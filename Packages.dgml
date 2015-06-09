@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="TestProject" Label="TestProject" Category="Project" />
+    <Node Id="EntityFramework 6.1.1" Label="EntityFramework 6.1.1" Category="Package" />
+    <Node Id="MPBA.DataAccess 1.1.0" Label="MPBA.DataAccess 1.1.0" Category="Package" />
+    <Node Id="ISIC" Label="ISIC" Category="Project" />
+    <Node Id="EntityFramework 6.1.1" Label="EntityFramework 6.1.1" Category="Package" />
+    <Node Id="MPBA.DataAccess 1.1.0" Label="MPBA.DataAccess 1.1.0" Category="Package" />
+    <Node Id="ISICWeb" Label="ISICWeb" Category="Project" />
+    <Node Id="AlertifyJS 1.1.0" Label="AlertifyJS 1.1.0" Category="Package" />
+    <Node Id="Antlr 3.4.1.9004" Label="Antlr 3.4.1.9004" Category="Package" />
+    <Node Id="Atlassian.SDK 2.2.0" Label="Atlassian.SDK 2.2.0" Category="Package" />
+    <Node Id="bootstrap 3.3.1" Label="bootstrap 3.3.1" Category="Package" />
+    <Node Id="elmah.corelibrary 1.2.1" Label="elmah.corelibrary 1.2.1" Category="Package" />
+    <Node Id="Elmah.MVC 2.1.1" Label="Elmah.MVC 2.1.1" Category="Package" />
+    <Node Id="EntityFramework 6.1.1" Label="EntityFramework 6.1.1" Category="Package" />
+    <Node Id="EntityFramework.es 6.1.1" Label="EntityFramework.es 6.1.1" Category="Package" />
+    <Node Id="Glimpse 1.8.6" Label="Glimpse 1.8.6" Category="Package" />
+    <Node Id="Glimpse.Ado 1.7.3" Label="Glimpse.Ado 1.7.3" Category="Package" />
+    <Node Id="Glimpse.AspNet 1.9.2" Label="Glimpse.AspNet 1.9.2" Category="Package" />
+    <Node Id="Glimpse.EF6 1.6.5" Label="Glimpse.EF6 1.6.5" Category="Package" />
+    <Node Id="Glimpse.Mvc5 1.5.3" Label="Glimpse.Mvc5 1.5.3" Category="Package" />
+    <Node Id="Glimpse.NLog 1.4.0" Label="Glimpse.NLog 1.4.0" Category="Package" />
+    <Node Id="jQuery 1.10.2" Label="jQuery 1.10.2" Category="Package" />
+    <Node Id="jQuery.BlockUI 2.70" Label="jQuery.BlockUI 2.70" Category="Package" />
+    <Node Id="jQuery.Validation 1.11.1" Label="jQuery.Validation 1.11.1" Category="Package" />
+    <Node Id="Microsoft.AspNet.Identity.Core 2.0.0" Label="Microsoft.AspNet.Identity.Core 2.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.Identity.Core.es 2.0.0" Label="Microsoft.AspNet.Identity.Core.es 2.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.Identity.EntityFramework 2.0.0" Label="Microsoft.AspNet.Identity.EntityFramework 2.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.Identity.EntityFramework.es 2.0.0" Label="Microsoft.AspNet.Identity.EntityFramework.es 2.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.Identity.Owin 2.0.0" Label="Microsoft.AspNet.Identity.Owin 2.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.Identity.Owin.es 2.0.0" Label="Microsoft.AspNet.Identity.Owin.es 2.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.Mvc 5.1.2" Label="Microsoft.AspNet.Mvc 5.1.2" Category="Package" />
+    <Node Id="Microsoft.AspNet.Mvc.es 5.1.2" Label="Microsoft.AspNet.Mvc.es 5.1.2" Category="Package" />
+    <Node Id="Microsoft.AspNet.Razor 3.1.2" Label="Microsoft.AspNet.Razor 3.1.2" Category="Package" />
+    <Node Id="Microsoft.AspNet.Razor.es 3.1.2" Label="Microsoft.AspNet.Razor.es 3.1.2" Category="Package" />
+    <Node Id="Microsoft.AspNet.Web.Optimization 1.1.3" Label="Microsoft.AspNet.Web.Optimization 1.1.3" Category="Package" />
+    <Node Id="Microsoft.AspNet.Web.Optimization.es 1.1.3" Label="Microsoft.AspNet.Web.Optimization.es 1.1.3" Category="Package" />
+    <Node Id="Microsoft.AspNet.WebApi 5.0.0" Label="Microsoft.AspNet.WebApi 5.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.WebApi.Client 5.0.0" Label="Microsoft.AspNet.WebApi.Client 5.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.WebApi.Client.es 5.0.0" Label="Microsoft.AspNet.WebApi.Client.es 5.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.WebApi.Core 5.0.0" Label="Microsoft.AspNet.WebApi.Core 5.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.WebApi.Core.es 5.0.0" Label="Microsoft.AspNet.WebApi.Core.es 5.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.WebApi.WebHost 5.0.0" Label="Microsoft.AspNet.WebApi.WebHost 5.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.WebApi.WebHost.es 5.0.0" Label="Microsoft.AspNet.WebApi.WebHost.es 5.0.0" Category="Package" />
+    <Node Id="Microsoft.AspNet.WebPages 3.1.2" Label="Microsoft.AspNet.WebPages 3.1.2" Category="Package" />
+    <Node Id="Microsoft.AspNet.WebPages.es 3.1.2" Label="Microsoft.AspNet.WebPages.es 3.1.2" Category="Package" />
+    <Node Id="Microsoft.jQuery.Unobtrusive.Ajax 3.2.2" Label="Microsoft.jQuery.Unobtrusive.Ajax 3.2.2" Category="Package" />
+    <Node Id="Microsoft.jQuery.Unobtrusive.Validation 3.1.2" Label="Microsoft.jQuery.Unobtrusive.Validation 3.1.2" Category="Package" />
+    <Node Id="Microsoft.Owin 2.1.0" Label="Microsoft.Owin 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.es 2.1.0" Label="Microsoft.Owin.es 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Host.SystemWeb 2.1.0" Label="Microsoft.Owin.Host.SystemWeb 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Host.SystemWeb.es 2.1.0" Label="Microsoft.Owin.Host.SystemWeb.es 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security 2.1.0" Label="Microsoft.Owin.Security 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.Cookies 2.1.0" Label="Microsoft.Owin.Security.Cookies 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.es 2.1.0" Label="Microsoft.Owin.Security.es 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.Facebook 2.1.0" Label="Microsoft.Owin.Security.Facebook 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.Facebook.es 2.1.0" Label="Microsoft.Owin.Security.Facebook.es 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.Google 2.1.0" Label="Microsoft.Owin.Security.Google 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.Google.es 2.1.0" Label="Microsoft.Owin.Security.Google.es 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.MicrosoftAccount 2.1.0" Label="Microsoft.Owin.Security.MicrosoftAccount 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.MicrosoftAccount.es 2.1.0" Label="Microsoft.Owin.Security.MicrosoftAccount.es 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.OAuth 2.1.0" Label="Microsoft.Owin.Security.OAuth 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.Twitter 2.1.0" Label="Microsoft.Owin.Security.Twitter 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Owin.Security.Twitter.es 2.1.0" Label="Microsoft.Owin.Security.Twitter.es 2.1.0" Category="Package" />
+    <Node Id="Microsoft.Web.Infrastructure 1.0.0.0" Label="Microsoft.Web.Infrastructure 1.0.0.0" Category="Package" />
+    <Node Id="MiniProfiler 3.0.10" Label="MiniProfiler 3.0.10" Category="Package" />
+    <Node Id="Modernizr 2.6.2" Label="Modernizr 2.6.2" Category="Package" />
+    <Node Id="MPBA.DataAccess 1.1.0" Label="MPBA.DataAccess 1.1.0" Category="Package" />
+    <Node Id="MPBA.JiraClient 1.0.0" Label="MPBA.JiraClient 1.0.0" Category="Package" />
+    <Node Id="MvcFileUploader 1.3.5" Label="MvcFileUploader 1.3.5" Category="Package" />
+    <Node Id="Newtonsoft.Json 5.0.6" Label="Newtonsoft.Json 5.0.6" Category="Package" />
+    <Node Id="NLog 3.1.0.0" Label="NLog 3.1.0.0" Category="Package" />
+    <Node Id="NLog.Config 3.1.0.0" Label="NLog.Config 3.1.0.0" Category="Package" />
+    <Node Id="NLog.Schema 3.1.0.0" Label="NLog.Schema 3.1.0.0" Category="Package" />
+    <Node Id="Owin 1.0" Label="Owin 1.0" Category="Package" />
+    <Node Id="Respond 1.2.0" Label="Respond 1.2.0" Category="Package" />
+    <Node Id="RestSharp 105.0.1" Label="RestSharp 105.0.1" Category="Package" />
+    <Node Id="Select2.js 3.4.1.1" Label="Select2.js 3.4.1.1" Category="Package" />
+    <Node Id="Select2-Bootstrap 1.2.0" Label="Select2-Bootstrap 1.2.0" Category="Package" />
+    <Node Id="Twitter.Bootstrap 2.3.2" Label="Twitter.Bootstrap 2.3.2" Category="Package" />
+    <Node Id="Unity 3.0.1304.1" Label="Unity 3.0.1304.1" Category="Package" />
+    <Node Id="Unity.Mvc5 1.1" Label="Unity.Mvc5 1.1" Category="Package" />
+    <Node Id="WebGrease 1.5.2" Label="WebGrease 1.5.2" Category="Package" />
+  </Nodes>
+  <Links>
+    <Link Source="MPBA.DataAccess 1.1.0" Target="EntityFramework 6.1.1" Category="Package Dependency" />
+    <Link Source="TestProject" Target="MPBA.DataAccess 1.1.0" Category="Installed Package" />
+    <Link Source="MPBA.DataAccess 1.1.0" Target="EntityFramework 6.1.1" Category="Package Dependency" />
+    <Link Source="ISIC" Target="MPBA.DataAccess 1.1.0" Category="Installed Package" />
+    <Link Source="bootstrap 3.3.1" Target="jQuery 1.10.2" Category="Package Dependency" />
+    <Link Source="Elmah.MVC 2.1.1" Target="elmah.corelibrary 1.2.1" Category="Package Dependency" />
+    <Link Source="EntityFramework.es 6.1.1" Target="EntityFramework 6.1.1" Category="Package Dependency" />
+    <Link Source="Glimpse.Ado 1.7.3" Target="Glimpse 1.8.6" Category="Package Dependency" />
+    <Link Source="Glimpse.AspNet 1.9.2" Target="Glimpse 1.8.6" Category="Package Dependency" />
+    <Link Source="Glimpse.EF6 1.6.5" Target="Glimpse.Ado 1.7.3" Category="Package Dependency" />
+    <Link Source="Glimpse.Mvc5 1.5.3" Target="Glimpse.AspNet 1.9.2" Category="Package Dependency" />
+    <Link Source="Glimpse.NLog 1.4.0" Target="Glimpse 1.8.6" Category="Package Dependency" />
+    <Link Source="Glimpse.NLog 1.4.0" Target="NLog 3.1.0.0" Category="Package Dependency" />
+    <Link Source="jQuery.BlockUI 2.70" Target="jQuery 1.10.2" Category="Package Dependency" />
+    <Link Source="jQuery.Validation 1.11.1" Target="jQuery 1.10.2" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Identity.Core.es 2.0.0" Target="Microsoft.AspNet.Identity.Core 2.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Identity.EntityFramework 2.0.0" Target="Microsoft.AspNet.Identity.Core 2.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Identity.EntityFramework 2.0.0" Target="EntityFramework 6.1.1" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Identity.EntityFramework.es 2.0.0" Target="Microsoft.AspNet.Identity.EntityFramework 2.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Identity.Owin 2.0.0" Target="Microsoft.AspNet.Identity.Core 2.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Identity.Owin 2.0.0" Target="Microsoft.Owin.Security 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Identity.Owin 2.0.0" Target="Microsoft.Owin.Security.Cookies 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Identity.Owin 2.0.0" Target="Microsoft.Owin.Security.OAuth 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Identity.Owin.es 2.0.0" Target="Microsoft.AspNet.Identity.Owin 2.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Mvc 5.1.2" Target="Microsoft.AspNet.WebPages 3.1.2" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Mvc 5.1.2" Target="Microsoft.AspNet.Razor 3.1.2" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Mvc.es 5.1.2" Target="Microsoft.AspNet.Mvc 5.1.2" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Razor.es 3.1.2" Target="Microsoft.AspNet.Razor 3.1.2" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Web.Optimization 1.1.3" Target="Microsoft.Web.Infrastructure 1.0.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Web.Optimization 1.1.3" Target="WebGrease 1.5.2" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.Web.Optimization.es 1.1.3" Target="Microsoft.AspNet.Web.Optimization 1.1.3" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebApi 5.0.0" Target="Microsoft.AspNet.WebApi.WebHost 5.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebApi.Client 5.0.0" Target="Newtonsoft.Json 5.0.6" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebApi.Client 5.0.0" Target="Newtonsoft.Json 5.0.6" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebApi.Client.es 5.0.0" Target="Microsoft.AspNet.WebApi.Client 5.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebApi.Core 5.0.0" Target="Microsoft.AspNet.WebApi.Client 5.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebApi.Core.es 5.0.0" Target="Microsoft.AspNet.WebApi.Core 5.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebApi.WebHost 5.0.0" Target="Microsoft.AspNet.WebApi.Core 5.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebApi.WebHost.es 5.0.0" Target="Microsoft.AspNet.WebApi.WebHost 5.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebPages 3.1.2" Target="Microsoft.Web.Infrastructure 1.0.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebPages 3.1.2" Target="Microsoft.AspNet.Razor 3.1.2" Category="Package Dependency" />
+    <Link Source="Microsoft.AspNet.WebPages.es 3.1.2" Target="Microsoft.AspNet.WebPages 3.1.2" Category="Package Dependency" />
+    <Link Source="Microsoft.jQuery.Unobtrusive.Ajax 3.2.2" Target="jQuery 1.10.2" Category="Package Dependency" />
+    <Link Source="Microsoft.jQuery.Unobtrusive.Validation 3.1.2" Target="jQuery 1.10.2" Category="Package Dependency" />
+    <Link Source="Microsoft.jQuery.Unobtrusive.Validation 3.1.2" Target="jQuery.Validation 1.11.1" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.es 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Host.SystemWeb 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Host.SystemWeb 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Host.SystemWeb 2.1.0" Target="Microsoft.Web.Infrastructure 1.0.0.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Host.SystemWeb 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Host.SystemWeb 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Host.SystemWeb.es 2.1.0" Target="Microsoft.Owin.Host.SystemWeb 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Cookies 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Cookies 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Cookies 2.1.0" Target="Microsoft.Owin.Security 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.es 2.1.0" Target="Microsoft.Owin.Security 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Facebook 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Facebook 2.1.0" Target="Newtonsoft.Json 5.0.6" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Facebook 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Facebook 2.1.0" Target="Microsoft.Owin.Security 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Facebook.es 2.1.0" Target="Microsoft.Owin.Security.Facebook 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Google 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Google 2.1.0" Target="Newtonsoft.Json 5.0.6" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Google 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Google 2.1.0" Target="Microsoft.Owin.Security 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Google.es 2.1.0" Target="Microsoft.Owin.Security.Google 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.MicrosoftAccount 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.MicrosoftAccount 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.MicrosoftAccount 2.1.0" Target="Newtonsoft.Json 5.0.6" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.MicrosoftAccount 2.1.0" Target="Microsoft.Owin.Security 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.MicrosoftAccount.es 2.1.0" Target="Microsoft.Owin.Security.MicrosoftAccount 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.OAuth 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.OAuth 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.OAuth 2.1.0" Target="Newtonsoft.Json 5.0.6" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.OAuth 2.1.0" Target="Microsoft.Owin.Security 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Twitter 2.1.0" Target="Owin 1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Twitter 2.1.0" Target="Microsoft.Owin 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Twitter 2.1.0" Target="Newtonsoft.Json 5.0.6" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Twitter 2.1.0" Target="Microsoft.Owin.Security 2.1.0" Category="Package Dependency" />
+    <Link Source="Microsoft.Owin.Security.Twitter.es 2.1.0" Target="Microsoft.Owin.Security.Twitter 2.1.0" Category="Package Dependency" />
+    <Link Source="MPBA.DataAccess 1.1.0" Target="EntityFramework 6.1.1" Category="Package Dependency" />
+    <Link Source="MPBA.JiraClient 1.0.0" Target="RestSharp 105.0.1" Category="Package Dependency" />
+    <Link Source="NLog.Config 3.1.0.0" Target="NLog 3.1.0.0" Category="Package Dependency" />
+    <Link Source="NLog.Config 3.1.0.0" Target="NLog.Schema 3.1.0.0" Category="Package Dependency" />
+    <Link Source="Select2.js 3.4.1.1" Target="jQuery 1.10.2" Category="Package Dependency" />
+    <Link Source="Select2-Bootstrap 1.2.0" Target="Twitter.Bootstrap 2.3.2" Category="Package Dependency" />
+    <Link Source="Select2-Bootstrap 1.2.0" Target="Select2.js 3.4.1.1" Category="Package Dependency" />
+    <Link Source="Twitter.Bootstrap 2.3.2" Target="jQuery 1.10.2" Category="Package Dependency" />
+    <Link Source="Unity.Mvc5 1.1" Target="Unity 3.0.1304.1" Category="Package Dependency" />
+    <Link Source="Unity.Mvc5 1.1" Target="Microsoft.AspNet.Mvc 5.1.2" Category="Package Dependency" />
+    <Link Source="WebGrease 1.5.2" Target="Antlr 3.4.1.9004" Category="Package Dependency" />
+    <Link Source="WebGrease 1.5.2" Target="Newtonsoft.Json 5.0.6" Category="Package Dependency" />
+    <Link Source="ISICWeb" Target="AlertifyJS 1.1.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Atlassian.SDK 2.2.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="bootstrap 3.3.1" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Elmah.MVC 2.1.1" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="EntityFramework.es 6.1.1" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Glimpse.EF6 1.6.5" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Glimpse.Mvc5 1.5.3" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Glimpse.NLog 1.4.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="jQuery.BlockUI 2.70" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.Identity.Core.es 2.0.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.Identity.EntityFramework.es 2.0.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.Identity.Owin.es 2.0.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.Mvc.es 5.1.2" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.Razor.es 3.1.2" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.Web.Optimization.es 1.1.3" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.WebApi 5.0.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.WebApi.Client.es 5.0.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.WebApi.Core.es 5.0.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.WebApi.WebHost.es 5.0.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.AspNet.WebPages.es 3.1.2" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.jQuery.Unobtrusive.Ajax 3.2.2" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.jQuery.Unobtrusive.Validation 3.1.2" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.Owin.es 2.1.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.Owin.Host.SystemWeb.es 2.1.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.Owin.Security.es 2.1.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.Owin.Security.Facebook.es 2.1.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.Owin.Security.Google.es 2.1.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.Owin.Security.MicrosoftAccount.es 2.1.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Microsoft.Owin.Security.Twitter.es 2.1.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="MiniProfiler 3.0.10" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Modernizr 2.6.2" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="MPBA.DataAccess 1.1.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="MPBA.JiraClient 1.0.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="MvcFileUploader 1.3.5" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="NLog.Config 3.1.0.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Respond 1.2.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Select2-Bootstrap 1.2.0" Category="Installed Package" />
+    <Link Source="ISICWeb" Target="Unity.Mvc5 1.1" Category="Installed Package" />
+  </Links>
+  <Categories>
+    <Category Id="Project" />
+    <Category Id="Package" />
+  </Categories>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Project" ValueLabel="True">
+      <Condition Expression="HasCategory('Project')" />
+      <Setter Property="Background" Value="Blue" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Package Dependency" ValueLabel="True">
+      <Condition Expression="HasCategory('Package Dependency')" />
+      <Setter Property="Background" Value="Yellow" />
+    </Style>
+  </Styles>
+</DirectedGraph>

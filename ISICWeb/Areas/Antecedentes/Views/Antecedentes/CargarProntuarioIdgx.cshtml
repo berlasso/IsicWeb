@@ -1,0 +1,100 @@
+﻿@using System.ServiceModel.Security
+@model ISICWeb.Areas.Antecedentes.Models.IdgxProntuarioViewModel
+
+
+
+
+<div class="container-detalle" style="margin-bottom: 80px;">
+    <div class="center wow fadeInDown animated tile-light">
+        <h1>Carga de Prontuarios de IDGx</h1>
+    </div>
+
+    @using (Html.BeginForm(null,null,FormMethod.Get, new {id="frm"}))
+    {
+
+
+        <div class="panel panel-default tile wow fadeInDown animated">
+            <div class="panel-body">
+                <div class="row wow fadeInDown animated">
+                    <div class="col-xs-12">
+
+                        @Html.HiddenFor(model => model.Id)
+
+
+                    </div>
+                </div>
+
+                <div class="row wow fadeInDown animated">
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.TipoProntuarioPF, "Tipo de Prontuario")
+                        @Html.DropDownListFor(model => model.TipoProntuarioPF, Model.TipoProntuarioPFList, new {@class = "form-control"})
+                        @*@Html.Hidden("idtipoprontuario",Model.TipoProntuarioPF)*@
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.ProntuarioPF)
+
+                        @Html.EditorFor(model => model.ProntuarioPF, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.ProntuarioPF, "", new {@class = "text-danger"})
+
+
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-xs-4">
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+        
+
+    }
+
+</div>
+@section footer
+{
+    <div class="col-md-2 col-sm-2 col-xs-6">
+      @Html.ActionLink("Volver","BuscarProntuariosIdgx", new {prontuariosic=Model.prontuariosic}, new {@class="btn btn-alt btn-lg"})
+    </div>
+    <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
+
+
+        <a href="#" id="btnGuardarProntuario" class="btn btn-alt btn-lg">Guardar Prontuario</a>
+    </div>
+
+}
+
+@section scripts
+{
+    <script>
+        $(function() {
+            $("#btnGuardarProntuario").on("click", function(e) {
+                e.preventDefault();
+                if ($("#frm").valid() == false)
+                    return;
+                var prontuariopf = $("#ProntuarioPF").val();
+                var idtipoprontuario = $("#TipoProntuarioPF").val();
+                    var url = '@Url.Content("GuardarIdgxProntuario")' + '?idIdgxProntuario=@Model.Id&prontuariopf='+prontuariopf+'&idtipoprontuario='+idtipoprontuario+'&prontuariosic=@Model.prontuariosic';
+                    $.get(url, null, function(data) {
+                        if (data === "True") {
+
+
+                            alertify.success("Delito borrado correctamente");
+
+
+                        } else {
+                            alertify.error("Error al borrar");
+                        }
+                    });
+                
+            });
+
+        })
+    </script>
+}

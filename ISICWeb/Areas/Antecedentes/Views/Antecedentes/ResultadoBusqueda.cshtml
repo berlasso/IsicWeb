@@ -1,0 +1,244 @@
+﻿@using ISIC.Entities
+@model IEnumerable<ISICWeb.Areas.Antecedentes.Models.ImputadosAntecedentesViewModel>
+@{ Session["CurrentUrl"] = Request.Url.ToString(); }
+
+ 
+<div class="row wow fadeInDown animated">
+    <ol class="breadcrumb hidden-xs tile-light" style="float:left!important">
+        <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
+        <li class="active">Resultados</li>
+    </ol>
+
+
+</div>
+    
+
+<div class=" center wow fadeInDown animated tile-light">
+    <h3>
+        Resultados de la búsqueda de delitos para vincular<br/>
+        <small>(se muestran los primeros @ViewBag.MaxResultados registros.)</small>
+    </h3>
+</div>
+<div class="tile" style="margin-bottom: 80px;">
+    <div class="row wow fadeInDown animated">
+        <div class="col-md-12">
+            <table id="tablaResultados" class="table  table-bordered table-hover  table-striped tile tabla" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Prontuario
+                        </th>
+                        <th>
+                            Código de Barras
+                        </th>
+                        <th>
+                            Apellido
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Documento Número
+                        </th>
+                        <th>
+                            IPP
+                        </th>
+                        <th>
+                            IDGx
+                        </th>
+                        <th>
+                            AFIS
+                        </th>
+                        <th>
+                            PB
+                        </th>
+                        <th>
+                            RNR
+                        </th>
+                        <th>
+                            GNA
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr id="@Html.DisplayFor(modelItem => item.Id)">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProntuarioSIC)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CodigoDeBarras)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Apellido)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DocumentoNumero)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IPP)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IDGx)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AFIS)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PB)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RNR)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GNA)
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    @if (Model != null)
+    {
+        <div class="row" id="botones">
+            <div class="col-md-3">
+                @Html.ActionLink("Carga IDGx", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaIdgx", onclick = "showPageLoadingSpinner()" })
+                @Html.ActionLink("Carga AFIS", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaAfis", onclick = "showPageLoadingSpinner()" })
+                @Html.ActionLink("Carga GNA", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaGna", onclick = "showPageLoadingSpinner()" })
+            </div>
+            <div class="col-md-3">
+                
+            </div>
+            <div class="col-md-3">
+                
+            </div>
+        </div>
+    }
+</div>
+
+ 
+
+@section footer
+{
+    <div class="col-md-2">
+        
+        @Html.ActionLink("Volver","Index","Antecedentes",new {@class="btn btn-lg btn-alt volver"})
+        @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' window.history.go(-1); return false; ' title=" volver" type="button">
+            Volver
+        </a>*@
+        
+    </div>
+    <div class="col-md-10">
+
+    </div>
+
+}
+
+
+
+@section scripts
+{
+
+
+    <script>
+
+        $(document).ready(function() {
+            $('#tablaResultados').dataTable({
+                "dom": 'pT<"clear"i>rt<"bottom"><"clear">',
+                "tableTools": {
+                    "aButtons": [],
+                    "sSelectedClass": "row_selected",
+                    "sRowSelect": "single",
+                    "fnRowSelected": function(nodes) {
+                        //var id = nodes[0].id;
+                        var prontuariosic = nodes[0].cells[0].innerHTML.trim();
+                        VincularBotones(prontuariosic);
+                        $('html, body').animate({
+                            scrollTop: $("#botones").offset().top
+                        }, 2000);
+
+                    },
+                    "fnRowDeselected": function(nodes) {
+                        VincularBotones("");
+
+                    }
+                },
+                "columnDefs": [
+                 {
+                     "targets": 6,//idgx
+                     "sortable": false
+                 },
+                 {
+                     "targets": 7,//afis
+                     "sortable": false
+                 },
+                 {
+                     "targets": 8,//pb
+                     "sortable": false
+                 },
+                 {
+                     "targets": 9,//rnr
+                     "sortable": false
+                 },
+                 {
+                     "targets": 10,//gna
+                     "sortable": false
+                 },
+
+                ],
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+
+        });
+
+        function VincularBotones(prontuariosic) {
+            if (prontuariosic !== "") {
+                var urlIdgx = '@Url.Action("BuscarProntuariosIdgx", "Antecedentes")?prontuariosic=' + prontuariosic;
+                var urlAfis = '@Url.Action("CargarAFIS", "Antecedentes")?prontuariosic=' + prontuariosic;
+                var urlGna = '@Url.Action("CargarGNA", "Antecedentes")?prontuariosic=' + prontuariosic;
+                $("#btnCargaIdgx").removeClass("disabled").prop("href", urlIdgx);
+                $("#btnCargaAfis").removeClass("disabled").prop("href", urlAfis);
+                $("#btnCargaGna").removeClass("disabled").prop("href", urlGna);
+            } else {
+
+                $("#btnCargaIdgx").addClass("disabled");
+                $("#btnCargaAfis").addClass("disabled");
+                $("#btnCargaGna").addClass("disabled");
+            }
+        }
+
+    </script>
+}

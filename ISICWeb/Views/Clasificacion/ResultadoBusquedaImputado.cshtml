@@ -1,0 +1,131 @@
+﻿@model ISICWeb.Models.ClasificacionViewModel
+@{
+    Layout = null;
+}
+
+@if (ViewData.ModelState.IsValid)
+{
+    <br />
+    <div class="row">
+        <div class="col-md-5">
+            @Html.Label("Código de Barra: " + Model.CodigoDeBarra)
+        </div>
+        <div class="col-md-7 ">
+            @Html.Label(Model.Apellido + ", " + Model.Nombre)
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:10px; display:flex; align-items: center; border:solid 1px;">
+        <div class="col-md-1">
+            @Html.Label("Mano derecha", new { @class = "text-muted" })
+        </div>
+
+        @foreach (ISICWeb.Models.BioDactilarViewModel bioDactilar in Model.BioManoDerecha.OrderBy(b => b.Orden))
+        {
+            <div class="col-md-2 text-center">
+                @if (bioDactilar != null)
+                {
+                    @Html.Label(bioDactilar.Dedo.ToString(), new { @class = "text-muted" });
+                    <br />
+                    if (bioDactilar.imagen != null)
+                    {
+                        var base64 = Convert.ToBase64String(bioDactilar.imagen);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        <a href="@Url.Action("Clasificar", "Clasificacion", new { @idBioDactilar = bioDactilar.Id })" style="color:black">
+                            <img src="@imgSrc" class="biodactilar-img" />
+                        </a>
+                        <br />
+                    }
+                    else
+                    {
+                        <div class="biodactilar-div">
+                            @Html.Label(bioDactilar.EstadoDedo.ToString(), new { @class = "text-danger" })
+                        </div>
+                    }
+
+                    if ((bioDactilar.DactilarVuc.Descripcion != null) && (bioDactilar.DactilarVuc.Descripcion != ISIC.Enums.GlobalStrings.Sin_Clasificar))
+                    {
+                        @Html.Label(bioDactilar.DactilarVuc.Descripcion);
+                    }
+                    else
+                    {
+                        @Html.Label("Sin clasificación");
+                    }
+                }
+            </div>
+        }
+    </div>
+
+    <div class="row" style="border-left:solid 1px; border-right:solid 1px;">
+        <div class="col-md-3 col-md-offset-1" style="margin-top:10px;margin-bottom:10px;">
+            @Html.Label("Individual Dactiloscópica:")
+        </div>
+        <div class="col-md-8" style="margin-top:10px;margin-bottom:10px;">
+            @Html.Label(
+            Model.BioManoDerecha.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Pulgar).FirstOrDefault().DactilarVuc.Sigla +
+            " - " +
+            Model.BioManoDerecha.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Indice).FirstOrDefault().DactilarVuc.Sigla +
+            Model.BioManoDerecha.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Medio).FirstOrDefault().DactilarVuc.Sigla +
+            Model.BioManoDerecha.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Anular).FirstOrDefault().DactilarVuc.Sigla +
+            Model.BioManoDerecha.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Meñique).FirstOrDefault().DactilarVuc.Sigla,
+            new { @class = "text-danger" })
+            <br />
+            @Html.Label(
+            Model.BioManoIzquierda.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Pulgar).FirstOrDefault().DactilarVuc.Sigla +
+            " - " +
+            Model.BioManoIzquierda.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Indice).FirstOrDefault().DactilarVuc.Sigla +
+            Model.BioManoIzquierda.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Medio).FirstOrDefault().DactilarVuc.Sigla +
+            Model.BioManoIzquierda.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Anular).FirstOrDefault().DactilarVuc.Sigla +
+            Model.BioManoIzquierda.Where(x => x.Dedo == ISIC.Enums.ClaseDedo.Meñique).FirstOrDefault().DactilarVuc.Sigla,
+            new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row" style="display:flex; align-items: center; border:solid 1px;">
+        <div class="col-md-1">
+            @Html.Label("Mano izquierda", new { @class = "text-muted" })
+        </div>
+
+        @foreach (ISICWeb.Models.BioDactilarViewModel bioDactilar in Model.BioManoIzquierda.OrderBy(b => b.Orden))
+        {
+            <div class="col-md-2 text-center">
+                @if (bioDactilar != null)
+                {
+                    @Html.Label(bioDactilar.Dedo.ToString(), new { @class = "text-muted" });
+                    <br />
+                    if (bioDactilar.imagen != null)
+                    {
+                        var base64 = Convert.ToBase64String(bioDactilar.imagen);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        <a href="@Url.Action("Clasificar", "Clasificacion", new { @idBioDactilar = bioDactilar.Id })" style="color:black">
+                            <img src="@imgSrc" class="biodactilar-img" />
+                        </a>
+                        <br />
+                    }
+                    else
+                    {
+                        <div class="biodactilar-div">
+                            @Html.Label(bioDactilar.EstadoDedo.ToString(), new { @class = "text-danger" })
+                        </div>
+                    }
+
+                    if ((bioDactilar.DactilarVuc.Descripcion != null) && (bioDactilar.DactilarVuc.Descripcion != ISIC.Enums.GlobalStrings.Sin_Clasificar))
+                    {
+                        @Html.Label(bioDactilar.DactilarVuc.Descripcion);
+                    }
+                    else
+                    {
+                        @Html.Label("Sin clasificación");
+                    }
+                }
+            </div>
+        }
+    </div>
+
+}
+else
+{
+    <p>
+        @ViewData.ModelState[""].Errors.First().ErrorMessage
+    </p>
+}
