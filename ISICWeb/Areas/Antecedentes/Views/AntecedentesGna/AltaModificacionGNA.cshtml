@@ -18,11 +18,16 @@
             Carga datos de GNA
         </h3>
     </div>
+    <div class="tile   wow fadeInDown animated">
+        @{
+  
 
+        }
+    </div>
 
     if (Model != null)
     {
-        Html.RenderAction("MostrarDatosImputado", "Antecedentes", new { idIdgxprontuario = Model.Id });
+        Html.RenderAction("MostrarDatosImputado", "Antecedentes", new { prontuarioSic = Model.Prontuario.ProntuarioNro });
 
     }
 
@@ -222,10 +227,11 @@
         function onGuardarSuccess(data) {
             if (data == "") {
                 //alertify.success("Alta exitosa");
+                var url = '@Url.Content("BuscarFichasGNA")?prontuariosic=@Model.Prontuario.ProntuarioNro';
                 alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>").set({
                     onclose: function () {
                         showPageLoadingSpinner();
-                        location.href = '@url';
+                        location.href = url;
 
                     }
                 });

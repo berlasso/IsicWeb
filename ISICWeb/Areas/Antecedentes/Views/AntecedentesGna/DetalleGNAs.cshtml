@@ -2,17 +2,15 @@
 @{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index"); }
 
 <div class="row wow fadeInDown animated">
-    <ol class="breadcrumb hidden-xs tile-light" style="float:left!important">
+    <ol class="breadcrumb hidden-xs tile-light" style="float: left !important">
         <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
         <li><a href="@url">Resultados</a></li>
-        <li class="active">Prontuarios</li>
+        <li class="active">Lista GNA</li>
     </ol>
-
-
 </div>
 <div class=" center wow fadeInDown animated tile-light">
     <h1>
-        Prontuarios en IDGx
+        Fichas de GNA
     </h1>
 </div>
 <div class="tile   wow fadeInDown animated">
@@ -22,12 +20,13 @@
     }
 </div>
 
+
 <div class="tile tile  wow fadeInDown animated" style="margin-bottom: 80px;">
 
     <div class="panel panel-default ">
         <div class="panel-heading">
             <h4>
-                Listado de prontuarios en IDGx
+                Listado de fichas de GNA
             </h4>
         </div>
     </div>
@@ -35,53 +34,50 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
-                <table id="tablaProntuarios" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
+                <table id="tablaGNAs" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th>
-                                Tipo de Prontuario
+                                Apellido
                             </th>
                             <th>
-                                Prontuario SIC
+                                Nombre
                             </th>
                             <th>
-                                Prontuario PF
+                                Documento Nro.
                             </th>
                             <th>
-
+                                Caratula
                             </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model != null && Model.ProntuariosIdgx != null)
+                        @if (Model != null && Model.DatosGNA != null)
                         {
-                            foreach (var item in Model.ProntuariosIdgx.Where(x => x.Baja != true))
+                            foreach (var item in Model.DatosGNA.Where(x => x.Baja != true))
                             {
                                 <tr>
                                     <td>
-                                        @if (item.tipoprontuario != null)
-                                        {
-                                            @Html.DisplayFor(modelItem => item.tipoprontuario.descripcion)
-                                        }
+                                        @Html.DisplayFor(modelItem => item.Apellido)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ProntuarioPF)
+                                        @Html.DisplayFor(modelItem => item.Nombre)
                                     </td>
                                     <td>
-                                        @if (item.Prontuario != null)
-                                        {
-                                            @Html.DisplayFor(modelItem => item.Prontuario.ProntuarioNro)
-                                        }
+                                        @Html.DisplayFor(modelItem => item.DocumentoNumero)
                                     </td>
-
-
                                     <td>
-                                        @Html.ActionLink("Editar", "AltaModificacionProntuarioIDGx", new { prontuariosic = Model.ProntuarioNro, idIdgxprontuario = item.Id, esNuevo = false }, new { @class = "btn btn-alt btn-sm " })
-                                        <input type="button" class="btn btn-alt btn-sm" id="btnBorrarProntuarioIdgx" data-id="@item.Id" value="Borrar" />
+                                        @Html.DisplayFor(modelItem => item.Caratula)
+                                    </td>
+                                    <td style="text-align: right">
+                                        @Html.ActionLink("Editar", "AltaModificacionGNA", new { prontuariosic = Model.ProntuarioNro, idGNA = item.Id, esNuevo = false }, new { @class = "btn btn-alt btn-sm " })
+                                        <input type="button" class="btn btn-alt btn-sm" id="btnBorrarGNA" data-id="@item.Id" value="Borrar" />
                                     </td>
                                 </tr>
                             }
                         }
+
                     </tbody>
                 </table>
                 <div class="row">
@@ -100,7 +96,6 @@
 
 </div>
 
-
 @section footer
 {
     <div class="col-md-2 col-sm-2 col-xs-6">
@@ -114,7 +109,7 @@
     <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
         @if (Model != null)
         {
-            @Html.ActionLink("Nuevo Prontuario", "AltaModificacionProntuarioIDGx", new { prontuariosic = Model.ProntuarioNro, esNuevo = true }, new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
+            @Html.ActionLink("Nuevo", "AltaModificacionGNA", new { prontuariosic = Model.ProntuarioNro, esNuevo = true }, new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
         }
 
 
@@ -123,13 +118,9 @@
 }
 
 
-
-
-
-
 <script>
     $(document).ready(function () {
-        $('#tablaProntuarios').dataTable({
+        $('#tablaGNAs').dataTable({
             "dom": 'pT<"clear"i>rt<"bottom"><"clear">',
             "tableTools": {
                 "aButtons": [],
@@ -137,7 +128,7 @@
             },
             "columnDefs": [
                 {
-                    "targets": 3,
+                    "targets": 4,
                     "sortable": false
                 }
             ],
@@ -166,20 +157,20 @@
                 }
             }
         });
-        $('#tablaProntuarios tbody').on('click', '#btnBorrarProntuarioIdgx', function () {
-            
-            var id = $(this).data("id");
-            var table = $('#tablaProntuarios').DataTable();
-            var row = table.row($(this).parents('tr'));
-                
-            alertify.confirm("Borrar Prontuario en IDGx", "Seguro que desea borrar?", function () {
+        $('#tablaGNAs tbody').on('click', '#btnBorrarGNA', function () {
 
-                var url = '@Url.Action("BorrarProntuarioIdgx","Antecedentes")/' + encodeURI(id);
+            var id = $(this).data("id");
+            var table = $('#tablaGNAs').DataTable();
+            var row = table.row($(this).parents('tr'));
+
+            alertify.confirm("Borrar ficha de GNA", "Seguro que desea borrar?", function () {
+
+                var url = '@Url.Action("BorrarFichaGNA","Antecedentes")/' + encodeURI(id);
                 $.get(url, null, function (data) {
                     if (data === "True") {
                         row.remove().draw();
-                        alertify.success("Prontuario borrado correctamente");
-                        
+                        alertify.success("Ficha de GNA borrada correctamente");
+
 
                     } else {
                         alertify.error("Error al borrar");
@@ -193,6 +184,6 @@
 
     });
 
-  
+
 </script>
 

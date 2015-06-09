@@ -18,6 +18,8 @@ namespace ISIC.Persistence
         public ISICWebContext() : base("name=ISICWebContext")
         {
         }
+
+        public System.Data.Entity.DbSet<ISIC.Entities.GNA> GNAs { get; set; }
     
     }
 }

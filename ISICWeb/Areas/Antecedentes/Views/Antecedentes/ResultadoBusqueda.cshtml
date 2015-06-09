@@ -228,7 +228,7 @@
             if (prontuariosic !== "") {
                 var urlIdgx = '@Url.Action("BuscarProntuariosIdgx", "Antecedentes")?prontuariosic=' + prontuariosic;
                 var urlAfis = '@Url.Action("CargarAFIS", "Antecedentes")?prontuariosic=' + prontuariosic;
-                var urlGna = '@Url.Action("CargarGNA", "Antecedentes")?prontuariosic=' + prontuariosic;
+                var urlGna = '@Url.Action("BuscarFichasGNA", "Antecedentes")?prontuariosic=' + prontuariosic;
                 $("#btnCargaIdgx").removeClass("disabled").prop("href", urlIdgx);
                 $("#btnCargaAfis").removeClass("disabled").prop("href", urlAfis);
                 $("#btnCargaGna").removeClass("disabled").prop("href", urlGna);

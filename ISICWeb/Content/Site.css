@@ -2458,7 +2458,9 @@ section.well.tile {
 
 .panel-default>.panel-heading>h2,
 .panel-default>.panel-heading>h3,
-.panel-default>.panel-heading>h4 {
+.panel-default>.panel-heading>h4,
+.panel-default>.panel-heading>h5,
+.panel-default>.panel-heading>h6 {
     color: white;
 }
 

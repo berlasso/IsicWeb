@@ -263,6 +263,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Antecedentes\AntecedentesAreaRegistration.cs" />
+    <Compile Include="Areas\Antecedentes\Controllers\AntecedentesGnaController.cs" />
     <Compile Include="Areas\Antecedentes\Models\IdgxViewModels.cs" />
     <Compile Include="Areas\Antecedentes\Models\ImputadosAntecedentesViewModel.cs" />
     <Compile Include="Areas\Otip\Controllers\BuscadorAutocompletesController.cs" />
@@ -312,6 +313,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelISIC.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Services\GnaService.cs" />
     <Compile Include="Services\IdgxService.cs" />
     <Compile Include="Services\ImputadoExtraService.cs" />
     <Compile Include="Services\ImputadosSimilaresService.cs" />
@@ -1313,11 +1315,12 @@
     <Content Include="Areas\Antecedentes\Views\Antecedentes\DetalleProntuariosIdgx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\CargarProntuarioIdgx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\AltaModificacionAFIS.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\Antecedentes\AltaModificacionGNA.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\AntecedentesGna\AltaModificacionGNA.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\AltaModificacionProntuarioIDGx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\_SummaryErrorAfis.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\Antecedentes\_SummaryErrorGna.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\AntecedentesGna\_SummaryErrorGna.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\ListaDatosPersonalesIDGx.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\AntecedentesGna\DetalleGNAs.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

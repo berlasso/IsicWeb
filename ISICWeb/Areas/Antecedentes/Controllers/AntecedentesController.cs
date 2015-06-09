@@ -19,15 +19,16 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
     {
         IRepository _repository;
         private BusquedaService _busquedaService;
-        private ImputadoService _imputadoService;
         private IdgxService _idgxService;
+        private GnaService _gnaService;
 
-        public AntecedentesController(IRepository repository, BusquedaService busquedaService, ImputadoService imputadoService, IdgxService idgxService)
+        public AntecedentesController(IRepository repository, BusquedaService busquedaService, ImputadoService imputadoService, IdgxService idgxService, GnaService gnaService)
         {
             _repository = repository;
             _busquedaService = busquedaService;
-            _imputadoService = imputadoService;
+
             _idgxService = idgxService;
+            _gnaService = gnaService;
         }
 
         // GET: Antecedentes/Antecedentes
@@ -63,9 +64,9 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
                                  Nombre = persona.Nombre,
                                  DocumentoNumero = persona.DocumentoNumero,
                                  IPP = numero,
-                                 IDGx = (p != null && p.ProntuarioPF != null),
-                                 AFIS = (a != null && a.Prontuario != null),
-                                 GNA = (g != null && g.Prontuario != null)
+                                 IDGx = (p != null && p.ProntuarioPF != null && p.Baja!=true),
+                                 AFIS = (a != null && a.Prontuario != null && a.Baja!=true),
+                                 GNA = (g != null && g.Prontuario != null && g.Baja!=true)
                              };
 
           //  var aaa = resultados.ToList();
@@ -78,7 +79,8 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
         /// <param name="prontuariosic">busca el prontuario en idgx que tenga el prontuariosic indicado</param>
         /// <param name="idIdgxprontuario">trae el prontuario en idgx con id indicado, obviando el paramentro prontuariosic</param>
         /// <returns></returns>
-        public ActionResult AltaModificacionProntuarioIDGx(string prontuariosic = "", string idIdgxprontuario = "", bool esNuevo = false)
+        public ActionResult AltaModificacionProntuarioIDGx(string prontuariosic = "", string idIdgxprontuario = "",
+            bool esNuevo = false)
         {
             IdgxProntuario idgxProntuario = null;
             if (!esNuevo)
@@ -93,15 +95,16 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
                         _repository.Set<IdgxProntuario>().FirstOrDefault(x => x.Id.ToString() == idIdgxprontuario);
                 }
             }
-
-
             IdgxProntuarioViewModel prontuario = null;
-
             prontuario = _idgxService.TraerIdgxProntuarioViewModel(idgxProntuario, prontuariosic);
-
-
             return View(prontuario);
+
         }
+
+    
+    
+
+
 
         public ActionResult BuscarProntuariosIdgx(string prontuariosic)
         {
@@ -116,6 +119,9 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
             }
             return View("DetalleProntuariosIdgx", prontuario);
         }
+
+
+     
 
         public int GuardarIdgxProntuario(string idIdgxProntuario, string prontuariopf, string idtipoprontuario, string prontuariosic)
         {
@@ -291,6 +297,8 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
             return borroBien;
         }
 
+      
+
         public ActionResult MostrarDatosIdgx(int id)
         {
             IdgxProntuario prontuario = _repository.Set<IdgxProntuario>().Single(x => x.Id == id);
@@ -311,21 +319,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
             return View("AltaModificacionAFIS", afis);
         }
 
-        public ActionResult CargarGna(string prontuariosic)
-        {
-            ViewBag.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion");
-            ViewBag.TipoDocList = new SelectList(_repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion");
-            GNA gna = _repository.Set<GNA>().SingleOrDefault(x => x.Prontuario.ProntuarioNro == prontuariosic);
-            if (gna == null)
-                gna = new GNA
-                {
-                    Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == 0),
-                    TipoDNI = _repository.Set<ClaseTipoDNI>().Single(x => x.Id == 0),
-                    Prontuario = new Prontuario { ProntuarioNro = prontuariosic }
-                };
-
-            return View("AltaModificacionGNA", gna);
-        }
+     
 
         [HttpPost]
         public ActionResult GuardarDatosAfis(AFIS model)
@@ -372,52 +366,5 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult GuardarDatosGNA(GNA model)
-        {
-            string errores = "";
-            string prontuariosic = model.Prontuario.ProntuarioNro;
-            Prontuario prontuario = _repository.Set<Prontuario>().FirstOrDefault(x => x.ProntuarioNro == prontuariosic);
-            if (prontuario == null)
-                prontuario = new Prontuario
-                {
-                    ProntuarioNro = prontuariosic
-                };
-            if (ModelState.IsValid)
-            {
-                model.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == model.Sexo.Id);
-                model.TipoDNI = _repository.Set<ClaseTipoDNI>().Single(x => x.Id == model.TipoDNI.Id);
-                model.FechaUltimaModificacion = DateTime.Now;
-
-                
-                if (model.Id == 0)
-                {
-                    model.FechaCreacion = DateTime.Now;
-                    model.Prontuario = prontuario;
-                    model.FechaCarga=DateTime.Now;
-                    _repository.UnitOfWork.RegisterNew(model);
-                }
-                else
-                    _repository.UnitOfWork.RegisterChanged(model);
-                try
-                {
-                    _repository.UnitOfWork.Commit();
-                }
-                catch (Exception e)
-                {
-                    errores = e.InnerException == null ? "Error al guardar" : e.InnerException.ToString().Substring(0, 400);
-                }
-                if (errores != "")
-                {
-                    ModelState.AddModelError("", errores);
-                    return PartialView("_SummaryErrorGna", model);
-                }
-                return null;
-            }
-            else
-            {
-                return PartialView("_SummaryErrorGna", model);
-            }
-        }
     }
 }
