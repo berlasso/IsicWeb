@@ -39,6 +39,43 @@ namespace ISICWeb.Services
 
         }
 
+        public string GuardarFichaGNA(GNA model)
+        {
+            string errores = "";
+            string prontuariosic = model.Prontuario.ProntuarioNro;
+            Prontuario prontuario = _repository.Set<Prontuario>().FirstOrDefault(x => x.ProntuarioNro == prontuariosic);
+            if (prontuario == null)
+                prontuario = new Prontuario
+                {
+                    ProntuarioNro = prontuariosic
+                };
+
+            model.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == model.Sexo.Id);
+            model.TipoDNI = _repository.Set<ClaseTipoDNI>().Single(x => x.Id == model.TipoDNI.Id);
+            model.FechaUltimaModificacion = DateTime.Now;
+
+
+            if (model.Id == 0)
+            {
+                model.FechaCreacion = DateTime.Now;
+                model.Prontuario = prontuario;
+                model.FechaCarga = DateTime.Now;
+                _repository.UnitOfWork.RegisterNew(model);
+            }
+            else
+                _repository.UnitOfWork.RegisterChanged(model);
+            try
+            {
+                _repository.UnitOfWork.Commit();
+            }
+            catch (Exception e)
+            {
+                errores = e.InnerException == null ? "Error al guardar" : e.InnerException.ToString().Substring(0, 400);
+            }
+            return errores;
+
+        }
+
     
 
        
