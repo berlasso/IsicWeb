@@ -30,12 +30,15 @@ $(function () {
 
     $('.tabla').dataTable({
         //"dom": 'TRfrtsp<"row"<"col-md-12"l>>i',
-        "dom": '<"row"<"col-md-5"TR><"col-md-1"r><"col-md-6"f>>ts<"row"<"col-md-6"l><"col-md-6"p>>i',
+        "dom": '<"row "<"col-md-5"TR><"col-md-1"r><"col-md-6"f>>ts<"row tile"<"col-md-4"l><"col-md-4"i><"col-md-4"p>>',
         serverSide: true,
         "processing": true,
         "ajax": window.urlTablaImputados,
-        "order": [[ 1, "asc" ]],//codbarras
-        "columns": [
+        "order": [[2, "asc"]],//codbarras
+        "columns": [{
+                        "data": null,
+                        "targets": -1
+                    },
                     { "data": "ThumbUrl" },
                     { "data": "CodigoDeBarras" },
                     { "data": "Apellido" },
@@ -44,49 +47,50 @@ $(function () {
                     {
                         "data": null,
                         "targets": -1,
-                        "defaultContent": "<a href='#' class='btn-sm btn-alt' style='font-size: 20px!important' title='Borrar' id='btnborrarimputado' ><span  class='flaticon-waste2' ></span></a>"
+                        "defaultContent": "<a href='#' class='btn-alt btn-xs' style='font-size: 20px!important' title='Borrar' id='btnborrarimputado' ><span  class='flaticon-waste2' ></span></a>"
                     },
                       {
                           "data": null,
                           "targets": -1,
-                          "defaultContent": "<a href='#' class='btn-alt btn-sm ' style='font-size: 20px!important'  title='Enviar al SIC'  id='btnEnviarImputado'><span  class='flaticon-arrow430' ></span></a>"
+                          "defaultContent": "<a href='#' class='btn-alt btn-xs ' style='font-size: 20px!important'  title='Enviar al SIC'  id='btnEnviarImputado'><span  class='flaticon-arrow430' ></span></a>"
                       },
                     { "data": "Id" }
         ],
         "columnDefs": [
+          {
+              "render": function (data, type, row) {
+                  return '<a href="' + urlEditar + '/' + row.Id + '" class="btn  btn-alt" title="Editar" onclick=" showPageLoadingSpinner() ">Editar</a>';
+              },
+              "targets": 0, //boton editar
+          },
         {
             "render": function (data, type, row) {
-                if (data !== "" && data!=null)
+                if (data !== "" && data != null)
 
-                    return '<img src=' + data + '?r='+Math.random() +' style="max-width: 100px" />';
+                    return '<img src=' + data + '?r=' + Math.random() + ' style="max-width: 100px" />';
                 else
                     return '';
-            
-            },
+
+                },
             "orderable": false,
-            "searchable":false,
-        "targets": 0 //ThumbUrl
+            "searchable": false,
+            "targets": 1 //ThumbUrl
         },
-        {
-            "render": function (data, type, row) {
-                return '<a href="' + urlEditar + '/' + row.Id + '" title="Editar" onclick=" showPageLoadingSpinner() ">' + data + '<span class="flaticon-magnifying27"></span></a>';
-            },
-            "targets": 1, //codigo de barras
-        },
-        
+      
+
        {
-            "orderable": false,//columna Borrar
-            "targets": 5
+           "orderable": false,//columna Borrar
+           "targets": 6
        },
        {
-            "orderable": false,//columna Enviar
-            "targets": 6
+           "orderable": false,//columna Enviar
+           "targets": 7
        },
        {
-           "targets": 7,//id
+           "targets": 8,//id
            "visible": false,
            "searchable": false
-                }
+       }
         ],
         "language": {
             "sProcessing": "Procesando...",
@@ -151,16 +155,25 @@ $(function () {
     //        hidePageLoadingSpinner(1);
     //    }
     //}).dataTable();
-    $('.tabla tbody').on('click', '#btnborrarimputado', function () {
-        var row = $(this).parents('tr');
-        var data = $('.tabla').DataTable().row(row).data();
+    $('.tabla tbody').on('click', '#btnborrarimputado', function (e) {
+        e.preventDefault();
+        //var row = $(this).parents('tr');
+        //var data = $('.tabla').DataTable().row(row).data();
+
+
+
+        //var id = $(this).data("id");
+        var table = $('.tabla').DataTable();
+        var row = table.row($(this).parents('tr'));
+        var id = row.data().Id
         alertify.confirm("Borrar Imputado", "Seguro que desea borrar?", function () {
 
-            var url = urlBorrarImputado + encodeURI(data.Id);
+            var url = urlBorrarImputado + encodeURI(id);
             $.get(url, null, function (data) {
                 if (data === "True") {
 
-                    row.remove();
+                    //row.remove();
+                    row.remove().draw();
                     alertify.success("Imputado borrado correctamente");
 
 
@@ -178,7 +191,7 @@ $(function () {
         var data = $('.tabla').DataTable().row(row).data();
         var url = urlEnviarImputado + encodeURI(data.Id);
         if ($('#chkEnviar').is(':checked')) {
-            $.get(url, null, function(data) {
+            $.get(url, null, function (data) {
                 if (data === "True") {
 
                     row.remove();
@@ -203,25 +216,25 @@ $(function () {
 
 $(document).ready(function () {
 
-    $('#btnGenerarCodBarras').click(function() {
-            $.ajax({
-                type: 'GET',
-                url: urlBuscarCodBarrasAutogenerado,
-                //dataType: 'JSON',
-                async: true,
-                beforeSend: function () {
-                    $("#CodBarras").addClass("loadinggif");
-                },
-                success: function (data) {
-                    if (data.length == 13) {
-                        letra = LetraCodBarra(data);
-                        $("#CodBarras").val(data.substring(0,12)+letra);
-                    }
-                },
-                complete: function () {
-                    $("#CodBarras").removeClass("loadinggif");
+    $('#btnGenerarCodBarras').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: urlBuscarCodBarrasAutogenerado,
+            //dataType: 'JSON',
+            async: true,
+            beforeSend: function () {
+                $("#CodBarras").addClass("loadinggif");
+            },
+            success: function (data) {
+                if (data.length == 13) {
+                    letra = LetraCodBarra(data);
+                    $("#CodBarras").val(data.substring(0, 12) + letra);
                 }
-            });
+            },
+            complete: function () {
+                $("#CodBarras").removeClass("loadinggif");
+            }
+        });
     });
 
     //ControlarComisaria();
@@ -397,11 +410,11 @@ function ControlarComisaria() {
     } else {
         dp = "(" + dep + ")";
         selectize.enable();
-       // selectize.clear();
+        // selectize.clear();
         // selectize.clearOptions();
 
         selectize.load(function (callback) {
-              $.ajax({
+            $.ajax({
                 type: 'GET',
                 url: urlAutocompleteDependenciaPolicial + "&loc=" + $('#hidIdLocalidadPolicial').val(),
                 success: function (results) {
@@ -482,7 +495,7 @@ $(function () {
                     if (data.HuboError == true) {
                         alertify.alert("Error", data.errorMessage);
                     } else {
-                        if (data.DatosSimp.length == 0 || data.DatosSimp[0].Imputados.length==0) {
+                        if (data.DatosSimp.length == 0 || data.DatosSimp[0].Imputados.length == 0) {
                             alertify.alert("No hubo resultados");
                             return;
                         }
@@ -503,7 +516,7 @@ $(function () {
                                 imputado.Madre = "";
                             if (imputado.Padre === null)
                                 imputado.Padre = "";
-                            if ((imputado.FechaNacimiento instanceof Date && !isNaN(imputado.FechaNacimiento.valueOf()))===false)
+                            if ((imputado.FechaNacimiento instanceof Date && !isNaN(imputado.FechaNacimiento.valueOf())) === false)
                                 imputado.FechaNacimiento = "";
                             if (i == 0) {
                                 $("#divIppEncontrado").append("Imputados en el SIMP para la IPP " + ipp + ":");
@@ -532,13 +545,13 @@ $(function () {
                     //loader("Buscando datos de la IPP...");
                     $("#IPP").addClass("loadinggif");
                 },
-                complete: function() {
+                complete: function () {
                     //$.unblockUI();    
                     $("#IPP").removeClass("loadinggif");
                 },
                 dataType: "json"
             });
-            
+
         } else {
             $("#IPP").data("validator");
         }
@@ -809,10 +822,10 @@ function PrepararSubida(rnd, esCaptura) {
     $("#hidIdUbicacion").val($("#hidIdUbicacionSena" + rnd).val());
     $("#esCaptura").val(esCaptura);
 
-    
-        $('html, body').animate({
-            scrollTop: $("#tableUpload").offset().top
-        }, 2000);
-    
+
+    $('html, body').animate({
+        scrollTop: $("#tableUpload").offset().top
+    }, 2000);
+
 };
 ///////////////////////////////////

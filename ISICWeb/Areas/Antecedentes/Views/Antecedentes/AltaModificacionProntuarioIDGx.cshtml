@@ -137,7 +137,7 @@
                         $("#btnGuardarProntuario").attr("disabled", "disabled");
                         alertify.success("Prontuario guardado correctamente");
                         var url = '@Url.Content("MostrarDatosIdgx")?id=' + data;
-                        alertify.alert("Exito", "Carga Exitosa. A continuación podrá cargar los datos personales asociados...").set({
+                        alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>.<br/> A continuación podrá cargar los datos personales asociados...").set({
                             onclose: function() {
                                 location.href = url;
                             }

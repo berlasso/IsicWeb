@@ -148,7 +148,7 @@
         function onGuardarSuccess(data) {
             if (data == "") {
                 //alertify.success("Alta exitosa");
-                alertify.alert("Exito","Carga Exitosa").set({
+                alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>").set({
                     onclose: function () {
                         showPageLoadingSpinner();
                     location.href = '@url';

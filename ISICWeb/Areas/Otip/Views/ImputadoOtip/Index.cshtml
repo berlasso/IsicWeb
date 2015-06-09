@@ -39,6 +39,9 @@
                 <thead>
                 <tr>
                     <th>
+                        Abrir
+                    </th>
+                    <th>
                         Rostro
                     </th>
                     <th>
@@ -51,7 +54,7 @@
                         Nombre
                     </th>
                     <th>
-                        Documento Número
+                        Doc. Nro.
                     </th>
 
                     <th style="width: 5%">
@@ -84,9 +87,7 @@
     @section footer
     {
     <div class="col-md-2 col-sm-3 col-xs-4">
-        <a href='#' id="btnVolver" onclick=" window.history.go(-1); return false; " class=" btn btn-alt btn-lg">
-            Volver
-        </a>
+        @Html.ActionLink("Volver", "Index","Home", new { area = "" }, new { @class = "btn btn-lg btn-alt", title = "Volver" })
     </div>
     @if (!subCodBarra.Value.IsNullOrWhiteSpace())
     {

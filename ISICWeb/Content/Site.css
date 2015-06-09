@@ -2,9 +2,21 @@
     margin-bottom: 50px; 
 }
 
+.Exito {
+    font-size: xx-large;
+    font-weight: bold;
+    color: green;
+     
+}
+
 /**********************
     ALERTIFY
 ************************/
+
+.ajs-message.ajs-success {
+    background: rgb(39, 104, 39)!important;
+}
+
 .alertify .ajs-dialog {
     min-height: 110px !important;
     max-width: 500px !important;

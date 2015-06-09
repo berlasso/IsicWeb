@@ -184,7 +184,7 @@
     <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
         <div class="row">
             <div class="  col-sm-3 col-xs-4">
-                <a id="btnVolver" class="btn btn-lg btn-alt volver" href='@url' title=" volver" onclick="showPageLoadingSpinner();" type="button">
+                <a id="btnVolver" class="btn btn-lg btn-alt volver  " href='@url' title=" volver" onclick="showPageLoadingSpinner();" type="button">
                     Volver
                 </a>
 
@@ -193,7 +193,7 @@
             <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-8">
                 <div class="row ">
                     <div class="col-md-6 col-sm-6 col-xs-6">
-                        <input type="submit" value="Guardar" class="btn btn-alt btn-lg" />
+                        <input type="submit" value="Guardar" class="btn btn-alt btn-lg fa-align-center" />
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6">
 
@@ -222,7 +222,7 @@
         function onGuardarSuccess(data) {
             if (data == "") {
                 //alertify.success("Alta exitosa");
-                alertify.alert("Exito", "Carga Exitosa").set({
+                alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>").set({
                     onclose: function () {
                         showPageLoadingSpinner();
                         location.href = '@url';
