@@ -1,0 +1,101 @@
+﻿@model ISICWeb.Models.IDatosSomaticos
+           
+@{
+    bool esSoloDetalle = ViewBag.EsSoloDetalle??false;
+}
+<section id="DatosSomaticos">
+
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
+            @*<div class="left wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">*@
+            <h2>Datos Somáticos</h2>
+        </div>
+        <div class="panel-body">
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Robustez)
+                    @Html.DropDownListFor(m => m.Robustez, Model.RobustezList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.ColorPiel)
+                    @Html.DropDownListFor(m => m.ColorPiel, Model.ColorPielList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.ColorOjos)
+                    @Html.DropDownListFor(m => m.ColorOjos, Model.ColorOjosList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.ColorCabellos)
+                    @Html.DropDownListFor(m => m.ColorCabellos, Model.ColorCabellosList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.TipoCabello)
+                    @Html.DropDownListFor(m => m.TipoCabello, Model.TipoCabelloList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.TipoCalvicie)
+                    @Html.DropDownListFor(m => m.TipoCalvicie, Model.TipoCalvicieList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FormaCara)
+                    @Html.DropDownListFor(m => m.FormaCara, Model.FormaCaraList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.DimensionCeja)
+                    @Html.DropDownListFor(m => m.DimensionCeja, Model.DimensionCejaList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.TipoCeja)
+                    @Html.DropDownListFor(m => m.TipoCeja, Model.TipoCejaList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FormaMenton)
+                    @Html.DropDownListFor(m => m.FormaMenton, Model.FormaMentonList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FormaOreja)
+                    @Html.DropDownListFor(m => m.FormaOreja, Model.FormaOrejaList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FormaNariz)
+                    @Html.DropDownListFor(m => m.FormaNariz, Model.FormaNarizList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FormaBoca)
+                    @Html.DropDownListFor(m => m.FormaBoca, Model.FormaBocaList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FormaLabioInferior)
+                    @Html.DropDownListFor(m => m.FormaLabioInferior, Model.FormaLabioInferiorList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FormaLabioSuperior)
+                    @Html.DropDownListFor(m => m.FormaLabioSuperior, Model.FormaLabioSuperiorList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Estatura)
+                    @Html.EditorFor(m => m.Estatura, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
+                    @Html.ValidationMessageFor(m => m.Estatura)
+                </div>
+                <div class="col-xs-4">
+
+                </div>
+                <div class="col-xs-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

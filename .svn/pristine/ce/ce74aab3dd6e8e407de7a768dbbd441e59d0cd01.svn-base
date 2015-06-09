@@ -1,0 +1,102 @@
+﻿@model  IEnumerable<ISIC.Entities.BioDactilar>
+
+ <style>
+     <style>
+     
+ 
+    #fondo {
+        background-image: none;
+        color: black;
+    }
+  
+     biodactilar-img {
+         height: 332px;
+         width:352px;
+         border: solid 1px;
+     }
+  
+    .hoverific {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        width: 260px;
+        height: 246px;
+        margin: 1em;
+        padding: 1.2em;
+        border: 1px solid gray;
+        background: silver;
+    }
+
+
+     </style>
+<script type="text/javascript">
+
+    $("div").removeClass("container body-content");
+
+ </script>
+
+    <div class="row" style="margin-left:15px;margin-top:0px!important" >
+        @if (Model.Any())
+        {
+            <h3><span class="label label-info">Mano @Model.First().Mano.ToString()   </span></h3>
+        }
+        else
+        {
+            <h3>No se encontraron datos dactilares asociados</h3>
+        }
+
+    @foreach (var dedos in Model)
+    {
+        <div class="col-sm-10 col-md-2">
+             <div class="thumbnail" style="margin-bottom: -25px;" >
+              @{ switch (dedos.EstadoDedo)
+                   {
+                       case (ISIC.Enums.ClaseEstadoDedo)1:
+                           {
+                           var base64 = Convert.ToBase64String(dedos.imagen);
+                           var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                            <img src="@imgSrc" />
+                            break;}
+                       case (ISIC.Enums.ClaseEstadoDedo)2:
+                           {// Lastimado
+                            <img src="~/Images/dedoLastimado.png" />
+                               break;
+                           }
+                       case (ISIC.Enums.ClaseEstadoDedo)3:
+                               {// faltante}
+                                <img src="~/Images/dedoFaltante.png" />
+                               break;
+                               }
+                       case (ISIC.Enums.ClaseEstadoDedo)4:
+                              {// Huella No Apta}
+                                <img src="~/Images/dedoHuellaNoApta.png" />
+                                  break;
+                              }
+
+
+
+                }}
+
+
+
+                    <div class="caption">
+                        <h3>@dedos.Dedo</h3>
+
+                    </div>
+                </div>
+            </div>
+            
+        
+    }
+
+</div>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1412 @@
+﻿@model  ISIC.Entities.Imputado
+
+
+
+@{
+    ViewBag.Title = "Proceso de Digitalización del Imputado ";
+}
+@*@Styles.Render("~/Content/boostrap")*@
+<style>
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        margin: 0;
+        font: inherit;
+        color: inherit;
+    }
+
+    button {
+        overflow: visible;
+    }
+
+    button,
+    select {
+        text-transform: none;
+    }
+
+    button,
+    html input[type="button"],
+    input[type="reset"],
+    input[type="submit"] {
+        -webkit-appearance: button;
+        cursor: pointer;
+    }
+
+        button[disabled],
+        html input[disabled] {
+            cursor: default;
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            padding: 0;
+            border: 0;
+        }
+
+    input {
+        line-height: normal;
+    }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            height: auto;
+        }
+
+        input[type="search"] {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+            -webkit-appearance: textfield;
+        }
+
+            input[type="search"]::-webkit-search-cancel-button,
+            input[type="search"]::-webkit-search-decoration {
+                -webkit-appearance: none;
+            }
+
+    fieldset {
+        padding: .35em .625em .75em;
+        margin: 0 2px;
+        border: 1px solid #c0c0c0;
+    }
+
+    legend {
+        padding: 0;
+        border: 0;
+    }
+
+    textarea {
+        overflow: auto;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+    }
+
+        .btn-primary:hover,
+        .btn-primary:focus,
+        .btn-primary.focus,
+        .btn-primary:active,
+        .btn-primary.active,
+        .open > .dropdown-toggle.btn-primary {
+            color: #fff;
+            background-color: #286090;
+            border-color: #204d74;
+        }
+
+        .btn-primary:active,
+        .btn-primary.active,
+        .open > .dropdown-toggle.btn-primary {
+            background-image: none;
+        }
+
+        .btn-primary.disabled,
+        .btn-primary[disabled],
+        fieldset[disabled] .btn-primary,
+        .btn-primary.disabled:hover,
+        .btn-primary[disabled]:hover,
+        fieldset[disabled] .btn-primary:hover,
+        .btn-primary.disabled:focus,
+        .btn-primary[disabled]:focus,
+        fieldset[disabled] .btn-primary:focus,
+        .btn-primary.disabled.focus,
+        .btn-primary[disabled].focus,
+        fieldset[disabled] .btn-primary.focus,
+        .btn-primary.disabled:active,
+        .btn-primary[disabled]:active,
+        fieldset[disabled] .btn-primary:active,
+        .btn-primary.disabled.active,
+        .btn-primary[disabled].active,
+        fieldset[disabled] .btn-primary.active {
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+
+        .btn-primary .badge {
+            color: #337ab7;
+            background-color: #fff;
+        }
+
+    .btn-success {
+        color: #fff;
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+    }
+
+        .btn-success:hover,
+        .btn-success:focus,
+        .btn-success.focus,
+        .btn-success:active,
+        .btn-success.active,
+        .open > .dropdown-toggle.btn-success {
+            color: #fff;
+            background-color: #449d44;
+            border-color: #398439;
+        }
+
+        .btn-success:active,
+        .btn-success.active,
+        .open > .dropdown-toggle.btn-success {
+            background-image: none;
+        }
+
+        .btn-success.disabled,
+        .btn-success[disabled],
+        fieldset[disabled] .btn-success,
+        .btn-success.disabled:hover,
+        .btn-success[disabled]:hover,
+        fieldset[disabled] .btn-success:hover,
+        .btn-success.disabled:focus,
+        .btn-success[disabled]:focus,
+        fieldset[disabled] .btn-success:focus,
+        .btn-success.disabled.focus,
+        .btn-success[disabled].focus,
+        fieldset[disabled] .btn-success.focus,
+        .btn-success.disabled:active,
+        .btn-success[disabled]:active,
+        fieldset[disabled] .btn-success:active,
+        .btn-success.disabled.active,
+        .btn-success[disabled].active,
+        fieldset[disabled] .btn-success.active {
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+
+        .btn-success .badge {
+            color: #5cb85c;
+            background-color: #fff;
+        }
+
+    .btn-info {
+        color: #fff;
+        background-color: #5bc0de;
+        border-color: #46b8da;
+    }
+
+        .btn-info:hover,
+        .btn-info:focus,
+        .btn-info.focus,
+        .btn-info:active,
+        .btn-info.active,
+        .open > .dropdown-toggle.btn-info {
+            color: #fff;
+            background-color: #31b0d5;
+            border-color: #269abc;
+        }
+
+        .btn-info:active,
+        .btn-info.active,
+        .open > .dropdown-toggle.btn-info {
+            background-image: none;
+        }
+
+        .btn-info.disabled,
+        .btn-info[disabled],
+        fieldset[disabled] .btn-info,
+        .btn-info.disabled:hover,
+        .btn-info[disabled]:hover,
+        fieldset[disabled] .btn-info:hover,
+        .btn-info.disabled:focus,
+        .btn-info[disabled]:focus,
+        fieldset[disabled] .btn-info:focus,
+        .btn-info.disabled.focus,
+        .btn-info[disabled].focus,
+        fieldset[disabled] .btn-info.focus,
+        .btn-info.disabled:active,
+        .btn-info[disabled]:active,
+        fieldset[disabled] .btn-info:active,
+        .btn-info.disabled.active,
+        .btn-info[disabled].active,
+        fieldset[disabled] .btn-info.active {
+            background-color: #5bc0de;
+            border-color: #46b8da;
+        }
+
+        .btn-info .badge {
+            color: #5bc0de;
+            background-color: #fff;
+        }
+
+    .btn-warning {
+        color: #fff;
+        background-color: #f0ad4e;
+        border-color: #eea236;
+    }
+
+        .btn-warning:hover,
+        .btn-warning:focus,
+        .btn-warning.focus,
+        .btn-warning:active,
+        .btn-warning.active,
+        .open > .dropdown-toggle.btn-warning {
+            color: #fff;
+            background-color: #ec971f;
+            border-color: #d58512;
+        }
+
+        .btn-warning:active,
+        .btn-warning.active,
+        .open > .dropdown-toggle.btn-warning {
+            background-image: none;
+        }
+
+
+
+    /*  SACAAAR HASTA ACA UNIFICAR*/
+    .fondoBlanco {
+        background-color: white !important;
+        color: black;
+    }
+
+
+    .ui-selectmenu-menu .ui-menu.customicons .ui-menu-item {
+        padding: 0.5em 0 0.5em 3em;
+    }
+
+        .ui-selectmenu-menu .ui-menu.customicons .ui-menu-item .ui-icon {
+            height: 24px;
+            width: 24px;
+            top: 0.1em;
+        }
+
+    .ui-icon.lastimado {
+        background: url("../Images/seleccionLastimadosR.jpeg") 0 0 no-repeat;
+    }
+
+    .ui-icon.normal {
+        background: url("../Images/seleccionNormalR.jpeg") 0 0 no-repeat;
+    }
+
+    .ui-icon.amputado {
+        background: url("../Images/seleccionFaltanteR.jpeg") 0 0 no-repeat;
+    }
+
+    .ui-icon.noApta {
+        background: url("../Images/seleccionHuellaNoApta.jpeg") 0 0 no-repeat;
+    }
+
+    fieldset {
+        border: 0;
+    }
+
+    label {
+        display: block;
+    }
+
+    select {
+        width: 200px;
+    }
+</style>
+
+<div class="center tile-light">
+    @*<div style="float:left">*@
+
+    <h3>
+        Segmentación de las Huellas Dactilares<br />   <small style="font-style:italic; ">Cod.Barra: @Model.CodigoDeBarras , Imputado: @Model.Persona.Apellido , @Model.Persona.Nombre</small>
+
+    </h3>
+
+
+</div>
+<div class="row">
+    <div id="headerRecortaHuellas" class="col-md-12 tile-light" style="margin-bottom: 20px; display: none;">
+
+        <h6>
+            Si la huella no está alineadada correctamente, puede correjir su posición girando la imagen desde su punto central, es fundamental para el reconocimiento posterior
+
+        </h6>
+
+
+    </div>
+</div>
+
+<div id="seleccionManosEstados" class="row" style="margin-bottom: 20px">
+    <div id="manos" class="col-md-3 col-sm-4 col-xs-6">
+        <canvas id="cmanos" width="350" height="110"></canvas>
+
+    </div>
+    <div id="simbolos" class="col-md-5 col-sm-4 col-xs-6 tile-light">
+        <div class="row">
+            <div class="col-md-12">
+                <fieldset>
+                    <label for="estadoMiembros">Estado:</label>
+                    <select name="estadoMiembros" id="estadoMiembros">
+                        <option value="1" data-class="normal">Normal</option>
+                        <option value="2" data-class="lastimado">Lastimado/Enyesado</option>
+                        <option value="3" data-class="amputado">Amputado</option>
+                        <option value="4" data-class="noApta">Huella No Apta</option>
+                    </select>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div id="nota" class="col-md-12">
+                <p>
+                    <small>
+                        Click! sobre el Dedo para cambiar el estado según el valor seleccionado
+                    </small>
+
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <button type="button" id="decadactilar" class="btn active ">DecaDactilar</button>
+        <button type="button" id="guardaIndividuales" class="btn">Recorta Dactilares</button>
+    </div>
+</div>
+
+        
+
+
+
+
+        <div id="decadactilarPanel" class="fondoBlanco" style=" float: left; width: 100%; overflow-x: scroll;overflow-y: hidden;">
+            <canvas id="c" width="1900" height="750" style="margin-top :0px; margin-left:0px !important ;border: 1px solid #000000;"></canvas>
+            <img src="" id="prueba" />
+        </div>
+
+
+
+
+        <div id="individualPanel" class="fondoBlanco" style=" overflow-x: scroll;overflow-y: hidden;">
+            <div id="cargando" style="display: none;margin:150px">
+                <img src="~/Images/loading.gif" alt="Loading..." />
+            </div>
+        </div>
+
+
+        @using (Html.BeginForm("SalvaHuellasDactilares", "Digitalizacion", FormMethod.Post, new { id = "formImagenes" }))
+        {
+            <div id="ImputadoaServidor" style="visibility: hidden; margin-top: 0px !important; height: 0px">
+                <div class="row">
+                    <div class="col-md-4 col-sm-3">
+
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+
+
+
+                    </div>
+                    <div class="col-md-4 col-sm-3">
+
+                    </div>
+                </div>
+
+
+
+                @Html.EditorFor(model => model.ManoDerecha)
+                @Html.EditorFor(model => model.ManoIzquierda)
+                @Html.EditorFor(model => model.CodigoDeBarras)
+
+                @{
+            int d = 0;
+            ;
+            foreach (ISIC.Entities.BioDactilar bioDactilar in Model.BioManoDerecha)
+            {
+                var manoDedo = bioDactilar.Mano.ToString() + d;
+                var ig = "imagen" + d;
+                @Html.TextBoxFor(model => bioDactilar.Mano, new { id = manoDedo + "Mano" })
+                    @Html.TextBoxFor(model => bioDactilar.Dedo, new { id = manoDedo + "Dedo" })
+                    @Html.TextBoxFor(model => bioDactilar.EstadoDedo, new { id = manoDedo + "EstadoDedo", Name = manoDedo + "EstadoDedo" })
+
+                    @Html.TextBoxFor(model => bioDactilar.CodigoDeBarra, new { id = manoDedo + "CodigoBarra", Name = manoDedo + "CodigoBarra" })
+                    @Html.TextBoxFor(model => bioDactilar.FechaDigital, new { id = manoDedo + "FechaDigital", Name = manoDedo + "FechaDigital" })
+                    @Html.TextBoxFor(model => bioDactilar.Baja, new { id = manoDedo + "Baja", Name = manoDedo + "Baja" })
+                    @Html.TextBoxFor(model => bioDactilar.imagen, new { id = "Derecha" + @d, Name = "Derecha" + @d })
+
+
+
+
+                d++;
+            }
+
+            foreach (ISIC.Entities.BioDactilar bioDactilar in Model.BioManoIzquierda)
+            {
+                var manoDedo = bioDactilar.Mano.ToString() + d;
+                var ig = "imagen" + d;
+                @Html.TextBoxFor(model => bioDactilar.Mano, new { id = manoDedo + "Mano" })
+                    @Html.TextBoxFor(model => bioDactilar.Dedo, new { id = manoDedo + "Dedo", Name = manoDedo + "Dedo" })
+                    @Html.TextBoxFor(model => bioDactilar.EstadoDedo, new { id = manoDedo + "EstadoDedo", Name = manoDedo + "EstadoDedo" })
+
+                    @Html.TextBoxFor(model => bioDactilar.CodigoDeBarra, new { id = manoDedo + "CodigoBarra", Name = manoDedo + "CodigoBarra" })
+                    @Html.TextBoxFor(model => bioDactilar.FechaDigital, new { id = manoDedo + "FechaDigital", Name = manoDedo + "FechaDigital" })
+                    @Html.TextBoxFor(model => bioDactilar.Baja, new { id = manoDedo + "Baja", Name = manoDedo + "Baja" })
+                    @Html.TextBoxFor(model => bioDactilar.imagen, new { id = "Izquierda" + @d, Name = "Izquierda" + @d })
+
+                d++;
+            }
+                }
+
+
+
+            </div>
+            <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-4">
+
+
+
+                        <a class="btn btn-lg btn-alt volver" href='#' onclick=' window.history.go(-1); return false; ' title=" volver" type="button">
+                            Volver
+                        </a>
+                    </div>
+                    <div class="col-md-7 col-md-offset-3 col-sm-9 col-xs-8">
+                        <div class="checkbox" id="salvaYClasifica" style="visibility: hidden">
+                            <div class="row">
+
+                                <button type="submit" style="visibility: hidden;" id="salvaIndividuales" onclick="showPageLoadingSpinner();" class="btn btn-alt btn-lg"> Guarda las Huellas Dactilares</button>
+                                <label style="display: inline-block; position: relative; vertical-align: middle;">
+                                    <input type="checkbox" name="clasifica" style="position: relative; vertical-align: middle;" /> Clasificar las Huellas Dactilares
+                                </label>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </nav>
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script type="text/javascript">
+
+            
+
+
+            // posicionamiento de partes de la Mano Derecha
+            /* var leftMeniqueDer =188;
+             var leftAnularDer = 166;
+             var leftMayorDer = 149;
+             var leftIndiceDer = 126;
+             var leftPulgarDer = 104;
+
+             var leftDerecha = new Array(5);
+
+             // posicionamiento de partes de la Mano Izquierda
+             var leftMeniqueIzq = 0;
+             var leftAnularIzq =20 ;
+             var leftMayorIzq = 39;
+             var leftIndiceIzq =62;
+             var leftPulgarIzq = 84;*/
+
+            $(document).ready(function () {
+                $("#navFooter").hide();
+                jQuery.support.cors = true;
+            });
+
+            var archivoDeca = "@ViewBag.ImagenDecaDactilar";
+            $("salvaIndividuales").css("visibility", "hidden");
+            $("salvaYClasifica").hide();
+
+            var imagenesD = new Array(3, 5);
+            var posiciones = new Array(10);
+            // posiciones comenzando con el pulgar DERECHO  ,  + 5 deds y pulgar IZQUIERDO
+            posiciones = [104, 126, 149, 166, 188, 84, 62, 39, 20, 0]
+
+
+
+            imagenesD = [[1, "../Images/pulgarDer.jpeg"], [2, "../Images/pulgarDerLastimado.jpeg"], [3, "../Images/pulgarDerFaltante.jpeg"], [4, "../Images/pulgarDerHuellaNoApta.jpeg"],
+                [1, "../Images/indiceDer.jpeg"], [2, "../Images/indiceDerLastimado.jpeg"], [3, "../Images/indiceDerFaltante.jpeg"], [4, "../Images/indiceDerHuellaNoApta.jpeg"],
+                [1, "../Images/mayorDer.jpeg"], [2, "../Images/mayorDerLastimado.jpeg"], [3, "../Images/mayorDerFaltante.jpeg"], [4, "../Images/mayorDerHuellaNoApta.jpeg"],
+                [1, "../Images/anularDer.jpeg"], [2, "../Images/anularDerLastimado.jpeg"], [3, "../Images/anularDerFaltante.jpeg"], [4, "../Images/anularDerHuellaNoApta.jpeg"],
+                [1, "../Images/meniqueDer.jpeg"], [2, "../Images/meniqueDerLastimado.jpeg"], [3, "../Images/meniqueDerFaltante.jpeg"], [4, "../Images/meniqueDerHuellaNoApta.jpeg"]];
+
+
+            imagenesI = [[1, "../Images/pulgarIzq.jpeg"], [2, "../Images/pulgarIzqLastimado.jpeg"], [3, "../Images/pulgarIzqFaltante.jpeg"], [4, "../Images/pulgarIzqHuellaNoApta.jpeg"],
+              [1, "../Images/indiceIzq.jpeg"], [2, "../Images/indiceIzqLastimado.jpeg"], [3, "../Images/indiceIzqFaltante.jpeg"], [4, "../Images/indiceIzqHuellaNoApta.jpeg"],
+              [1, "../Images/mayorIzq.jpeg"], [2, "../Images/mayorIzqLastimado.jpeg"], [3, "../Images/mayorIzqFaltante.jpeg"], [4, "../Images/mayorIzqHuellaNoApta.jpeg"],
+              [1, "../Images/anularIzq.jpeg"], [2, "../Images/anularIzqLastimado.jpeg"], [3, "../Images/anularIzqFaltante.jpeg"], [4, "../Images/anularIzqHuellaNoApta.jpeg"],
+              [1, "../Images/meniqueIzq.jpeg"], [2, "../Images/meniqueIzqLastimado.jpeg"], [3, "../Images/meniqueIzqFaltante.jpeg"], [4, "../Images/meniqueIzqHuellaNoApta.jpeg"]];
+
+            // Registra el estado de las Huellas
+            var arrayEstadoHuellas = new Array(10);
+            // registra el estado de los dedos
+            var arrayEstadoDedos = new Array(10);
+            var objetoEstados = new Array(2, 10);
+            for (var i = 0; i < 10; i++) {
+                // null es Normal el estado de los Dedos
+                objetoEstados[i] = [null, null];
+            }
+
+
+
+
+            $("div").removeClass("container body-content");
+
+
+            $.widget("custom.iconselectmenu", $.ui.selectmenu, {
+                _renderItem: function (ul, item) {
+                    var li = $("<li>", { text: item.label });
+
+                    if (item.disabled) {
+                        li.addClass("ui-state-disabled");
+                    }
+
+                    $("<span>", {
+                        style: item.element.attr("data-style"),
+                        "class": "ui-icon " + item.element.attr("data-class")
+                    })
+                      .appendTo(li);
+
+                    return li.appendTo(ul);
+                }
+            });
+
+            $("#estadoMiembros").iconselectmenu().iconselectmenu("menuWidget").addClass("ui-menu-icons customicons");
+
+
+
+
+            var modificoRectangulo = true;
+            var canvasManos = new fabric.Canvas('cmanos');
+
+
+            canvasManos.renderOnAddition = true;
+
+            /*Mano Izquierda Seleccion de dedos */
+
+            fabric.Image.fromURL("../Images/pulgarIzq.jpeg", function (oImg) {
+                oImg.top = 0;
+                oImg.left = posiciones[5];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                });
+
+
+                canvasManos.add(oImg);
+
+
+            });
+
+            fabric.Image.fromURL("../Images/indiceIzq.jpeg", function (oImg) {
+                oImg.left = posiciones[6];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                });
+
+                canvasManos.add(oImg);
+
+            });
+
+            fabric.Image.fromURL("../Images/mayorIzq.jpeg", function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                //    oImg.scale(0.5).setFlipX(true);
+                oImg.top = 0;
+                oImg.left = posiciones[7];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                });
+
+                canvasManos.add(oImg);
+
+
+            });
+
+
+
+            fabric.Image.fromURL("../Images/anularIzq.jpeg", function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                //    oImg.scale(0.5).setFlipX(true);
+                oImg.top = 0;
+                oImg.left = posiciones[8];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                }
+                    );
+                canvasManos.add(oImg);
+
+            });
+
+            fabric.Image.fromURL("../Images/meniqueIzq.jpeg", function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                //    oImg.scale(0.5).setFlipX(true);
+                oImg.top = 0;
+                oImg.left = posiciones[9];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                }
+                    );
+
+                canvasManos.add(oImg);
+            });
+
+
+            //  MANO DERECHA  NO se puede USAR UN LOOP For por el FromURL
+
+
+            fabric.Image.fromURL("../Images/pulgarDer.jpeg", function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                //    oImg.scale(0.5).setFlipX(true);
+                oImg.top = 0;
+                oImg.left = posiciones[0];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                });
+
+
+                canvasManos.add(oImg);
+
+
+            });
+
+
+
+            fabric.Image.fromURL("../Images/indiceDer.jpeg", function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                //    oImg.scale(0.5).setFlipX(true);
+                oImg.top = 0;
+                oImg.left = posiciones[1];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                });
+
+                canvasManos.add(oImg);
+
+            });
+
+
+
+            fabric.Image.fromURL("../Images/mayorDer.jpeg", function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                //    oImg.scale(0.5).setFlipX(true);
+                oImg.top = 0;
+                oImg.left = posiciones[2];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                });
+
+                canvasManos.add(oImg);
+
+
+            });
+
+
+
+            fabric.Image.fromURL("../Images/anularDer.jpeg", function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                //    oImg.scale(0.5).setFlipX(true);
+                oImg.top = 0;
+                oImg.left = posiciones[3];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                }
+                    );
+                canvasManos.add(oImg);
+
+            });
+
+            fabric.Image.fromURL("../Images/meniqueDer.jpeg", function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                //    oImg.scale(0.5).setFlipX(true);
+                oImg.top = 0;
+                oImg.left = posiciones[4];
+                oImg.set({
+                    selectable: true,
+                    stroke: 'none',
+                    hasBorders: false,
+                    fill: 'none',
+                    borderColor: 'none',
+                    lockRotation: true,
+                    strokeWidth: 0,
+                    lockMovementX: true,
+                    lockMovementY: true,
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockUniScaling: true,
+                    lockRotation: true
+                }
+                    );
+
+                canvasManos.add(oImg);
+            });
+
+            var posDedo = 0;
+
+
+            canvasManos.on('object:selected', function (e) {
+                var activeObject = e.target;
+                var izq = activeObject.get('left');
+                var indice = $("#estadoMiembros").val();
+                // izq es el valor del margen left de la imagen del dedo
+
+
+
+                var posDedo = posiciones.indexOf(izq);
+
+                canvasManos.remove(e.target);
+                if (posDedo < 5)
+                { imagen = imagenesD[(4 * posDedo) + (indice - 1)][1]; }
+                else {
+                    imagen = imagenesI[(4 * (posDedo - 5)) + (indice - 1)][1];
+                }
+
+
+
+                fabric.Image.fromURL(imagen, function (oImg) {
+                    // scale image down, and flip it, before adding it onto canvas
+                    //    oImg.scale(0.5).setFlipX(true);
+                    oImg.top = 0;
+                    oImg.left = posiciones[posDedo];
+
+                    oImg.set({
+                        selectable: true,
+                        stroke: 'none',
+                        hasBorders: false,
+                        fill: 'none',
+                        borderColor: 'none',
+                        lockRotation: true,
+                        strokeWidth: 0,
+                        lockMovementX: true,
+                        lockMovementY: true,
+                        lockScalingX: true,
+                        lockScalingY: true,
+                        lockUniScaling: true,
+                        lockRotation: true
+                    }
+                       );
+
+                    canvasManos.add(oImg);
+                });
+
+                estadoDedoRectangulo(posDedo, indice);
+
+
+                canvasManos.renderAll();
+
+            });
+
+
+
+            canvasManos.calcOffset();
+
+
+
+            canvasManos.renderAll();
+            canvasManos.renderAll.bind(canvasManos);
+            var canvas = new fabric.Canvas('c');
+
+
+            var ancho = 0;
+            var alto = 0;
+            var tope = 0;
+            var left = 0;
+
+            var rectang = new Array(10);
+            var imagenes = new Array(10);
+            var areas = new Array(10);
+            for (j = 0; j < 10; j++) {
+                areas[j] = new Array();
+                for (k = 0; k < 4 ; k++) {
+                    areas[j][k] = 0;
+                }
+            }
+            // canvas.backgroundImage = '/Images/decadactilar.jpeg';
+            fabric.Object.prototype.transparentCorners = false;
+
+            /*prueba*/
+            var imgObj = new Image();
+            imgObj.src = archivoDeca;
+            imgObj.crossOrigin = "Anonymous";
+
+            imgObj.onload = function () {
+                var image = new fabric.Image(imgObj);
+                image.set({
+                    selectable: false,
+                    right: -125
+                });
+                canvas.add(image);
+            }
+
+
+
+
+
+
+            /*hasta aca */
+
+            /*  fabric.Image.fromURL(archivoDeca, function (oImg) {
+                  // scale image down, and flip it, before adding it onto canvas
+                  //    oImg.scale(0.5).setFlipX(true);
+                  oImg.scale(1);
+                 // oImg.right = -125;
+                  canvas.add(oImg);
+                  // Para que no pueda correr la imagen de la huella
+                  oImg.set('selectable', false);
+
+              });
+              */
+
+            canvasManos.on("after:render", function () {
+                canvasManos.calcOffset();
+            });
+            canvas.on("after:render", function () {
+                canvas.calcOffset();
+            });
+
+            $("#decadactilarPanel").show();
+            $("#seleccionManosEstados").show();
+            $("#individualPanel").hide();
+
+
+            $("#decadactilar").on("click", function () {
+                $("#seleccionManosEstados").show();
+                $("#decadactilarPanel").show("slow");
+                $("#salvaYClasifica").hide();
+                $("salvaIndividuales").css("visibility", "hidden");
+                $("#guardaIndividuales").toggleClass("active");
+                $("#decadactilar").toggleClass("active");
+                $("#individualPanel").hide("fast");
+                $("#headerRecortaHuellas").hide();
+
+
+            });
+            $("#guardaIndividuales").on("click", function () {
+                //$("#cargando").show();
+                showPageLoadingSpinner();
+                $("#seleccionManosEstados").hide();
+                $("#decadactilarPanel").hide("slow");
+                $("#guardaIndividuales").toggleClass("active");
+                $("#decadactilar").toggleClass("active");
+                $("#individualPanel").show("fast");
+                $("#headerRecortaHuellas").show();
+                $("#salvaIndividuales").css("visibility", "visible");
+                $("#salvaYClasifica").show();
+
+                var j = 0;
+                for (k = 0 ; k < canvas.getObjects().length; k++) {
+                    var seleccionado = canvas.getObjects()[k];
+                    if (seleccionado.get("type") == "rect") {
+                        j = seleccionado.name.slice(-1);
+                        areas[j][0] = seleccionado.top;
+                        areas[j][1] = seleccionado.left;
+                        areas[j][2] = seleccionado.currentWidth;
+                        areas[j][3] = seleccionado.currentHeight;
+                        j++;
+                    }
+
+                }
+                $.ajax('@Url.Action("DigitalizaHuellaIndividual","Digitalizacion")',
+                    {
+                        type: 'POST',
+                        InsertionMode: 'InsertionMode.InsertBefore',
+                        // ver content type
+                        data: JSON.stringify({ areas: areas, imagenDeca: archivoDeca }),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                              hidePageLoadingSpinner(1);
+                            $("#individualPanel").html($(data));
+                        },
+                        error: function () {
+                            alert("No puede cargar la pagina");
+                        },
+                        complete: function() {
+                          //  hidePageLoadingSpinner(1);
+                        }
+
+                    });
+                //   $("#salvaYClasifica").css("visibility", "visible");
+
+
+            });
+
+            fabric.Canvas.prototype.getItemByName = function (name) {
+                var object = null,
+                    objects = this.getObjects();
+
+                for (var i = 0, len = this.size() ; i < len; i++) {
+                    if (objects[i].name && objects[i].name === name) {
+                        object = objects[i];
+                        break;
+                    }
+                }
+
+                return object;
+            };
+
+            function recortaBordesRectangulo() {
+                // index :dedo
+
+
+                // estado = integer indicando : 1 Normal, 2 Lastimado, 3 : faltante
+                for (var l = 0; l < 10; l++) {
+
+
+                    //  var objetosCanvas = $("#canvasRes"+l).getObjects();
+
+                    var imagen = canvasResu[l].getActiveObject().set({
+                        hasBorders: false,
+                        selectable: false,
+                        stroke: 'none'
+                    });
+                    canvasResu[l].renderAll();
+
+                    var ancho = imagen.width - 9;
+                    var alto = imagen.height - 9;
+                    var tope = imagen.top + 5;
+                    var lefti = imagen.left + 5;
+                    if (imagen.get("angle") != 0) {
+                        tope = imagen.top + 15;
+                        lefti = imagen.left + 15;
+                        ancho = imagen.width - 22;
+                        alto = imagen.height - 15;
+
+                    }
+                    var clipRect1 = new fabric.Rect({
+                        originX: 'left',
+                        originY: 'top',
+                        left: lefti,
+                        top: tope,
+                        width: ancho,
+                        height: alto,
+                        fill: '#DDD',
+                        selectable: false,
+                        angle: imagen.get("angle")
+                    });
+
+                    canvasResu[l].clipTo = function (ctx) {
+                        clipRect1.render(ctx);
+                    };
+                    /*if (imagen.get("angle") == 0)
+                    {
+
+
+
+                        canvasResu[l].set({
+                            width:ancho - 62
+                                 })  ;
+                        canvasResu[l].setTop(alto - 62);
+
+
+
+
+                    }*/
+
+                    canvasResu[l].calcOffset();
+
+                    canvasResu[l].renderAll();
+
+                }
+            }
+
+            function estadoDedoRectangulo(index, estado) {
+                // index :dedo
+
+
+                // estado = integer indicando : 1 Normal, 2 Lastimado, 3 : faltante,
+
+                var objetosCanvas = canvas.getObjects();
+                var rectangDedo = null;
+                // posicion de rect i (dedo) dentro del canvas
+                var posicion = 0;
+                for (var j = 0; j < objetosCanvas.length; j++) {
+                    if (objetosCanvas[j].get("type") == "rect") {
+                        if (objetosCanvas[j].get("name") == "rect" + index) {
+                            rectangDedo = objetosCanvas[j];
+                            posicion = j;
+                            break;
+                        }
+                    }
+
+                }
+
+
+                var objetosE = objetoEstados[index];
+                var auxLeft = 90;
+                var auxTop = 200;
+                var mano = "Derecha";
+                var posDedoMano = index;
+                if (index > 4) {
+                    auxTop = 190;
+                    mano = "Izquierda";
+                    posDedoMano = index - 5;
+                }
+
+
+                switch (estado) {
+                    case "1":
+                        var estadoTexto = objetosE[0, 1];
+
+                        objetoEstados[index] = new Array(null, null);
+
+                        if (estadoTexto != null) {
+                            canvas.remove(estadoTexto);
+
+
+
+                            // Vuelve a Normal
+                            rectangDedo.set({
+                                hasBorders: true,
+                                fill: '#DDD',
+                                borderColor: 'red',
+                                stroke: 'red',
+                                lockRotation: true,
+                                strokeWidth: 8,
+                                selectable: true
+                            }
+                       );
+
+                            canvas.bringToFront(canvas.item(posicion));
+
+                            canvas.setActiveObject(canvas.item(posicion));
+                            canvas.renderAll();
+                            $("#" + mano + index + "EstadoDedo").val("Normal");
+                            return;
+
+
+
+                        }
+
+                        break;
+
+                    case "4":
+                        rectangDedo.set('fill', 'rgb(85, 177, 214)');
+
+                        if (objetosE[1] == null) {
+
+
+
+                            var estadoTexto = new fabric.Text('Huella NO Apta', {
+                                fontSize: 40,
+                                left: rectangDedo.get('left') + auxLeft,
+                                top: rectangDedo.get('top') + auxTop,
+                                clipFor: 'text' + index,
+                                selectable: false,
+                                angle: -45
+
+                            });
+
+
+
+                            objetoEstados[index] = new Array(null, estadoTexto);
+
+                            canvas.add(estadoTexto);
+                        }
+                        else {
+
+                            var estadoTexto = objetosE[0, 1];
+                            estadoTexto.set('text', 'Huella NO Apta');
+                        }
+
+                        break;
+                    case "3":
+                        rectangDedo.set('fill', 'red');
+
+                        if (objetosE[1] == null) {
+                            var estadoTexto = new fabric.Text('Amputado', {
+                                fontSize: 40,
+                                left: rectangDedo.get('left') + auxLeft,
+                                top: rectangDedo.get('top') + auxTop,
+                                clipFor: 'text' + index,
+                                selectable: false,
+                                angle: -45
+
+                            });
+
+
+                            objetoEstados[index] = new Array(null, estadoTexto);
+
+                            canvas.add(estadoTexto);
+                        }
+                        else {
+
+                            var estadoTexto = objetosE[0, 1];
+                            estadoTexto.set('text', 'Amputado');
+
+                        }
+
+                        break;
+
+                    case "2":
+
+                        rectangDedo.set('fill', 'magenta');
+
+                        if (objetosE[1] == null) {
+                            var estadoTexto = new fabric.Text('Lastimado', {
+                                fontSize: 40,
+                                left: rectangDedo.get('left') + auxLeft,
+                                top: rectangDedo.get('top') + auxTop,
+                                clipFor: 'text' + index,
+                                selectable: false,
+                                angle: -45
+
+                            });
+
+                            objetoEstados[index] = new Array(null, estadoTexto);
+                            canvas.add(estadoTexto);
+                        }
+                        else {
+
+                            var estadoTexto = objetosE[0, 1];
+                            estadoTexto.set('text', 'Lastimado');
+                        }
+
+                        break;
+
+                }
+                canvas.renderAll();
+                // Sincroniza las variables de entrada. Se cambio el Dedo : index al estado: estado
+                $("#" + mano + index + "EstadoDedo").val(estado);
+                return;
+            }
+
+            function agrego_rectangulos() {
+                var leftInicial = 220;
+                var desplaza = 0;
+                topInicial = 80;
+                const anchoR = 300;
+                // Agrego 5 rectangulos
+                // Mano Derecha
+                // Si queres que no rote
+                //lockRotation: true
+
+                for (var i = 0; i < 5   ; i++) {
+
+
+                    rectang[i] = new fabric.Rect({
+                        originX: 'left',
+                        originY: 'top',
+                        left: leftInicial + desplaza,
+                        top: topInicial,
+                        opacity: 0.1,
+                        hasBorders: true,
+                        fill: '#DDD',
+                        width: anchoR,
+                        height: 280,
+                        borderColor: 'red',
+                        stroke: 'red',
+                        lockRotation: true,
+                        strokeWidth: 8
+
+
+                    });
+                    rectang[i].set({
+                        clipFor: 'rect' + i
+                    });
+                    rectang[i].name = 'rect' + i;
+                    canvas.add(rectang[i]);
+                    // top, left,ancho , alto
+                    areas[i][0] = rectang[i].top;
+                    areas[i][1] = rectang[i].left;
+                    areas[i][2] = rectang[i].width;
+                    areas[i][3] = rectang[i].height;
+
+                    canvas.calcOffset();
+                    var recuadro = "#" + rectang[i].clipFor;
+
+
+                    rectang[i].bringToFront();
+                    desplaza += 310;
+
+                }
+                //Mano Izquierda
+                var topInicial = 435;
+                desplaza = 0;
+                leftInicial = 220;
+                for (var i = 5; i < 10   ; i++) {
+                    rectang[i] = new fabric.Rect({
+                        originX: 'left',
+                        originY: 'top',
+                        left: leftInicial + desplaza,
+                        top: topInicial,
+                        opacity: 0.1,
+                        hasBorders: true,
+                        fill: '#DDD',
+                        width: anchoR,
+                        height: 280,
+                        borderColor: 'red',
+                        stroke: 'red',
+                        lockRotation: true,
+                        strokeWidth: 5
+
+                    });
+                    rectang[i].set({
+                        clipFor: 'rect' + i
+                    });
+                    rectang[i].name = 'rect' + i;
+                    // top, left,ancho , alto
+                    areas[i][0] = rectang[i].top;
+                    areas[i][1] = rectang[i].left;
+                    areas[i][2] = rectang[i].width;
+                    areas[i][3] = rectang[i].height;
+
+                    canvas.add(rectang[i]);
+
+                    rectang[i].bringToFront();
+
+
+                    var recuadro = "#" + rectang[i].clipFor;
+                    desplaza += 310;
+
+
+                }
+
+
+
+            }
+
+            canvas.on({
+                'object:moving': onChange,
+                'object:rotating': onChange,
+                'object:modified': onChange,
+                'object:scaling': onChange
+
+            });
+
+
+            function onChange(options) {
+
+
+                modificoRectangulo = true;
+                var seleccionado = options.target;
+
+                // top, left,ancho , alto
+
+            }
+            $(window).load(agrego_rectangulos);
+        </script>
+
+

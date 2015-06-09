@@ -1,0 +1,42 @@
+﻿@model ISIC.Entities.Imputado
+
+
+@{
+    ViewBag.Title = "Crear";
+}
+
+<br>
+
+<div class="alert alert-warning">
+    <strong>Crear Imputado</strong>
+</div>
+
+@using (Html.BeginForm("Create", "Imputado", FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+    @Html.Partial("_CreateOrEdit", Model)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="button" class="btn btn-primary" title="Volver" onclick="location.href='@Url.Action("Index", "Imputado")';return false">
+                <span class="glyphicon glyphicon-arrow-left"></span>
+            </button>
+            <button type="submit" class="btn btn-success" title="Guardar">
+                <span class="glyphicon glyphicon-save"></span>
+            </button>
+        </div>
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+    </script>
+
+}

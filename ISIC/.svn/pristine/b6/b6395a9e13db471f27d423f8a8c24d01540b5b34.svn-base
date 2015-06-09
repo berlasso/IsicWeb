@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ISIC.Entities.Autor" Collapsed="true">
+    <Position X="1.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoBAAECIhAAAAAAAgAQACCAQABACAEAABAAEIABAAAQ=</HashCode>
+      <FileName>Entities\Autor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.AutoresAlias" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\AutoresAlias.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.BioDactilar" Collapsed="true">
+    <Position X="3.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAIEAAAAAAAABAAIAAABAAAEAAAAAgACAAECIgACAQ=</HashCode>
+      <FileName>Entities\BioDactilar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.BioPalmar" Collapsed="true">
+    <Position X="6.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAAAAABA=</HashCode>
+      <FileName>Entities\BioPalmar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseDedo" Collapsed="true">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseDedo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseDelito" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseDelito.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseEstadoCivil" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseEstadoCivil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseEstadoDedo" Collapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseEstadoDedo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseEstadoHuella" Collapsed="true">
+    <Position X="6.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseEstadoHuella.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseEstadoMano" Collapsed="true">
+    <Position X="8" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseEstadoMano.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseEstudiosCursados" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseEstudiosCursados.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseMano" Collapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseMano.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseSeniaParticular" Collapsed="true">
+    <Position X="4.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseSeniaParticular.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseSexo" Collapsed="true">
+    <Position X="6.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseSexo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseTatuaje" Collapsed="true">
+    <Position X="8" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseTatuaje.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseTipoDNI" Collapsed="true">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseTipoDNI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseTipoPersona" Collapsed="true">
+    <Position X="11.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseTipoPersona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ClaseUbicacionSeniaPart" Collapsed="true">
+    <Position X="2.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClaseUbicacionSeniaPart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.Comisaria" Collapsed="true">
+    <Position X="6.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Comisaria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.Delito" Collapsed="true">
+    <Position X="8" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAECAAAAEAAEAEAAICAIAAIAAAAIAAAAQAAAAAEQ=</HashCode>
+      <FileName>Entities\Delito.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.Departamento" Collapsed="true">
+    <Position X="9.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Entities\Departamento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.DescripcionTemporal" Collapsed="true">
+    <Position X="6.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAEAAEAAAQAAAIAAAAAgg=</HashCode>
+      <FileName>Entities\DescripcionTemporal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.Domicilio" Collapsed="true">
+    <Position X="4.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAEAAAAAAAAFACAAAAAAEAABCAAEAAgA=</HashCode>
+      <FileName>Entities\Domicilio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.Imputado" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAAAAEAAEBAAoBJAAAEQCxAAABIggAAAAAAAIEgEg=</HashCode>
+      <FileName>Entities\Imputado.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.ImputadoEstadoTramite" Collapsed="true">
+    <Position X="11.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAIAAAAgAAAAAAAAAJAw=</HashCode>
+      <FileName>Entities\ImputadoEstadoTramite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.IPP" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABCAICAACAUAAEACgkhEAAIBAAABAAEAgCIAAAU=</HashCode>
+      <FileName>Entities\IPP.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.NNClaseModusOperandi" Collapsed="true">
+    <Position X="12.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\NNClaseModusOperandi.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.NNClaseTipoAutor" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\NNClaseTipoAutor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.Partido" Collapsed="true">
+    <Position X="8" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAEAAAAAAAACAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Entities\Partido.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.Persona" Collapsed="true">
+    <Position X="14.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAQBACAIEAAAQEEkiAAgCAIICIAAkRAAARBIgQIIAQ=</HashCode>
+      <FileName>Entities\Persona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.PersonaIdentidad" Collapsed="true">
+    <Position X="14.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAACAIAAAAAAEAAAAgAAAAAIAAAAAAAAAARAIAAQ=</HashCode>
+      <FileName>Entities\PersonaIdentidad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.Provincia" Collapsed="true">
+    <Position X="10.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAkA=</HashCode>
+      <FileName>Entities\Provincia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.SICClaseCejasDimension" Collapsed="true">
+    <Position X="14" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\SICClaseCejasDimension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.SICClaseFormaCara" Collapsed="true">
+    <Position X="14" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\SICClaseFormaCara.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.SICClaseFormaLabioInferior" Collapsed="true">
+    <Position X="15.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\SICClaseFormaLabioInferior.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.SICClaseRobustez" Collapsed="true">
+    <Position X="14" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\SICClaseRobustez.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.SICClaseTipoCabello" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\SICClaseTipoCabello.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.SICClaseTipoCalvicie" Collapsed="true">
+    <Position X="2.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\SICClaseTipoCalvicie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.SICEstadoTramite" Collapsed="true">
+    <Position X="13.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\SICEstadoTramite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.TatuajePersona" Collapsed="true">
+    <Position X="8" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAIAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Entities\TatuajePersona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.VucClasifica" Collapsed="true">
+    <Position X="1" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Entities\VucClasifica.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.VucClasificaDactilar" Collapsed="true">
+    <Position X="2.75" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\VucClasificaDactilar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ISIC.Entities.VucClasificaPulgar" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\VucClasificaPulgar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

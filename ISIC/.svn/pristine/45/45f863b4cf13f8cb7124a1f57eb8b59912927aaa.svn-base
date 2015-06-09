@@ -1,0 +1,126 @@
+﻿@model ISICWeb.Models.BioDactilarViewModel
+@{
+    ViewBag.Title = "Clasificar";
+}
+
+<div class="container-detalle" style="margin-bottom: 50px;">
+    <div class="center wow fadeInDown animated tile-light">
+        <h1>Clasificar</h1>
+    </div>
+
+
+
+@Html.Label("Mano " + Model.Mano + " - Dedo " + Model.Dedo, new { @class = "text-muted" })
+<br />
+@if (Model.imagen != null)
+{
+    var base64 = Convert.ToBase64String(Model.imagen);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    <img src="@imgSrc" class="biodactilar-img-big" />
+    <br />
+    <br />
+}
+
+@using (Html.BeginForm("Clasificar", "Clasificacion", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.CodigoDeBarra)
+
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
+
+            <h2>
+                Huella a clasificar
+            </h2>
+
+        </div>
+
+
+
+
+        <div class="panel-body">
+            <div class="row wow fadeInDown animated">
+                <div class="form-group col-md-6">
+                    @Html.Label("Clasificación")
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.DactilarVuc.Id, (IEnumerable<SelectListItem>) ViewBag.ListaClasificacion, null, new {@id = "clasificaciones", @class = "form-control combobox"})
+                    </div>
+                </div>
+            </div>
+
+            <div class="row wow fadeInDown animated">
+                <div class="form-group col-md-6">
+                    @Html.Label("Subclasificación")
+                    <div class="controls">
+                        @Html.DropDownListFor(m => m.SubDactilarVuc.Id, (IEnumerable<SelectListItem>) ViewBag.ListaSubClasificacion, null, new {@id = "subclasificaciones", @class = "form-control combobox"})
+                    </div>
+                </div>
+            </div>
+
+          
+        </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+        <div class="row">
+            <div class="col-md-2 col-sm-3 col-xs-4">
+
+
+
+                <a class="btn btn-lg btn-alt " href='@Url.Action("Index", "Clasificacion", new {CodigoBarra = Model.CodigoDeBarra})' onclick=' showpageloadingspinner() ' title=" volver" type="button" id="btnVolverDetalle">
+                    Volver
+                </a>
+            </div>
+            <div class="col-md-4 col-md-offset-3 col-sm-9 col-xs-8">
+                <button type="submit" class="btn btn-alt btn-lg" onclick="showPageLoadingSpinner();" title="Guardar">Guardar</button>
+
+
+            </div>
+
+        </div>
+
+    </nav>
+    
+}
+</div>
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#navFooter").hide();
+            });
+
+            $(document).ready(function () {
+                var idSubClasificacion = @Model.SubDactilarVuc.Id;
+                if (idSubClasificacion == 0)
+                {
+                    var clasificaciones = $('#clasificaciones');
+                    getListaSubclasificaciones(clasificaciones.val());
+                }
+            });
+
+            $('#clasificaciones').change(function () {
+                getListaSubclasificaciones($(this).val());
+            });
+
+            function getListaSubclasificaciones(idClasificacion) {
+                var subclasificaciones = $('#subclasificaciones');
+
+                subclasificaciones.empty();
+
+                if (idClasificacion > 0) {
+                    var url = '@Url.Action("GetSubclasificaciones", "Clasificacion")';
+
+                    $.get(url,
+                          {
+                              "idClasificacion": idClasificacion
+                          },
+                          function (data) {
+                              $.each(data, function (index, value) {
+                                  subclasificaciones.append($('<option></option>').val(value.Value).html(value.Text));
+                              });
+                          });
+                }
+            }
+        </script>

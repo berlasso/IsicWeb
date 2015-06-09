@@ -1,0 +1,66 @@
+﻿@model  ISIC.Entities.Imputado
+
+ @{
+     ViewBag.Title = "Huellas Dactilares Digitalizadas de  "+Model.Persona.Apellido+' '+  Model.Persona.Nombre;
+}
+<style>
+
+  /*  SACAAAR HASTA ACA UNIFICAR*/
+    #fondo {
+        background-image: none;
+        color: black;
+    }
+</style>
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Inicio", "Index", "Home") </li>
+        <li><a href= @Url.Action("Index", "Digitalizacion") >Digitalización</a></li>
+        <li class="active"><a href=@Url.Action("VisualizaDecaDigital", "Digitalizacion")>Visualiza Huellas Dactilares</a></li>
+    </ol>
+
+    <h3> <em style="color: rgb(59, 91, 119);font-size: 0.85em; float:left"> Imputado : @Model.Persona.Apellido, @Model.Persona.Nombre => Cod. Barra : @Model.CodigoDeBarras</em></h3>
+
+  </div>
+
+
+<div class="row">
+    @if (Model.BioManoDerecha.Any())
+    {
+        @Html.Partial("VisualizaHuellasDigitalMano", @Model.BioManoDerecha)
+        ;
+    }
+    else
+    {
+        <div class="alert alert-warning alert-icon"> <i class="icon flaticon-information32"></i>No se encontraron datos dactilares de la mano derecha asociados</div>
+    }
+
+</div>
+<div class="row">
+    @if (Model.BioManoIzquierda.Any())
+    {
+        @Html.Partial("VisualizaHuellasDigitalMano", @Model.BioManoIzquierda)
+
+    }
+    else
+    {
+
+        <div class="alert alert-warning alert-icon"> <i class="icon flaticon-information32"></i>No se encontraron datos dactilares de la mano izquierda asociados</div>
+    }
+
+</div>
+
+@section footer
+{
+    <div class="col-md-2">
+        @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
+                Volver
+            </a>*@
+        <a class="btn btn-lg btn-alt volver" href='#' onclick=' window.history.go(-1); return false; ' title=" volver" type="button">
+            Volver
+        </a>
+    </div>
+    <div class="col-md-10">
+
+    </div>
+
+}

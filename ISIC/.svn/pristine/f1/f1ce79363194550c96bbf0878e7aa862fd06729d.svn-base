@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<script type="text/javascript" src="~/Areas/PortalSIC/Scripts/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="~/Areas/PortalSIC/Scripts/imagesloaded.js"></script>
+<script type="text/javascript" src="~/Areas/PortalSIC/Scripts/prettyPhotoSetup.js"></script>
+<script type="text/javascript" src="~/Areas/PortalSIC/Scripts/portalsicJs.js"></script>
+<link href="~/Areas/PortalSIC/Content/portalsicStyle.css" rel="stylesheet"/>
+

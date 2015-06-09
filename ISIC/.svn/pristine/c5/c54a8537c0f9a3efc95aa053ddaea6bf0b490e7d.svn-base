@@ -1,0 +1,52 @@
+﻿@model ISIC.Entities.Imputado
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+
+<br>
+
+<div class="alert alert-info">
+    <strong>Detalles de Imputado</strong>
+</div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProntuarioSIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProntuarioSIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodigoDeBarra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodigoDeBarra)
+        </dd>
+
+    </dl>
+
+    <div class="form-group" style="position:relative;float:left;margin-top:-5px;margin-left:180px">
+        <div>
+            <button type="button" class="btn btn-primary" title="Volver" onclick="location.href='@Url.Action("Index", "Imputado")';return false">
+                <span class="glyphicon glyphicon-arrow-left"></span>
+            </button>
+            <button type="submit" class="btn btn-warning" title="Guardar" onclick="location.href='@Url.Action("Edit", "Imputado",new { id = Model.Id })';return false">
+                <span class=" glyphicon glyphicon-edit">
+                </span>
+            </button>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
+
+@section Scripts {
+
+}

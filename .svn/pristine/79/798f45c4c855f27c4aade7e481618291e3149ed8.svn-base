@@ -1,0 +1,197 @@
+2014-10-15 10:06:05.6103 | DEBUG | Preloaded all referenced assemblies with System.Web.Compilation.BuildManager.GetReferencedAssemblies() | 
+2014-10-15 10:06:06.5185 | DEBUG | Discovering IClientScript's in 'C:\Users\mdaffunchio\AppData\Local\Temp\Temporary ASP.NET Files\root\7c022feb\2a225bb6' and all sub directories. | 
+2014-10-15 10:06:06.5455 | WARN | Failed to load type when getting types from assembly 'Microsoft.Practices.Unity, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' | System.IO.FileNotFoundException--No se puede cargar el archivo o ensamblado 'Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' ni una de sus dependencias. El sistema no puede encontrar el archivo especificado.--
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IClientScript of type 'Glimpse.Core.ClientScript.Client' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IClientScript of type 'Glimpse.Core.ClientScript.Data' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IClientScript of type 'Glimpse.Core.ClientScript.Metadata' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovering IInspector's in 'C:\Users\mdaffunchio\AppData\Local\Temp\Temporary ASP.NET Files\root\7c022feb\2a225bb6' and all sub directories. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IInspector of type 'Glimpse.Ado.Inspector.AdoInspector' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IInspector of type 'Glimpse.AspNet.Inspector.RoutesInspector' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IInspector of type 'Glimpse.Core.Inspector.TraceInspector' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IInspector of type 'Glimpse.EF.Inspector.EntityFrameworkInspector' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IInspector of type 'Glimpse.Mvc.Inspector.DependencyInjectionInspector' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IInspector of type 'Glimpse.Mvc.Inspector.ExecutionInspector' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IInspector of type 'Glimpse.Mvc.Inspector.ModelBinderInspector' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovered IInspector of type 'Glimpse.Mvc.Inspector.ViewEngineInspector' and added it to collection. | 
+2014-10-15 10:06:06.5455 | DEBUG | Discovering IResource's in 'C:\Users\mdaffunchio\AppData\Local\Temp\Temporary ASP.NET Files\root\7c022feb\2a225bb6' and all sub directories. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.AjaxResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.ClientResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.ConfigurationResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.ConfigurationScriptResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.ConfigurationStyleResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.HistoryResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.LogoResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.LogosResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.MetadataResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.PopupRedirectResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.PopupResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.RequestResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.SpriteResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered IResource of type 'Glimpse.Core.Resource.VersionCheckResource' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovering ISerializationConverter's in 'C:\Users\mdaffunchio\AppData\Local\Temp\Temporary ASP.NET Files\root\7c022feb\2a225bb6' and all sub directories. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.AspNet.SerializationConverter.ConfigurationModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.AspNet.SerializationConverter.ConfigurationRoleManagerProviderSettingsModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.AspNet.SerializationConverter.EnvironmentModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.AspNet.SerializationConverter.ListOfRouteModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.AspNet.SerializationConverter.RequestModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.AspNet.SerializationConverter.SessionModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.CSharpTypeConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.DateTimeConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.EnumerableOfITimelineMessageConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.GlimpseMetadataConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.GlimpseRequestConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.GlimpseRequestHeadersConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.ListOfTraceMessageConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.MethodInfoConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.TabMetadataConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.TabResultConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.TimelineEventModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Core.SerializationConverter.TimeSpanConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Mvc.SerializationConverter.CultureConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Mvc.SerializationConverter.ListOfExecutionModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Mvc.SerializationConverter.ListOfMetadataItemModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Mvc.SerializationConverter.ListOfViewsModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Mvc.SerializationConverter.MvcDisplayModelConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovered ISerializationConverter of type 'Glimpse.Mvc.SerializationConverter.UrlParameterConverter' and added it to collection. | 
+2014-10-15 10:06:06.5545 | DEBUG | Discovering ITab's in 'C:\Users\mdaffunchio\AppData\Local\Temp\Temporary ASP.NET Files\root\7c022feb\2a225bb6' and all sub directories. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.Ado.Tab.SQL' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.AspNet.Tab.Cache' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.AspNet.Tab.Configuration' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.AspNet.Tab.Environment' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.AspNet.Tab.Request' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.AspNet.Tab.Routes' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.AspNet.Tab.Server' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.AspNet.Tab.Session' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.Core.Tab.Timeline' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.Core.Tab.Trace' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.Mvc.Tab.Execution' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.Mvc.Tab.Metadata' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.Mvc.Tab.ModelBinding' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered ITab of type 'Glimpse.Mvc.Tab.Views' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovering IDisplay's in 'C:\Users\mdaffunchio\AppData\Local\Temp\Temporary ASP.NET Files\root\7c022feb\2a225bb6' and all sub directories. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IDisplay of type 'Glimpse.Ado.Display.SqlDisplay' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IDisplay of type 'Glimpse.AspNet.Display.EnvironmentDisplay' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IDisplay of type 'Glimpse.Core.Display.TimingsDisplay' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IDisplay of type 'Glimpse.Mvc.Display.MvcDisplay' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovering IRuntimePolicy's in 'C:\Users\mdaffunchio\AppData\Local\Temp\Temporary ASP.NET Files\root\7c022feb\2a225bb6' and all sub directories. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IRuntimePolicy of type 'Glimpse.Core.Policy.AjaxPolicy' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IRuntimePolicy of type 'Glimpse.Core.Policy.ContentTypePolicy' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IRuntimePolicy of type 'Glimpse.Core.Policy.ControlCookiePolicy' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IRuntimePolicy of type 'Glimpse.Core.Policy.GlimpseResourcePolicy' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IRuntimePolicy of type 'Glimpse.Core.Policy.StatusCodePolicy' and added it to collection. | 
+2014-10-15 10:06:06.5785 | DEBUG | Discovered IRuntimePolicy of type 'Glimpse.Core.Policy.UriPolicy' and added it to collection. | 
+2014-10-15 10:06:06.5995 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.Ado.Message.AdoMessage]' has been subscribed to all 'Glimpse.Ado.Message.AdoMessage' messages. | 
+2014-10-15 10:06:06.5995 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.Core.Message.ITimelineMessage]' has been subscribed to all 'Glimpse.Core.Message.ITimelineMessage' messages. | 
+2014-10-15 10:06:06.5995 | DEBUG | Method '<Setup>b__0' on type 'Glimpse.Mvc.Display.MvcDisplay+<>c__DisplayClass4' has been subscribed to all 'Glimpse.Mvc.AlternateType.ActionInvoker+InvokeActionMethod+Message' messages. | 
+2014-10-15 10:06:06.5995 | DEBUG | Method '<Setup>b__1' on type 'Glimpse.Mvc.Display.MvcDisplay+<>c__DisplayClass4' has been subscribed to all 'Glimpse.Mvc.AlternateType.ViewEngine+FindViews+Message' messages. | 
+2014-10-15 10:06:06.5995 | DEBUG | Method '<Setup>b__2' on type 'Glimpse.Mvc.Display.MvcDisplay+<>c__DisplayClass4' has been subscribed to all 'Glimpse.Mvc.AlternateType.View+Render+Message' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<Setup>b__3' on type 'Glimpse.Mvc.Display.MvcDisplay+<>c__DisplayClass4' has been subscribed to all 'Glimpse.AspNet.AlternateType.RouteBase+GetRouteData+Message' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.Ado.Message.AdoMessage]' has been subscribed to all 'Glimpse.Ado.Message.AdoMessage' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.AspNet.AlternateType.RouteBase+ProcessConstraint+Message]' has been subscribed to all 'Glimpse.AspNet.AlternateType.RouteBase+ProcessConstraint+Message' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.AspNet.AlternateType.RouteBase+GetRouteData+Message]' has been subscribed to all 'Glimpse.AspNet.AlternateType.RouteBase+GetRouteData+Message' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.Core.Message.ITimelineMessage]' has been subscribed to all 'Glimpse.Core.Message.ITimelineMessage' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.Core.Message.ITraceMessage]' has been subscribed to all 'Glimpse.Core.Message.ITraceMessage' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.Mvc.Message.IExecutionMessage]' has been subscribed to all 'Glimpse.Mvc.Message.IExecutionMessage' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.Mvc.AlternateType.View+Render+Message]' has been subscribed to all 'Glimpse.Mvc.AlternateType.View+Render+Message' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<Setup>b__5' on type 'Glimpse.Mvc.Tab.ModelBinding+<>c__DisplayClassd' has been subscribed to all 'Glimpse.Mvc.AlternateType.ValueProvider`1+ContainsPrefix+Message[System.Web.Mvc.IUnvalidatedValueProvider]' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<Setup>b__6' on type 'Glimpse.Mvc.Tab.ModelBinding+<>c__DisplayClassd' has been subscribed to all 'Glimpse.Mvc.AlternateType.ValueProvider`1+ContainsPrefix+Message[System.Web.Mvc.IValueProvider]' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<Setup>b__7' on type 'Glimpse.Mvc.Tab.ModelBinding+<>c__DisplayClassd' has been subscribed to all 'Glimpse.Mvc.AlternateType.ValueProvider`1+GetValue+Message[System.Web.Mvc.IUnvalidatedValueProvider]' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<Setup>b__8' on type 'Glimpse.Mvc.Tab.ModelBinding+<>c__DisplayClassd' has been subscribed to all 'Glimpse.Mvc.AlternateType.ValueProvider`1+GetValue+Message[System.Web.Mvc.IValueProvider]' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<Setup>b__9' on type 'Glimpse.Mvc.Tab.ModelBinding+<>c__DisplayClassd' has been subscribed to all 'Glimpse.Mvc.AlternateType.ModelBinder+BindModel+Message' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<Setup>b__a' on type 'Glimpse.Mvc.Tab.ModelBinding+<>c__DisplayClassd' has been subscribed to all 'Glimpse.Mvc.AlternateType.ModelBinder+BindProperty+Message' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<Setup>b__b' on type 'Glimpse.Mvc.Tab.ModelBinding+<>c__DisplayClassd' has been subscribed to all 'Glimpse.Mvc.AlternateType.ValueProvider`1+GetValue+Message[System.Web.Mvc.IEnumerableValueProvider]' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<Setup>b__c' on type 'Glimpse.Mvc.Tab.ModelBinding+<>c__DisplayClassd' has been subscribed to all 'Glimpse.Mvc.AlternateType.ValueProvider`1+ContainsPrefix+Message[System.Web.Mvc.IEnumerableValueProvider]' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.Mvc.AlternateType.ViewEngine+FindViews+Message]' has been subscribed to all 'Glimpse.Mvc.AlternateType.ViewEngine+FindViews+Message' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Method '<PersistMessages>b__0' on type 'Glimpse.Core.Extensions.TabContextExtensions+<>c__DisplayClass1`1[Glimpse.Mvc.AlternateType.View+Render+Message]' has been subscribed to all 'Glimpse.Mvc.AlternateType.View+Render+Message' messages. | 
+2014-10-15 10:06:06.6005 | DEBUG | Setup IInspector of type 'Glimpse.Ado.Inspector.AdoInspector'. | 
+2014-10-15 10:06:06.6225 | DEBUG | get_Constraints method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | set_Constraints method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | get_DataTokens method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | set_DataTokens method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | get_Defaults method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | set_Defaults method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | get_RouteHandler method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | set_RouteHandler method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | get_Url method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | set_Url method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | get_RouteExistingFiles method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6225 | DEBUG | set_RouteExistingFiles method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6385 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Routing.Route'. | 
+2014-10-15 10:06:06.6975 | INFO | Replaced Route of type 'System.Web.Routing.Route' with proxy implementation. | 
+2014-10-15 10:06:06.6975 | INFO | Replaced Route of type 'System.Web.Routing.Route' with proxy implementation. | 
+2014-10-15 10:06:06.6975 | DEBUG | get_Constraints method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | set_Constraints method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | get_DataTokens method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | set_DataTokens method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | get_Defaults method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | set_Defaults method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | get_RouteHandler method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | set_RouteHandler method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | get_Url method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | set_Url method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | get_RouteExistingFiles method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | set_RouteExistingFiles method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | _url method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | _parsedRoute method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | HttpMethodParameterName method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | _routeExistingFiles method of type 'System.Web.Routing.Route' is not proxyable. | 
+2014-10-15 10:06:06.6975 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Routing.Route'. | 
+2014-10-15 10:06:06.7255 | INFO | Replaced Route of type 'System.Web.Mvc.RouteCollectionExtensions+IgnoreRouteInternal' with proxy implementation. | 
+2014-10-15 10:06:06.7255 | INFO | Replaced Route of type 'System.Web.Routing.Route' with proxy implementation. | 
+2014-10-15 10:06:06.7255 | DEBUG | Setup IInspector of type 'Glimpse.AspNet.Inspector.RoutesInspector'. | 
+2014-10-15 10:06:06.7255 | DEBUG | Setup IInspector of type 'Glimpse.Core.Inspector.TraceInspector'. | 
+2014-10-15 10:06:06.7255 | DEBUG | Setup IInspector of type 'Glimpse.EF.Inspector.EntityFrameworkInspector'. | 
+2014-10-15 10:06:06.7255 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IDependencyResolver'. | 
+2014-10-15 10:06:06.7455 | DEBUG | Replaced IDependencyResolver of type 'Unity.Mvc5.UnityDependencyResolver' with proxy implementation. | 
+2014-10-15 10:06:06.7455 | DEBUG | Setup IInspector of type 'Glimpse.Mvc.Inspector.DependencyInjectionInspector'. | 
+2014-10-15 10:06:06.7655 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IControllerFactory'. | 
+2014-10-15 10:06:06.7655 | DEBUG | Proxied IControllerFactory of type 'System.Web.Mvc.DefaultControllerFactory'. | 
+2014-10-15 10:06:06.7655 | DEBUG | Setup IInspector of type 'Glimpse.Mvc.Inspector.ExecutionInspector'. | 
+2014-10-15 10:06:06.7725 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.ValueProviderFactory'. | 
+2014-10-15 10:06:06.7725 | INFO | Replaced ValueProviderFactory of type 'System.Web.Mvc.ChildActionValueProviderFactory' with proxy implementation. | 
+2014-10-15 10:06:06.7725 | INFO | Replaced ValueProviderFactory of type 'System.Web.Mvc.FormValueProviderFactory' with proxy implementation. | 
+2014-10-15 10:06:06.7725 | INFO | Replaced ValueProviderFactory of type 'System.Web.Mvc.JsonValueProviderFactory' with proxy implementation. | 
+2014-10-15 10:06:06.7725 | INFO | Replaced ValueProviderFactory of type 'System.Web.Mvc.RouteDataValueProviderFactory' with proxy implementation. | 
+2014-10-15 10:06:06.7725 | INFO | Replaced ValueProviderFactory of type 'System.Web.Mvc.QueryStringValueProviderFactory' with proxy implementation. | 
+2014-10-15 10:06:06.7725 | INFO | Replaced ValueProviderFactory of type 'System.Web.Mvc.HttpFileCollectionValueProviderFactory' with proxy implementation. | 
+2014-10-15 10:06:06.7725 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IModelBinder'. | 
+2014-10-15 10:06:06.7725 | INFO | Replaced IModelBinder of type 'System.Web.Mvc.HttpPostedFileBaseModelBinder' with proxy implementation. | 
+2014-10-15 10:06:06.7725 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IModelBinder'. | 
+2014-10-15 10:06:06.7725 | INFO | Replaced IModelBinder of type 'System.Web.Mvc.ByteArrayModelBinder' with proxy implementation. | 
+2014-10-15 10:06:06.7725 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IModelBinder'. | 
+2014-10-15 10:06:06.7875 | INFO | Replaced IModelBinder of type 'System.Web.Mvc.LinqBinaryModelBinder' with proxy implementation. | 
+2014-10-15 10:06:06.7875 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IModelBinder'. | 
+2014-10-15 10:06:06.7875 | INFO | Replaced IModelBinder of type 'System.Web.Mvc.CancellationTokenModelBinder' with proxy implementation. | 
+2014-10-15 10:06:06.7875 | DEBUG | get_Binders method of type 'System.Web.Mvc.DefaultModelBinder' is not proxyable. | 
+2014-10-15 10:06:06.7875 | DEBUG | set_Binders method of type 'System.Web.Mvc.DefaultModelBinder' is not proxyable. | 
+2014-10-15 10:06:06.7875 | DEBUG | GetFilteredModelProperties method of type 'System.Web.Mvc.DefaultModelBinder' is not proxyable. | 
+2014-10-15 10:06:06.7875 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.DefaultModelBinder'. | 
+2014-10-15 10:06:06.7875 | INFO | Replaced IModelBinder of type 'System.Web.Mvc.DefaultModelBinder' with proxy implementation. | 
+2014-10-15 10:06:06.7875 | DEBUG | Setup IInspector of type 'Glimpse.Mvc.Inspector.ModelBinderInspector'. | 
+2014-10-15 10:06:06.7875 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IViewEngine'. | 
+2014-10-15 10:06:06.8055 | INFO | Replaced IViewEngine of type 'System.Web.Mvc.WebFormViewEngine' with proxy implementation. | 
+2014-10-15 10:06:06.8055 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IViewEngine'. | 
+2014-10-15 10:06:06.8055 | INFO | Replaced IViewEngine of type 'System.Web.Mvc.RazorViewEngine' with proxy implementation. | 
+2014-10-15 10:06:06.8055 | DEBUG | Setup IInspector of type 'Glimpse.Mvc.Inspector.ViewEngineInspector'. | 
+2014-10-15 10:06:07.2415 | DEBUG | get_Binders method of type 'System.Web.Mvc.Async.AsyncControllerActionInvoker' is not proxyable. | 
+2014-10-15 10:06:07.2415 | DEBUG | set_Binders method of type 'System.Web.Mvc.Async.AsyncControllerActionInvoker' is not proxyable. | 
+2014-10-15 10:06:07.2415 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.Async.AsyncControllerActionInvoker'. | 
+2014-10-15 10:06:07.2806 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IActionFilter'. | 
+2014-10-15 10:06:07.2866 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IResultFilter'. | 
+2014-10-15 10:06:07.2866 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IAuthorizationFilter'. | 
+2014-10-15 10:06:07.2866 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IExceptionFilter'. | 
+2014-10-15 10:06:07.2866 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IExceptionFilter'. | 
+2014-10-15 10:06:07.3025 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IExceptionFilter'. | 
+2014-10-15 10:06:07.3236 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IEnumerableValueProvider'. | 
+2014-10-15 10:06:07.3236 | DEBUG | Methods inspected via proxy generation hook on type 'Glimpse.Mvc.AlternateType.ValueProviderFactory+IUnvalidatedEnumerableValueProvider'. | 
+2014-10-15 10:06:07.3356 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IEnumerableValueProvider'. | 
+2014-10-15 10:06:07.3356 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IEnumerableValueProvider'. | 
+2014-10-15 10:06:07.4246 | DEBUG | Methods inspected via proxy generation hook on type 'System.Web.Mvc.IView'. | 
+2014-10-15 10:06:07.4286 | INFO | Replaced IView of type 'System.Web.Mvc.RazorView', named 'Index', with proxy implementation. | 
+2014-10-15 10:06:07.9696 | INFO | Replaced IView of type 'System.Web.Mvc.RazorView', named 'Index', with proxy implementation. | 
+2014-10-15 10:06:09.4458 | INFO | Replaced IView of type 'System.Web.Mvc.RazorView', named '_LoginPartial', with proxy implementation. | 
+2014-10-15 10:06:09.4458 | INFO | Replaced IView of type 'System.Web.Mvc.RazorView', named '_LoginPartial', with proxy implementation. | 
+2014-10-15 10:06:10.4610 | DEBUG | RuntimePolicy set to 'ExecuteResourceOnly' by IRuntimePolicy of type 'Glimpse.Core.Policy.GlimpseResourcePolicy' during RuntimeEvent 'ExecuteResource'. | 
+2014-10-15 10:06:10.6860 | DEBUG | RuntimePolicy set to 'Off' by IRuntimePolicy of type 'Glimpse.Core.Policy.ContentTypePolicy' during RuntimeEvent 'EndRequest'. | 
+2014-10-15 10:06:11.0590 | DEBUG | RuntimePolicy set to 'ModifyResponseHeaders' by IRuntimePolicy of type 'Glimpse.Core.Policy.AjaxPolicy' during RuntimeEvent 'BeginRequest'. | 
+2014-10-15 10:06:11.0590 | DEBUG | RuntimePolicy set to 'Off' by IRuntimePolicy of type 'Glimpse.Core.Policy.UriPolicy' during RuntimeEvent 'BeginRequest'. | 

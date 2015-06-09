@@ -1,0 +1,39 @@
+﻿
+/*Cartel de Espera*/
+div.cartelEspera {
+    display: none;
+
+}
+div.cartelEspera:before {
+    /*display: none;*/
+	background: url("../Content/Images/loading_75x75.gif") no-repeat 0 0;
+	/*height: 50px;*/
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	margin-top: 20px;
+	content: "";
+    -ms-background-size: 100%;
+    background-size: 100%;
+	vertical-align: middle;
+}
+
+div.cartelEspera span {
+	color: white;
+	padding: 5px 5px 5px 25px;
+	text-align: left;
+}
+/************************/
+
+/*autocompletes*/
+ .ui-autocomplete {
+max-height: 100px;
+overflow-y: auto;
+/* prevent horizontal scrollbar */
+overflow-x: hidden;
+}
+  * html .ui-autocomplete {
+height: 100px;
+}
+.ui-autocomplete-loading, .loading { background:url('../Content/Images/indicator.gif') no-repeat right center }
+/*****************************/
