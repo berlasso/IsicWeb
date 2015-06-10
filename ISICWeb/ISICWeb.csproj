@@ -263,6 +263,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Antecedentes\AntecedentesAreaRegistration.cs" />
+    <Compile Include="Areas\Antecedentes\Controllers\AntecedentesAfisController.cs" />
     <Compile Include="Areas\Antecedentes\Controllers\AntecedentesGnaController.cs" />
     <Compile Include="Areas\Antecedentes\Models\IdgxViewModels.cs" />
     <Compile Include="Areas\Antecedentes\Models\ImputadosAntecedentesViewModel.cs" />
@@ -313,6 +314,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelISIC.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Services\AfisService.cs" />
     <Compile Include="Services\GnaService.cs" />
     <Compile Include="Services\IdgxService.cs" />
     <Compile Include="Services\ImputadoExtraService.cs" />
@@ -1312,15 +1314,16 @@
     <Content Include="Areas\Antecedentes\Views\Antecedentes\_IdgxDelitosAsociados.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\_DetalleImputado.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\CargarDelitoIdgx.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\Antecedentes\DetalleProntuariosIdgx.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\Antecedentes\ListadoProntuariosIdgx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\CargarProntuarioIdgx.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\Antecedentes\AltaModificacionAFIS.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\AntecedentesAfis\AltaModificacionAFIS.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesGna\AltaModificacionGNA.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\AltaModificacionProntuarioIDGx.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\Antecedentes\_SummaryErrorAfis.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\AntecedentesAfis\_SummaryErrorAfis.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesGna\_SummaryErrorGna.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\ListaDatosPersonalesIDGx.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesGna\DetalleGNAs.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\AntecedentesGna\ListadoGNAs.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\AntecedentesAfis\ListadoAFIS.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

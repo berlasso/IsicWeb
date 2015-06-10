@@ -1,5 +1,5 @@
 ﻿@model ISIC.Entities.GNA
-@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index"); }
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
 
 @using (Ajax.BeginForm("GuardarDatosGNA", "Antecedentes",
   new AjaxOptions
@@ -13,6 +13,14 @@
                 new { id = "frmGuardarDatosGna" }))
 {    @Html.AntiForgeryToken()
 
+    <div class="row wow fadeInDown animated">
+        <ol class="breadcrumb hidden-xs tile-light" style="float: left !important">
+            <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
+            <li><a href="@url">Resultados</a></li>
+            <li>@Html.ActionLink("Listado GNA", "BuscarFichasGNA", new { prontuariosic = Model.Prontuario.ProntuarioNro }, new { onclick = "showPageLoadingSpinner();" })</li>
+            <li class="active">Carga GNA</li>
+        </ol>
+    </div>
     <div class=" center wow fadeInDown animated tile-light">
         <h3>
             Carga datos de GNA
@@ -189,9 +197,7 @@
     <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
         <div class="row">
             <div class="  col-sm-3 col-xs-4">
-                <a id="btnVolver" class="btn btn-lg btn-alt volver  " href='@url' title=" volver" onclick="showPageLoadingSpinner();" type="button">
-                    Volver
-                </a>
+                @Html.ActionLink("Volver", "BuscarFichasGNA", new { prontuariosic = Model.Prontuario.ProntuarioNro }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
 
 
             </div>
@@ -230,6 +236,7 @@
                 var url = '@Url.Content("BuscarFichasGNA")?prontuariosic=@Model.Prontuario.ProntuarioNro';
                 alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>").set({
                     onclose: function () {
+
                         showPageLoadingSpinner();
                         location.href = url;
 

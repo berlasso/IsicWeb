@@ -1,5 +1,5 @@
 ﻿@model ISIC.Entities.Prontuario
-@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index"); }
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
 
 <div class="row wow fadeInDown animated">
     <ol class="breadcrumb hidden-xs tile-light" style="float: left !important">
@@ -71,7 +71,7 @@
                                         @Html.DisplayFor(modelItem => item.Caratula)
                                     </td>
                                     <td style="text-align: right">
-                                        @Html.ActionLink("Editar", "AltaModificacionGNA", new { prontuariosic = Model.ProntuarioNro, idGNA = item.Id, esNuevo = false }, new { @class = "btn btn-alt btn-sm " })
+                                        @Html.ActionLink("Editar", "AltaModificacionGNA", new { prontuariosic = Model.ProntuarioNro, idGNA = item.Id}, new { @class = "btn btn-alt btn-sm " })
                                         <input type="button" class="btn btn-alt btn-sm" id="btnBorrarGNA" data-id="@item.Id" value="Borrar" />
                                     </td>
                                 </tr>
@@ -109,7 +109,7 @@
     <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
         @if (Model != null)
         {
-            @Html.ActionLink("Nuevo", "AltaModificacionGNA", new { prontuariosic = Model.ProntuarioNro, esNuevo = true }, new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
+            @Html.ActionLink("Nuevo", "AltaModificacionGNA", new { prontuariosic = Model.ProntuarioNro}, new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
         }
 
 
@@ -165,7 +165,7 @@
 
             alertify.confirm("Borrar ficha de GNA", "Seguro que desea borrar?", function () {
 
-                var url = '@Url.Action("BorrarFichaGNA","Antecedentes")/' + encodeURI(id);
+                var url = '@Url.Action("BorrarFichaGNA","AntecedentesGna")/' + encodeURI(id);
                 $.get(url, null, function (data) {
                     if (data === "True") {
                         row.remove().draw();

@@ -23,17 +23,17 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
             _gnaService = gnaService;
         }
 
-       public ActionResult AltaModificacionGNA(string prontuariosic = "", bool esNuevo = false)
+       public ActionResult AltaModificacionGNA(string prontuariosic = "", int idGNA=0)
        {
            ViewBag.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion");
            ViewBag.TipoDocList = new SelectList(_repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion");
 
-           GNA gna = _repository.Set<GNA>().SingleOrDefault(x => (x.Prontuario != null && x.Prontuario.ProntuarioNro == prontuariosic));
+           //GNA gna = _repository.Set<GNA>().SingleOrDefault(x => (x.Prontuario != null && x.Prontuario.ProntuarioNro == prontuariosic));
+           GNA gna = null;
 
-
-           if (!esNuevo)
+           if (idGNA!=0)
            {
-               gna = _repository.Set<GNA>().SingleOrDefault(x => x.Prontuario.ProntuarioNro == prontuariosic);
+               gna = _repository.Set<GNA>().SingleOrDefault(x => x.Id == idGNA);
            }
            else
            {
@@ -61,7 +61,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
                    ProntuarioNro = prontuariosic
                };
            }
-           return View("DetalleGNAs", prontuario);
+           return View("ListadoGNAs", prontuario);
        }
 
 

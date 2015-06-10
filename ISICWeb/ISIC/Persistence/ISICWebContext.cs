@@ -20,6 +20,8 @@ namespace ISIC.Persistence
         }
 
         public System.Data.Entity.DbSet<ISIC.Entities.GNA> GNAs { get; set; }
+
+        public System.Data.Entity.DbSet<ISIC.Entities.AFIS> AFIS { get; set; }
     
     }
 }

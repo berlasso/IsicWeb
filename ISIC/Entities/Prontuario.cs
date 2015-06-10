@@ -12,5 +12,6 @@ namespace ISIC.Entities
         public string ProntuarioNro { get; set; }
         public virtual ICollection<IdgxProntuario> ProntuariosIdgx { get; set; }
         public virtual ICollection<GNA> DatosGNA { get; set; }
+        public virtual ICollection<AFIS> DatosAFIS { get; set; }
     }
 }

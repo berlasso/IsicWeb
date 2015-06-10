@@ -20,15 +20,12 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
         IRepository _repository;
         private BusquedaService _busquedaService;
         private IdgxService _idgxService;
-        private GnaService _gnaService;
 
-        public AntecedentesController(IRepository repository, BusquedaService busquedaService, ImputadoService imputadoService, IdgxService idgxService, GnaService gnaService)
+        public AntecedentesController(IRepository repository, BusquedaService busquedaService, IdgxService idgxService)
         {
             _repository = repository;
             _busquedaService = busquedaService;
-
             _idgxService = idgxService;
-            _gnaService = gnaService;
         }
 
         // GET: Antecedentes/Antecedentes
@@ -306,65 +303,9 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
             return View("ListaDatosPersonalesIDGx",prontuarioviewmodel);
         }
 
-        public ActionResult CargarAfis(string prontuariosic)
-        {
-            ViewBag.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion");
-            AFIS afis = _repository.Set<AFIS>().SingleOrDefault(x => x.Prontuario.ProntuarioNro == prontuariosic);
-            if (afis==null)
-            afis = new AFIS
-            {
-                Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == 0),
-                Prontuario = new Prontuario { ProntuarioNro = prontuariosic}
-            };
-            return View("AltaModificacionAFIS", afis);
-        }
-
      
 
-        [HttpPost]
-        public ActionResult GuardarDatosAfis(AFIS model)
-        {
-             string errores = "";
-            string prontuariosic = model.Prontuario.ProntuarioNro;
-             Prontuario prontuario = _repository.Set<Prontuario>().FirstOrDefault(x => x.ProntuarioNro == prontuariosic);
-             if (prontuario == null)
-                 prontuario = new Prontuario
-                 {
-                     ProntuarioNro = prontuariosic
-                 };
-            if (ModelState.IsValid)
-            {
-                model.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == model.Sexo.Id);
-                model.FechaUltimaModificacion=DateTime.Now;
-                if (model.Id == 0)
-                {
-                    model.FechaCreacion=DateTime.Now;
-                    model.Prontuario = prontuario;
-                    _repository.UnitOfWork.RegisterNew(model);
-                }
-                else
-                    _repository.UnitOfWork.RegisterChanged(model);
-                try
-                {
-                    _repository.UnitOfWork.Commit();
-                }
-                catch (Exception e)
-                {
-                    errores = e.InnerException==null?"Error al guardar":e.InnerException.ToString().Substring(0, 400);
-                }
-                if (errores != "")
-                {
-                    ModelState.AddModelError("", errores);
-                    return PartialView("_SummaryErrorAfis", model);
-                }
-                return null;
-            }
-            else
-            {
-                return PartialView("_SummaryErrorAfis", model);
-            }
-        }
-
+      
 
     }
 }
