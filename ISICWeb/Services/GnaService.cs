@@ -39,44 +39,95 @@ namespace ISICWeb.Services
 
         }
 
-        public string GuardarFichaGNA(GNA model)
+        public string GuardarFichaGNA(GNAViewModel model)
         {
             string errores = "";
             string prontuariosic = model.Prontuario.ProntuarioNro;
             Prontuario prontuario = _repository.Set<Prontuario>().FirstOrDefault(x => x.ProntuarioNro == prontuariosic);
+            GNA gna = _repository.Set<GNA>().SingleOrDefault(x => x.Id == model.Id);
+            if (gna == null)
+            {
+                gna = new GNA { FechaCreacion = DateTime.Now, };
+            }
+
             if (prontuario == null)
-                prontuario = new Prontuario
-                {
-                    ProntuarioNro = prontuariosic
-                };
-
-            model.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == model.Sexo.Id);
-            model.TipoDNI = _repository.Set<ClaseTipoDNI>().Single(x => x.Id == model.TipoDNI.Id);
-            model.FechaUltimaModificacion = DateTime.Now;
-
-
+            {
+                prontuario = new Prontuario { ProntuarioNro = prontuariosic };
+            }
+            string fechanac = model.FechaNacimiento == null ? "" : model.FechaNacimiento.ToString();
+   gna.Nombre = model.Nombre;
+            gna.Apellido = model.Apellido;
+            gna.ApellidoMadre = model.ApellidoMadre;
+            gna.Prontuario = prontuario;
+            gna.Asunto = model.Asunto;
+            gna.Captura = model.Captura;
+            gna.Caratula = model.Caratula;
+            gna.Corroborado = model.Corroborado;
+            gna.DocumentoNumero = model.DocumentoNumero;
+            gna.ExpteGNA = model.ExpteGNA;
+            gna.FechaNacimiento = DateTime.ParseExact(fechanac, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            gna.FechaPedido = model.FechaPedido;
+            gna.Generado = model.Generado;
+            gna.ImpSalida = model.ImpSalida;
+            gna.Juzgadointerviniente = model.Juzgadointerviniente;
+            gna.NroLegajoGNA = model.NroLegajoGNA;
+            gna.Vigente = model.Vigente;
+            gna.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id.ToString() == model.idClaseSexo);
+            gna.TipoDNI = _repository.Set<ClaseTipoDNI>().Single(x => x.Id.ToString() == model.idClaseTipoDNI);
             if (model.Id == 0)
             {
-                model.FechaCreacion = DateTime.Now;
-                model.Prontuario = prontuario;
-                model.FechaCarga = DateTime.Now;
-                _repository.UnitOfWork.RegisterNew(model);
+                _repository.UnitOfWork.RegisterNew(gna);
             }
             else
-                _repository.UnitOfWork.RegisterChanged(model);
+            {
+                _repository.UnitOfWork.RegisterChanged(gna);
+            }
             try
             {
                 _repository.UnitOfWork.Commit();
             }
             catch (Exception e)
             {
-                errores = e.InnerException == null ? "Error al guardar" : e.InnerException.ToString().Substring(0, 400);
+                errores = e.InnerException == null ? "Error al guardar. " + e.Message : e.InnerException.ToString().Substring(0, 400);
             }
             return errores;
 
         }
 
-    
+        public GNAViewModel LlenarViewModelDesdeBase(string prontuariosic, int idGNA)
+        {
+            GNA gna = _repository.Set<GNA>().SingleOrDefault(x => x.Id == idGNA);
+            if (gna==null)gna=new GNA();
+            GNAViewModel model = new GNAViewModel();
+            Prontuario prontuario = _repository.Set<Prontuario>().Single(x => x.ProntuarioNro == prontuariosic);
+            if (prontuario == null)
+            {
+                prontuario = new Prontuario { ProntuarioNro = prontuariosic };
+            };
+            model.Id = idGNA;
+            model.idClaseSexo = gna.Sexo == null ? "0" : gna.Sexo.Id.ToString();
+            model.idClaseTipoDNI = gna.TipoDNI == null ? "0" : gna.TipoDNI.Id.ToString();
+            model.Nombre = gna.Nombre;
+            model.Apellido = gna.Apellido;
+            model.ApellidoMadre = gna.ApellidoMadre;
+            model.Prontuario = prontuario;
+            model.Asunto = gna.Asunto;
+            model.Captura = gna.Captura;
+            model.Caratula = gna.Caratula;
+            model.Corroborado = gna.Corroborado;
+            model.DocumentoNumero = gna.DocumentoNumero;
+            model.ExpteGNA = gna.ExpteGNA;
+            model.FechaNacimiento = gna.FechaNacimiento;
+            model.FechaPedido = gna.FechaPedido;
+            model.Generado = gna.Generado;
+            model.ImpSalida = gna.ImpSalida;
+            model.Juzgadointerviniente = gna.Juzgadointerviniente;
+            model.NroLegajoGNA = gna.NroLegajoGNA;
+            model.Vigente = gna.Vigente;
+            model.ClaseSexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion");
+            model.ClaseTipoDNIList = new SelectList(_repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion");
+            return model;
+        }
 
        
     }

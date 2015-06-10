@@ -17,6 +17,7 @@ namespace ISIC.Persistence.Mappings
             this.HasKey(x => x.Id);
             this.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.HasOptional(x => x.Sexo).WithMany().Map(m => m.MapKey("idSexo"));
+            this.HasOptional(x => x.TipoDNI).WithMany().Map(m => m.MapKey("idTipoDNI"));
         }
     }
 }

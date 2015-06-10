@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ISIC.Entities;
+using ISICWeb.Areas.Antecedentes.Models;
 using ISICWeb.Services;
 using MPBA.DataAccess;
 
@@ -23,12 +24,18 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
 
         [HttpPost]
-        public ActionResult GuardarDatosAfis(AFIS model)
+        public ActionResult GuardarDatosAfis(AFISViewModel model)
         {
             string errores = "";
             if (ModelState.IsValid)
             {
                 errores = _afisService.GuardarFichaAFIS(model);
+            }
+            else
+            {
+                errores = string.Join("; ", ModelState.Values
+                                          .SelectMany(x => x.Errors)
+                                          .Select(x => x.ErrorMessage));
             }
 
             if (errores != "")
@@ -54,32 +61,13 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
             return View("ListadoAFIS", prontuario);
         }
 
-
+        
         public ActionResult AltaModificacionAFIS(string prontuariosic,int idAfis=0)
         {
-            ViewBag.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion");
-            //ViewBag.TipoDocList = new SelectList(_repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion");
 
-            //AFIS afis = _repository.Set<AFIS>().SingleOrDefault(x => (x.Prontuario != null && x.Prontuario.ProntuarioNro == prontuariosic));
-            AFIS afis = null;
-
-            if (idAfis!=0)
-            {
-                afis = _repository.Set<AFIS>().SingleOrDefault(x => x.Id==idAfis);
-            }
-            else
-            {
-                afis = new AFIS
-                {
-                    Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == 0),
-                    //TipoDNI = _repository.Set<ClaseTipoDNI>().Single(x => x.Id == 0),
-                    Prontuario = new Prontuario { ProntuarioNro = prontuariosic }
-                };
-
-            }
-
-            return View(afis);
-
+            AFISViewModel model = _afisService.LlenarViewModelDesdeBase(prontuariosic, idAfis);
+          
+            return View(model);
         }
 
         public bool BorrarFichasAFIS(int id)

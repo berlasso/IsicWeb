@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MPBA.Entities;
+using System.Web;
+using System.Web.Mvc;
+using ISIC.Entities;
 
-namespace ISIC.Entities
+namespace ISICWeb.Areas.Antecedentes.Models
 {
-    public class AFIS : Entity
+    public class AFISViewModel
     {
+        public int Id { get; set; }
         public virtual Prontuario Prontuario { get; set; }
         public string NIF { get; set; } //prontuario de Policía Federal
         public string CTL { get; set; }
         [Display(Name = "Tipo Doducmento")]
-        public virtual ClaseTipoDNI TipoDNI { get; set; }
+        public string idTipoDoc { get; set; }
         [Required(ErrorMessage = "El apellido es requerido")]
         [MinLength(2, ErrorMessage = "El apellido no puede tener menos de 2 letras")]
         [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el apellido")]
@@ -29,11 +30,14 @@ namespace ISIC.Entities
         [Display(Name = "Nro. de Documento")]
         public string DNI { get; set; }
         public string Clase { get; set; }
-        public virtual ClaseSexo Sexo { get; set; }
+        //public virtual ClaseSexo Sexo { get; set; }
+        public string idClaseSexo { get; set; }
         public string idUsuarioCreacion { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public Nullable<bool> Baja { get; set; }
         public string idUsuarioUltimaModificacion { get; set; }
         public Nullable<System.DateTime> FechaUltimaModificacion { get; set; }
+        public SelectList TipoDocList { get; set; }
+        public SelectList SexoList { get; set; }
     }
 }

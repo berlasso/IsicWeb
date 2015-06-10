@@ -71,7 +71,7 @@
                                         @Html.DisplayFor(modelItem => item.Caratula)
                                     </td>
                                     <td style="text-align: right">
-                                        @Html.ActionLink("Editar", "AltaModificacionGNA", new { prontuariosic = Model.ProntuarioNro, idGNA = item.Id}, new { @class = "btn btn-alt btn-sm " })
+                                        @Html.ActionLink("Editar", "AltaModificacionGNA", new { prontuariosic = Model.ProntuarioNro, idGNA = item.Id }, new { @class = "btn btn-alt btn-sm ", onclick = "showPageLoadingSpinner();" })
                                         <input type="button" class="btn btn-alt btn-sm" id="btnBorrarGNA" data-id="@item.Id" value="Borrar" />
                                     </td>
                                 </tr>

@@ -1,4 +1,4 @@
-﻿@model ISIC.Entities.GNA
+﻿@model ISICWeb.Areas.Antecedentes.Models.GNAViewModel
 @{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
 
 @using (Ajax.BeginForm("GuardarDatosGNA", "Antecedentes",
@@ -69,14 +69,14 @@
                     @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-xs-4">
-                    @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label  " })
-                    @Html.DropDownListFor(model => model.Sexo.Id, ViewBag.SexoList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                    @Html.LabelFor(model => model.idClaseSexo, htmlAttributes: new { @class = "control-label  " })
+                    @Html.DropDownListFor(model => model.idClaseSexo, Model.ClaseSexoList as IEnumerable<SelectListItem>, new { @class = "form-control" })
                 </div>
             </div>
             <div class="row wow fadeInDown animated">
                 <div class="col-xs-4">
-                    @Html.LabelFor(model => model.TipoDNI, htmlAttributes: new { @class = "control-label  " })
-                    @Html.DropDownListFor(model => model.TipoDNI.Id, ViewBag.TipoDocList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                    @Html.LabelFor(model => model.idClaseTipoDNI, htmlAttributes: new { @class = "control-label  " })
+                    @Html.DropDownListFor(model => model.idClaseTipoDNI, Model.ClaseTipoDNIList as IEnumerable<SelectListItem>, new { @class = "form-control" })
                 </div>
                 <div class="col-xs-4">
                     @Html.LabelFor(model => model.DocumentoNumero, htmlAttributes: new { @class = "control-label  " })
@@ -254,6 +254,10 @@
             }
         }
 
+        //$('#FechaNacimiento').bind('keyup keypress blur change cut copy paste ', function () {
+        //    var validator = $("#frmGuardarDatosGna").validate();
+        //    validator.element(this);
+        //});
 
         $(document).ready(function () {
             $("#navFooter").hide();

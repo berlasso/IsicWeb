@@ -265,6 +265,8 @@
     <Compile Include="Areas\Antecedentes\AntecedentesAreaRegistration.cs" />
     <Compile Include="Areas\Antecedentes\Controllers\AntecedentesAfisController.cs" />
     <Compile Include="Areas\Antecedentes\Controllers\AntecedentesGnaController.cs" />
+    <Compile Include="Areas\Antecedentes\Models\AFISViewModel.cs" />
+    <Compile Include="Areas\Antecedentes\Models\GNAViewModels.cs" />
     <Compile Include="Areas\Antecedentes\Models\IdgxViewModels.cs" />
     <Compile Include="Areas\Antecedentes\Models\ImputadosAntecedentesViewModel.cs" />
     <Compile Include="Areas\Otip\Controllers\BuscadorAutocompletesController.cs" />
@@ -274,6 +276,7 @@
     <Compile Include="Areas\Otip\Models\ImagenesViewModel.cs" />
     <Compile Include="Areas\Otip\Models\DatosGeneralesViewModel.cs" />
     <Compile Include="Areas\Otip\Models\ImputadoService.cs" />
+    <Compile Include="Areas\Otip\Models\OtipViewModels.cs" />
     <Compile Include="Areas\Otip\Models\WebApiSimpModels.cs" />
     <Compile Include="Areas\Otip\OtipAreaRegistration.cs" />
     <Compile Include="Areas\PortalSIC\Controllers\BusquedaController.cs" />

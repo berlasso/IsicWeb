@@ -25,29 +25,8 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
        public ActionResult AltaModificacionGNA(string prontuariosic = "", int idGNA=0)
        {
-           ViewBag.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion");
-           ViewBag.TipoDocList = new SelectList(_repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion");
-
-           //GNA gna = _repository.Set<GNA>().SingleOrDefault(x => (x.Prontuario != null && x.Prontuario.ProntuarioNro == prontuariosic));
-           GNA gna = null;
-
-           if (idGNA!=0)
-           {
-               gna = _repository.Set<GNA>().SingleOrDefault(x => x.Id == idGNA);
-           }
-           else
-           {
-               gna = new GNA
-               {
-                   Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == 0),
-                   TipoDNI = _repository.Set<ClaseTipoDNI>().Single(x => x.Id == 0),
-                   Prontuario = new Prontuario { ProntuarioNro = prontuariosic }
-               };
-
-           }
-
-           return View(gna);
-
+           GNAViewModel model = _gnaService.LlenarViewModelDesdeBase(prontuariosic, idGNA);
+           return View(model);
        }
 
        public ActionResult BuscarFichasGNA(string prontuariosic)
@@ -75,12 +54,18 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
 
        [HttpPost]
-       public ActionResult GuardarDatosGNA(GNA model)
+       public ActionResult GuardarDatosGNA(GNAViewModel model)
        {
            string errores = "";
            if (ModelState.IsValid)
            {
                errores = _gnaService.GuardarFichaGNA(model);
+           }
+           else
+           {
+               errores = string.Join("; ", ModelState.Values
+                                         .SelectMany(x => x.Errors)
+                                         .Select(x => x.ErrorMessage));
            }
 
            if (errores != "")
