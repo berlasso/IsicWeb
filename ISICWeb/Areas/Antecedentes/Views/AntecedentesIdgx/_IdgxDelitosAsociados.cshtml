@@ -60,7 +60,7 @@
                                 </td>
 
                                 <td>
-                                    @Html.ActionLink("Editar", "AltaModificacionDelitoIdgx", new { idIdgxdatospersonales = Model.Id, idIdgxdelito=item.Id }, new { @class = "btn btn-alt btn-sm" })
+                                    @Html.ActionLink("Editar", "AltaModificacionDelitoIdgx", new { idIdgxdatospersonales = Model.Id, idIdgxdelito = item.Id }, new { @class = "btn btn-alt btn-sm", onclick = "showPageLoadingSpinner();" })
                                     <input type="button" class="btn btn-alt btn-sm" id="btnBorrarDelitoIdgx" data-id="@item.Id" value="Borrar" />
                                 </td>
                             </tr>
@@ -77,7 +77,7 @@
                 <div class="pull-right">
                     @if (Model != null)
                     {
-                        @Html.ActionLink("Nuevo Delito", "AltaModificacionDelitoIdgx", new {idIdgxdatospersonales = Model.Id}, new {@class = "btn ", id = "btnNuevoDelito"})
+                        @Html.ActionLink("Nuevo Delito", "AltaModificacionDelitoIdgx", new { idIdgxdatospersonales = Model.Id }, new { @class = "btn ", id = "btnNuevoDelito", onclick = "showPageLoadingSpinner();" })
                     }
 
                 </div>
@@ -97,6 +97,10 @@
                             "aButtons": [],
                         },
                         "columnDefs": [
+                              {
+                                  "targets": 4,
+                                  "sortable": false
+                              }
                       ],
                         "language": {
                             "sProcessing": "Procesando...",

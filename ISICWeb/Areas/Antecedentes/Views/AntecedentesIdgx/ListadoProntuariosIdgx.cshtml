@@ -76,7 +76,7 @@
 
 
                                     <td>
-                                        @Html.ActionLink("Editar", "AltaModificacionProntuarioIDGx", new { prontuariosic = Model.ProntuarioNro, idIdgxprontuario = item.Id, esNuevo = false }, new { @class = "btn btn-alt btn-sm " })
+                                        @Html.ActionLink("Editar", "AltaModificacionProntuarioIDGx", new { prontuariosic = Model.ProntuarioNro, idIdgxprontuario = item.Id, esNuevo = false }, new { @class = "btn btn-alt btn-sm ", onclick = "showPageLoadingSpinner();" })
                                         <input type="button" class="btn btn-alt btn-sm" id="btnBorrarProntuarioIdgx" data-id="@item.Id" value="Borrar" />
                                     </td>
                                 </tr>

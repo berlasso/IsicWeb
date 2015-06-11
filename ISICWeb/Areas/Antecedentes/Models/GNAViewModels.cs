@@ -62,6 +62,7 @@ namespace ISICWeb.Areas.Antecedentes.Models
         public bool Corroborado { get; set; }
         public DateTime? FechaCarga { get; set; }
         [Display(Name = "Fecha de Pedido de Captura")]
+        [RegularExpression(RegexFecha, ErrorMessage = "El formato de la fecha de pedido es incorrecto")]
         public string FechaPedido { get; set; }
         public string idUsuarioCreacion { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }

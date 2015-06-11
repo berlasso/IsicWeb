@@ -13,3 +13,7 @@ $(function() {
     $("#Clase").mask("9999", { placeholder: "" });
 });
 
+$(document).ready(function() {
+    $(".fecha").mask("99/99/9999");
+});
+

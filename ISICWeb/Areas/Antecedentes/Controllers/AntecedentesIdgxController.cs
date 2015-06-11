@@ -107,9 +107,9 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
                     idIdgxprontuario);
             }
 
+            ViewBag.prontuarioidgx = _repository.Set<IdgxProntuario>().Single(x=>x.Id==idIdgxprontuario).ProntuarioPF;
 
-
-            return View("CargaDatosPersonalesIDGx", datosPersona);
+            return View("AltaModificacionDatosPersonalesIDGx", datosPersona);
         }
 
         [HttpPost]
@@ -145,7 +145,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
             {
                 IdgxDatosPersona datosPersona =
                     _repository.Set<IdgxDatosPersona>().Single(x => x.Id == idIdgxdatospersonales);
-
+                ViewBag.prontuarioidgx = _repository.Set<IdgxProntuario>().Single(x => x.Id == datosPersona.IdgxProntuario.Id).ProntuarioPF;
                 delito = new IdgxDelitoViewModel
                 {
                     Id = 0,
@@ -155,14 +155,17 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
                     CodigoRestriccionPF = "0",
                     idIdgxdatospersonales = idIdgxdatospersonales,
                     idIdgxprontuario = (datosPersona.IdgxProntuario == null ? 0 : datosPersona.IdgxProntuario.Id)
-
+                    
                 };
+                
             }
             else
             {
                 delito = _idgxService.TraerIdgxDelito(idIdgxdelito);
+                ViewBag.prontuarioidgx = _repository.Set<IdgxProntuario>().Single(x => x.Id == delito.idIdgxprontuario).ProntuarioPF;
             }
-            return View("CargarDelitoIdgx", delito);
+            
+            return View("AltaModificacionDelitoIdgx", delito);
         }
 
         [HttpPost]
@@ -213,7 +216,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
         public ActionResult MostrarDatosIdgx(int id)
         {
             IdgxProntuario prontuario = _repository.Set<IdgxProntuario>().Single(x => x.Id == id);
-            IdgxProntuarioViewModel prontuarioviewmodel = _idgxService.TraerIdgxProntuarioViewModel(prontuario);
+            IdgxProntuarioViewModel prontuarioviewmodel = _idgxService.TraerIdgxProntuarioViewModel(prontuario,prontuario.Prontuario.ProntuarioNro);
             return View("ListaDatosPersonalesIDGx", prontuarioviewmodel);
         }
 

@@ -46,8 +46,8 @@ namespace ISICWeb.Services
                 ProvinciaNacimiento = datosPersona.ProvinciaNacimiento == null ? "0" : datosPersona.ProvinciaNacimiento.Id.ToString(),
                 InfDac = datosPersona.InfDac,
                 DocumentoNumero = datosPersona.DocumentoNumero,
-                FechaFallecimiento = datosPersona.FechaFallecimiento,
-                FechaNacimiento = datosPersona.FechaNacimiento,
+                FechaFallecimiento =datosPersona.FechaFallecimiento==null?"": datosPersona.FechaFallecimiento.Value.ToString("dd/MM/yyyy"),
+                FechaNacimiento =datosPersona.FechaNacimiento==null?"": datosPersona.FechaNacimiento.Value.ToString("dd/MM/yyyy"),
                 InfNom = datosPersona.InfNom,
                 Madre = datosPersona.Madre,
                 Padre = datosPersona.Padre,
@@ -196,8 +196,19 @@ namespace ISICWeb.Services
                 idgxpersona.Id = datosPersona.Id;
                 idgxpersona.InfDac = datosPersona.InfDac;
                 idgxpersona.DocumentoNumero = datosPersona.DocumentoNumero;
-                idgxpersona.FechaFallecimiento = datosPersona.FechaFallecimiento;
-                idgxpersona.FechaNacimiento = datosPersona.FechaNacimiento;
+                if (datosPersona.FechaFallecimiento != null)
+                    idgxpersona.FechaFallecimiento = DateTime.ParseExact(datosPersona.FechaFallecimiento, "dd/MM/yyyy",
+                        CultureInfo.InvariantCulture);
+                else
+                {
+                    idgxpersona.FechaFallecimiento = null;
+                }
+                if (datosPersona.FechaNacimiento!=null)
+                    idgxpersona.FechaNacimiento = DateTime.ParseExact(datosPersona.FechaNacimiento, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                else
+                {
+                    idgxpersona.FechaNacimiento = null;
+                }
                 idgxpersona.InfNom = datosPersona.InfNom;
                 idgxpersona.Madre = datosPersona.Madre;
                 idgxpersona.Padre = datosPersona.Padre;

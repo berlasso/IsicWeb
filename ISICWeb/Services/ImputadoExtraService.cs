@@ -4,16 +4,17 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Web.Mvc;
 using ISIC.Entities;
+using ISIC.Services;
 using ISICWeb.Areas.Otip.Models;
 using Microsoft.Owin.Security.Provider;
 using MPBA.DataAccess;
+using MPBA.Jira.Model;
 
 namespace ISICWeb.Services
 {
     public class ImputadoExtraService: ISIC.Services.ImputadoService
     {
         private IRepository repository;
-
 
         public ImputadoExtraService(IRepository repository) : base(repository)
         {
@@ -290,13 +291,7 @@ namespace ISICWeb.Services
             imputado.Persona.Domicilio.Partido = repository.Set<Partido>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdPartido);
             imputado.Persona.Domicilio.Provincia = repository.Set<Provincia>().FirstOrDefault(x => x.Id.ToString() == imp.Provincia);
 
-            //Comisaria comisaria = null;
-            //if (!string.IsNullOrWhiteSpace(imp.DependenciaPolicial))
-            //{
-            //    comisaria = id > 0 ? delito.Comisaria : new Comisaria();
-            //    comisaria.ComisariaNombre = imp.DependenciaPolicial;
-            //}
-
+      
 
             if (imputado.Alias == null)
                 imputado.Alias = new AutoresAlias();
@@ -392,6 +387,8 @@ namespace ISICWeb.Services
             try
             {
                 repository.UnitOfWork.Commit();
+              
+
             }
             catch (Exception e)
             {

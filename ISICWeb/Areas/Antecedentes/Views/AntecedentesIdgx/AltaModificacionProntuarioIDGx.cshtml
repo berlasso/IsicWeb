@@ -135,7 +135,7 @@
                         $("#TipoProntuarioPF").attr("disabled", "disabled")
                         $("#ProntuarioPF").attr("disabled", "disabled")
                         $("#btnGuardarProntuario").attr("disabled", "disabled");
-                        alertify.success("Prontuario guardado correctamente");
+                        //alertify.success("Prontuario guardado correctamente");
                         var url = '@Url.Content("MostrarDatosIdgx")?id=' + data;
                         alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>.<br/> A continuación podrá cargar los datos personales asociados...").set({
                             onclose: function() {

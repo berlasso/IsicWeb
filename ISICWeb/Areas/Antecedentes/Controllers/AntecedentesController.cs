@@ -41,30 +41,26 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
             ISICContext ctx = (ISICContext)_repository.UnitOfWork.Context;
             string querystring = "";
              _busquedaService.BuscarImputados(busqueda, maxResultados, out querystring);
-            var imputados = ctx.Imputado.Where(querystring).OrderBy(x => x.CodigoDeBarras).Take(100);
-            var resultados = from i in imputados
-                             from p in ctx.IdgxProntuario.Where(p => p.Prontuario.ProntuarioNro == i.ProntuarioSIC).DefaultIfEmpty()
-                             from a in ctx.AFIS.Where(a => a.Prontuario.ProntuarioNro == i.ProntuarioSIC).DefaultIfEmpty()
-                             from g in ctx.GNA.Where(g => g.Prontuario.ProntuarioNro == i.ProntuarioSIC).DefaultIfEmpty()
-                             let persona = i.Persona
-                             where persona != null
-                             let numero = i.Delito != null ? i.Delito.Ipp.numero : ""
-                             where numero != null
-                             select new ImputadosAntecedentesViewModel()
-                             {
-                                 Id = i.Id,
-                                 ProntuarioSIC = i.ProntuarioSIC,
-                                 CodigoDeBarras = i.CodigoDeBarras,
-                                 Apellido = persona.Apellido,
-                                 Nombre = persona.Nombre,
-                                 DocumentoNumero = persona.DocumentoNumero,
-                                 IPP = numero,
-                                 IDGx = (p != null && p.ProntuarioPF != null && p.Baja!=true),
-                                 AFIS = (a != null && a.Prontuario != null && a.Baja!=true),
-                                 GNA = (g != null && g.Prontuario != null && g.Baja!=true)
-                             };
 
-          //  var aaa = resultados.ToList();
+
+            var imputados = ctx.Imputado.Where(querystring).OrderBy(x => x.CodigoDeBarras).Take(100);
+            var resultados = from imp in imputados
+                from p in ctx.Prontuario.Where(p => p.ProntuarioNro == imp.ProntuarioSIC).DefaultIfEmpty()
+                select new ImputadosAntecedentesViewModel
+                {
+                    Id = imp.Id,
+                    ProntuarioSIC = imp.ProntuarioSIC,
+                    CodigoDeBarras = imp.CodigoDeBarras,
+                    Apellido = imp.Persona.Apellido,
+                    Nombre = imp.Persona.Nombre,
+                    DocumentoNumero = imp.Persona.DocumentoNumero,
+                    IPP = imp.Delito.Ipp.numero,
+                    AFIS = (from a in ctx.AFIS where a.Prontuario == p select a).Any(),
+                    GNA = (from g in ctx.GNA where g.Prontuario == p select g).Any(),
+                    IDGx = (from i in ctx.IdgxProntuario where i.Prontuario == p select i).Any()
+                };
+
+         
             return View("ResultadoBusqueda", resultados);
         }
 

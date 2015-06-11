@@ -81,7 +81,13 @@
                                         @Html.DisplayFor(modelItem => item.DocumentoNumero)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.FechaNacimiento)
+                                        
+                                        @if (item.FechaNacimiento != null)
+                                        {
+                                            var fenac = item.FechaNacimiento.ToString().Substring(0, 10);
+                                            @fenac;
+
+                                        }
                                     </td>
 
 
@@ -94,9 +100,9 @@
 
 
                                     <td>
-                                        @Html.ActionLink("Editar", "AltaModificacionDatosPersonalesIdGx", new {idIdgxdatospersonales = item.Id, idIdgxprontuario = Model.Id}, new {@class = "btn btn-alt btn-sm"})
+                                        @Html.ActionLink("Editar", "AltaModificacionDatosPersonalesIdGx", new { idIdgxdatospersonales = item.Id, idIdgxprontuario = Model.Id }, new { @class = "btn btn-alt btn-sm", onclick = "showPageLoadingSpinner();" })
 
-                                        <input type="button" class="btn btn-alt btn-sm" id="btnBorrarDatosPersonales" data-id="@item.Id" value="Borrar"/>
+                                        <input type="button" class="btn btn-alt btn-sm" id="btnBorrarDatosPersonales" data-id="@item.Id"  value="Borrar"/>
                                     </td>
                                 </tr>
 
@@ -120,7 +126,7 @@
 @section footer
 {
     <div class="col-md-2 col-sm-2 col-xs-6">
-        @Html.ActionLink("Volver", "AltaModificacionProntuarioIDGx", new { prontuariosic = Model.prontuariosic, idIdgxprontuario = Model.Id, esNuevo = false }, new { @class = "btn btn-alt btn-lg " })
+        @Html.ActionLink("Volver", "AltaModificacionProntuarioIDGx", new { prontuariosic = Model.prontuariosic, idIdgxprontuario = Model.Id, esNuevo = false }, new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
         @*<a class="btn btn-lg btn-alt volver" href='@url' title=" volver" onclick="showPageLoadingSpinner();" type="button">
             Volver
         </a>*@
@@ -128,7 +134,7 @@
     <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
         @if (Model != null)
         {
-            @Html.ActionLink("Nuevo Dato Personal", "AltaModificacionDatosPersonalesIdGx", new { idIdgxprontuario = Model.Id }, new { @class = "btn btn-lg btn-alt" })
+            @Html.ActionLink("Nuevo Dato Personal", "AltaModificacionDatosPersonalesIdGx", new { idIdgxprontuario = Model.Id }, new { @class = "btn btn-lg btn-alt", onclick = "showPageLoadingSpinner();" })
         }
     </div>
 

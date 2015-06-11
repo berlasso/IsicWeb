@@ -1313,13 +1313,12 @@
     <Content Include="fonts\open-sans\OpenSans-SemiboldItalic-webfont.woff" />
     <Content Include="Areas\Antecedentes\Views\web.config" />
     <Content Include="Areas\Antecedentes\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\CargaDatosPersonalesIDGx.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\AltaModificacionDatosPersonalesIDGx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\ResultadoBusqueda.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\_IdgxDelitosAsociados.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\_DetalleImputado.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\CargarDelitoIdgx.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\AltaModificacionDelitoIdgx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\ListadoProntuariosIdgx.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\CargarProntuarioIdgx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesAfis\AltaModificacionAFIS.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesGna\AltaModificacionGNA.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\AltaModificacionProntuarioIDGx.cshtml" />

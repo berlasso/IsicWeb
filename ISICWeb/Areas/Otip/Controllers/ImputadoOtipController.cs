@@ -10,9 +10,11 @@ using System.Linq.Dynamic;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using ISIC.Persistence.Context;
+using ISIC.Services;
 using ISICWeb.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MPBA.Jira.Model;
 using ImputadoService = ISICWeb.Services.ImputadoExtraService;
 using Session = Glimpse.AspNet.Tab.Session;
 
@@ -25,6 +27,7 @@ namespace ISICWeb.Areas.Otip.Controllers
         
         IRepository repository;
         private ImputadoService ImputadoSrv;
+        private IJiraService _jiraService;
         /// <summary>
 
         /// Application DB context
@@ -41,10 +44,10 @@ namespace ISICWeb.Areas.Otip.Controllers
 
         protected UserManager<ApplicationUser> UserManager { get; set; }
 
-        public ImputadoOtipController(IRepository repository, ImputadoService service)
+        public ImputadoOtipController(IRepository repository, ImputadoService service, IJiraService jiraService)
         {
             this.repository = repository;
-            //ImputadoSrv = new ImputadoService(repository);
+            _jiraService = jiraService;
             ImputadoSrv = service;
         }
 
@@ -149,15 +152,23 @@ namespace ISICWeb.Areas.Otip.Controllers
                 {
                     errores = "Código de barras no pertenece a la OTIP";
                 }
-                else if (imp.Id == 0  && BuscarDelito(imp.CodBarras) == true)
+                else if (imp.Id == 0 && BuscarDelito(imp.CodBarras) == true)
                 {
                     errores = "Código de barras existente en la base de datos del SIC";
                 }
                 else
-                    errores = ImputadoSrv.GuardarImputadoDesdeViewModel(imp,idPuntoGestion);
+                {
+                    errores = ImputadoSrv.GuardarImputadoDesdeViewModel(imp, idPuntoGestion);
+
+
+                }
                 if (errores != "")
                 {
                     ModelState.AddModelError("", errores);
+                    var issue = _jiraService.GetIssue(imp.CodBarras);
+                    Transition transition = _jiraService.GetTransitions(issue).First();
+                    issue = _jiraService.TransitionIssue(issue, transition);
+
                     return PartialView("SummaryError", imp);
                 }
 
@@ -199,7 +210,7 @@ namespace ISICWeb.Areas.Otip.Controllers
                                     //&& (a==null || a.Imputado.Id==i.Id && (a.TipoArchivo==null || a.TipoArchivo.Id==1))
                                    && i.CodigoDeBarras.Substring(2, 4) == subCodBarra && //codbarras coincide con el permitido al usuario 
                                    i.PuntoGestionCreacionI.Id == idPuntoGestion //el punto de gestion que dio de alta es el mismo al que pertenece el usuario
-                             select new {ThumbUrl=a.ThumbUrl.Replace("~",""), i.CodigoDeBarras, i.Persona.Apellido, i.Persona.Nombre, i.Persona.DocumentoNumero, i.Id });
+                             select new {Abrir="",ThumbUrl=a.ThumbUrl.Replace("~",""), i.CodigoDeBarras, i.Persona.Apellido, i.Persona.Nombre, i.Persona.DocumentoNumero,Borrar="",Enviar="", i.Id });
             var cant = imputados.Count();
             //var filteredColumns = requestModel.Columns.GetFilteredColumns();
             //foreach (var column in filteredColumns)

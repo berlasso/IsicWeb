@@ -35,62 +35,66 @@ $(function () {
         "processing": true,
         "ajax": window.urlTablaImputados,
         "order": [[2, "asc"]],//codbarras
-        "columns": [{
-                        "data": null,
-                        "targets": -1
-                    },
+        "columns": [
+                    { "data": null },
                     { "data": "ThumbUrl" },
                     { "data": "CodigoDeBarras" },
                     { "data": "Apellido" },
                     { "data": "Nombre" },
                     { "data": "DocumentoNumero" },
-                    {
-                        "data": null,
-                        "targets": -1,
-                        "defaultContent": "<a href='#' class='btn-alt btn-xs' style='font-size: 20px!important' title='Borrar' id='btnborrarimputado' ><span  class='flaticon-waste2' ></span></a>"
-                    },
+
+
                       {
                           "data": null,
-                          "targets": -1,
-                          "defaultContent": "<a href='#' class='btn-alt btn-xs ' style='font-size: 20px!important'  title='Enviar al SIC'  id='btnEnviarImputado'><span  class='flaticon-arrow430' ></span></a>"
-                      },
-                    { "data": "Id" }
+                          "defaultContent": "<a href='#' class='btn-alt btn-xs ' style='font-size: 20px!important'  title='Enviar al SIC'  id='btnEnviarImputado'><span  class='flaticon-arrow430' ></span></a>" +
+                              "<a href='#' class='btn-alt btn-xs' style='font-size: 20px!important' title='Borrar' id='btnborrarimputado' ><span  class='flaticon-waste2' ></span></a>"
+                        },
+                    {
+                        "data": "Id",
+                        "visible": false
+                        },
+
+
         ],
         "columnDefs": [
           {
               "render": function (data, type, row) {
-                  return '<a href="' + urlEditar + '/' + row.Id + '" class="btn  btn-alt" title="Editar" onclick=" showPageLoadingSpinner() ">Editar</a>';
+                  return '<a href="' + urlEditar + '/' + row.Id + '" class="btn  btn-alt" title="Editar" onclick=" showPageLoadingSpinner()  ">Editar</a>';
               },
               "targets": 0, //boton editar
+
           },
         {
             "render": function (data, type, row) {
                 if (data !== "" && data != null)
 
-                    return '<img src=' + data + '?r=' + Math.random() + ' style="max-width: 100px" />';
+                    return '<img src=' + data + '?r=' + Math.random() + ' style="max-width: 100px"  class="thumb" />';
                 else
                     return '';
 
-                },
+            },
             "orderable": false,
-            "searchable": false,
-            "targets": 1 //ThumbUrl
+
+            "targets": 1, //ThumbUrl
+
         },
-      
+
 
        {
            "orderable": false,//columna Borrar
-           "targets": 6
+           "targets": 6,
+
        },
        {
            "orderable": false,//columna Enviar
-           "targets": 7
-       },
-       {
-           "targets": 8,//id
-           "visible": false,
+           "targets": 7,
            "searchable": false
-       }
+       },
+       //{
+       //    "targets": 8,//id
+       //    //"visible": false,
+       //    "searchable": false
+       //}
         ],
         "language": {
             "sProcessing": "Procesando...",
