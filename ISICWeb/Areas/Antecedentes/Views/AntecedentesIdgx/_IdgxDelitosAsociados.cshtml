@@ -128,7 +128,7 @@
                         var id = $(this).data("id");
                         alertify.confirm("Borrar Delito en IDGx", "Seguro que desea borrar?", function () {
 
-                            var url = '@Url.Action("BorrarDelitoIdgx","Antecedentes")/' + encodeURI(id);
+                            var url = '@Url.Action("BorrarDelitoIdgx","AntecedentesIdgx")/' + encodeURI(id);
                             $.get(url, null, function (data) {
                                 if (data === "True") {
 

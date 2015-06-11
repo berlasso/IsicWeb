@@ -2,8 +2,8 @@
 @using ISIC.Entities
 @model ISICWeb.Areas.Antecedentes.Models.IdgxDatosPersonalesViewModel
 @{
-    string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index"); 
-    string prontuariosic=Session["prontuariosic"].ToString() != "" ? Session["prontuariosic"].ToString() : @Url.Action("Index"); 
+    string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); 
+    string prontuariosic=Session["prontuariosic"].ToString() != "" ? Session["prontuariosic"].ToString() : @Url.Action("Index","Antecedentes"); 
 }
 
 <div class="container-detalle" style="margin-bottom: 80px;">
@@ -49,7 +49,7 @@
                 <div class="panel-heading">
                     @if (Model.Id > 0)
                     {
-                        <h4>Modificación Datos Personales IDGx</h4>
+                        <h4><b style="color:red">Modificación</b> Datos Personales IDGx</h4>
                     }
                     else
                     {
@@ -230,62 +230,20 @@
 
                 </div>
             </div>
-            <div class="row wow fadeInDown animated" style="margin-bottom: 80px">
-                @*@if (Model.Delitos == null)
-                    {
-                        List<ISIC.Entities.IdgxDetalle> detalles=new List<IdgxDetalle>();
-                        @Html.Partial("_IdgxDelitosAsociados", detalles);
-                    }
-                    else
-                    {
-                        @Html.Partial("_IdgxDelitosAsociados", Model.Delitos.ToList());
-                    }*@
-                <div class="tile">
-                    <div id="DelitosAsociados"></div>
-                    @if (Model.Id > 0)
-                    {
-                        @*<div class="row">
-                                <div class="col-md-12">
-                                    <div class="pull-right">
-                                        @Html.ActionLink("Nuevo Delito", "NuevoDelitoIdgx", new { idIdgxdatospersonales = @Model.Id }, new { @class = "btn  ", id = "btnNuevoDelito" })
-                                    </div>
-                                </div>
-                            </div>*@
-                    }
-                    else
-                    {
-                        @*<div class="row">
-                                <div class="col-md-12">
-                                    <div class="pull-right">
-                                        @Html.ActionLink("Nuevo Delito", "NuevoDelitoIdgx", new { idIdgxdatospersonales = @Model.Id }, new { @class = "btn hidden", id = "btnNuevoDelito" })
+    <div class="row wow fadeInDown animated" style="margin-bottom: 80px">
+        @*@if (Model.Delitos == null)
+            {
+                List<ISIC.Entities.IdgxDetalle> detalles=new List<IdgxDetalle>();
+                @Html.Partial("_IdgxDelitosAsociados", detalles);
+            }
+            else
+            {
+                @Html.Partial("_IdgxDelitosAsociados", Model.Delitos.ToList());
+            }*@
+        <div class="tile">
+            <div id="DelitosAsociados">
 
 
-                                    </div>
-                                </div>
-                            </div>*@
-                    }
-                </div>
-
-                @*@if (Model.Id > 0)
-                    {
-
-                        <div class="alert alert-info alert-icon   tile-dark hidden" id="cartelSinDelitos">
-                            Atención: Los delitos relacionados podrán ser cargados una vez que haya guardado el nuevo Dato Personal.
-                            <i class="icon flaticon-information32">
-
-                            </i>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="alert alert-info alert-icon   tile-dark " id="cartelSinDelitos">
-                            Atención: Los delitos relacionados podrán ser cargados una vez que haya guardado el nuevo Dato Personal.
-                            <i class="icon flaticon-information32">
-
-                            </i>
-                        </div>
-
-                    }*@
 
 
                 @if (Model.Id > 0)
@@ -301,7 +259,11 @@
                         </i>
                     </div>
                 }
+
             </div>
+
+        </div>
+    </div>
 
             <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
                 <div class="row">

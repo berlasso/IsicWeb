@@ -54,8 +54,7 @@ namespace ISICWeb.Services
             {
                 prontuario = new Prontuario { ProntuarioNro = prontuariosic };
             }
-            string fechanac = model.FechaNacimiento == null ? "" : model.FechaNacimiento.ToString();
-   gna.Nombre = model.Nombre;
+            gna.Nombre = model.Nombre;
             gna.Apellido = model.Apellido;
             gna.ApellidoMadre = model.ApellidoMadre;
             gna.Prontuario = prontuario;
@@ -65,8 +64,10 @@ namespace ISICWeb.Services
             gna.Corroborado = model.Corroborado;
             gna.DocumentoNumero = model.DocumentoNumero;
             gna.ExpteGNA = model.ExpteGNA;
-            gna.FechaNacimiento = DateTime.ParseExact(fechanac, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            gna.FechaPedido = model.FechaPedido;
+            if (!string.IsNullOrEmpty(model.FechaNacimiento))
+                gna.FechaNacimiento = DateTime.ParseExact(model.FechaNacimiento, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            if (!string.IsNullOrEmpty(model.FechaPedido))
+                gna.FechaPedido = DateTime.ParseExact(model.FechaPedido, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             gna.Generado = model.Generado;
             gna.ImpSalida = model.ImpSalida;
             gna.Juzgadointerviniente = model.Juzgadointerviniente;
@@ -99,7 +100,7 @@ namespace ISICWeb.Services
             GNA gna = _repository.Set<GNA>().SingleOrDefault(x => x.Id == idGNA);
             if (gna==null)gna=new GNA();
             GNAViewModel model = new GNAViewModel();
-            Prontuario prontuario = _repository.Set<Prontuario>().Single(x => x.ProntuarioNro == prontuariosic);
+            Prontuario prontuario = _repository.Set<Prontuario>().SingleOrDefault(x => x.ProntuarioNro == prontuariosic);
             if (prontuario == null)
             {
                 prontuario = new Prontuario { ProntuarioNro = prontuariosic };
@@ -117,8 +118,8 @@ namespace ISICWeb.Services
             model.Corroborado = gna.Corroborado;
             model.DocumentoNumero = gna.DocumentoNumero;
             model.ExpteGNA = gna.ExpteGNA;
-            model.FechaNacimiento = gna.FechaNacimiento;
-            model.FechaPedido = gna.FechaPedido;
+            model.FechaNacimiento = gna.FechaNacimiento == null ? "" : gna.FechaNacimiento.Value.ToString("dd/MM/yyyy");
+            model.FechaPedido = gna.FechaPedido == null ? "" : gna.FechaPedido.Value.ToString("dd/MM/yyyy");
             model.Generado = gna.Generado;
             model.ImpSalida = gna.ImpSalida;
             model.Juzgadointerviniente = gna.Juzgadointerviniente;

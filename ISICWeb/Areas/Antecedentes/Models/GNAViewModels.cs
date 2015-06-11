@@ -15,8 +15,10 @@ namespace ISICWeb.Areas.Antecedentes.Models
     public class GNAViewModel
     {
         public int Id { get; set; }
+
         private const string RegexFecha =
-       @"(^(((0[1-9]|[12][0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)";
+            @"^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$";
+       //@"(^(((0[1-9]|[12][0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)";
         public virtual Prontuario Prontuario { get; set; }
         [Required(ErrorMessage = "El apellido es requerido")]
         [MinLength(2, ErrorMessage = "El apellido no puede tener menos de 2 letras")]
@@ -36,8 +38,8 @@ namespace ISICWeb.Areas.Antecedentes.Models
         [Display(Name = "Nro. de Documento")]
         public string DocumentoNumero { get; set; }
         [Display(Name = "Fecha de Nacimiento")]
-        //[RegularExpression(RegexFecha, ErrorMessage = "El formato de la fecha de nacimiento es incorrecto")]
-        public DateTime? FechaNacimiento { get; set; }
+        [RegularExpression(RegexFecha, ErrorMessage = "El formato de la fecha de nacimiento es incorrecto")]
+        public string FechaNacimiento { get; set; }
         [Display(Name = "Apellido Madre")]
         [MinLength(2, ErrorMessage = "El apellido de la madre no puede tener menos de 2 letras")]
         [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el apellido de la madre")]
@@ -60,7 +62,7 @@ namespace ISICWeb.Areas.Antecedentes.Models
         public bool Corroborado { get; set; }
         public DateTime? FechaCarga { get; set; }
         [Display(Name = "Fecha de Pedido de Captura")]
-        public DateTime? FechaPedido { get; set; }
+        public string FechaPedido { get; set; }
         public string idUsuarioCreacion { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public Nullable<bool> Baja { get; set; }

@@ -1,5 +1,5 @@
 ﻿@model ISIC.Entities.Prontuario
-@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index"); }
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
 
 <div class="row wow fadeInDown animated">
     <ol class="breadcrumb hidden-xs tile-light" style="float:left!important">
@@ -174,7 +174,7 @@
                 
             alertify.confirm("Borrar Prontuario en IDGx", "Seguro que desea borrar?", function () {
 
-                var url = '@Url.Action("BorrarProntuarioIdgx","Antecedentes")/' + encodeURI(id);
+                var url = '@Url.Action("BorrarProntuarioIdgx","AntecedentesIdgx")/' + encodeURI(id);
                 $.get(url, null, function (data) {
                     if (data === "True") {
                         row.remove().draw();

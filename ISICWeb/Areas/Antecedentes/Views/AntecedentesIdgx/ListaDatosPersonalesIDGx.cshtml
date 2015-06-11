@@ -1,7 +1,7 @@
 ﻿@using System.ServiceModel.Security
 @model ISICWeb.Areas.Antecedentes.Models.IdgxProntuarioViewModel
 
-@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index"); }
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
 
 
 <div class="container-detalle" style="margin-bottom: 80px;">
@@ -214,7 +214,7 @@
                 var row = table.row($(this).parents('tr'));
                 alertify.confirm("Borrar Imputado", "Seguro que desea borrar?", function () {
 
-                    var url = '@Url.Action("BorrarDatosPersonales","Antecedentes")?id=' + encodeURI(id);
+                    var url = '@Url.Action("BorrarDatosPersonales","AntecedentesIdgx")?id=' + encodeURI(id);
                     $.get(url, null, function (data) {
                         if (data === "True") {
 

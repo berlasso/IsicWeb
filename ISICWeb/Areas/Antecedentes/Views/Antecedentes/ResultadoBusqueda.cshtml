@@ -226,7 +226,7 @@
 
         function VincularBotones(prontuariosic) {
             if (prontuariosic !== "") {
-                var urlIdgx = '@Url.Action("BuscarProntuariosIdgx", "Antecedentes")?prontuariosic=' + prontuariosic;
+                var urlIdgx = '@Url.Action("BuscarProntuariosIdgx", "AntecedentesIdgx")?prontuariosic=' + prontuariosic;
                 var urlAfis = '@Url.Action("BuscarFichasAFIS", "AntecedentesAfis")?prontuariosic=' + prontuariosic;
                 var urlGna = '@Url.Action("BuscarFichasGNA", "AntecedentesGna")?prontuariosic=' + prontuariosic;
                 $("#btnCargaIdgx").removeClass("disabled").prop("href", urlIdgx);

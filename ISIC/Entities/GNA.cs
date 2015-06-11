@@ -29,7 +29,7 @@ namespace ISIC.Entities
         [Display(Name = "Nro. de Documento")]
         public string DocumentoNumero { get; set; }
         [Display(Name = "Fecha de Nacimiento")]
-        [RegularExpression(RegexFecha, ErrorMessage = "El formato de la fecha de nacimiento es incorrecto")]
+        //[RegularExpression(RegexFecha, ErrorMessage = "El formato de la fecha de nacimiento es incorrecto")]
         public DateTime? FechaNacimiento { get; set; }
         public virtual ClaseSexo Sexo { get; set; }
         [Display(Name = "Apellido Madre")]
@@ -54,7 +54,7 @@ namespace ISIC.Entities
         public bool Corroborado { get; set; }
         public DateTime? FechaCarga { get; set; }
         [Display(Name = "Fecha de Pedido de Captura")]
-        [RegularExpression(RegexFecha, ErrorMessage = "El formato de la fecha de de pedido de captura es incorrecto")]
+        //[RegularExpression(RegexFecha, ErrorMessage = "El formato de la fecha de de pedido de captura es incorrecto")]
         public DateTime? FechaPedido { get; set; }
         public string idUsuarioCreacion { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }

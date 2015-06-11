@@ -1,7 +1,7 @@
 ﻿@model ISICWeb.Areas.Antecedentes.Models.IdgxDelitoViewModel
 @{
-    string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index");
-    string prontuariosic = Session["prontuariosic"].ToString() != "" ? Session["prontuariosic"].ToString() : @Url.Action("Index");     
+    string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes");
+    string prontuariosic = Session["prontuariosic"].ToString() != "" ? Session["prontuariosic"].ToString() : @Url.Action("Index","Antecedentes");     
 }
 <div class="container-detalle" style="margin-bottom: 80px;">
     <div class="row wow fadeInDown animated">
