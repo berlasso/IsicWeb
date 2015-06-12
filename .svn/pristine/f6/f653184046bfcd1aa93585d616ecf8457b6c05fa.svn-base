@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="block-area wow fadeInDown animated">
+    <div class="jumbotron tile-light" style="max-height: 200px!important;">
+        <h1>SIC Web</h1>
+        <p class="lead">Sistemas de Investigaciones Criminalísticas</p>    
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-lg-12"></div>
+</div>
+<div class="row">
+    <div class="features">
+        <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+            <div class="feature-wrap">
+                <a href='@Url.Action("Index", "ImputadoOtip", new {area = "Otip"})' onclick=" showPageLoadingSpinner() ">
+                    <i class="fa fa-user"></i>
+                </a>
+                <h2>OTIP</h2>
+                <h4>Carga de datos en las Oficinas Técnicas</h4>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+            <div class="feature-wrap">
+                <a href='@Url.Action("Index", "Busqueda", new {area = "PortalSIC"})' onclick=" showPageLoadingSpinner() ">
+                    <i class="fa fa-search"></i>
+                </a>
+                <h2>Portal SIC</h2>
+                <h4>Búsqueda de datos en la base del SIC</h4>
+            </div>
+        </div>
+        @*<i class="fa fa-search"></i>
+            </a>
+            <h2>Portal SIC</h2>
+            <h4>Búsqueda de datos en la base del SIC</h4>*@
+        <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+            <div class="feature-wrap">
+                <a href='@Url.Action("Index", "Digitalizacion")' onclick=" showPageLoadingSpinner() ">
+                    <i class="fa fa-paw"></i>
+                </a>
+                <h2>Huellas Dactilares</h2>
+                <h4>Segmentación de Huellas</h4>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+            <div class="feature-wrap">
+                <a href='@Url.Action("VisualizaDecaDigital", "Digitalizacion")' onclick=" showPageLoadingSpinner() ">
+                    <i class="fa fa-crop"></i>
+                </a>
+                <h2>Huellas Digitales</h2>
+                <h4>Visualiza las huellas Dactilares Digitalizadas</h4>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+            <div class="feature-wrap">
+                <a href='@Url.Action("Index", "Clasificacion")' onclick=" showPageLoadingSpinner() ">
+                    <i class="fa fa-sitemap"></i>
+                </a>
+                <h2>Clasificación</h2>
+                <h4>Clasifica las Huellas Dactilares Digitalizadas</h4>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+            <div class="feature-wrap">
+                <a href='@Url.Action("IndexPorTareas", "Imputado")' onclick=" showPageLoadingSpinner() ">
+                    <i class="fa fa-calendar"></i>
+                </a>
+                <h2>Tareas</h2>
+                <h4>Muestra el estado de los imputados asignados al usuario</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+            <div class="feature-wrap">
+                <a href='@Url.Action("CheckRenaper", "Imputado")' onclick=" showPageLoadingSpinner() ">
+                    <i class="fa fa-check-square-o"></i>
+                </a>
+                <h2>RENAPER</h2>
+                <h4>Chequea las huellas con el RENAPER</h4>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+            <div class="feature-wrap">
+                <a href='@Url.Action("Index", "CotejoManual")' onclick=" showPageLoadingSpinner() ">
+                    <i class="fa fa-users"></i>
+                </a>
+                <h2>Cotejo Manual</h2>
+                <h4>Búsqueda de reincidencia en el SIC</h4>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+            <div class="feature-wrap">
+                <a href='@Url.Action("Index", "Antecedentes", new {area = "Antecedentes"})' onclick=" showPageLoadingSpinner() ">
+                    <i class="fa fa-folder-open-o"></i>
+                </a>
+                <h2>Antecedentes</h2>
+                <h4>Carga de antecedentes en el SIC</h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="tile-light" style="margin-bottom: 50px;">
+                    <!--Solo muestra las siguientes herramientas si el usuario tiene el rol Admin -->
+
+                    <h2>Administración</h2>
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4">
+                            <p>Administrador de Errores.</p>
+                            <a class="btn btn-default" href="/Admin/Errors.axd">elmah &raquo;</a>
+                        </div>
+                        <div class="col-md-3 col-xs-4">
+                            <p>Modo Desarrollador</p>
+                            <a class="btn btn-default" href="/Admin/Glimpse.axd">glimpse &raquo;</a>
+                        </div>
+                    </div>
+                </div>
+                
+
+            }
+        
+
+@section scripts
+{
+
+
+
+
+    <script type="text/javascript">
+     
+            $("#navFooter").hide();
+     
+        function onSuccessAlta(result) {
+            $('#CartelLoading').hide();
+            $("#contenido").html(result);
+        }
+        var urlOtip = '@Url.Action("Index", "ImputadoOtip", new {area = "Otip"})';
+        $("#btnOtip").on("click", function () {
+            $.ajax({
+                type: 'GET',
+                url: urlOtip,
+                ////  beforeSend: function() { MostrarCartelCarga($("#contenido"), true) },
+                success: function (result) {
+
+                    $('#CartelLoading').hide();
+                    $("#contenido").html(result);
+                }
+                ////complete: function() { MostrarCartelCarga($("#contenido"), false) }
+            });
+        });
+
+    </script>
+}

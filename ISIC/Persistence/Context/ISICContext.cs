@@ -137,6 +137,7 @@ namespace ISIC.Persistence.Context
         public virtual DbSet<AFIS> AFIS { get; set; }
         public virtual DbSet<GNA> GNA { get; set; }
         public virtual DbSet<Prontuario> Prontuario { get; set; }
+        public virtual DbSet<Migraciones> Migracioness { get; set; }
 
     }
 }

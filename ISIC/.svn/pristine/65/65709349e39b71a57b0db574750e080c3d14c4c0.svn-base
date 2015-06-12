@@ -1,2 +1,0 @@
-﻿@model ISICWeb.Areas.Otip.Models.DatosGeneralesViewModel
-   @Html.ValidationSummary()

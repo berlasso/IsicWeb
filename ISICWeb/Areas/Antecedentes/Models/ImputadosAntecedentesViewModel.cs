@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -16,8 +17,9 @@ namespace ISICWeb.Areas.Antecedentes.Models
         public string IPP { get; set; }
         public bool IDGx { get; set; }
         public bool AFIS { get; set; }
-        public bool PB { get; set; }
-        public bool RNR { get; set; }
         public bool GNA { get; set; }
+        [Display(Name = "Mig.")]
+        public bool Migraciones { get; set; }
+        public bool SPB { get; set; }
     }
 }

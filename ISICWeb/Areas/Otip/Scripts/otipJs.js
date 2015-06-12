@@ -46,14 +46,15 @@ $(function () {
 
                       {
                           "data": null,
-                          "defaultContent": "<a href='#' class='btn-alt btn-xs ' style='font-size: 20px!important'  title='Enviar al SIC'  id='btnEnviarImputado'><span  class='flaticon-arrow430' ></span></a>" +
-                              "<a href='#' class='btn-alt btn-xs' style='font-size: 20px!important' title='Borrar' id='btnborrarimputado' ><span  class='flaticon-waste2' ></span></a>"
+                          "defaultContent": "<button class='btn-alt btn-xs' style='font-size: 20px!important' title='Borrar' id='btnborrarimputado' ><span  class='flaticon-waste2' ></span></button>"+
+                           "<button class='btn-alt btn-xs ' style='font-size: 20px!important'  title='Enviar al SIC'   id='btnEnviarImputado'><span  class='flaticon-arrow430' ></span></button>"
+                              
                         },
                     {
                         "data": "Id",
                         "visible": false
-                        },
-
+                    }
+       
 
         ],
         "columnDefs": [
@@ -81,20 +82,20 @@ $(function () {
 
 
        {
-           "orderable": false,//columna Borrar
+           "orderable": false,//columna Borrar/Enviar
            "targets": 6,
 
        },
-       {
-           "orderable": false,//columna Enviar
-           "targets": 7,
-           "searchable": false
-       },
        //{
-       //    "targets": 8,//id
-       //    //"visible": false,
+       //    "orderable": false,//columna Enviar
+       //    "targets": 7,
        //    "searchable": false
-       //}
+       //},
+       {
+           "targets": 7,//id
+           "visible": false,
+           "searchable": false
+       }
         ],
         "language": {
             "sProcessing": "Procesando...",

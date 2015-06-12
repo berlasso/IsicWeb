@@ -266,7 +266,6 @@
     <Compile Include="Areas\Antecedentes\Controllers\AntecedentesAfisController.cs" />
     <Compile Include="Areas\Antecedentes\Controllers\AntecedentesGnaController.cs" />
     <Compile Include="Areas\Antecedentes\Controllers\AntecedentesIdgxController.cs" />
-    <Compile Include="Areas\Antecedentes\Controllers\AntecedentesMigracionesController.cs" />
     <Compile Include="Areas\Antecedentes\Models\AFISViewModel.cs" />
     <Compile Include="Areas\Antecedentes\Models\GNAViewModels.cs" />
     <Compile Include="Areas\Antecedentes\Models\IdgxViewModels.cs" />
@@ -318,7 +317,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelISIC.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Services\MigracionesService.cs" />
     <Compile Include="Services\AfisService.cs" />
     <Compile Include="Services\GnaService.cs" />
     <Compile Include="Services\IdgxService.cs" />
@@ -1328,9 +1326,6 @@
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\ListaDatosPersonalesIDGx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesGna\ListadoGNAs.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesAfis\ListadoAFIS.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\ListadoMigraciones.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\_SummaryErrorMigraciones.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\AltaModificacionMigraciones.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -165,9 +165,7 @@ namespace ISICWeb.Areas.Otip.Controllers
                 if (errores != "")
                 {
                     ModelState.AddModelError("", errores);
-                    var issue = _jiraService.GetIssue(imp.CodBarras);
-                    Transition transition = _jiraService.GetTransitions(issue).First();
-                    issue = _jiraService.TransitionIssue(issue, transition);
+                
 
                     return PartialView("SummaryError", imp);
                 }
@@ -210,7 +208,7 @@ namespace ISICWeb.Areas.Otip.Controllers
                                     //&& (a==null || a.Imputado.Id==i.Id && (a.TipoArchivo==null || a.TipoArchivo.Id==1))
                                    && i.CodigoDeBarras.Substring(2, 4) == subCodBarra && //codbarras coincide con el permitido al usuario 
                                    i.PuntoGestionCreacionI.Id == idPuntoGestion //el punto de gestion que dio de alta es el mismo al que pertenece el usuario
-                             select new {Abrir="",ThumbUrl=a.ThumbUrl.Replace("~",""), i.CodigoDeBarras, i.Persona.Apellido, i.Persona.Nombre, i.Persona.DocumentoNumero,Borrar="",Enviar="", i.Id });
+                             select new {ThumbUrl=a.ThumbUrl.Replace("~",""), i.CodigoDeBarras, i.Persona.Apellido, i.Persona.Nombre, i.Persona.DocumentoNumero,Borrar="",i.Id});
             var cant = imputados.Count();
             //var filteredColumns = requestModel.Columns.GetFilteredColumns();
             //foreach (var column in filteredColumns)
@@ -282,6 +280,9 @@ namespace ISICWeb.Areas.Otip.Controllers
                 {
                     repository.UnitOfWork.RegisterChanged(imputado);
                     repository.UnitOfWork.Commit();
+                    Issue<IssueFields> issue = _jiraService.CreateIssue(imputado.CodigoDeBarras);
+                    Transition transition = _jiraService.GetTransitions(issue).First();
+                    _jiraService.TransitionIssue(issue, transition);
                     envioOk = true;
                 }
             }
