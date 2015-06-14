@@ -14,6 +14,6 @@ $(function() {
 });
 
 $(document).ready(function() {
-    $(".fecha").mask("99/99/9999");
+    $(".fecha").mask("99/99/9999", { placeholder: "dd/mm/aaaa" });
 });
 

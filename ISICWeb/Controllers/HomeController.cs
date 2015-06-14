@@ -41,30 +41,30 @@ namespace ISICWeb.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Completar Página de contacto.";
-            ViewBag.dnilist = new SelectList(repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion");
+            ViewBag.dnilist = new SelectList(repository.Set<ClaseExpedienteMigraciones>().ToList(), "Id", "descripcion");
             return View();
         }
 
 
-        public ActionResult GuardarContacto(AFIS model)
+        public ActionResult GuardarContacto(Migraciones model)
         {
-            AFIS afis = repository.Set<AFIS>().FirstOrDefault(x => x.Id == model.Id);
-            ClaseTipoDNI tipoDNI = repository.Set<ClaseTipoDNI>().Single(x => x.Id == model.TipoDNI.Id);
-            if (afis == null)
-            {
-                afis = new AFIS();
-                afis.TipoDNI = tipoDNI;
-                afis.Apellido = "prueba";
+            //AFIS afis = repository.Set<AFIS>().FirstOrDefault(x => x.Id == model.Id);
+            //ClaseTipoDNI tipoDNI = repository.Set<ClaseTipoDNI>().Single(x => x.Id == model.TipoDNI.Id);
+            //if (afis == null)
+            //{
+            //    afis = new AFIS();
+            //    afis.TipoDNI = tipoDNI;
+            //    afis.Apellido = "prueba";
                 
-                repository.UnitOfWork.RegisterNew(afis);
-            }
-            else
-            {
-                afis.Apellido = "prueba";
-                afis.TipoDNI = tipoDNI;
-                repository.UnitOfWork.RegisterChanged(afis);
-            }
-            repository.UnitOfWork.Commit();
+            //    repository.UnitOfWork.RegisterNew(afis);
+            //}
+            //else
+            //{
+            //    afis.Apellido = "prueba";
+            //    afis.TipoDNI = tipoDNI;
+            //    repository.UnitOfWork.RegisterChanged(afis);
+            //}
+            //repository.UnitOfWork.Commit();
             return RedirectToAction("Contact");
         }
     }

@@ -111,16 +111,15 @@
     @if (Model != null)
     {
         <div class="row" id="botones">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 @Html.ActionLink("Carga IDGx", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaIdgx", onclick = "showPageLoadingSpinner()" })
                 @Html.ActionLink("Carga AFIS", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaAfis", onclick = "showPageLoadingSpinner()" })
                 @Html.ActionLink("Carga GNA", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaGna", onclick = "showPageLoadingSpinner()" })
-                @Html.ActionLink("Carga Mig.", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaMig", onclick = "showPageLoadingSpinner()" })
+                @Html.ActionLink("Migraciones", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaMig", onclick = "showPageLoadingSpinner()" })
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
             </div>
-            <div class="col-md-3">
-            </div>
+            
         </div>
     }
 </div>
@@ -145,7 +144,7 @@
 
     $(document).ready(function () {
         $('#tablaResultados').dataTable({
-            "dom": 'pT<"clear"i>rt<"bottom"><"clear">',
+            "dom": '<"row"<"col-md-12"ipT>><"clear">rt<"bottom"><"clear">',
             "tableTools": {
                 "aButtons": [],
                 "sSelectedClass": "row_selected",

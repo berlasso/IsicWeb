@@ -58,7 +58,7 @@ namespace ISICWeb.Models
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
         }
 
-        public System.Data.Entity.DbSet<ISIC.Entities.Migraciones> Migraciones { get; set; }
+        //public System.Data.Entity.DbSet<ISIC.Entities.Migraciones> Migraciones { get; set; }
     }
 
 

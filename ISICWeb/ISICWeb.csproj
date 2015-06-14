@@ -53,6 +53,14 @@
     <Reference Include="Atlassian.Jira">
       <HintPath>..\packages\Atlassian.SDK.2.2.0\lib\Atlassian.Jira.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="BarCodeGenerator">
       <HintPath>..\packages\BarcodeGenerator.1.0.0.0\lib\BarCodeGenerator.dll</HintPath>
     </Reference>
@@ -271,6 +279,7 @@
     <Compile Include="Areas\Antecedentes\Models\GNAViewModels.cs" />
     <Compile Include="Areas\Antecedentes\Models\IdgxViewModels.cs" />
     <Compile Include="Areas\Antecedentes\Models\ImputadosAntecedentesViewModel.cs" />
+    <Compile Include="Areas\Antecedentes\Models\MigracionesViewModel.cs" />
     <Compile Include="Areas\Otip\Controllers\BuscadorAutocompletesController.cs" />
     <Compile Include="Areas\Otip\Controllers\BuscadorSimpController.cs" />
     <Compile Include="Areas\Otip\Controllers\FilesUploaderController.cs" />
@@ -1624,6 +1633,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

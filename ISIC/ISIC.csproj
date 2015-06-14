@@ -192,6 +192,7 @@
     <Compile Include="Enums\ClaseMano.cs" />
     <Compile Include="Enums\GlobalStrings.cs" />
     <Compile Include="Persistence\Context\ISICContext.cs" />
+    <Compile Include="Persistence\Mappings\MigracionesMapping.cs" />
     <Compile Include="Persistence\Mappings\AFISMapping.cs" />
     <Compile Include="Persistence\Mappings\ArchivoMapping.cs" />
     <Compile Include="Persistence\Mappings\AutorMapping.cs" />

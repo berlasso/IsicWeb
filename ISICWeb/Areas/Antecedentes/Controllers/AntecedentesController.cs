@@ -58,7 +58,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
                     AFIS = (from a in ctx.AFIS where a.Prontuario == p select a).Any(),
                     GNA = (from g in ctx.GNA where g.Prontuario == p select g).Any(),
                     IDGx = (from i in ctx.IdgxProntuario where i.Prontuario == p select i).Any(),
-                    Migraciones = (from m in ctx.Migracioness where m.Prontuario == p select m).Any()
+                    Migraciones = (from m in ctx.Migraciones where m.Prontuario == p select m).Any()
                 };
 
          

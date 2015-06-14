@@ -1,5 +1,6 @@
-﻿@model ISIC.Entities.Migraciones
-@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
+﻿@using System.Web.UI.WebControls
+@model ISICWeb.Areas.Antecedentes.Models.MigracionesViewModel
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index", "Antecedentes"); }
 
 @using (Ajax.BeginForm("GuardarDatosMigraciones", "AntecedentesMigraciones",
   new AjaxOptions
@@ -16,7 +17,7 @@
         <ol class="breadcrumb hidden-xs tile-light" style="float: left !important">
             <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
             <li><a href="@url">Resultados</a></li>
-            <li>@Html.ActionLink("Listado Migraciones", "BuscarFichasMigraciones", new {prontuariosic = Model.Prontuario.ProntuarioNro}, new {onclick = "showPageLoadingSpinner();"})</li>
+            <li>@Html.ActionLink("Listado Migraciones", "BuscarFichasMigraciones", new { prontuariosic = Model.Prontuario.ProntuarioNro }, new { onclick = "showPageLoadingSpinner();" })</li>
             <li class="active">Carga Migraciones</li>
         </ol>
     </div>
@@ -42,38 +43,40 @@
             else
             {
                 <h4>Carga Nuevos Datos del Migraciones</h4>
+
+
             }
         </div>
         <div class="panel-body">
 
 
             <div class="row wow fadeInDown animated">
-            
+
                 <div class="col-xs-3">
-                    @Html.LabelFor(model => model.Fechainicio, htmlAttributes: new {@class = "control-label "})
-                    @Html.EditorFor(model => model.Fechainicio, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Fechainicio, "", new {@class = "text-danger"})
+                    @Html.LabelFor(model => model.Fechainicio, htmlAttributes: new { @class = "control-label " })
+                    @Html.TextBoxFor(model => model.Fechainicio, "{0:dd/MM/yyyy}",new {@class="form-control fecha datepicker"})
+                    @Html.ValidationMessageFor(model => model.Fechainicio, "", new { @class = "text-danger" })
                 </div>
 
 
                 <div class="col-xs-3">
-                    @Html.LabelFor(model => model.Tema, htmlAttributes: new {@class = "control-label "})
-                    @Html.EditorFor(model => model.Tema, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Tema, "", new {@class = "text-danger"})
+                    @Html.LabelFor(model => model.Tema, htmlAttributes: new { @class = "control-label " })
+                    @Html.EditorFor(model => model.Tema, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Tema, "", new { @class = "text-danger" })
                 </div>
 
 
                 <div class="col-xs-3">
-                    @Html.LabelFor(model => model.Titular, htmlAttributes: new {@class = "control-label "})
-                    @Html.EditorFor(model => model.Titular, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Titular, "", new {@class = "text-danger"})
+                    @Html.LabelFor(model => model.Titular, htmlAttributes: new { @class = "control-label " })
+                    @Html.EditorFor(model => model.Titular, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Titular, "", new { @class = "text-danger" })
                 </div>
 
 
                 <div class="col-xs-3">
-                    @Html.LabelFor(model => model.FecNacim, htmlAttributes: new {@class = "control-label "})
-                    @Html.EditorFor(model => model.FecNacim, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.FecNacim, "", new {@class = "text-danger"})
+                    @Html.LabelFor(model => model.FecNacim, htmlAttributes: new { @class = "control-label " })
+                    @Html.TextBoxFor(model => model.FecNacim, "{0:dd/MM/yyyy}", new { @class = "form-control fecha datepicker" })
+                    @Html.ValidationMessageFor(model => model.FecNacim, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row wow fadeInDown animated">
@@ -102,7 +105,7 @@
                 <div class="col-xs-3">
                     @Html.LabelFor(model => model.FechaExp, htmlAttributes: new { @class = "control-label " })
 
-                    @Html.EditorFor(model => model.FechaExp, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBoxFor(model => model.FechaExp, "{0:dd/MM/yyyy}", new { @class = "form-control fecha datepicker" })
                     @Html.ValidationMessageFor(model => model.FechaExp, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -168,7 +171,7 @@
                 <div class="col-xs-3">
                     @Html.LabelFor(model => model.FechaRadica, htmlAttributes: new { @class = "control-label " })
 
-                    @Html.EditorFor(model => model.FechaRadica, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBoxFor(model => model.FechaRadica, "{0:dd/MM/yyyy}", new { @class = "form-control fecha datepicker" })
                     @Html.ValidationMessageFor(model => model.FechaRadica, "", new { @class = "text-danger" })
                 </div>
 
@@ -289,7 +292,7 @@
                 <div class="col-xs-3">
                     @Html.LabelFor(model => model.FechaUltimoIngreso, htmlAttributes: new { @class = "control-label " })
 
-                    @Html.EditorFor(model => model.FechaUltimoIngreso, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBoxFor(model => model.FechaUltimoIngreso, "{0:dd/MM/yyyy}", new { @class = "form-control fecha datepicker" })
                     @Html.ValidationMessageFor(model => model.FechaUltimoIngreso, "", new { @class = "text-danger" })
                 </div>
 
@@ -306,7 +309,7 @@
                 <div class="col-xs-3">
                     @Html.LabelFor(model => model.FechaResolucion, htmlAttributes: new { @class = "control-label " })
 
-                    @Html.EditorFor(model => model.FechaResolucion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBoxFor(model => model.FechaResolucion, "{0:dd/MM/yyyy}", new { @class = "form-control fecha datepicker" })
                     @Html.ValidationMessageFor(model => model.FechaResolucion, "", new { @class = "text-danger" })
                 </div>
 
@@ -322,7 +325,7 @@
                 <div class="col-xs-3">
                     @Html.LabelFor(model => model.FechaDisposicion, htmlAttributes: new { @class = "control-label " })
 
-                    @Html.EditorFor(model => model.FechaDisposicion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBoxFor(model => model.FechaDisposicion, "{0:dd/MM/yyyy}", new { @class = "form-control fecha datepicker" })
                     @Html.ValidationMessageFor(model => model.FechaDisposicion, "", new { @class = "text-danger" })
                 </div>
 
@@ -339,7 +342,7 @@
                 <div class="col-xs-3">
                     @Html.LabelFor(model => model.FechaCertificado, htmlAttributes: new { @class = "control-label " })
 
-                    @Html.EditorFor(model => model.FechaCertificado, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.FechaCertificado, new { htmlAttributes = new { @class = "form-control fecha datepicker" } })
                     @Html.ValidationMessageFor(model => model.FechaCertificado, "", new { @class = "text-danger" })
                 </div>
 
@@ -355,7 +358,7 @@
                 <div class="col-xs-3">
                     @Html.LabelFor(model => model.FechaIngresoSistema, htmlAttributes: new { @class = "control-label " })
 
-                    @Html.EditorFor(model => model.FechaIngresoSistema, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBoxFor(model => model.FechaIngresoSistema, "{0:dd/MM/yyyy}", new { @class = "form-control fecha datepicker" })
                     @Html.ValidationMessageFor(model => model.FechaIngresoSistema, "", new { @class = "text-danger" })
                 </div>
 
@@ -421,7 +424,7 @@
                 <div class="col-xs-3">
                     @Html.LabelFor(model => model.FechaPrecaria, htmlAttributes: new { @class = "control-label " })
 
-                    @Html.EditorFor(model => model.FechaPrecaria, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextBoxFor(model => model.FechaPrecaria, "{0:dd/MM/yyyy}", new { @class = "form-control fecha datepicker" })
                     @Html.ValidationMessageFor(model => model.FechaPrecaria, "", new { @class = "text-danger" })
                 </div>
 
@@ -433,52 +436,98 @@
                     @Html.ValidationMessageFor(model => model.DiasPrecaria, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="row wow fadeInDown animated">
+        <div class="row wow fadeInDown animated">
 
-                <div class="col-xs-3">
-                    @Html.LabelFor(model => model.NroEntOficios, htmlAttributes: new { @class = "control-label " })
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.NroEntOficios, htmlAttributes: new {@class = "control-label "})
 
-                    @Html.EditorFor(model => model.NroEntOficios, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.NroEntOficios, "", new { @class = "text-danger" })
-                </div>
-
-
-                <div class="col-xs-3">
-                    @Html.LabelFor(model => model.FechaEntOficios, htmlAttributes: new { @class = "control-label " })
-
-                    @Html.EditorFor(model => model.FechaEntOficios, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FechaEntOficios, "", new { @class = "text-danger" })
-                </div>
-
-
-                <div class="col-xs-3">
-                    @Html.LabelFor(model => model.Caratula, htmlAttributes: new { @class = "control-label " })
-
-                    @Html.EditorFor(model => model.Caratula, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Caratula, "", new { @class = "text-danger" })
-                </div>
-
-
-                <div class="col-xs-3">
-               @Html.TextBoxFor(x => x.ExpedienteMigraciones, new { @class = "form-control" })
-            @Html.DropDownListFor(x => x.ExpedienteMigraciones.Id, ViewBag.exptelist as SelectList, new { @class = "form-control" })
-                    @Html.HiddenFor(x=>x.ExpedienteMigraciones.Id)
-                </div>
+                @Html.EditorFor(model => model.NroEntOficios, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.NroEntOficios, "", new {@class = "text-danger"})
             </div>
-        
 
-    <div class="row">
-        <div class="col-md-12" id="divValidation">
-            @Html.HiddenFor(model => model.Prontuario.Id)
-            @Html.HiddenFor(model => model.Prontuario.ProntuarioNro)
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
 
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.FechaEntOficios, htmlAttributes: new {@class = "control-label "})
+
+                @Html.TextBoxFor(model => model.FechaEntOficios, "{0:dd/MM/yyyy}", new { @class = "form-control fecha datepicker" })
+                @Html.ValidationMessageFor(model => model.FechaEntOficios, "", new {@class = "text-danger"})
+            </div>
+
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Caratula, htmlAttributes: new {@class = "control-label "})
+
+                @Html.EditorFor(model => model.Caratula, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Caratula, "", new {@class = "text-danger"})
+            </div>
+
+
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.ExpedienteMigraciones, htmlAttributes: new {@class = "control-label "})
+                @Html.DropDownListFor(x => x.ExpedienteMigraciones.Id, Model.ExpedienteList as SelectList, new {@class = "form-control"})
+
+
+            </div>
         </div>
+        <div class="row wow fadeInDown animated">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.EstadoCivil, htmlAttributes: new {@class = "control-label "})
+                @Html.DropDownListFor(x => x.EstadoCivil.Id, Model.EstadoCivilList as SelectList, new {@class = "form-control"})
+
+
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Sexo, htmlAttributes: new {@class = "control-label "})
+                @Html.DropDownListFor(x => x.Sexo.Id, Model.SexoList as SelectList, new {@class = "form-control"})
+
+
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.TipoDNI, htmlAttributes: new {@class = "control-label "})
+                @Html.DropDownListFor(x => x.TipoDNI.Id, Model.TipoDocList as SelectList, new {@class = "form-control"})
+
+
+            </div>
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.PaisEmbarque, htmlAttributes: new {@class = "control-label "})
+                @Html.DropDownListFor(x => x.PaisEmbarque.Id, Model.PaisList as SelectList,  new { @class = "form-control" })
+
+
+            </div>
+        </div>
+        <div class="row wow fadeInDown animated">
+            <div class="col-xs-3">
+                @Html.LabelFor(model => model.Domicilio, htmlAttributes: new {@class = "control-label "})
+
+                @Html.EditorFor(model => model.Domicilio, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Domicilio, "", new {@class = "text-danger"})
+            </div>
+
+
+            <div class="col-xs-3">
+                @Html.HiddenFor(model => model.LocalidadJusticia.Id)
+                @Html.LabelFor(model => model.LocalidadJusticia, htmlAttributes: new {@class = "control-label "})
+
+                @Html.EditorFor(model => model.LocalidadJusticia.LocalidadNombre, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.LocalidadJusticia, "", new {@class = "text-danger"})
+
+
+            </div>
+        </div>
+
+                <div class="row wow fadeInDown animated">
+                    <div class="col-md-12" id="divValidation">
+                        @Html.HiddenFor(model => model.Prontuario.Id)
+                        @Html.HiddenFor(model => model.Prontuario.ProntuarioNro)
+                        @Html.HiddenFor(model => model.FechaCreacion)
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+
+                    </div>
+                </div>
+
+            </div>
     </div>
-
-            </div>
-        </div>
     <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
         <div class="row">
             <div class="  col-sm-3 col-xs-3">
@@ -504,41 +553,82 @@
 }
 
 @section scripts
-{
+        {
     <script>
-                //GUARDAR DATOS MIGRACIONES
-                function onGuardarBegin() {
-                    loader("Guardando, espere un momento...");
-                }
+        //GUARDAR DATOS MIGRACIONES
+        function onGuardarBegin() {
+            loader("Guardando, espere un momento...");
+        }
 
-                function onGuardarComplete() {
-                    $.unblockUI();
-                }
+        function onGuardarComplete() {
+            $.unblockUI();
+        }
 
-                function onGuardarSuccess(data) {
-                    if (data == "") {
-                        //alertify.success("Alta exitosa");
-                        var url = '@Url.Content("BuscarFichasMigraciones")?prontuariosic=@Model.Prontuario.ProntuarioNro';
-                        alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>").set({
-                            onclose: function () {
-                                showPageLoadingSpinner();
-                                location.href = url;
+        function onGuardarSuccess(data) {
+            if (data == "") {
+                //alertify.success("Alta exitosa");
+                var url = '@Url.Content("BuscarFichasMigraciones")?prontuariosic=@Model.Prontuario.ProntuarioNro';
+                alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>").set({
+                    onclose: function () {
+                        showPageLoadingSpinner();
+                        location.href = url;
 
-                            }
-                        });
-
-                  
-
-                    } else {
-                        alertify.error("Error en la carga");
-                        $("#cartelSinDelitos").removeClass("hidden");
                     }
-                }
-
-
-                $(document).ready(function () {
-                    $("#navFooter").hide();
-                    //$("#Clase").mask("9999");
                 });
+
+
+
+            } else {
+                alertify.error("Error en la carga");
+                
+                    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+                
+            }
+        }
+
+    
+        $(document).ready(function () {
+            $('.fecha').bind('keyup keypress blur change cut copy paste ', function () {
+                var validator = $("#frmGuardarDatosMigraciones").validate();
+                validator.element(this);
+            });
+            $("#navFooter").hide();
+        });
+
+        $('#LocalidadJusticia_LocalidadNombre').bind('autocompleteselect', function (event, ui) {
+            $("#LocalidadJusticia_Id").val(ui.item.id);
+        });
+
+
+        $("#LocalidadJusticia_LocalidadNombre").on("autocompletechange", function (event, ui) {
+            if (this.value.trim() === '') {
+                $("#LocalidadJusticia_Id").val("0");
+            }
+            if ($("#LocalidadJusticia_Id").val().trim() === "0") {
+                this.value = "";
+            };
+
+        });
+
+        $("#LocalidadJusticia_LocalidadNombre").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("BuscarLocalidad", "Antecedentes")',
+                    type: "GET",
+                    dataType: "json",
+                    autoFocus: true,
+                    minLength: 3,
+                    data: { term: request.term },
+
+                    success: function (data) {
+                        $("#LocalidadJusticia_Id").val("0");
+                        response($.map(data, function (item) {
+
+                            return { label: item.label, value: item.label, id: item.id };
+                        }));
+                    }
+                });
+            },
+        });
     </script>
 }

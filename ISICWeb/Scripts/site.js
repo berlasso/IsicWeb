@@ -80,8 +80,13 @@ $(function () {
         changeYear: true,
         maxDate: new Date(),
         dateFormat: "dd/mm/yy",
-        yearRange: "-100:+0"
+        yearRange: "-100:+0",
+        autoSize: true,
+        gotoCurrent: true,
+        showAnim: 'blind',
+        highlightWeek: true
     });
+    jQuery.validator.methods["date"] = function (value, element) { return true; }
 });
 
 

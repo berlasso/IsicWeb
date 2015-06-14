@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using ISIC.Entities;
@@ -37,65 +38,20 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
         public ActionResult AltaModificacionMigraciones(string prontuariosic = "",  int idMigraciones = 0)
         {
-            Migraciones model = _repository.Set<Migraciones>().SingleOrDefault(x => x.Id == idMigraciones);
-            if (model == null)
-            {
-                Prontuario prontuario = _repository.Set<Prontuario>().FirstOrDefault(x => x.ProntuarioNro == prontuariosic);
-                if (prontuario == null)
-                {
-                    prontuario = new Prontuario { ProntuarioNro = prontuariosic };
-                };
-                model = new Migraciones
-                {
-                    Prontuario = prontuario,
-                };
-            }
-            ViewBag.exptelist = new SelectList(_repository.Set<ClaseExpedienteMigraciones>().ToList(), "Id", "descripcion");
+            MigracionesViewModel model = _migracionesService.LlenarViewModelDesdeBase(prontuariosic, idMigraciones);
+
             return View(model);
+
         }
 
         [HttpPost]
-        public ActionResult GuardarDatosMigraciones(Migraciones model)
+        public ActionResult GuardarDatosMigraciones(MigracionesViewModel model)
         {
             string errores = "";
+
             if (ModelState.IsValid)
             {
-                Prontuario prontuario = null;
-                if (model.Prontuario.Id == 0)
-                {
-                    prontuario = new Prontuario
-                    {
-                        ProntuarioNro = model.Prontuario.ProntuarioNro
-                    };
-                }
-                else
-                {
-                    prontuario = _repository.Set<Prontuario>().Single(x => x.Id == model.Prontuario.Id);
-                }
-                model.Prontuario = prontuario;
-                model.FechaUltimaModificacion=DateTime.Now;
-                ClaseExpedienteMigraciones expte =
-                    _repository.Set<ClaseExpedienteMigraciones>().Single(x => x.Id == model.ExpedienteMigraciones.Id);
-                model.ExpedienteMigraciones = expte;
-                if (model.Id == 0)
-                {
-
-                    model.FechaCreacion=DateTime.Now;
-
-                    _repository.UnitOfWork.RegisterNew(model);
-                }
-                else
-                {
-                    _repository.UnitOfWork.RegisterChanged(model);
-                }
-                try
-                {
-                    _repository.UnitOfWork.Commit();
-                }
-                catch (Exception e)
-                {
-                    errores = e.InnerException == null ? "Error al guardar. " + e.Message : e.InnerException.ToString().Substring(0, 400);
-                }
+                errores = _migracionesService.GuardarFichaMigraciones(model);
                  
             }
             else

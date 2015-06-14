@@ -29,7 +29,7 @@ namespace ISIC.Entities
         public string DocumentoNumero { get; set; }
         [Display(Name = "Emisor del Documento")]
         public string EmisorDocumento { get; set; }
-        public virtual Domicilio Domicilio { get; set; }
+        public string Domicilio { get; set; }
         [Display(Name = "Nro. Expte. Ajeno")]
         public string NroExpAjeno { get; set; }
         [Display(Name = "Fecha Exp.")]

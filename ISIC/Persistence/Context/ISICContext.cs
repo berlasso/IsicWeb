@@ -66,6 +66,7 @@ namespace ISIC.Persistence.Context
             modelBuilder.Configurations.Add(new AutorMapping());
             modelBuilder.Configurations.Add(new AFISMapping());
             modelBuilder.Configurations.Add(new GNAMapping());
+            modelBuilder.Configurations.Add(new MigracionesMapping());
             base.OnModelCreating(modelBuilder);
 
         }
@@ -137,7 +138,8 @@ namespace ISIC.Persistence.Context
         public virtual DbSet<AFIS> AFIS { get; set; }
         public virtual DbSet<GNA> GNA { get; set; }
         public virtual DbSet<Prontuario> Prontuario { get; set; }
-        public virtual DbSet<Migraciones> Migracioness { get; set; }
+        public virtual DbSet<Migraciones> Migraciones { get; set; }
+        public virtual DbSet<ClaseExpedienteMigraciones> ClaseExpedienteMigraciones { get; set; }
 
     }
 }
