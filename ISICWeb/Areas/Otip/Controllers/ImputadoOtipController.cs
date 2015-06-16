@@ -187,7 +187,7 @@ namespace ISICWeb.Areas.Otip.Controllers
         //    UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(this.ApplicationDbContext));
         //    return UserManager.FindById(User.Identity.GetUserId());
         //}
-
+        [Authorize]
         public JsonResult MostrarImputados([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
             //Para visualistar delitos tengo que controlar que el punto de gestion de quien dio de alta el delito(usuarioCreacionI)

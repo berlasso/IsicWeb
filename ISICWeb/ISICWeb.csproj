@@ -263,6 +263,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Web References\wsSIC\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Content Include="App_Code\RegisterVirtualPathProvider.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -1340,6 +1346,7 @@
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\ListadoMigraciones.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\_SummaryErrorMigraciones.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\AltaModificacionMigraciones.cshtml" />
+    <Content Include="Views\Usuarios\AltaModificacionUsuario.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1484,6 +1491,7 @@
     <Content Include="Views\CotejoManual\VisualizaParesDecaDactilares.cshtml" />
     <Content Include="Views\Shared\DataTable.cshtml" />
     <None Include="Areas\Antecedentes\Views\Antecedentes\Index.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />
@@ -1496,6 +1504,14 @@
     <None Include="Views\Digitalizacion\DigitalizaHuellaIndividual.cshtml" />
     <Content Include="Views\Digitalizacion\MarcarHuellasDactilares.cshtml" />
     <Content Include="Views\Digitalizacion\VisualizaHuellasDigitalMano.cshtml" />
+    <Content Include="Web References\wsSIC\MyResultadoObject.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\wsSIC\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <None Include="Web References\wsSIC\webservice.wsdl" />
     <None Include="Web.Desa.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1534,6 +1550,17 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
+    <WebReferenceUrl Include="http://www.sic.mpba.gov.ar/cons1/webservice.php%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\wsSIC\</RelPath>
+      <UpdateFromURL>http://www.sic.mpba.gov.ar/cons1/webservice.php%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>ISICWeb_wsSIC_Services</CachedSettingsPropName>
+    </WebReferenceUrl>
     <WebReferenceUrl Include="https://sistemas.mpba.gov.ar/NN/WebServiceMesaVirtualNN.asmx%3fWSDL">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\simpWs\</RelPath>
