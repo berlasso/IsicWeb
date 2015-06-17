@@ -1,4 +1,4 @@
-﻿@model ISIC.Entities.Migraciones
+﻿@*@model ISIC.Entities.Migraciones*@
 @{
     ViewBag.Title = "Contacto";
 }
@@ -10,8 +10,8 @@
 </div>
 @using (Html.BeginForm("GuardarContacto","Home"))
 {
-    @Html.TextBoxFor(x=>x.Id,new {@class="form-control"})
-    @Html.DropDownListFor(x => x.ExpedienteMigraciones.Id, ViewBag.dnilist as SelectList, new {@class="form-control"})
+    @*@Html.TextBoxFor(x=>x.Id,new {@class="form-control"})
+    @Html.DropDownListFor(x => x.ExpedienteMigraciones.Id, ViewBag.dnilist as SelectList, new {@class="form-control"})*@
 
     <div class="row tile-light wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
 

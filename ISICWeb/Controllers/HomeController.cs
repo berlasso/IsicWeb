@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using ISIC.Entities;
 using ISICWeb.Areas.Otip.Models;
@@ -19,6 +20,10 @@ namespace ISICWeb.Controllers
         {
             this.repository = repository;
         }
+
+
+     
+     
 
 
 
@@ -40,8 +45,16 @@ namespace ISICWeb.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Completar Página de contacto.";
-            ViewBag.dnilist = new SelectList(repository.Set<ClaseExpedienteMigraciones>().ToList(), "Id", "descripcion");
+            //ViewBag.Message = "Completar Página de contacto.";
+            //ViewBag.dnilist = new SelectList(repository.Set<ClaseExpedienteMigraciones>().ToList(), "Id", "descripcion");
+
+           wsSIC.Services ws=new wsSIC.Services();
+            string perfil = ws.PerfilUsuario("usuario", "clave");
+
+
+          
+            
+            
             return View();
         }
 

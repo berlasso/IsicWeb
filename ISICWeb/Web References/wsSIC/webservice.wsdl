@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://sic-site.mpba.gov.ar/soap/Services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://sic-site.mpba.gov.ar/soap/Services" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://sic-site.mpba.gov.ar/soap/Services">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="MyFiltroObject">
+        <xsd:all>
+          <xsd:element name="codUsuario" type="xsd:string" />
+          <xsd:element name="fisGral" type="xsd:string" />
+          <xsd:element name="domicilio" type="xsd:string" />
+          <xsd:element name="localidad" type="xsd:string" />
+          <xsd:element name="nombre" type="xsd:string" />
+          <xsd:element name="apellido" type="xsd:string" />
+          <xsd:element name="docNro" type="xsd:string" />
+          <xsd:element name="tatuaje" type="xsd:string" />
+          <xsd:element name="IPP" type="xsd:string" />
+          <xsd:element name="sexo" type="xsd:string" />
+          <xsd:element name="edadAprox" type="xsd:string" />
+          <xsd:element name="cantResultados" type="xsd:string" />
+          <xsd:element name="estatura" type="xsd:string" />
+          <xsd:element name="robustez" type="xsd:string" />
+          <xsd:element name="colorOjos" type="xsd:string" />
+          <xsd:element name="colorPiel" type="xsd:string" />
+          <xsd:element name="colorCabello" type="xsd:string" />
+          <xsd:element name="tipoCabello" type="xsd:string" />
+          <xsd:element name="calvicie" type="xsd:string" />
+          <xsd:element name="formaCara" type="xsd:string" />
+          <xsd:element name="dimensionCeja" type="xsd:string" />
+          <xsd:element name="formaCeja" type="xsd:string" />
+          <xsd:element name="formaMenton" type="xsd:string" />
+          <xsd:element name="formaOreja" type="xsd:string" />
+          <xsd:element name="formaNariz" type="xsd:string" />
+          <xsd:element name="formaBoca" type="xsd:string" />
+          <xsd:element name="labioInferior" type="xsd:string" />
+          <xsd:element name="labioSuperior" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="MyResultadoObject">
+        <xsd:all>
+          <xsd:element name="PaisNac" type="xsd:string" />
+          <xsd:element name="codbarra" type="xsd:string" />
+          <xsd:element name="NroCarpeta" type="xsd:string" />
+          <xsd:element name="tatuaje" type="xsd:string" />
+          <xsd:element name="ProntuarioSic" type="xsd:string" />
+          <xsd:element name="Apellido" type="xsd:string" />
+          <xsd:element name="Nombres" type="xsd:string" />
+          <xsd:element name="TipoDOC" type="xsd:string" />
+          <xsd:element name="DocNro" type="xsd:string" />
+          <xsd:element name="FeNac" type="xsd:string" />
+          <xsd:element name="LugarNac" type="xsd:string" />
+          <xsd:element name="PciaNac" type="xsd:string" />
+          <xsd:element name="caratula" type="xsd:string" />
+          <xsd:element name="Fecha" type="xsd:string" />
+          <xsd:element name="ipp" type="xsd:string" />
+          <xsd:element name="linkSic" type="xsd:string" />
+          <xsd:element name="Sexo" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="MyResultadoObjectArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:MyResultadoObject[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="MyFiltroArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:MyFiltroObject[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="PerfilUsuarioRequest">
+    <wsdl:part name="login" type="xsd:string" />
+    <wsdl:part name="clave" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="PerfilUsuarioResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMyFiltroObjectRequest">
+    <wsdl:part name="soapObject" type="tns:MyFiltroObject" />
+  </wsdl:message>
+  <wsdl:message name="ProcessMyFiltroObjectResponse">
+    <wsdl:part name="return" type="tns:MyResultadoObjectArray" />
+  </wsdl:message>
+  <wsdl:portType name="ServicesPortType">
+    <wsdl:operation name="PerfilUsuario">
+      <documentation>Processes usuario y login and returns one of them</documentation>
+      <wsdl:input message="tns:PerfilUsuarioRequest" />
+      <wsdl:output message="tns:PerfilUsuarioResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMyFiltroObject">
+      <documentation>Processes an array of MySoapObjects and returns one of them</documentation>
+      <wsdl:input message="tns:ProcessMyFiltroObjectRequest" />
+      <wsdl:output message="tns:ProcessMyFiltroObjectResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServicesBinding" type="tns:ServicesPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="PerfilUsuario">
+      <soap:operation soapAction="http://sic-site.mpba.gov.ar/cons1/webservice.php/PerfilUsuario" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcessMyFiltroObject">
+      <soap:operation soapAction="http://sic-site.mpba.gov.ar/cons1/webservice.php/ProcessMyFiltroObject" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Services">
+    <wsdl:port name="ServicesPort" binding="tns:ServicesBinding">
+      <soap:address location="http://sic-site.mpba.gov.ar/cons1/webservice.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
