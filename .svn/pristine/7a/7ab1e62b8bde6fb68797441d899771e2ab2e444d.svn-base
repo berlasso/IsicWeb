@@ -1,0 +1,244 @@
+﻿@using System.ServiceModel.Security
+@model ISICWeb.Areas.Antecedentes.Models.IdgxProntuarioViewModel
+
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
+
+
+<div class="container-detalle" style="margin-bottom: 80px;">
+    <div class="row wow fadeInDown animated">
+        <ol class="breadcrumb hidden-xs tile-light" style="float:left!important">
+            <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
+            <li><a href="@url">Resultados</a></li>
+            <li>@Html.ActionLink("Prontuarios", "BuscarProntuariosIdgx", new {prontuariosic = Model.prontuariosic})</li>
+            <li>@Html.ActionLink("Prontuario", "AltaModificacionProntuarioIDGx", new { prontuariosic = Model.prontuariosic, idIdgxprontuario = Model.Id, esNuevo = false })</li>
+            <li class="active">Lista Datos Pers.</li>
+        </ol>
+
+
+    </div>
+    <div class="center wow fadeInDown animated tile-light">
+        <h1>Datos Personales según IDGx</h1>
+    </div>
+
+
+
+    @if (Model != null)
+    {
+        Html.RenderAction("MostrarDatosImputado", "Antecedentes", new {idIdgxprontuario = Model.Id});
+
+    }
+
+
+
+
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
+
+
+            <h3>Datos Personales Asociados al Prontuario de IDGx nro. @Model.ProntuarioPF</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tablaDatosPersonales" class="table  table-bordered table-hover  table-striped tile tabla" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Apellido
+                            </th>
+
+                            <th>
+                                Documento
+                            </th>
+                            <th>
+                                Fecha Nacimiento
+                            </th>
+
+                            <th>
+                                Localidad Nac.
+                            </th>
+
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (Model != null && Model.DatosPersona != null)
+                        {
+                            foreach (var item in Model.DatosPersona)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Apellido)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DocumentoNumero)
+                                    </td>
+                                    <td>
+                                        
+                                        @if (item.FechaNacimiento != null)
+                                        {
+                                            var fenac = item.FechaNacimiento.ToString().Substring(0, 10);
+                                            @fenac;
+
+                                        }
+                                    </td>
+
+
+                                    <td>
+                                        @if (item.LocalidadNacimiento != null)
+                                        {
+                                            Html.DisplayFor(modelItem => item.LocalidadNacimiento.LocalidadNombre);
+                                        }
+                                    </td>
+
+
+                                    <td>
+                                        @Html.ActionLink("Editar", "AltaModificacionDatosPersonalesIdGx", new { idIdgxdatospersonales = item.Id, idIdgxprontuario = Model.Id }, new { @class = "btn btn-alt btn-sm", onclick = "showPageLoadingSpinner();" })
+
+                                        <input type="button" class="btn btn-alt btn-sm" id="btnBorrarDatosPersonales" data-id="@item.Id"  value="Borrar"/>
+                                    </td>
+                                </tr>
+
+                            }
+                        }
+                        </tbody>
+
+                    </table>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@section footer
+{
+    <div class="col-md-2 col-sm-2 col-xs-6">
+        @Html.ActionLink("Volver", "AltaModificacionProntuarioIDGx", new { prontuariosic = Model.prontuariosic, idIdgxprontuario = Model.Id, esNuevo = false }, new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
+        @*<a class="btn btn-lg btn-alt volver" href='@url' title=" volver" onclick="showPageLoadingSpinner();" type="button">
+            Volver
+        </a>*@
+    </div>
+    <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
+        @if (Model != null)
+        {
+            @Html.ActionLink("Nuevo Dato Personal", "AltaModificacionDatosPersonalesIdGx", new { idIdgxprontuario = Model.Id }, new { @class = "btn btn-lg btn-alt", onclick = "showPageLoadingSpinner();" })
+        }
+    </div>
+
+}
+
+
+
+
+@section scripts
+  {
+    <script>
+
+        $(function () {
+            $("#btnGuardarIdgxProntuario").on("click", function () {
+                var prontuariopf = $("#ProntuarioPF").val();
+                var idtipoprontuario = $("#TipoProntuarioPF").val();
+                var url = '@Url.Content("GuardarIdgxProntuario")?ididgxprontuario=' +@Model.Id +'&prontuariopf=' + prontuariopf+'&idtipoprontuario='+idtipoprontuario;
+                $.get(url, null, function (data) {
+                    if (data === "True")
+                        alertify.success("Prontuario guardado correctamente");
+                    else
+                        alertify.error("No se pudo guardar el prontuario");
+
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('#tablaDatosPersonales').dataTable({
+                "dom": 'pT<"clear"i>rt<"bottom"><"clear">',
+                "tableTools": {
+                    "aButtons": []
+                    //"sSelectedClass": "row_selected",
+                    //"sRowSelect": "single",
+                    //"fnRowSelected": function(nodes) {
+                    //    var id = nodes[0].id;
+
+
+                    //},
+                    //"fnRowDeselected": function(nodes) {
+
+
+                    //}
+                },
+                "columnDefs": [
+                 {
+                     "targets": 4,
+                     "sortable": false
+                 },
+                 {
+                     "targets": 5,
+                     "sortable": false
+                 }
+                ],
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+            $('#tablaDatosPersonales tbody').on('click', '#btnBorrarDatosPersonales', function () {
+                var id = $(this).data("id");
+                var table = $('#tablaDatosPersonales').DataTable();
+                var row = table.row($(this).parents('tr'));
+                alertify.confirm("Borrar Imputado", "Seguro que desea borrar?", function () {
+
+                    var url = '@Url.Action("BorrarDatosPersonales","AntecedentesIdgx")?id=' + encodeURI(id);
+                    $.get(url, null, function (data) {
+                        if (data === "True") {
+
+                            row.remove().draw();
+                            alertify.success("Imputado borrado correctamente");
+
+
+                        } else {
+                            alertify.error("Error al borrar");
+                        }
+                    });
+
+                }, null)
+             .set('labels', { cancel: 'Cancelar' })
+             .set('defaultFocus', 'cancel');
+            });
+        });
+    </script>
+}
+
+

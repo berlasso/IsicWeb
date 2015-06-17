@@ -1,0 +1,273 @@
+﻿@model ISICWeb.Areas.Antecedentes.Models.IdgxDelitoViewModel
+@{
+    string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes");
+    string prontuariosic = Session["prontuariosic"].ToString() != "" ? Session["prontuariosic"].ToString() : @Url.Action("Index","Antecedentes");     
+}
+<div class="container-detalle" style="margin-bottom: 80px;">
+    <div class="row wow fadeInDown animated">
+        <ol class="breadcrumb hidden-xs tile-light" style="float: left !important">
+            <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
+            <li><a href="@url">Resultados</a></li>
+            <li>@Html.ActionLink("Prontuarios", "BuscarProntuariosIdgx", new { prontuariosic = prontuariosic })</li>
+            <li>@Html.ActionLink("Prontuario", "AltaModificacionProntuarioIDGx", new { prontuariosic = prontuariosic, idIdgxprontuario = Model.idIdgxprontuario, esNuevo = false })</li>
+            <li>@Html.ActionLink("Lista Datos Pers.", "MostrarDatosIdgx", new { id = Model.idIdgxprontuario })</li>
+            <li>@Html.ActionLink("Carga Datos Personales", "MostrarDatosIdgx", new { id = Model.idIdgxprontuario })</li>
+            <li class="active">Carga Delito</li>
+        </ol>
+    </div>
+    <div class="center wow fadeInDown animated tile-light">
+        <h1>Detalle Delito segun IDGx</h1>
+    </div>
+    @{
+        Html.RenderAction("MostrarDatosImputado", "Antecedentes", new { idIdgxprontuario = Model.idIdgxprontuario });
+
+    }
+
+
+
+
+    @using (Ajax.BeginForm("GuardarDelitoIdgx", "Antecedentes", new AjaxOptions
+{
+    //UpdateTargetId = "DivUpdate",
+    HttpMethod = "Post",
+    OnBegin = "onGuardarBegin",
+    OnComplete = "onGuardarComplete",
+    OnSuccess = "onGuardarSuccess"
+},
+    new { id = "frmGuardarDelitoIdgx" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="panel panel-default tile wow fadeInDown animated">
+            <div class="panel-heading">
+                @if (Model.Id > 0)
+                {
+                    <h4><b style="color:red">Modificación</b> de Delito para el Prontuario IDGx @ViewBag.prontuarioidgx</h4>
+                }
+                else
+                {
+                    <h4>Carga de Delito para el Prontuario IDGx @ViewBag.prontuarioidgx</h4>
+                }
+            </div>
+            <div class="panel-body">
+
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.HiddenFor(model => model.idIdgxdatospersonales)
+                @Html.HiddenFor(model => model.idIdgxprontuario)
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="row wow fadeInDown animated">
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.causassinefecto)
+                        @Html.EditorFor(model => model.causassinefecto, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.causassinefecto, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.CodigoRestriccionPF, "Código Restricción")
+                        @Html.DropDownListFor(model => model.CodigoRestriccionPF, Model.CodigoRestriccionList, new { @class = "form-control" })
+
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.causatipo)
+                        @Html.EditorFor(model => model.causatipo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.causatipo, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <div class="row wow fadeInDown animated">
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.nrocausa)
+                        @Html.EditorFor(model => model.nrocausa, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.nrocausa, "", new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.solicitante)
+                        @Html.EditorFor(model => model.solicitante, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.solicitante, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.secretaria)
+                        @Html.EditorFor(model => model.secretaria, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.secretaria, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row wow fadeInDown animated">
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.observaciones)
+                        @Html.EditorFor(model => model.observaciones, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.observaciones, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <br />
+                                @Html.LabelFor(model => model.pedidovigente)
+                                @Html.CheckBoxFor(model => model.pedidovigente)
+                                @Html.ValidationMessageFor(model => model.pedidovigente, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-xs-9">
+                                @Html.LabelFor(model => model.fechavigente)
+                                @Html.EditorFor(model => model.fechavigente, new { htmlAttributes = new { @class = "form-control datepicker date fecha" } })
+                                @Html.ValidationMessageFor(model => model.fechavigente, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <br />
+                                @Html.LabelFor(model => model.resolucion)
+                                @Html.CheckBoxFor(model => model.resolucion)
+                                @Html.ValidationMessageFor(model => model.resolucion, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-xs-9">
+                                @Html.LabelFor(model => model.fecharesolucion)
+                                @Html.EditorFor(model => model.fecharesolucion, new { htmlAttributes = new { @class = "form-control datepicker fecha" } })
+                                @Html.ValidationMessageFor(model => model.fecharesolucion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row wow fadeInDown animated">
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <br />
+                                @Html.LabelFor(model => model.publicado)
+                                @Html.CheckBoxFor(model => model.publicado)
+                                @Html.ValidationMessageFor(model => model.publicado, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-xs-9">
+                                @Html.LabelFor(model => model.fechapublicacion)
+                                @Html.EditorFor(model => model.fechapublicacion, new { htmlAttributes = new { @class = "form-control datepicker fecha " } })
+                                @Html.ValidationMessageFor(model => model.fechapublicacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.ordendeldia)
+                        @Html.EditorFor(model => model.ordendeldia, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ordendeldia, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.expedientenro)
+                        @Html.EditorFor(model => model.expedientenro, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.expedientenro, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row wow fadeInDown animated">
+                    <div class="col-xs-4">
+                        <br />
+                        @Html.LabelFor(model => model.provisorio)
+                        @Html.CheckBoxFor(model => model.provisorio)
+                        @Html.ValidationMessageFor(model => model.provisorio, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-xs-4">
+                        <br />
+                        @Html.LabelFor(model => model.pedidovigentepublicacion)
+                        @Html.CheckBoxFor(model => model.pedidovigentepublicacion)
+                        @Html.ValidationMessageFor(model => model.pedidovigentepublicacion, "", new { @class = "text-danger" })
+                    </div>
+
+
+                    <div class="col-xs-4">
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+        <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+            <div class="row">
+                <div class="col-md-2 col-sm-3 col-xs-4">
+                    @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' window.history.go(-1); return false; ' title=" volver" type="button">
+                            Volver
+                        </a>*@
+                    @Html.ActionLink("Volver", "AltaModificacionDatosPersonalesIdGx", new { idIdgxprontuario = Model.idIdgxprontuario, idIdgxdatospersonales = Model.idIdgxdatospersonales }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+                </div>
+                <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-8">
+                    <div class="row ">
+                        <div class="col-md-6 col-sm-3 col-xs-6">
+                        </div>
+                        <div class="col-md-6 col-sm-9 col-xs-6">
+
+                            <input type="submit" value="Guardar" class="btn btn-lg btn-alt" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </nav>
+    }
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('.fecha').bind('keyup keypress blur change cut copy paste ', function() {
+                var validator = $("#frmGuardarDelitoIdgx").validate();
+                validator.element(this);
+            });
+            $("#navFooter").hide();
+        });
+
+        //GUARDAR DATOS PERSONALES IDGX
+        function onGuardarBegin() {
+            loader("Guardando, espere un momento...");
+        }
+
+        function onGuardarComplete() {
+            $.unblockUI();
+        }
+
+        function onGuardarSuccess(data) {
+            if (data !== 0) {
+                $("#Id").val(data);
+                alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>").set({
+                    onclose: function () {
+                        var url = '@Url.Content("AltaModificacionDatosPersonalesIdGx")?idIdgxprontuario='+@Model.idIdgxprontuario+'&idIdgxdatospersonales='+@Model.idIdgxdatospersonales;
+                        showPageLoadingSpinner();
+                        location.href = url;
+
+                    }
+                });
+                //alertify.success("Alta exitosa");
+                
+                
+            } else {
+                alertify.error("Error en la carga");
+
+            }
+        }
+    </script>
+
+}

@@ -1,0 +1,153 @@
+﻿@model ISICWeb.Areas.Antecedentes.Models.IdgxDatosPersonalesViewModel
+@{
+    //var idIdgxdatospersonales= ViewData["idIdgxdatospersonales"].ToString();
+}
+<div class="tile">
+
+    <div class="panel panel-default tile  wow fadeInDown animated">
+        <div class="panel-heading">
+            <h4>
+                Listado de delitos en IDGx<br/>
+            </h4>
+        </div>
+    </div>
+    @*@Html.Hidden("hidIdIdgxdatospersonales", idIdgxdatospersonales)*@
+    @if (Model != null)
+    {
+        @Html.Hidden("idIdgxdatospersonales",Model.Id)
+    }
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tablaDelitos" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>
+                            CAUSATIPO
+                        </th>
+                        <th>
+                            nro. causa
+                        </th>
+                        <th>
+                            solicitante
+                        </th>
+                        <th>
+                            secretaria
+                        </th>
+
+                        <th>
+
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (Model != null && Model.Delitos!=null)
+                    {
+                        foreach (var item in Model.Delitos)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.causatipo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nrocausa)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.solicitante)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.secretaria)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink("Editar", "AltaModificacionDelitoIdgx", new { idIdgxdatospersonales = Model.Id, idIdgxdelito = item.Id }, new { @class = "btn btn-alt btn-sm", onclick = "showPageLoadingSpinner();" })
+                                    <input type="button" class="btn btn-alt btn-sm" id="btnBorrarDelitoIdgx" data-id="@item.Id" value="Borrar" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    @if (Model != null)
+                    {
+                        @Html.ActionLink("Nuevo Delito", "AltaModificacionDelitoIdgx", new { idIdgxdatospersonales = Model.Id }, new { @class = "btn ", id = "btnNuevoDelito", onclick = "showPageLoadingSpinner();" })
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+            <script>
+
+                $(document).ready(function () {
+                   var tabla= $('#tablaDelitos').dataTable({
+                        "dom": 'pT<"clear"i>rt<"bottom"><"clear">',
+                        "tableTools": {
+                            "aButtons": [],
+                        },
+                        "columnDefs": [
+                              {
+                                  "targets": 4,
+                                  "sortable": false
+                              }
+                      ],
+                        "language": {
+                            "sProcessing": "Procesando...",
+                            "sLengthMenu": "Mostrar _MENU_ registros",
+                            "sZeroRecords": "No se encontraron resultados",
+                            "sEmptyTable": "Ningún dato disponible en esta tabla",
+                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                            "sInfoPostFix": "",
+                            "sSearch": "Buscar:",
+                            "sUrl": "",
+                            "sInfoThousands": ",",
+                            "sLoadingRecords": "Cargando...",
+                            "oPaginate": {
+                                "sFirst": "Primero",
+                                "sLast": "Último",
+                                "sNext": "Siguiente",
+                                "sPrevious": "Anterior"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                            }
+                        }
+                    });
+                    $('#tablaDelitos tbody').on('click', '#btnBorrarDelitoIdgx', function () {
+                        var row = $(this).parents('tr');
+                        var id = $(this).data("id");
+                        alertify.confirm("Borrar Delito en IDGx", "Seguro que desea borrar?", function () {
+
+                            var url = '@Url.Action("BorrarDelitoIdgx","AntecedentesIdgx")/' + encodeURI(id);
+                            $.get(url, null, function (data) {
+                                if (data === "True") {
+
+                                    row.remove();
+                                    alertify.success("Delito borrado correctamente");
+
+
+                                } else {
+                                    alertify.error("Error al borrar");
+                                }
+                            });
+
+                        }, null)
+                     .set('labels', { cancel: 'Cancelar' })
+                     .set('defaultFocus', 'cancel');
+                    });
+                });
+            </script>

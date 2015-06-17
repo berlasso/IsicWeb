@@ -1,0 +1,5 @@
+﻿tr.row_selected.even,
+tr.row_selected.odd {
+    background-color: rgb(25, 23, 21)!important;
+
+}

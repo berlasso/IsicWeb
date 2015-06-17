@@ -1,0 +1,267 @@
+﻿@model ISICWeb.Areas.Antecedentes.Models.GNAViewModel
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
+
+@using (Ajax.BeginForm("GuardarDatosGNA", "Antecedentes",
+  new AjaxOptions
+                {
+                    UpdateTargetId = "divValidation",
+                    HttpMethod = "Post",
+                    OnBegin = "onGuardarBegin",
+                    OnComplete = "onGuardarComplete",
+                    OnSuccess = "onGuardarSuccess"
+                },
+                new { id = "frmGuardarDatosGna" }))
+{    @Html.AntiForgeryToken()
+
+    <div class="row wow fadeInDown animated">
+        <ol class="breadcrumb hidden-xs tile-light" style="float: left !important">
+            <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
+            <li><a href="@url">Resultados</a></li>
+            <li>@Html.ActionLink("Listado GNA", "BuscarFichasGNA", new { prontuariosic = Model.Prontuario.ProntuarioNro }, new { onclick = "showPageLoadingSpinner();" })</li>
+            <li class="active">Carga GNA</li>
+        </ol>
+    </div>
+    <div class=" center wow fadeInDown animated tile-light">
+        <h3>
+            Carga datos de GNA
+        </h3>
+    </div>
+    <div class="tile   wow fadeInDown animated">
+        @{
+  
+
+        }
+    </div>
+
+    if (Model != null)
+    {
+        Html.RenderAction("MostrarDatosImputado", "Antecedentes", new { prontuarioSic = Model.Prontuario.ProntuarioNro });
+
+    }
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="panel panel-default tile wow fadeInDown animated" style="margin-bottom: 80px;">
+        <div class="panel-heading">
+            @if (Model.Id > 0)
+            {
+                <h4><b style="color: red;">Modificación</b> Datos de GNA</h4>
+            }
+            else
+            {
+                <h4>Carga Nuevos Datos de GNA</h4>
+            }
+        </div>
+        <div class="panel-body">
+
+
+            <div class="row wow fadeInDown animated">
+
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.idClaseSexo, htmlAttributes: new { @class = "control-label  " })
+                    @Html.DropDownListFor(model => model.idClaseSexo, Model.ClaseSexoList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.idClaseTipoDNI, htmlAttributes: new { @class = "control-label  " })
+                    @Html.DropDownListFor(model => model.idClaseTipoDNI, Model.ClaseTipoDNIList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.DocumentoNumero, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.DocumentoNumero, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DocumentoNumero, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Juzgadointerviniente, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.Juzgadointerviniente, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Juzgadointerviniente, "", new { @class = "text-danger" })
+                </div>
+
+
+            </div>
+            <div class="row wow fadeInDown animated">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FechaNacimiento, htmlAttributes: new { @class = "control-label  " })
+
+                    @Html.EditorFor(model => model.FechaNacimiento, new { htmlAttributes = new { @class = "form-control datepicker fecha" } })
+                    @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.ApellidoMadre, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.ApellidoMadre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ApellidoMadre, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Generado, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.Generado, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Generado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.NroLegajoGNA, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.NroLegajoGNA, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NroLegajoGNA, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.ExpteGNA, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.ExpteGNA, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExpteGNA, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Caratula, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.Caratula, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Caratula, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row wow fadeInDown animated">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Asunto, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.Asunto, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Asunto, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-xs-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <br />
+                            @Html.LabelFor(model => model.Captura, htmlAttributes: new { @class = "control-label  " })
+                            @Html.CheckBoxFor(model => model.Captura)
+                            @Html.ValidationMessageFor(model => model.Captura, "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <div class="col-md-9">
+                            @Html.LabelFor(model => model.FechaPedido, htmlAttributes: new { @class = "control-label  " })
+                            @Html.EditorFor(model => model.FechaPedido, new { htmlAttributes = new { @class = "form-control datepicker fecha" } })
+                            @Html.ValidationMessageFor(model => model.FechaPedido, "", new { @class = "text-danger" })
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-xs-4">
+                    <div class="col-xs-4">
+                        <br />
+                        @Html.LabelFor(model => model.Vigente, htmlAttributes: new { @class = "control-label  " })
+                        @Html.CheckBoxFor(model => model.Vigente)
+                        @Html.ValidationMessageFor(model => model.Vigente, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-xs-4">
+                        <br />
+                        @Html.LabelFor(model => model.ImpSalida, htmlAttributes: new { @class = "control-label  " })
+                        @Html.EditorFor(model => model.ImpSalida)
+                        @Html.ValidationMessageFor(model => model.ImpSalida, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-xs-4">
+                        <br />
+                        @Html.LabelFor(model => model.Corroborado, htmlAttributes: new { @class = "control-label  " })
+                        @Html.CheckBoxFor(model => model.Corroborado)
+                        @Html.ValidationMessageFor(model => model.Corroborado, "", new { @class = "text-danger" })
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="divValidation">
+                    @Html.HiddenFor(model => model.Prontuario.ProntuarioNro)
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+        <div class="row">
+            <div class="  col-sm-3 col-xs-4">
+                @Html.ActionLink("Volver", "BuscarFichasGNA", new { prontuariosic = Model.Prontuario.ProntuarioNro }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+
+
+            </div>
+            <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-8">
+                <div class="row ">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <input type="submit" value="Guardar" class="btn btn-alt btn-lg fa-align-center" />
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </nav>
+}
+
+@section scripts
+{
+    <script>
+        //GUARDAR DATOS GNA
+        function onGuardarBegin() {
+            loader("Guardando, espere un momento...");
+        }
+
+        function onGuardarComplete() {
+            $.unblockUI();
+        }
+
+        function onGuardarSuccess(data) {
+            if (data == "") {
+                //alertify.success("Alta exitosa");
+                var url = '@Url.Content("BuscarFichasGNA")?prontuariosic=@Model.Prontuario.ProntuarioNro';
+                alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>").set({
+                    onclose: function () {
+
+                        showPageLoadingSpinner();
+                        location.href = url;
+
+                    }
+                });
+
+                //$("#btnNuevoDelito").removeClass("hidden");
+                //$("#cartelSinDelitos").addClass("hidden");
+                //$("#Id").val($("#idIdgxdatospersonales").val());
+
+            } else {
+                alertify.error("Error en la carga");
+                //$("#btnNuevoDelito").addClass("hidden");
+                $("#cartelSinDelitos").removeClass("hidden");
+            }
+        }
+
+        //$('#FechaNacimiento').bind('keyup keypress blur change cut copy paste ', function () {
+        //    var validator = $("#frmGuardarDatosGna").validate();
+        //    validator.element(this);
+        //});
+
+        $(document).ready(function () {
+            $("#navFooter").hide();
+            //$(".fecha").mask("99/99/9999");
+        });
+    </script>
+}

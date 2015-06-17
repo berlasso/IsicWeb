@@ -1,0 +1,162 @@
+﻿@using System.ServiceModel.Security
+@model ISICWeb.Areas.Antecedentes.Models.IdgxProntuarioViewModel
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
+
+
+
+<div class="container-detalle" style="margin-bottom: 80px;">
+    <div class="row wow fadeInDown animated">
+        <ol class="breadcrumb hidden-xs tile-light" style="float:left!important">
+            <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
+            <li><a href="@url">Resultados</a></li>
+            <li>@Html.ActionLink("Prontuarios", "BuscarProntuariosIdgx", new { prontuariosic = Model.prontuariosic })</li>
+            <li class="active">Prontuario</li>
+        </ol>
+
+
+    </div>
+
+    <div class="center wow fadeInDown animated tile-light">
+        @*<div class="center tile-light">*@
+        <h1>Carga de Prontuarios de IDGx</h1>
+    </div>
+    @*</div>*@
+
+    <div class="tile   wow fadeInDown animated">
+        @{
+            Html.RenderAction("MostrarDatosImputado", "Antecedentes", new { prontuarioSic = Model.prontuariosic });
+
+        }
+    </div>
+
+    @using (Html.BeginForm(null, null, FormMethod.Get, new { id = "frm" }))
+    {
+
+
+        <div class="panel panel-default tile wow fadeInDown animated">
+            <div class="panel-heading">
+                @if (Model.Id == 0)
+                {
+                    <h4>Cargando NUEVO Prontuario IDGx</h4>
+                }
+                else
+                {
+                    <h4><b style="color: red;">MODIFICANDO</b> Prontuario IDGx</h4>
+                }
+
+            </div>
+            <div class="panel-body">
+                <div class="row wow fadeInDown animated">
+                    <div class="col-xs-12">
+
+                        @Html.HiddenFor(model => model.Id)
+
+
+                    </div>
+                </div>
+
+                <div class="row wow fadeInDown animated">
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.TipoProntuarioPF, "Tipo de Prontuario")
+                        @Html.DropDownListFor(model => model.TipoProntuarioPF, Model.TipoProntuarioPFList, new { @class = "form-control" })
+                        @*@Html.Hidden("idtipoprontuario",Model.TipoProntuarioPF)*@
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.ProntuarioPF)
+
+                        @Html.EditorFor(model => model.ProntuarioPF, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProntuarioPF, "", new { @class = "text-danger" })
+
+
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-xs-4">
+
+                </div>
+
+            </div>
+            <div class="center">
+                <a href="#" id="btnGuardarProntuario" class="btn btn-alt btn-lg">Guardar Prontuario</a>
+            </div>
+        </div>
+
+
+    }
+
+</div>
+
+
+@section footer
+{
+    <div class="col-md-2 col-sm-2 col-xs-6">
+        @Html.ActionLink("Volver", "BuscarProntuariosIdgx", new { prontuariosic = Model.prontuariosic }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+    </div>
+    <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
+        @if (Model.Id > 0)
+        {
+            @Html.ActionLink("Datos Asociados", "MostrarDatosIdgx", new { Model.Id }, new { @class = "btn btn-lg btn-alt  ", id = "btnDatos", onclick = "showPageLoadingSpinner();" })
+        }
+        else
+        {
+            @Html.ActionLink("Datos Asociados", "MostrarDatosIdgx", new { Model.Id }, new { @class = "btn btn-lg btn-alt hidden ", id = "btnDatos" })
+        }
+
+
+
+    </div>
+
+}
+
+@section scripts
+{
+    <script>
+        $(function() {
+            //$("#btnDelito").on("click", function(e) {
+            //    e.preventDefault();
+            //    if ($("#frm").valid() == false)
+            //        return;
+            //});
+            $("#btnGuardarProntuario").on("click", function(e) {
+                e.preventDefault();
+                if ($("#frm").valid() == false)
+                    return;
+                var prontuariopf = $("#ProntuarioPF").val();
+                var idtipoprontuario = $("#TipoProntuarioPF").val();
+                var idIdgxprontuario = $("#Id").val();
+                var url = '@Url.Content("GuardarIdgxProntuario")' + '?idIdgxProntuario=' + idIdgxprontuario + '&prontuariopf=' + prontuariopf + '&idtipoprontuario=' + idtipoprontuario + '&prontuariosic=@Model.prontuariosic';
+                $.get(url, null, function(data) {
+                    if (data >= 0) {
+                        $("#Id").val(data);
+                        $("#btnDatos").removeClass("hidden");
+                        $("#TipoProntuarioPF").attr("disabled", "disabled")
+                        $("#ProntuarioPF").attr("disabled", "disabled")
+                        $("#btnGuardarProntuario").attr("disabled", "disabled");
+                        //alertify.success("Prontuario guardado correctamente");
+                        var url = '@Url.Content("MostrarDatosIdgx")?id=' + data;
+                        alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>.<br/> A continuación podrá cargar los datos personales asociados...").set({
+                            onclose: function() {
+                                location.href = url;
+                            }
+                        });
+                        //alertify.confirm("Exito",
+                        //        "Carga Exitosa. Desea ir a la carga de datos personales asociados?",
+                        //        function() {
+                        //        },
+                        //        null)
+                        //    .set('labels', { cancel: 'No', ok: 'Sí' })
+                        //    .set('defaultFocus', 'cancel');
+
+                    } else {
+                        alertify.error("Error al guardar");
+                    }
+                });
+
+            });
+
+        })
+    </script>
+}
