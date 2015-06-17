@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using ISIC.Entities;
 using MPBA.DataAccess;
 
-namespace ISICWeb.Controllers
+namespace ISICWeb.Areas.Usuarios.Controllers
 {
 
     [Authorize]
@@ -27,7 +26,7 @@ namespace ISICWeb.Controllers
 
         public ActionResult Index()
         {
-            var Usuarios = _repository.Set<Usuarios>().ToList();
+            var Usuarios = _repository.Set<ISIC.Entities.Usuarios>().ToList();
             return View(Usuarios);
         }
     }

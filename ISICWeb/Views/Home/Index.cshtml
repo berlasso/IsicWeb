@@ -111,7 +111,7 @@
     <div class="row">
         <div class="col-md-4 col-sm-6 wow fadeInDown animated">
             <div class="feature-wrap">
-                <a href='@Url.Action("Index", "Usuarios")' onclick=" showPageLoadingSpinner() ">
+                <a href='@Url.Action("Index", "Usuarios", new {area = "Usuarios"})' onclick=" showPageLoadingSpinner() ">
                     <i class="fa fa-user-plus"></i>
                 </a>
                 <h2>Usuarios</h2>
