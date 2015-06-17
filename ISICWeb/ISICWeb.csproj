@@ -372,6 +372,8 @@
     <Content Include="Areas\PortalSIC\Scripts\portalsicJs.js" />
     <Content Include="Areas\PortalSIC\Scripts\prettyPhotoSetup.js" />
     <Content Include="Areas\PortalSIC\Scripts\printThis.js" />
+    <Content Include="Areas\Usuarios\Content\usuariosStyle.css" />
+    <Content Include="Areas\Usuarios\Scripts\usuariosJs.js" />
     <Content Include="Content\alertifyjs\alertify.css" />
     <Content Include="Content\alertifyjs\alertify.min.css" />
     <Content Include="Content\alertifyjs\alertify.rtl.css" />
@@ -1348,9 +1350,9 @@
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\_SummaryErrorMigraciones.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\AltaModificacionMigraciones.cshtml" />
     <Content Include="Areas\Usuarios\Views\Usuarios\AltaModificacionUsuario.cshtml" />
-    <Content Include="Areas\Usuarios\Views\web.config" />
     <Content Include="Areas\Usuarios\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Usuarios\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Usuarios\Views\web.config" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
