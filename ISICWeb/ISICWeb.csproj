@@ -263,7 +263,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Areas\Usuarios\UsuariosAreaRegistration.cs" />
+    <Compile Include="Areas\Usuarios\Controllers\UsuariosController.cs" />
     <Compile Include="Web References\wsSIC\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1346,7 +1347,10 @@
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\ListadoMigraciones.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\_SummaryErrorMigraciones.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\AltaModificacionMigraciones.cshtml" />
-    <Content Include="Views\Usuarios\AltaModificacionUsuario.cshtml" />
+    <Content Include="Areas\Usuarios\Views\Usuarios\AltaModificacionUsuario.cshtml" />
+    <Content Include="Areas\Usuarios\Views\web.config" />
+    <Content Include="Areas\Usuarios\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Usuarios\Views\Shared\_Layout.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1491,7 +1495,7 @@
     <Content Include="Views\CotejoManual\VisualizaParesDecaDactilares.cshtml" />
     <Content Include="Views\Shared\DataTable.cshtml" />
     <None Include="Areas\Antecedentes\Views\Antecedentes\Index.cshtml" />
-    <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Areas\Usuarios\Views\Usuarios\Index.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />
@@ -1525,6 +1529,7 @@
     <Folder Include="Areas\Otip\Content\uploads\" />
     <Folder Include="Areas\PortalSIC\Fotos3\" />
     <Folder Include="Areas\PortalSIC\Fotos\" />
+    <Folder Include="Areas\Usuarios\Models\" />
     <Folder Include="bin\" />
     <Folder Include="Images\FotosImputado\" />
     <Folder Include="Images\Huellas\" />
