@@ -12,7 +12,7 @@ namespace ISIC.Entities
     public class PersonalPoderJudicial
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public virtual Persona Persona { get; set; }
         public virtual PuntoGestion PuntoGestion { get; set; }
 

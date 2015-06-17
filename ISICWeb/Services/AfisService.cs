@@ -98,7 +98,7 @@ namespace ISICWeb.Services
             model.idTipoDoc = afis.TipoDNI == null ? "0" : afis.TipoDNI.Id.ToString();
             model.Nombre = afis.Nombre;
             model.Apellido = afis.Apellido;
-            Prontuario prontuario = _repository.Set<Prontuario>().Single(x => x.ProntuarioNro == prontuariosic);
+            Prontuario prontuario = _repository.Set<Prontuario>().SingleOrDefault(x => x.ProntuarioNro == prontuariosic);
 
             if (prontuario == null)
             {

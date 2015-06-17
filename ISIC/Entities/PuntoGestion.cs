@@ -14,6 +14,7 @@ namespace ISIC.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Id { get; set; }
         public virtual ClasePuntoGestion ClasePuntoGestion { get; set; }
+        [Display(Name = "Dependencia")]
         public string Descripcion { get; set; }
         public int? Numero { get; set; }
         //public int? Externo { get; set; }
@@ -25,6 +26,7 @@ namespace ISIC.Entities
         public string Telefonos { get; set; }
         //public string OrdenMuestra { get; set; }
         public string titular { get; set; }
+        public virtual Departamento Departamento { get; set; }
 
 
     }
