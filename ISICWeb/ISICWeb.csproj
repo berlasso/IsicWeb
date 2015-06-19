@@ -275,6 +275,7 @@
     <Compile Include="Areas\Usuarios\Models\UsuarioViewModel.cs" />
     <Compile Include="Areas\Usuarios\UsuariosAreaRegistration.cs" />
     <Compile Include="Areas\Usuarios\Controllers\UsuariosController.cs" />
+    <Compile Include="Models\UsuarioIsicViewModel.cs" />
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Web References\wsSIC\Reference.cs">
       <AutoGen>True</AutoGen>

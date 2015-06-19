@@ -1,4 +1,5 @@
-﻿@using (Ajax.BeginForm("ControlarUsuarioSic", "Account",
+﻿@model ISICWeb.Models.UsuarioIsicViewModel
+@using (Ajax.BeginForm("ControlarUsuarioSic", "Account",
     new AjaxOptions
     {
         UpdateTargetId = "divValidation",
@@ -29,10 +30,11 @@
                     
                             <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
                                 <div class="col-xs-3">
-                                    @Html.Label("usuario")
+                                    @Html.LabelFor(x => x.usuario)
                                 </div>
                                 <div class="col-xs-9 col-md-5 ">
-                                    @Html.TextBox("usuario", "", new {@class = "form-control"})
+                                 @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.usuario, "", new { @class = "text-danger" })
 
                                 </div>
 
@@ -41,10 +43,11 @@
                             </div>
                             <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
                                 <div class="col-xs-3">
-                                    @Html.Label("pass")
+                                    @Html.LabelFor(x => x.clave)
                                 </div>
                                 <div class="col-xs-9 col-md-5">
-                                    @Html.Password("pass", "", new {@class = "form-control"})
+                                    @Html.PasswordFor(model => model.clave, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.clave, "", new { @class = "text-danger" })
                                 </div>
 
                             </div>

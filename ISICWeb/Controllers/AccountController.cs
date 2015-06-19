@@ -642,17 +642,15 @@ namespace ISICWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult ControlarUsuarioSic(string usuario, string pass)
+        public ActionResult ControlarUsuarioSic(UsuarioIsicViewModel u)
         {
-         
+         //   return null;
             string perfil = "";
-          
-            
-            string errores = "";
+          string errores = "";
             if (ModelState.IsValid)
             {
                 wsSIC.Services ws = new wsSIC.Services();
-                perfil = ws.PerfilUsuario(usuario, pass);
+                perfil = ws.PerfilUsuario(u.usuario, u.clave);
                 if (perfil == "")
                 {
                     errores = "No se encontró el usuario";
@@ -674,14 +672,14 @@ namespace ISICWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult ControlarUsuarioIsic(string usuario, string pass)
+        public ActionResult ControlarUsuarioIsic(UsuarioIsicViewModel u)
         {
-
+            //return null;
             string errores = "";
             if (ModelState.IsValid)
             {
                 var loginDomain = new LoginDomain();
-                bool validado = loginDomain.CheckLogin(usuario, pass);
+                bool validado = loginDomain.CheckLogin(u.usuario, u.clave);
                 if (!validado)
                     errores = "No se encontró el usuario y/o contraseña indicados";
                 
@@ -691,6 +689,13 @@ namespace ISICWeb.Controllers
                 errores = string.Join("; ", ModelState.Values
                                           .SelectMany(x => x.Errors)
                                           .Select(x => x.ErrorMessage));
+            }
+
+            if (errores == "")
+            {
+                bool existente=_repository.Set<Usuarios>().Any(x => x.NombreUsuario.ToLower().Contains(u.usuario.Trim().ToLower()));
+                if (existente)
+                    errores = "El usuario ya existe en la base del Isic";
             }
 
             if (errores != "")

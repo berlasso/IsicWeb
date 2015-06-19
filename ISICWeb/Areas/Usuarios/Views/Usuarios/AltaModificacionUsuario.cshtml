@@ -15,7 +15,7 @@
                 new { id = "frmGuardarDatosUsuario" }))
 {    @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(model=>model.Validando)
+    @Html.HiddenFor(model => model.Validando)
     <div class=" center wow fadeInDown animated tile-light">
         <h3>
             Carga datos del Usuario
@@ -42,67 +42,80 @@
             <div class="row wow fadeInDown animated">
 
 
-                <div class="col-xs-3">
-                    @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new {@class = "control-label"})
-                    <div class="form-group">
-                        <div class='input-group '>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-10">
+                            @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label" })
 
-                            @Html.EditorFor(model => model.NombreUsuario, !modificando ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+
+                            @*@Html.EditorFor(model => model.NombreUsuario, !modificando ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)*@
                             @if (!modificando)
                             {
-                                <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA">
-                                <span class="flaticon-zoom22"></span>
-                            </span>
+                                <div class="form-group">
+                                    <div class='input-group '>
+                                        @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control" })
+                                        <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA">
+                                            <span class="flaticon-zoom22"></span>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control", @readonly = "readonly" })
+
+                            }
+
+                            @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })<br />
+                            <div class="alert alert-info" id="divUsuarioMPBAEncontrado" style="display: none" role="alert"></div>
+                        </div>
+                        <div class="col-md-2">
+                            @if (!Model.Validando)
+                            {
+                                <div class="col-xs-1">
+                                    <br />
+                                    @Html.LabelFor(model => model.activo, htmlAttributes: new { @class = "control-label" })
+                                    @Html.CheckBoxFor(model => model.activo)
+                                </div>
                             }
                         </div>
-
                     </div>
-                    @Html.ValidationMessageFor(model => model.NombreUsuario, "", new {@class = "text-danger"})
-                </div>
-
-                <div class="col-xs-1">
-                    <br/>
-                    @if (!Model.Validando)
-                    {
-                        @Html.LabelFor(model => model.activo, htmlAttributes: new {@class = "control-label"})
-                        @Html.CheckBoxFor(model => model.activo)
-                    }
-                </div>
-                <div class="col-xs-4">
-                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new {@class = "control-label"})
-                    @Html.EditorFor(model => model.Apellido, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Apellido, "", new {@class = "text-danger"})
-                </div>
-                <div class="col-xs-4">
-                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new {@class = "control-label"})
-                    @Html.EditorFor(model => model.Nombre, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new {@class = "text-danger"})
 
                 </div>
-            </div>
-            <div class="row wow fadeInDown animated">
+                
+
+
+
                 <div class="col-md-4">
-                    <div class="alert alert-info" id="divUsuarioMPBAEncontrado" style="display: none" role="alert"></div>
+                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
                 </div>
-
-            </div>
-
-            <div class="row wow fadeInDown animated">
-                <div class="col-xs-4">
-                    @if (!Model.Validando)
-                    {
-                        @Html.LabelFor(model => model.GrupoUsuario, htmlAttributes: new {@class = "control-label"})
-                        @Html.DropDownListFor(x => x.GrupoUsuario.id, Model.GrupoUsuarioList as SelectList, new {@class = "form-control"})
-                    }
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
 
                 </div>
-                <div class="col-xs-4">
+                <div class="clearfix"></div>
+
+                @if (!Model.Validando)
+                {
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.GrupoUsuario, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(x => x.GrupoUsuario.id, Model.GrupoUsuarioList as SelectList, new { @class = "form-control" })
+                    </div>
+                }
+
+
+                <div class="col-md-4">
                     @Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label" })
                     @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, new { @class = "form-control" })
 
 
                 </div>
-                <div class="col-xs-4">
+                <div class="col-md-4">
                     @Html.HiddenFor(model => model.PuntoGestion.Id)
 
                     @Html.Label("Punto Gestión", new { Id = "lblPuntoGestion" })
@@ -110,50 +123,50 @@
                     @Html.EditorFor(model => model.PuntoGestion.Descripcion, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Seleccione Depto. para filtrar" } })
                     @Html.ValidationMessageFor(model => model.PuntoGestion.Descripcion, "", new { @class = "text-danger" })
                 </div>
-            </div>
-            <div class="row wow fadeInDown animated">
-                <div class="col-xs-4">
+
+                <div class="col-md-4">
                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
                 </div>
-                <div class="col-xs-4">
+                <div class="col-md-4">
                     @Html.LabelFor(model => model.DocumentoNumero, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.DocumentoNumero, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.DocumentoNumero, "", new { @class = "text-danger" })
 
                 </div>
-                <div class="col-xs-4">
+                <div class="col-md-4">
                     @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label" })
                     @Html.DropDownListFor(x => x.Sexo.Id, Model.SexoList as SelectList, new { @class = "form-control" })
 
 
                 </div>
 
-            </div>
-            <div class="row wow fadeInDown animated">
-                <div class="col-xs-4">
+
+                <div class="col-md-4">
                     @Html.Label("Dependencia (Sólo Si usuario fuera de MPBA)", htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Dependencia, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Dependencia, "", new { @class = "text-danger" })
 
                 </div>
-                <div class="col-md-4">
-                    <div class="col-xs-4">
-                        @if (!Model.Validando)
-                        {
-                            @Html.LabelFor(model => model.SubCodBarra, htmlAttributes: new {@class = "control-label"})
-                            @Html.EditorFor(model => model.SubCodBarra, new {htmlAttributes = new {@class = "form-control", Title = "en 011701000001A seria 1701"}})
-                            @Html.ValidationMessageFor(model => model.SubCodBarra, "", new {@class = "text-danger"})
-                        }
+
+
+                @if (!Model.Validando)
+                {
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.SubCodBarra, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.SubCodBarra, new { htmlAttributes = new { @class = "form-control", Title = "en 011701000001A seria 1701" } })
+                        @Html.ValidationMessageFor(model => model.SubCodBarra, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                }
+
+
                 <div class="col-md-4">
                 </div>
             </div>
 
-        
+
 
 
             <div class="row wow fadeInDown animated">
@@ -256,7 +269,7 @@
                 var msg = "<i class='Exito'>Carga Exitosa</i>";
                 var validando = $("#validando").val();
                 if (validando == true) {
-                    msg=msg+"<br/>A la brevedad se le enviará un email a la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC."
+                    msg = msg + "<br/>A la brevedad se le enviará un email a la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC."
                 }
                 alertify.alert("Exito", msg).set({
                     onclose: function () {

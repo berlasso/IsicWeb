@@ -116,6 +116,9 @@ namespace ISICWeb.Services
         {
             Usuarios usuario = _repository.Set<Usuarios>().SingleOrDefault(x => x.id == id);
             UsuarioViewModel uvm = new UsuarioViewModel();
+            uvm.GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion");
+            uvm.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion");
+            uvm.DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre");
             if (usuario != null)
             {
                 uvm.id = usuario.id;
@@ -123,9 +126,7 @@ namespace ISICWeb.Services
                 uvm.NombreUsuario = usuario.NombreUsuario;
                 uvm.activo = usuario.activo;
                 uvm.GrupoUsuario = usuario.GrupoUsuario;
-                uvm.GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion");
-                uvm.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion");
-                uvm.DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre");
+                
             }
             if (usuario != null && usuario.id != "" && usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.Persona != null)
             {
