@@ -3,3 +3,10 @@ tr.row_selected.odd {
     background-color: rgb(25, 23, 21)!important;
 
 }
+
+ .ui-autocomplete {
+max-height: 300px;
+overflow-y: auto;
+/* prevent horizontal scrollbar */
+overflow-x: hidden;
+}
