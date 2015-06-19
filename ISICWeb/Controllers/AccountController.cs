@@ -36,7 +36,7 @@ namespace ISICWeb.Controllers
 
         public AccountController(IRepository repository, ApplicationUserManager userManager)
         {
-            UserManager = userManager;
+            _userManager = userManager;
             _repository = repository;
 
         }

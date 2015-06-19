@@ -22,12 +22,12 @@ namespace ISICWeb.Models
         {
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            subCodBarra=subCodBarra?? "";
+            subCodBarra = subCodBarra ?? "";
             idPuntoGestion = idPuntoGestion ?? "";
             // Agregar reclamaciones de usuario personalizado aquí
             userIdentity.AddClaim(new Claim("idPuntoGestion", this.idPuntoGestion));
             userIdentity.AddClaim(new Claim("subCodBarra", this.subCodBarra));
-            
+
             return userIdentity;
         }
     }
@@ -57,10 +57,6 @@ namespace ISICWeb.Models
             modelBuilder.Entity<IdentityUserClaim>().ToTable("Claims");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
         }
-
-        public System.Data.Entity.DbSet<ISIC.Entities.Usuarios> Usuarios { get; set; }
-
-        //public System.Data.Entity.DbSet<ISIC.Entities.Migraciones> Migraciones { get; set; }
     }
 
 
@@ -70,9 +66,10 @@ namespace ISICWeb.Models
         {
             // Me aseguro que la base ISIC este creada
             IDbContext ctx = DependencyResolver.Current.GetService<IDbContext>();
-            if (!ctx.Database.Exists()) {
+            if (!ctx.Database.Exists())
+            {
                 ctx.Database.Initialize(true);
-            }            
+            }
 
             if (!CheckIfTableUsersExists(context))
             {
@@ -83,17 +80,17 @@ namespace ISICWeb.Models
             CreateUserPrueba(context);
         }
 
-        public void CreateUserPrueba(ApplicationDbContext context) 
+        public void CreateUserPrueba(ApplicationDbContext context)
         {
             var u = context.Users.Where(b => b.UserName == "prueba").FirstOrDefault();
-            if (u == null) 
+            if (u == null)
             {
-                 var UserManager = new UserManager<ApplicationUser>(new 
-                                                UserStore<ApplicationUser>(context)); 
+                var UserManager = new UserManager<ApplicationUser>(new
+                                               UserStore<ApplicationUser>(context));
 
-                 var RoleManager = new RoleManager<IdentityRole>(new 
-                                          RoleStore<IdentityRole>(context));
-                 string roleName = "Admin";
+                var RoleManager = new RoleManager<IdentityRole>(new
+                                         RoleStore<IdentityRole>(context));
+                string roleName = "Admin";
                 //Create Role Admin if it does not exist
                 if (!RoleManager.RoleExists(roleName))
                 {
@@ -106,12 +103,12 @@ namespace ISICWeb.Models
                 user.PasswordHash = Crypto.HashPassword("pa$$w0rd");
                 user.UserName = "prueba@mpba.gov.ar";
                 var adminresult = UserManager.Create(user, "pa$$w0rd");
-     
+
                 //Add User Admin to Role Admin
                 if (adminresult.Succeeded)
                 {
                     var result = UserManager.AddToRole(user.Id, roleName);
-                }                
+                }
             }
         }
         public bool CheckIfTableUsersExists(ApplicationDbContext context)
