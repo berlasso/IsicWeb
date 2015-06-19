@@ -129,6 +129,10 @@
     <Reference Include="MPBA.RenaperClient">
       <HintPath>..\packages\MPBA.RenaperClient.1.0.0\lib\net45\MPBA.RenaperClient.dll</HintPath>
     </Reference>
+    <Reference Include="MPBA.Security, Version=1.0.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MPBA.Security.1.0.11\lib\net40\MPBA.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MvcFileUploader">
       <HintPath>..\packages\MvcFileUploader.1.3.5\lib\40\MvcFileUploader.dll</HintPath>
     </Reference>
@@ -142,6 +146,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Linq.Dynamic, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -217,6 +222,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -263,8 +272,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Usuarios\Models\UsuarioViewModel.cs" />
     <Compile Include="Areas\Usuarios\UsuariosAreaRegistration.cs" />
     <Compile Include="Areas\Usuarios\Controllers\UsuariosController.cs" />
+    <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Web References\wsSIC\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1128,6 +1139,7 @@
     <Content Include="Images\sort_both.png" />
     <Content Include="Images\sort_desc.png" />
     <Content Include="Images\sort_desc_disabled.png" />
+    <Content Include="leeme.txt" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -1353,6 +1365,7 @@
     <Content Include="Areas\Usuarios\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Usuarios\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Usuarios\Views\web.config" />
+    <Content Include="Areas\Usuarios\Views\Usuarios\_SummaryErrorUsuario.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1498,6 +1511,10 @@
     <Content Include="Views\Shared\DataTable.cshtml" />
     <None Include="Areas\Antecedentes\Views\Antecedentes\Index.cshtml" />
     <Content Include="Areas\Usuarios\Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Account\ValidarLoginSicViejo.cshtml" />
+    <Content Include="Views\Account\_SummaryErrorSic.cshtml" />
+    <Content Include="Views\Account\ValidarLoginSicNuevo.cshtml" />
+    <Content Include="Views\Account\DominioUsuario.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />
@@ -1531,7 +1548,6 @@
     <Folder Include="Areas\Otip\Content\uploads\" />
     <Folder Include="Areas\PortalSIC\Fotos3\" />
     <Folder Include="Areas\PortalSIC\Fotos\" />
-    <Folder Include="Areas\Usuarios\Models\" />
     <Folder Include="bin\" />
     <Folder Include="Images\FotosImputado\" />
     <Folder Include="Images\Huellas\" />

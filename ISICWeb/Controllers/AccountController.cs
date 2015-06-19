@@ -15,10 +15,11 @@ using Microsoft.Owin.Security;
 using Owin;
 using ISICWeb.Models;
 using MPBA.DataAccess;
+using MPBA.Security.Ldap;
 
 namespace ISICWeb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -314,7 +315,7 @@ namespace ISICWeb.Controllers
             }
             return RedirectToAction("Manage", new { Message = message });
         }
-
+        [Authorize]
         //
         // GET: /Account/Manage
         public ActionResult Manage(ManageMessageId? message)
@@ -618,5 +619,86 @@ namespace ISICWeb.Controllers
             }
         }
         #endregion
+
+        public ActionResult ValidarLoginSicNuevo(int id=0)
+        {
+            if (id == 1)
+            {
+                return View();
+            }
+                
+            else
+                return null;
+        }
+
+        public ActionResult ValidarLoginSicViejo()
+        {
+            return View();
+        }
+
+        public ActionResult SeleccionDominio()
+        {
+            return View("DominioUsuario");
+        }
+
+        [HttpPost]
+        public ActionResult ControlarUsuarioSic(string usuario, string pass)
+        {
+         
+            string perfil = "";
+          
+            
+            string errores = "";
+            if (ModelState.IsValid)
+            {
+                wsSIC.Services ws = new wsSIC.Services();
+                perfil = ws.PerfilUsuario(usuario, pass);
+                if (perfil == "")
+                {
+                    errores = "No se encontró el usuario";
+                }
+            }
+            else
+            {
+                errores = string.Join("; ", ModelState.Values
+                                          .SelectMany(x => x.Errors)
+                                          .Select(x => x.ErrorMessage));
+            }
+
+            if (errores != "")
+            {
+                ModelState.AddModelError("", errores);
+                return PartialView("_SummaryErrorSic");
+            }
+            return null;
+        }
+
+        [HttpPost]
+        public ActionResult ControlarUsuarioIsic(string usuario, string pass)
+        {
+
+            string errores = "";
+            if (ModelState.IsValid)
+            {
+                var loginDomain = new LoginDomain();
+                bool validado = loginDomain.CheckLogin(usuario, pass);
+                if (!validado)
+                    errores = "No se encontró el usuario y/o contraseña indicados";
+                
+            }
+            else
+            {
+                errores = string.Join("; ", ModelState.Values
+                                          .SelectMany(x => x.Errors)
+                                          .Select(x => x.ErrorMessage));
+            }
+
+            if (errores != "")
+            {
+                ModelState.AddModelError("", errores);
+                return PartialView("_SummaryErrorSic");
+            }
+            return null;
+        }
     }
 }

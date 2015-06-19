@@ -25,6 +25,7 @@
                 <table id="tablaUsuarios" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>
                             @Html.DisplayNameFor(model => model.NombreUsuario)
                         </th>
@@ -38,13 +39,13 @@
                             @Html.DisplayNameFor(model => model.PersonalPoderJudicial.PuntoGestion.Descripcion)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PersonalPoderJudicial.PuntoGestion.Departamento.DepartamentoNombre)
+                            DEPTO. JUDICIAL
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.activo)
                         </th>
-                        
-                        <th></th>
+
+
                     </tr>
                     </thead>
                     <tbody>
@@ -53,6 +54,9 @@
                     {
 
                         <tr>
+                            <td>
+                                @Html.ActionLink("Editar", "AltaModificacionUsuario", new { id = item.id }, new { @class = "btn btn-alt btn-sm ", onclick = "showPageLoadingSpinner();" })
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.NombreUsuario)
                             </td>
@@ -74,10 +78,10 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.activo)
                             </td>
-                            <td style="text-align: right">
-                                @Html.ActionLink("Editar", "AltaModificacionUsuario", new {id = item.id}, new {@class = "btn btn-alt btn-sm ", onclick = "showPageLoadingSpinner();"})
+                            @*<td style="text-align: right">
+                                
                                 <input type="button" class="btn btn-alt btn-sm" id="btnBorrarUsuario" data-id="@item.id" value="Borrar"/>
-                            </td>
+                            </td>*@
                         </tr>
                     }
 
