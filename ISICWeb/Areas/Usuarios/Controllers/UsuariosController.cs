@@ -40,6 +40,14 @@ namespace ISICWeb.Areas.Usuarios.Controllers
         {
             UsuarioViewModel uvm = _usuarioService.LlenarViewModelDesdeBase(id);
             uvm.Validando = true;
+            LoginDomain ld=new LoginDomain();
+            string usuarioDominio = ld.getCommonName(id);
+
+            if (usuarioDominio != "")
+            {
+               uvm.Apellido = usuarioDominio.Substring(usuarioDominio.LastIndexOf(' ') + 1);
+                uvm.Nombre = usuarioDominio.Substring(0, usuarioDominio.LastIndexOf(' '));
+            }
             return View("AltaModificacionUsuario",uvm);
         }
 
