@@ -119,11 +119,13 @@ namespace ISICWeb.Services
             uvm.GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion");
             uvm.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion");
             uvm.DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre");
+            uvm.id = id;
+            uvm.NombreUsuario = id;
             if (usuario != null)
             {
-                uvm.id = usuario.id;
+                
                 //  uvm.ClaveUsuario = usuario.ClaveUsuario;
-                uvm.NombreUsuario = usuario.NombreUsuario;
+                //uvm.NombreUsuario = usuario.NombreUsuario;
                 uvm.activo = usuario.activo;
                 uvm.GrupoUsuario = usuario.GrupoUsuario;
                 

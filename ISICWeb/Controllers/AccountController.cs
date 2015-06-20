@@ -644,7 +644,7 @@ namespace ISICWeb.Controllers
         [HttpPost]
         public ActionResult ControlarUsuarioSic(UsuarioIsicViewModel u)
         {
-         //   return null;
+            return null;
             string perfil = "";
           string errores = "";
             if (ModelState.IsValid)
@@ -674,7 +674,7 @@ namespace ISICWeb.Controllers
         [HttpPost]
         public ActionResult ControlarUsuarioIsic(UsuarioIsicViewModel u)
         {
-            //return null;
+            return null;
             string errores = "";
             if (ModelState.IsValid)
             {

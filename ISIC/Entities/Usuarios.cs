@@ -17,6 +17,7 @@ namespace ISIC.Entities
         public string ClaveUsuario { get; set; }
         public bool activo { get; set; }
         public virtual GrupoUsuario GrupoUsuario { get; set; }
+        public Guid TokenEnviado { get; set; }
         public DateTime? FechaCreacion { get; set; }
         public string UsuarioCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
