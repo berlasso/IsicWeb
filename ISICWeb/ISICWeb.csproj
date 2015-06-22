@@ -139,6 +139,14 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
+      <HintPath>..\packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.1.0\lib\net45\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -1523,6 +1531,9 @@
     <Content Include="Views\Account\_SummaryErrorSic.cshtml" />
     <Content Include="Views\Account\ValidarLoginSicNuevo.cshtml" />
     <Content Include="Views\Account\DominioUsuario.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Emails\Contact.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />

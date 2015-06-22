@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Web.Mvc;
 using ISIC.Entities;
 using ISICWeb.Areas.Otip.Models;
 using ISICWeb.Models;
 using MPBA.DataAccess;
+using Postal;
 using RestSharp;
 
 namespace ISICWeb.Controllers
@@ -22,7 +24,19 @@ namespace ISICWeb.Controllers
         }
 
 
-     
+        public ActionResult PruebaMail()
+        {
+            //SmtpClient smtpClient = new SmtpClient("smtp.mpba.gov.ar");
+            dynamic email = new Email("Contact");
+            email.To = "berlasso@hotmail.com";
+            
+            //email.FunnyLink = DB.GetRandomLolcatLink();
+            //email.Send();
+            //return View("Index");
+            return new EmailViewResult(email);
+          
+        }
+
      
 
 
