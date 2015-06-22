@@ -24,6 +24,7 @@ namespace ISIC.Entities
         public string UsuarioModificacion { get; set; }
         public string Dependencia { get; set; }
         public string SubCodBarra { get; set; }
+        public bool? UsuarioMPBA { get; set; }
 
     }
 }

@@ -25,7 +25,7 @@ namespace ISICWeb.Services
 
         }
 
-        public bool BorrarUsuario(int id)
+        public bool BorrarUsuario(string id)
         {
             try
             {
@@ -45,60 +45,81 @@ namespace ISICWeb.Services
         public string GuardarUsuario(UsuarioViewModel model)
         {
             string errores = "";
-           
-            Usuarios usuario = _repository.Set<Usuarios>().Single(x => x.id == model.id.ToString());
-            if (usuario ==null)
+            model.id = model.NombreUsuario;
+            Usuarios usuario = _repository.Set<Usuarios>().SingleOrDefault(x => x.id == model.id.ToString());
+
+            if (usuario == null)
             {
+                string ppjid = (Convert.ToInt32(_repository.Set<PersonalPoderJudicial>().Max(x => x.Id)) + 1).ToString();
                 usuario = new Usuarios
                 {
                     FechaCreacion = DateTime.Now,
-                    PersonalPoderJudicial = new PersonalPoderJudicial{
+
+                    PersonalPoderJudicial = new PersonalPoderJudicial
+                    {
+                        Id = ppjid,
                         Persona = new Persona
                         {
-                            
+
                         },
-                        PuntoGestion = _repository.Set<PuntoGestion>().SingleOrDefault(x=>x.Id==model.PuntoGestion.Id)
-                        
+                        PuntoGestion =
+                            _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == model.PuntoGestion.Id)
+
                     }
                 };
             }
+            else
             {
-                if (usuario.PersonalPoderJudicial.Persona.EMail != model.Email)
-                {
-                    bool emailExistente = _repository.Set<Persona>().Any(x => x.EMail == model.Email);
-                    if (emailExistente)
-                    {
-                        errores = "El email consignado ya existe en la base de datos";
-                        return errores;
+                usuario.PersonalPoderJudicial.PuntoGestion =
+                    _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == model.PuntoGestion.Id);
 
-                    }
-                }
-                
             }
-           
+
+            if (usuario.PersonalPoderJudicial.Persona.EMail != model.Email)
+            {
+                bool emailExistente = _repository.Set<Persona>().Any(x => x.EMail == model.Email);
+                if (emailExistente)
+                {
+                    errores = "El email consignado ya existe en la base de datos";
+                    return errores;
+
+                }
+                else
+                {
+                    usuario.PersonalPoderJudicial.Persona.EMail = model.Email;        
+                }
+            }
+
+
+
+
             //usuario.ClaveUsuario = u.ClaveUsuario;
 
             usuario.PersonalPoderJudicial.Persona.Apellido = model.Apellido;
+            usuario.PersonalPoderJudicial.Persona.Nombre = model.Nombre;
             usuario.PersonalPoderJudicial.Persona.DocumentoNumero = model.DocumentoNumero;
             usuario.PersonalPoderJudicial.Persona.FechaAlta = DateTime.Now;
             usuario.PersonalPoderJudicial.Persona.FechaUltimaModificacion = DateTime.Now;
-            usuario.PersonalPoderJudicial.Persona.Sexo = model.Sexo;
-            usuario.GrupoUsuario = _repository.Set<GrupoUsuario>().SingleOrDefault(x=>x.id==model.GrupoUsuario.id);
+            usuario.PersonalPoderJudicial.Persona.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == model.Sexo.Id);
+            usuario.GrupoUsuario = _repository.Set<GrupoUsuario>().SingleOrDefault(x => x.id == model.GrupoUsuario.id);
             usuario.NombreUsuario = model.NombreUsuario;
             usuario.activo = model.activo;
-            usuario.FechaModificacion=DateTime.Now;
+            if (model.activo)
+                usuario.TokenEnviado = null;
+            usuario.FechaModificacion = DateTime.Now;
             usuario.Dependencia = model.Dependencia;
             usuario.SubCodBarra = model.SubCodBarra;
-
-            if (usuario.id != "")
+            usuario.UsuarioMPBA = model.UsuarioMPBA;
+            if (!string.IsNullOrEmpty(usuario.id))
             {
                 _repository.UnitOfWork.RegisterChanged(usuario);
             }
             else
             {
+                usuario.id = model.id;
                 _repository.UnitOfWork.RegisterNew(usuario);
             }
-           
+
             try
             {
                 _repository.UnitOfWork.Commit();
@@ -116,6 +137,7 @@ namespace ISICWeb.Services
         {
             Usuarios usuario = _repository.Set<Usuarios>().SingleOrDefault(x => x.id == id);
             UsuarioViewModel uvm = new UsuarioViewModel();
+            uvm.UsuarioMPBA = true;
             uvm.GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion");
             uvm.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion");
             uvm.DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre");
@@ -123,12 +145,24 @@ namespace ISICWeb.Services
             uvm.NombreUsuario = id;
             if (usuario != null)
             {
-                
+
                 //  uvm.ClaveUsuario = usuario.ClaveUsuario;
                 //uvm.NombreUsuario = usuario.NombreUsuario;
+                uvm.SubCodBarra = usuario.SubCodBarra;
+                uvm.Sexo =
+                    _repository.Set<ClaseSexo>()
+                        .SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.Persona.Sexo.Id);
+                if (usuario.PersonalPoderJudicial!=null && usuario.PersonalPoderJudicial.PuntoGestion!=null)
+                    uvm.PuntoGestion =_repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.PuntoGestion.Id);
+                if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.PuntoGestion != null && usuario.PersonalPoderJudicial.PuntoGestion.Departamento!=null)
+                    uvm.Departamento =_repository.Set<Departamento>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.PuntoGestion.Departamento.Id);
                 uvm.activo = usuario.activo;
                 uvm.GrupoUsuario = usuario.GrupoUsuario;
-                
+                uvm.UsuarioMPBA = usuario.UsuarioMPBA ?? true;
+            }
+            else
+            {
+
             }
             if (usuario != null && usuario.id != "" && usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.Persona != null)
             {

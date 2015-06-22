@@ -1,7 +1,8 @@
 ﻿@using System.Web.UI.WebControls
 @model ISICWeb.Areas.Usuarios.Models.UsuarioViewModel
 @{
-    bool modificando = Model.id != null;
+    bool modificando =!string.IsNullOrEmpty(Model.id);
+    string display = Model.UsuarioMPBA?"block":"none";
 }
 @using (Ajax.BeginForm("GuardarDatosUsuario", "Usuarios",
   new AjaxOptions
@@ -25,9 +26,14 @@
 
     <div class="panel panel-default tile wow fadeInDown animated" style="margin-bottom: 80px;">
         <div class="panel-heading">
-            @if (Model.id != null)
+            @if (modificando)
             {
-                <h4><b style="color: red">Modificación</b> del Usuario</h4>
+                <h2><b style="color: red">Modificación</b> del Usuario
+                    <small>
+                    @Html.Label("Token Enviado sin confirmar", new { style = "color:yellowgreen" })
+                    <a href="#" id="EnviarToken" class="btn btn-alt btn-sm">Reenviar</a>
+                        </small>
+            </h2>
             }
             else
             {
@@ -35,149 +41,177 @@
 
 
             }
+            <h5>
+             
+            </h5>
+
         </div>
         <div class="panel-body">
 
-
             <div class="row wow fadeInDown animated">
-
-
                 <div class="col-md-4">
-                    <div class="row">
-                        <div class="col-md-10">
-                            @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label" })
+                    
+                    @Html.LabelFor(model => model.UsuarioMPBA)
+                    @Html.CheckBoxFor(model => model.UsuarioMPBA)
+                </div>
+                <div class="col-md-4">
+              
+                    
+                </div>
+                <div class="col-md-4">
+                </div>
+                </div>
+
+                <div class="row wow fadeInDown animated">
 
 
-                            @*@Html.EditorFor(model => model.NombreUsuario, !modificando ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)*@
-                            @if (!modificando && Model.Validando!=null && Model.Validando!=true)
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label required" })
+
+
+                                @*@Html.EditorFor(model => model.NombreUsuario, !modificando ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)*@
+                                @if (!modificando && Model.Validando!=null && Model.Validando!=true)
                             {
-                                <div class="form-group">
-                                    <div class='input-group '>
-                                        @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control" })
-                                        <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA">
-                                            <span class="flaticon-zoom22"></span>
-                                        </span>
-                                    </div>
+                                    <div class="form-group">
+                                        <div class='input-group '>
+                                            @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control" })
+                                            <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA" title="Consultar usuario en MPBA">
+                                                <span class="flaticon-zoom22"></span>
+                                            </span>
+                                        </div>
 
-                                </div>
+                                    </div>
                             }
                             else
                             {
-                                @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control", @readonly = "readonly" })
 
                             }
 
-                            @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })<br />
-                            <div class="alert alert-info" id="divUsuarioMPBAEncontrado" style="display: none" role="alert"></div>
-                        </div>
-                        <div class="col-md-2">
-                            @if (!Model.Validando)
+                                @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger " })<br />
+                                <div class="alert alert-info" id="divUsuarioMPBAEncontrado" style="display: none" role="alert"></div>
+                            </div>
+                            <div class="col-md-2">
+                                @if (!Model.Validando)
                             {
-                                <div class="col-xs-1">
-                                    <br />
-                                    @Html.LabelFor(model => model.activo, htmlAttributes: new { @class = "control-label" })
-                                    @Html.CheckBoxFor(model => model.activo)
-                                </div>
+                                    <div class="col-xs-1">
+                                        <br />
+                                        @Html.LabelFor(model => model.activo, htmlAttributes: new { @class = "control-label", style="font-style: italic; color: yellow" })
+
+                                        @Html.CheckBoxFor(model => model.activo, new {title="Se activa automaticamente cuando usuario confirma mail. Solo tildar para casos excepcionales.",style="font-style: italic; color: yellow" })
+
+
+
+                                    </div>
                             }
+                            </div>
                         </div>
+
                     </div>
 
-                </div>
-                
 
 
 
-                <div class="col-md-4">
-                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-4">
-                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-
-                </div>
-                <div class="clearfix"></div>
-
-                @if (!Model.Validando)
-                {
                     <div class="col-md-4">
-                        @Html.LabelFor(model => model.GrupoUsuario, htmlAttributes: new { @class = "control-label" })
-                        @Html.DropDownListFor(x => x.GrupoUsuario.id, Model.GrupoUsuarioList as SelectList, new { @class = "form-control" })
+                        @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label required" })
+                        @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
                     </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label required" })
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div id="colDependencia" class="col-md-4 " style="display: @display">
+                        @Html.Label("Dependencia (Sólo Si usuario no pertenece a red de MPBA)", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Dependencia, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Dependencia, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div id="colDepartamento" class="col-md-4" style="display: @display ">
+                        @Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label required" })
+                        @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, new { @class = "form-control" })
+
+
+                    </div>
+                    <div id="colPuntoGestion" class="col-md-4" style="display: @display ">
+                        @Html.HiddenFor(model => model.PuntoGestion.Id)
+
+                        @Html.Label("Punto Gestión", new { Id = "lblPuntoGestion required" })
+
+                        @Html.EditorFor(model => model.PuntoGestion.Descripcion, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Seleccione Depto. para filtrar" } })
+                        @Html.ValidationMessageFor(model => model.PuntoGestion.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label required" })
+                        @if (Model.UsuarioMPBA)
+                    {
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    }
+                    else
+                    {
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    }
+
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.DocumentoNumero, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.DocumentoNumero, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DocumentoNumero, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label required" })
+                        @Html.DropDownListFor(x => x.Sexo.Id, Model.SexoList as SelectList, new { @class = "form-control" })
+
+
+                    </div>
+
+                    @if (!Model.Validando)
+                {
+                        <div class="col-md-4 ">
+                            @Html.LabelFor(model => model.GrupoUsuario, htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownListFor(x => x.GrupoUsuario.id, Model.GrupoUsuarioList as SelectList, new { @class = "form-control" })
+                        </div>
                 }
 
 
-                <div class="col-md-4">
-                    @Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label" })
-                    @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, new { @class = "form-control" })
 
-
-                </div>
-                <div class="col-md-4">
-                    @Html.HiddenFor(model => model.PuntoGestion.Id)
-
-                    @Html.Label("Punto Gestión", new { Id = "lblPuntoGestion" })
-
-                    @Html.EditorFor(model => model.PuntoGestion.Descripcion, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Seleccione Depto. para filtrar" } })
-                    @Html.ValidationMessageFor(model => model.PuntoGestion.Descripcion, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-md-4">
-                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-
-                </div>
-                <div class="col-md-4">
-                    @Html.LabelFor(model => model.DocumentoNumero, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.DocumentoNumero, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DocumentoNumero, "", new { @class = "text-danger" })
-
-                </div>
-                <div class="col-md-4">
-                    @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label" })
-                    @Html.DropDownListFor(x => x.Sexo.Id, Model.SexoList as SelectList, new { @class = "form-control" })
-
-
-                </div>
-
-
-                <div class="col-md-4">
-                    @Html.Label("Dependencia (Sólo Si usuario fuera de MPBA)", htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.Dependencia, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Dependencia, "", new { @class = "text-danger" })
-
-                </div>
-
-
-                @if (!Model.Validando)
+                    @if (!Model.Validando)
                 {
-                    <div class="col-md-4">
-                        @Html.LabelFor(model => model.SubCodBarra, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.SubCodBarra, new { htmlAttributes = new { @class = "form-control", Title = "en 011701000001A seria 1701" } })
-                        @Html.ValidationMessageFor(model => model.SubCodBarra, "", new { @class = "text-danger" })
-                    </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.SubCodBarra, htmlAttributes: new { @class = "control-label " })
+                            @Html.EditorFor(model => model.SubCodBarra, new { htmlAttributes = new { @class = "form-control", Title = "Para carga de OTIPs: por ej.: en 011701000001A seria 1701" } })
+                            @Html.ValidationMessageFor(model => model.SubCodBarra, "", new { @class = "text-danger" })
+                        </div>
                 }
 
 
-                <div class="col-md-4">
+                    <div class="col-md-4">
+                    </div>
                 </div>
-            </div>
 
 
 
 
-            <div class="row wow fadeInDown animated">
-                <div class="col-md-12" id="divValidation">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.id)
+                <div class="row wow fadeInDown animated">
+                    <div class="col-md-12" id="divValidation">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.id)
 
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
     </div>
     <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
         <div class="row">
@@ -193,7 +227,8 @@
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6">
                         <input type="submit" value="Guardar" class="btn btn-alt btn-lg" />
-
+                        @Html.Label("Enviar Email de confirmación")
+                        @Html.CheckBox("EnviarMail",true)
                     </div>
                 </div>
             </div>
@@ -204,22 +239,22 @@
 }
 
 @section scripts
-        {
+{
     <script>
 
-        $("#Departamento_Id").change(function () {
+        $("#Departamento_Id").change(function() {
             $("#PuntoGestion_Id").val("");
             $("#PuntoGestion_Descripcion").val("");
             $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
         });
-        $('#PuntoGestion_Descripcion').bind('autocompleteselect', function (event, ui) {
+        $('#PuntoGestion_Descripcion').bind('autocompleteselect', function(event, ui) {
             $("#PuntoGestion_Id").val(ui.item.id);
             $("#Departamento_Id").val(ui.item.deptoId);
             $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
         });
 
 
-        $("#PuntoGestion_Descripcion").on("autocompletechange", function (event, ui) {
+        $("#PuntoGestion_Descripcion").on("autocompletechange", function(event, ui) {
             if (this.value.trim() === '') {
                 $("#PuntoGestion_Id").val("");
             }
@@ -231,7 +266,7 @@
 
         $("#PuntoGestion_Descripcion").autocomplete({
             minLength: 3,
-            source: function (request, response) {
+            source: function(request, response) {
                 $.ajax({
                     url: '@Url.Action("BuscarPuntoGestion", "Usuarios")',
                     type: "GET",
@@ -241,9 +276,9 @@
 
                     data: { term: request.term, depto: $("#Departamento_Id").val() },
 
-                    success: function (data) {
+                    success: function(data) {
                         $("#PuntoGestion_Id").val("");
-                        response($.map(data, function (item) {
+                        response($.map(data, function(item) {
 
                             return { label: item.label, value: item.label, id: item.id, deptoId: item.deptoId };
                         }));
@@ -252,8 +287,9 @@
             },
         });
 
-        var urlBuscarUsuario = '@Url.Action("BuscarUsuarioMPBA","Usuarios")?u=';
-        //GUARDAR DATOS Usuario
+        var urlBuscarUsuario = '@Url.Action("BuscarUsuarioMPBA", "Usuarios")?u=';
+
+//GUARDAR DATOS Usuario
         function onGuardarBegin() {
             loader("Guardando, espere un momento...");
         }
@@ -265,20 +301,19 @@
         function onGuardarSuccess(data) {
             if (data == "") {
                 //alertify.success("Alta exitosa");
-                var url = '@Url.Action("Index","Usuarios")';
+                var url = '@Url.Action("Index", "Usuarios")';
                 var msg = "<i class='Exito'>Carga Exitosa</i>";
                 var validando = $("#validando").val();
                 if (validando == true) {
                     msg = msg + "<br/>A la brevedad se le enviará un email a la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC."
                 }
                 alertify.alert("Exito", msg).set({
-                    onclose: function () {
+                    onclose: function() {
                         showPageLoadingSpinner();
                         location.href = url;
 
                     }
                 });
-
 
 
             } else {
@@ -290,10 +325,42 @@
         }
 
 
-        $(document).ready(function () {
-
+        $(document).ready(function() {
+            $('[title]').tooltip();
             $("#navFooter").hide();
             $("#SubCodBarra").mask("9999");
+            $("#EnviarToken").click(function() {
+                $.ajax({
+                    url: '@Url.Action("ReenviarToken", "Usuarios")/@Model.id',
+                    type: "GET",
+                    autoFocus: true,
+                    success: function(data) {
+                        if (data == true) {
+                            alertify.success("Token enviado correctamente");
+                        } else {
+                            alertify.error("Error al enviar el token");
+                        }
+
+                    }
+                });
+            });
+            $("#NombreUsuario").keyup(function() {
+
+                $("#Email").val($(this).val() + '@@MPBA.gov.ar');
+            });
+
+            $("#UsuarioMPBA").change(function() {
+                $("#colDependencia").toggle("slide", "up");
+                $("#colPuntoGestion").toggle("slide", "up");
+                $("#colDepartamento").toggle("slide", "up");
+                if (this.checked) {
+                    $("#Email").prop("readonly", "readonly");
+                    //$("#colDependencia").addClass("hidden");//.effect("fold", "slow");;
+                } else {
+                    $("#Email").prop("readonly", "");
+                    //$("#colDependencia").removeClass("hidden").effect("fold", "slow");
+                }
+            });
         });
 
 

@@ -14,7 +14,7 @@
     <div class="panel panel-default ">
         <div class="panel-heading">
             <h4>
-                Listado de Usuarios 
+                Listado de Usuarios
             </h4>
         </div>
     </div>
@@ -24,66 +24,89 @@
             <div class="col-md-12">
                 <table id="tablaUsuarios" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
                     <thead>
-                    <tr>
-                        <th></th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NombreUsuario)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.Apellido)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.Nombre)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.PersonalPoderJudicial.PuntoGestion.Descripcion)
-                        </th>
-                        <th>
-                            DEPTO. JUDICIAL
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.activo)
-                        </th>
+                        <tr>
+                            <th></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NombreUsuario)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.Apellido)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.PuntoGestion.Descripcion)
+                            </th>
+                            <th>
+                                DEPTO. JUDICIAL
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.EMail)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.activo)
+                            </th>
+                            <th>
+                                Email sin confirmar
+                            </th>
+                            <th>
 
-
-                    </tr>
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
-                    
-                    @foreach (var item in Model)
-                    {
 
-                        <tr>
-                            <td>
-                                @Html.ActionLink("Editar", "AltaModificacionUsuario", new { id = item.id }, new { @class = "btn btn-alt btn-sm ", onclick = "showPageLoadingSpinner();" })
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NombreUsuario)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.Persona.Apellido)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.Persona.Nombre)
-                            </td>
-                            <td>
-                                @if (item.PersonalPoderJudicial != null)
-                                {
-                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.PuntoGestion.Descripcion)
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.PuntoGestion.Departamento.DepartamentoNombre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.activo)
-                            </td>
-                            @*<td style="text-align: right">
-                                
-                                <input type="button" class="btn btn-alt btn-sm" id="btnBorrarUsuario" data-id="@item.id" value="Borrar"/>
-                            </td>*@
-                        </tr>
-                    }
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("Editar", "AltaModificacionUsuario", new { id = item.id }, new { @class = "btn btn-alt btn-sm ", onclick = "showPageLoadingSpinner();" })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NombreUsuario)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.Persona.Apellido)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.Persona.Nombre)
+                                </td>
+                                <td>
+                                    @if (item.PersonalPoderJudicial != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.PuntoGestion.Descripcion)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.PuntoGestion.Departamento.DepartamentoNombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelitem => item.PersonalPoderJudicial.Persona.EMail)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.activo)
+                                </td>
+                                <td>
+                                    @{
+                            bool tokenenviado = item.TokenEnviado != null;
+                                    }
+                                    @*<input type="checkbox" value=@tokenenviado disabled="disabled"/>*@
+                                    @Html.CheckBox("tokenenv", tokenenviado, new { disabled = "disabled" })
+
+
+                                </td>
+
+                                <td style="text-align: right">
+                                    @if (item.activo)
+                                    {
+                                        <input type="button" class="btn btn-alt btn-sm" id="btnBorrarUsuario" data-id="@item.id" value="Desactivar" />
+                                    }
+                                </td>
+
+                            </tr>
+                        }
 
 
                     </tbody>
@@ -110,14 +133,14 @@
         @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
                 Volver
             </a>*@
-        <a class="btn btn-lg btn-alt volver" href=' @Url.Action("Index","Home", new {Area = ""}) ' title=" volver" onclick="showPageLoadingSpinner();" type="button">
+        <a class="btn btn-lg btn-alt volver" href=' @Url.Action("Index", "Home", new { Area = "" }) ' title=" volver" onclick="showPageLoadingSpinner();" type="button">
             Volver
         </a>
     </div>
     <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
         @if (Model != null)
         {
-            @Html.ActionLink("Nuevo", "AltaModificacionUsuario","Usuarios",  new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
+            @Html.ActionLink("Nuevo", "AltaModificacionUsuario", "Usuarios", new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
         }
 
 
@@ -127,8 +150,8 @@
 
 
 <script>
-    var urlBorrarUsuario = '@Url.Action("BorrarUsuario")/';
-  
+    var urlBorrarUsuario = '@Url.Action("BorrarUsuario","Usuarios")/';
+
 
 </script>
 

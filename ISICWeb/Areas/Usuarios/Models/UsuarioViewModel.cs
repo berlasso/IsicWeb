@@ -39,11 +39,17 @@ namespace ISICWeb.Areas.Usuarios.Models
         //public SelectList PuntoGestionList { get; set; }
         public SelectList DepartamentoList { get; set; }
         public SelectList SexoList { get; set; }
+        [Required]
         public virtual PuntoGestion PuntoGestion { get; set; }
+        [Required]
         public virtual Departamento Departamento { get; set; }
         public virtual ClaseSexo Sexo { get; set; }
         public string SubCodBarra { get; set; }
         public bool Validando { get; set; }
+        [Display(Name = "Usuario MPBA")]
+        public bool UsuarioMPBA { get; set; }
+        [Display(Name = "Token Enviado")]
+        public Guid? TokenEnviado { get; set; }
 
     }
 }

@@ -50,17 +50,19 @@
         var table = $('#tablaUsuarios').DataTable();
         var row = table.row($(this).parents('tr'));
 
-        alertify.confirm("Borrar Usuario", "Seguro que desea borrar?", function () {
+        alertify.confirm("Desacivar Usuario", "Seguro que desea desactivar?", function () {
 
             var url = urlBorrarUsuario + encodeURI(id);
             $.get(url, null, function (data) {
                 if (data === "True") {
-                    row.remove().draw();
-                    alertify.success("Usuario borrado correctamente");
+                    //row.remove().draw();
+                    var cellActivo = table.cell(row, 7).node();
+                    $(cellActivo).children().removeAttr("checked");
+                    alertify.success("Usuario desactivado correctamente");
 
 
                 } else {
-                    alertify.error("Error al borrar");
+                    alertify.error("Error al desactivar");
                 }
             });
 
