@@ -568,6 +568,7 @@
     <Content Include="Content\Images\animated-overlay.gif" />
     <Content Include="Content\Images\details_close.png" />
     <Content Include="Content\Images\details_open.png" />
+    <Content Include="Content\Images\escudo.jpg" />
     <Content Include="Content\Images\glyphicons-halflings-white.png" />
     <Content Include="Content\Images\glyphicons-halflings.png" />
     <Content Include="Content\Images\indicator.gif" />

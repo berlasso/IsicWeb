@@ -3,28 +3,83 @@
     ViewBag.Title = "Contacto";
 }
 
-
+@section Head
+{
+    <style>
+        .wordCentral {
+            font-family: "Times New Roman";
+            font-size: 20px;
+            background-color: white;
+            color: black;
+             text-align: justify;
+            -webkit-text-justify: inter-word;
+            -moz-text-justify: inter-word;
+            -o-text-justify: inter-word;
+            text-justify: inter-word;
+            
+        }
+        p {
+    text-indent: 250px;
+} 
+    </style>
+}
 <div class="center wow fadeInDown animated tile-light">
     <h1>@ViewBag.Title</h1>
     
 </div>
-@using (Html.BeginForm("GuardarContacto","Home"))
-{
+
     @*@Html.TextBoxFor(x=>x.Id,new {@class="form-control"})
     @Html.DropDownListFor(x => x.ExpedienteMigraciones.Id, ViewBag.dnilist as SelectList, new {@class="form-control"})*@
 
-    <div class="row tile-light wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="row tile-light wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; margin-bottom: 100px; animation-delay: 300ms; animation-name: fadeInDown;" >
+        <div class="col-md-2"></div>
+        <div class="wordCentral col-md-8" >
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <img src="~/Content/Images/escudo.jpg" style="width: 200px; height: auto; margin-top: 100px;">
+                <br />
+                <br />
+                <p class="pull-right">La Plata, 18 de Febrero de 2015</p>
 
-        <address>
-            SIC<br/>
-            La Plata, 1900<br/>
-            <abbr title="Phone">P:</abbr>
-            425.555.0100
-        </address>
+                <span>
+                    Al Señor<br />
+                    Agente Fiscal del Fuero de Responsabilidad Penal Juvenil<br />
+                    del Departamento Judicial de San Martin<br />
+                    Dr. Fernando Javier Sirni<br />
+                    <u>Su Despacho:</u><br />
+                    <br />
+                    <br />
+                </span>
 
-        <address>
-            <strong>Soporte:</strong> <a href="mailto:sic@mpba.gov.ar">sic@mpba.gov.ar</a><br/>
-        </address>
+                <p>
+                    Tengo el agrado de dirigirme a usted en mi carácter de Coordinador del Sistema de Investigaciones Criminalísticas, del departamento de Policía Judicial de la Procuración General de la Suprema Corte de Justicia de la Provincia de Buenos Aires, en respuesta al oficio en el cual se solicita una clave para ingresar a la página Web de este sistema.
+                    A tal efecto, envió la presente clave de acceso y su correspondiente nombre de usuario, dejando constancia que el uso de la misma reviste carácter personal y confidencial.<br />
+                </p>
+                <p>
+                    Se recuerda que la información obtenida tiene carácter reservado siendo el funcionario responsable por su uso indebido en los términos de la Ley 25.326 de Protección de datos personales, su decreto reglamentario 1558/2001 y su modif. 1160/2010.<br/>
+                    Pagina de consultas Web: http://www.sic.mpba.gov.ar<br/>
+                </p>
+                <p>
+                    Para ser aceptado en la base de usuarios del sitio del SIC, deberá indefectiblemente confirmar su cuenta haciendo click en el boton "VALIDAR CUENTA". Hasta tanto no cumpla con este paso, su cuenta no estará habilitada para ingresar a dicha pagina.
+                </p>
+                <div class="center">
+                    <a href="#" class="btn btn-lg">VALIDAR CUENTA</a>
+                </div>
+                <p>
+                    Pongo en conocimiento, que los datos obrantes en la base de consulta son de carácter exclusivamente informativo, de requerir certificación de los mismos, deberá dirigirse al organismo allí citado.
+                </p>
+                <p>
+                    Por último, ante cualquier duda o consulta dejo a su disposición nuestros teléfonos (0221) 489-5350, 489-4072 o 423-3922.
+                </p>
+                <p>
+                    Aprovecho la ocasión para saludarlo a usted con distinguida consideración.
+
+                </p>
+                <small style="color: black;">Si no puede visualizar el formato HTML, valide la cuenta haciendo click <a style="color: blue" href="#">AQUI</a></small>
+                <p style="margin-bottom: 100px;"></p>
+            </div>
+            <div class="col-md-2"></div>
+            </div>
+        <div class="col-md-2"></div>
     </div>
-    <input type="submit" value="Enviar" class="btn btn-lg"/>
-}
+    
