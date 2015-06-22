@@ -101,7 +101,12 @@ namespace ISICWeb.Services
             usuario.PersonalPoderJudicial.Persona.FechaAlta = DateTime.Now;
             usuario.PersonalPoderJudicial.Persona.FechaUltimaModificacion = DateTime.Now;
             usuario.PersonalPoderJudicial.Persona.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == model.Sexo.Id);
-            usuario.GrupoUsuario = _repository.Set<GrupoUsuario>().SingleOrDefault(x => x.id == model.GrupoUsuario.id);
+            if (model.GrupoUsuario!=null)
+                usuario.GrupoUsuario = _repository.Set<GrupoUsuario>().SingleOrDefault(x => x.id == model.GrupoUsuario.id);
+            else
+            {
+                usuario.GrupoUsuario = _repository.Set<GrupoUsuario>().SingleOrDefault(x => x.id == 5);//todos los delitos/personas
+            }
             usuario.NombreUsuario = model.NombreUsuario;
             usuario.activo = model.activo;
             if (model.activo)
@@ -149,9 +154,8 @@ namespace ISICWeb.Services
                 //  uvm.ClaveUsuario = usuario.ClaveUsuario;
                 //uvm.NombreUsuario = usuario.NombreUsuario;
                 uvm.SubCodBarra = usuario.SubCodBarra;
-                uvm.Sexo =
-                    _repository.Set<ClaseSexo>()
-                        .SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.Persona.Sexo.Id);
+                if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.Persona != null && usuario.PersonalPoderJudicial.Persona.Sexo!=null)
+                    uvm.Sexo =_repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.Persona.Sexo.Id);
                 if (usuario.PersonalPoderJudicial!=null && usuario.PersonalPoderJudicial.PuntoGestion!=null)
                     uvm.PuntoGestion =_repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.PuntoGestion.Id);
                 if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.PuntoGestion != null && usuario.PersonalPoderJudicial.PuntoGestion.Departamento!=null)

@@ -1,7 +1,7 @@
-﻿@model ISICWeb.Areas.Antecedentes.Models.AFISViewModel
+﻿@model ISICWeb.Areas.Afis.Models.AFISViewModel
 @{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); }
 
-@using (Ajax.BeginForm("GuardarDatosAFIS", "Antecedentes",
+@using (Ajax.BeginForm("GuardarDatosAFIS", "Afis",
   new AjaxOptions
                 {
                     UpdateTargetId = "divValidation",
@@ -30,7 +30,7 @@
 
         if (Model != null)
         {
-        Html.RenderAction("MostrarDatosImputado", "Antecedentes", new { idIdgxprontuario = Model.Id });
+        Html.RenderAction("MostrarDatosImputado", "Afis", new { idIdgxprontuario = Model.Id });
 
         }
         <div class="panel panel-default tile wow fadeInDown animated" style="margin-bottom: 80px;">

@@ -138,8 +138,10 @@ namespace ISICWeb.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(bool RegistrandoUsuarioViejo=false)
         {
+            ViewBag.RegistrandoUsuarioViejo = RegistrandoUsuarioViejo;
+
             return View();
         }
 
@@ -199,7 +201,7 @@ namespace ISICWeb.Controllers
             else
             {
                 AddErrors(result);
-                return View();
+                return View(false);
             }
         }
 
@@ -631,8 +633,12 @@ namespace ISICWeb.Controllers
                 return View();
             }
                 
-            else
-                return RedirectToAction("Register");
+            else if (id == 2)
+            {
+              //  return RedirectToAction("Register",new {RegistrandoUsuarioViejo=true});
+                return RedirectToAction("CompletarDatosSicNuevo","Usuarios", new {area="Usuarios"});
+            }
+            return null;
         }
 
         public ActionResult ValidarLoginSicViejo()
@@ -648,7 +654,7 @@ namespace ISICWeb.Controllers
         [HttpPost]
         public ActionResult ControlarUsuarioSic(UsuarioIsicViewModel u)
         {
-            return null;
+           // return null;
             string perfil = "";
           string errores = "";
             if (ModelState.IsValid)
@@ -678,7 +684,7 @@ namespace ISICWeb.Controllers
         [HttpPost]
         public ActionResult ControlarUsuarioIsic(UsuarioIsicViewModel u)
         {
-            return null;
+     //       return null;
             string errores = "";
             if (ModelState.IsValid)
             {
@@ -700,6 +706,7 @@ namespace ISICWeb.Controllers
                 bool existente=_repository.Set<Usuarios>().Any(x => x.NombreUsuario.ToLower().Contains(u.usuario.Trim().ToLower()));
                 if (existente)
                     errores = "El usuario ya existe en la base del Isic";
+
             }
 
             if (errores != "")

@@ -272,6 +272,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Afis\AfisAreaRegistration.cs" />
+    <Compile Include="Areas\Afis\Models\ImputadosAfisViewModel.cs" />
     <Compile Include="Areas\Usuarios\Models\UsuarioViewModel.cs" />
     <Compile Include="Areas\Usuarios\UsuariosAreaRegistration.cs" />
     <Compile Include="Areas\Usuarios\Controllers\UsuariosController.cs" />
@@ -290,11 +292,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Antecedentes\AntecedentesAreaRegistration.cs" />
-    <Compile Include="Areas\Antecedentes\Controllers\AntecedentesAfisController.cs" />
+    <Compile Include="Areas\Afis\Controllers\AfisController.cs" />
     <Compile Include="Areas\Antecedentes\Controllers\AntecedentesGnaController.cs" />
     <Compile Include="Areas\Antecedentes\Controllers\AntecedentesIdgxController.cs" />
     <Compile Include="Areas\Antecedentes\Controllers\AntecedentesMigracionesController.cs" />
-    <Compile Include="Areas\Antecedentes\Models\AFISViewModel.cs" />
+    <Compile Include="Areas\Afis\Models\AFISViewModel.cs" />
     <Compile Include="Areas\Antecedentes\Models\GNAViewModels.cs" />
     <Compile Include="Areas\Antecedentes\Models\IdgxViewModels.cs" />
     <Compile Include="Areas\Antecedentes\Models\ImputadosAntecedentesViewModel.cs" />
@@ -1346,19 +1348,19 @@
     <Content Include="Areas\Antecedentes\Views\web.config" />
     <Content Include="Areas\Antecedentes\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\AltaModificacionDatosPersonalesIDGx.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\Antecedentes\ResultadoBusqueda.cshtml" />
+    <Content Include="Areas\Afis\Views\Afis\ResultadoBusqueda.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\_IdgxDelitosAsociados.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\Antecedentes\_DetalleImputado.cshtml" />
+    <Content Include="Areas\Afis\Views\Afis\_DetalleImputado.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\AltaModificacionDelitoIdgx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\ListadoProntuariosIdgx.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesAfis\AltaModificacionAFIS.cshtml" />
+    <Content Include="Areas\Afis\Views\Afis\AltaModificacionAFIS.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesGna\AltaModificacionGNA.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\AltaModificacionProntuarioIDGx.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesAfis\_SummaryErrorAfis.cshtml" />
+    <Content Include="Areas\Afis\Views\Afis\_SummaryErrorAfis.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesGna\_SummaryErrorGna.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesIdgx\ListaDatosPersonalesIDGx.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesGna\ListadoGNAs.cshtml" />
-    <Content Include="Areas\Antecedentes\Views\AntecedentesAfis\ListadoAFIS.cshtml" />
+    <Content Include="Areas\Afis\Views\Afis\ListadoAFIS.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\ListadoMigraciones.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\_SummaryErrorMigraciones.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\AltaModificacionMigraciones.cshtml" />
@@ -1367,6 +1369,11 @@
     <Content Include="Areas\Usuarios\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Usuarios\Views\web.config" />
     <Content Include="Areas\Usuarios\Views\Usuarios\_SummaryErrorUsuario.cshtml" />
+    <Content Include="Areas\Afis\Views\web.config" />
+    <Content Include="Areas\Afis\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\Antecedentes\_DetalleImputado.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\Antecedentes\Index.cshtml" />
+    <Content Include="Areas\Antecedentes\Views\Antecedentes\ResultadoBusqueda.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1473,7 +1480,7 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Areas\Usuarios\Views\Usuarios\ConfirmarEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
@@ -1510,7 +1517,7 @@
     <Content Include="Views\CotejoManual\ArmadoDecaDactilar.cshtml" />
     <Content Include="Views\CotejoManual\VisualizaParesDecaDactilares.cshtml" />
     <Content Include="Views\Shared\DataTable.cshtml" />
-    <None Include="Areas\Antecedentes\Views\Antecedentes\Index.cshtml" />
+    <None Include="Areas\Afis\Views\Afis\Index.cshtml" />
     <Content Include="Areas\Usuarios\Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Account\ValidarLoginSicViejo.cshtml" />
     <Content Include="Views\Account\_SummaryErrorSic.cshtml" />
@@ -1545,6 +1552,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Afis\Views\Shared\" />
     <Folder Include="Areas\Antecedentes\Views\Shared\" />
     <Folder Include="Areas\Otip\Content\uploads\" />
     <Folder Include="Areas\PortalSIC\Fotos3\" />

@@ -14,11 +14,13 @@ namespace ISICWeb.Services
 {
     public class ImputadoExtraService: ISIC.Services.ImputadoService
     {
-        private IRepository repository;
+        private IRepository _repository;
+        private JiraService _jiraService;
 
-        public ImputadoExtraService(IRepository repository) : base(repository)
+        public ImputadoExtraService(IRepository repository, JiraService jiraService=null) : base(repository)
         {
-            this.repository = repository;
+            this._repository = repository;
+            _jiraService = jiraService;
         }
 
         public DatosGeneralesViewModel CrearViewModel()
@@ -37,7 +39,7 @@ namespace ISICWeb.Services
         /// <returns></returns>
         public DatosGeneralesViewModel LlenarViewModelConImputado(int id, bool ParaEditar)
         {
-            Imputado imputado = repository.Set<Imputado>().FirstOrDefault(s => s.Id == id);
+            Imputado imputado = _repository.Set<Imputado>().FirstOrDefault(s => s.Id == id);
             if (imputado != null)
             {
                 Persona persona = imputado.Persona;
@@ -129,7 +131,7 @@ namespace ISICWeb.Services
                     bool hayPartido = dom.Partido != null;
                     if (!hayPartido)
                     {
-                        Partido partido = repository.Set<Partido>().FirstOrDefault(p => p.Id == 0);
+                        Partido partido = _repository.Set<Partido>().FirstOrDefault(p => p.Id == 0);
                         dom.Partido = partido;
                     }
                     datosImputado.Partido = dom.Partido==null?"":dom.Partido.PartidoNombre;
@@ -157,7 +159,7 @@ namespace ISICWeb.Services
                     bool hayPartidoDelito = domDelito.Partido != null;
                     if (!hayPartidoDelito)
                     {
-                        Partido partido = repository.Set<Partido>().FirstOrDefault(p => p.Id == 0);
+                        Partido partido = _repository.Set<Partido>().FirstOrDefault(p => p.Id == 0);
                         domDelito.Partido = partido;
                     }
                     datosImputado.hidIdPartidoDelito = domDelito.Partido==null?"0":domDelito.Partido.Id.ToString();
@@ -208,7 +210,7 @@ namespace ISICWeb.Services
             ////////////////////////////////
 
 
-            var imputado = id > 0 ? repository.Set<Imputado>().SingleOrDefault(s => s.Id == imp.Id) : new Imputado();
+            var imputado = id > 0 ? _repository.Set<Imputado>().SingleOrDefault(s => s.Id == imp.Id) : new Imputado();
             if (id == 0)
             {
                 imputado.CodigoDeBarrasOriginal = imp.CodBarras;
@@ -217,29 +219,29 @@ namespace ISICWeb.Services
                 imputado.FechaCreacionI = DateTime.Now;
                 //CAMBIAR!!
                 imputado.PuntoGestionCreacionI =
-                    repository.Set<PuntoGestion>().SingleOrDefault(p => p.Id == idPuntoGestion);
+                    _repository.Set<PuntoGestion>().SingleOrDefault(p => p.Id == idPuntoGestion);
                 /////////////////
-                imputado.Estado = repository.Set<SICEstadoTramite>().SingleOrDefault(e => e.Id == 9);
+                imputado.Estado = _repository.Set<SICEstadoTramite>().SingleOrDefault(e => e.Id == 9);
             }
             
             imputado.FechaUltimaModificacion = DateTime.Now;
 
             //DATOS SOMATICOS
-            imputado.CejasDimension = repository.Set<SICClaseCejasDimension>().First(x => x.Id.ToString() == imp.DimensionCeja);
-            imputado.CejasTipo = repository.Set<SICClaseCejasTipo>().First(x => x.Id.ToString() == imp.TipoCeja);
-            imputado.ColorCabello = repository.Set<SICClaseColorCabello>().First(x => x.Id.ToString() == imp.ColorCabellos);
-            imputado.ColorOjos = repository.Set<SICClaseColorOjos>().First(x => x.Id.ToString() == imp.ColorOjos);
-            imputado.ColorPiel = repository.Set<SICClaseColorPiel>().First(x => x.Id.ToString() == imp.ColorPiel);
-            imputado.FormaBoca = repository.Set<SICClaseFormaBoca>().First(x => x.Id.ToString() == imp.FormaBoca);
-            imputado.FormaCara = repository.Set<SICClaseFormaCara>().First(x => x.Id.ToString() == imp.FormaCara);
-            imputado.FormaLabioInferior = repository.Set<SICClaseFormaLabioInferior>().First(x => x.Id.ToString() == imp.FormaLabioInferior);
-            imputado.FormaLabioSuperior = repository.Set<SICClaseFormaLabioSuperior>().First(x => x.Id.ToString() == imp.FormaLabioSuperior);
-            imputado.FormaMenton = repository.Set<SICClaseFormaMenton>().First(x => x.Id.ToString() == imp.FormaMenton);
-            imputado.FormaNariz = repository.Set<SICClaseFormaNariz>().First(x => x.Id.ToString() == imp.FormaNariz);
-            imputado.FormaOreja = repository.Set<SICClaseFormaOreja>().First(x => x.Id.ToString() == imp.FormaOreja);
-            imputado.Robustez = repository.Set<SICClaseRobustez>().First(x => x.Id.ToString() == imp.Robustez);
-            imputado.TipoCabello = repository.Set<SICClaseTipoCabello>().First(x => x.Id.ToString() == imp.TipoCabello);
-            imputado.TipoCalvicie = repository.Set<SICClaseTipoCalvicie>().First(x => x.Id.ToString() == imp.TipoCalvicie);
+            imputado.CejasDimension = _repository.Set<SICClaseCejasDimension>().First(x => x.Id.ToString() == imp.DimensionCeja);
+            imputado.CejasTipo = _repository.Set<SICClaseCejasTipo>().First(x => x.Id.ToString() == imp.TipoCeja);
+            imputado.ColorCabello = _repository.Set<SICClaseColorCabello>().First(x => x.Id.ToString() == imp.ColorCabellos);
+            imputado.ColorOjos = _repository.Set<SICClaseColorOjos>().First(x => x.Id.ToString() == imp.ColorOjos);
+            imputado.ColorPiel = _repository.Set<SICClaseColorPiel>().First(x => x.Id.ToString() == imp.ColorPiel);
+            imputado.FormaBoca = _repository.Set<SICClaseFormaBoca>().First(x => x.Id.ToString() == imp.FormaBoca);
+            imputado.FormaCara = _repository.Set<SICClaseFormaCara>().First(x => x.Id.ToString() == imp.FormaCara);
+            imputado.FormaLabioInferior = _repository.Set<SICClaseFormaLabioInferior>().First(x => x.Id.ToString() == imp.FormaLabioInferior);
+            imputado.FormaLabioSuperior = _repository.Set<SICClaseFormaLabioSuperior>().First(x => x.Id.ToString() == imp.FormaLabioSuperior);
+            imputado.FormaMenton = _repository.Set<SICClaseFormaMenton>().First(x => x.Id.ToString() == imp.FormaMenton);
+            imputado.FormaNariz = _repository.Set<SICClaseFormaNariz>().First(x => x.Id.ToString() == imp.FormaNariz);
+            imputado.FormaOreja = _repository.Set<SICClaseFormaOreja>().First(x => x.Id.ToString() == imp.FormaOreja);
+            imputado.Robustez = _repository.Set<SICClaseRobustez>().First(x => x.Id.ToString() == imp.Robustez);
+            imputado.TipoCabello = _repository.Set<SICClaseTipoCabello>().First(x => x.Id.ToString() == imp.TipoCabello);
+            imputado.TipoCalvicie = _repository.Set<SICClaseTipoCalvicie>().First(x => x.Id.ToString() == imp.TipoCalvicie);
             imputado.Estatura = imp.Estatura;
             //////////////////////
       
@@ -252,7 +254,7 @@ namespace ISICWeb.Services
             if (imputado.Persona == null)
                 imputado.Persona = new Persona();
             Localidad localidadNacimiento = null;
-            localidadNacimiento = repository.Set<Localidad>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdLocalidadNacimiento);
+            localidadNacimiento = _repository.Set<Localidad>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdLocalidadNacimiento);
             imputado.Persona.Apellido = imp.Apellido;
             imputado.Persona.Nombre = imp.Nombres;
             imputado.Persona.Padre = imp.Padre;
@@ -266,14 +268,14 @@ namespace ISICWeb.Services
             imputado.Persona.FechaUltimaModificacion = DateTime.Now;
             imputado.Persona.LocalidadNacimiento = localidadNacimiento;
             imputado.Persona.LugarNacimiento = localidadNacimiento != null ? localidadNacimiento.LocalidadNombre : null;
-            imputado.Persona.Nacionalidad = repository.Set<Pais>().FirstOrDefault(x => x.Id.ToString() == imp.PaisNacimiento);
-            imputado.Persona.ProvinciaNacimiento = repository.Set<Provincia>().FirstOrDefault(x => x.Id.ToString() == imp.ProvinciaNacimiento);
-            imputado.Persona.TipoDNI = repository.Set<ClaseTipoDNI>().First(x => x.Id.ToString() == imp.TipoDocumento);
+            imputado.Persona.Nacionalidad = _repository.Set<Pais>().FirstOrDefault(x => x.Id.ToString() == imp.PaisNacimiento);
+            imputado.Persona.ProvinciaNacimiento = _repository.Set<Provincia>().FirstOrDefault(x => x.Id.ToString() == imp.ProvinciaNacimiento);
+            imputado.Persona.TipoDNI = _repository.Set<ClaseTipoDNI>().First(x => x.Id.ToString() == imp.TipoDocumento);
             imputado.Persona.DocumentoNumero = imp.NumeroDocumento??"";
-            imputado.Persona.EstudiosCursados = repository.Set<ClaseEstudiosCursados>().First(x => x.Id.ToString() == imp.Instruccion);
-            imputado.Persona.EstadoCivil = repository.Set<ClaseEstadoCivil>().First(x => x.Id.ToString() == imp.EstadoCivil);
+            imputado.Persona.EstudiosCursados = _repository.Set<ClaseEstudiosCursados>().First(x => x.Id.ToString() == imp.Instruccion);
+            imputado.Persona.EstadoCivil = _repository.Set<ClaseEstadoCivil>().First(x => x.Id.ToString() == imp.EstadoCivil);
             imputado.Persona.Conyuge = imp.Conyuge;
-            imputado.Persona.Sexo = repository.Set<ClaseSexo>().First(x => x.Id.ToString() == imp.Sexo);
+            imputado.Persona.Sexo = _repository.Set<ClaseSexo>().First(x => x.Id.ToString() == imp.Sexo);
             imputado.Persona.Direccion = imp.Domicilio;
 
             if (imputado.Persona.Domicilio == null)
@@ -282,14 +284,14 @@ namespace ISICWeb.Services
             imputado.Persona.Domicilio.EntreCalle = imp.EntreCalle;
             imputado.Persona.Domicilio.EntreCalle2 = imp.EntreCalle2;
 
-            imputado.Persona.Domicilio.Localidad = repository.Set<Localidad>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdLocalidad);
+            imputado.Persona.Domicilio.Localidad = _repository.Set<Localidad>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdLocalidad);
             imputado.Persona.Domicilio.NroH = imp.NroH;
             imputado.Persona.Domicilio.DeptoH = imp.DeptoH;
             imputado.Persona.Domicilio.PisoH = imp.PisoH;
             imputado.Persona.Domicilio.ParajeBarrioH = imp.ParajeBarrioH;
 
-            imputado.Persona.Domicilio.Partido = repository.Set<Partido>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdPartido);
-            imputado.Persona.Domicilio.Provincia = repository.Set<Provincia>().FirstOrDefault(x => x.Id.ToString() == imp.Provincia);
+            imputado.Persona.Domicilio.Partido = _repository.Set<Partido>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdPartido);
+            imputado.Persona.Domicilio.Provincia = _repository.Set<Provincia>().FirstOrDefault(x => x.Id.ToString() == imp.Provincia);
 
       
 
@@ -305,12 +307,12 @@ namespace ISICWeb.Services
             imputado.Delito.FechaUltimaModificacion = DateTime.Now;
             if (!string.IsNullOrEmpty(imp.hidIdDependenciaPolicial))
             {
-                PuntoGestion comisaria = repository.Set<PuntoGestion>().FirstOrDefault(x => x.Id == imp.hidIdDependenciaPolicial);
+                PuntoGestion comisaria = _repository.Set<PuntoGestion>().FirstOrDefault(x => x.Id == imp.hidIdDependenciaPolicial);
                 if (comisaria != null)
                     imputado.Delito.Comisaria = comisaria;
             }
             
-            imputado.Delito.ModusOperandi = repository.Set<NNClaseModusOperandi>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdModusOperandi);
+            imputado.Delito.ModusOperandi = _repository.Set<NNClaseModusOperandi>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdModusOperandi);
 
             if (imputado.Delito.Ipp == null)
                 imputado.Delito.Ipp = new IPP
@@ -358,9 +360,9 @@ namespace ISICWeb.Services
             imputado.Delito.Domicilio.DeptoH = imp.DeptoHDelito;
             imputado.Delito.Domicilio.PisoH = imp.PisoHDelito;
             imputado.Delito.Domicilio.ParajeBarrioH = imp.ParajeBarrioHDelito;
-            imputado.Delito.Domicilio.Partido = repository.Set<Partido>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdPartidoDelito);
-            imputado.Delito.Domicilio.Provincia = repository.Set<Provincia>().FirstOrDefault(x => x.Id.ToString() == imp.ProvinciaDelito);
-            imputado.Delito.Domicilio.Localidad = repository.Set<Localidad>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdLocalidadDelito);
+            imputado.Delito.Domicilio.Partido = _repository.Set<Partido>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdPartidoDelito);
+            imputado.Delito.Domicilio.Provincia = _repository.Set<Provincia>().FirstOrDefault(x => x.Id.ToString() == imp.ProvinciaDelito);
+            imputado.Delito.Domicilio.Localidad = _repository.Set<Localidad>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdLocalidadDelito);
 
             if (imputado.Persona.FechaNacimiento != null && imputado.Delito.DescripcionTemporal.FechaDesde != null)
             {
@@ -380,13 +382,19 @@ namespace ISICWeb.Services
                 return error;
             }
             if (id > 0)
-                    repository.UnitOfWork.RegisterChanged(imputado);
+                    _repository.UnitOfWork.RegisterChanged(imputado);
                 else
-                    repository.UnitOfWork.RegisterNew(imputado);
+                    _repository.UnitOfWork.RegisterNew(imputado);
             
             try
             {
-                repository.UnitOfWork.Commit();
+                _repository.UnitOfWork.Commit();
+                if (id == 0 && imputado.Id>0)
+                {
+                    Issue<IssueFields> issue = _jiraService.CreateIssue(imputado.CodigoDeBarras);
+                    //Transition transition = _jiraService.GetTransitions(issue).First();
+                    //_jiraService.TransitionIssue(issue, transition);
+                }
               
 
             }
@@ -400,28 +408,28 @@ namespace ISICWeb.Services
         private void LlenarListas(DatosGeneralesViewModel datosImputado)
         {
             //datosImputado.ComisariaList = new SelectList(repository.Set<PuntoGestion>().AsEnumerable().Select(x => new { id = x.Id, Descripcion = x.Descripcion + ", " + ((x.Localidad == null) ? "" : x.Localidad.LocalidadNombre) + ", " + ((x.Provincia == null) ? "" : x.Provincia.ProvinciaNombre) }), "id", "Descripcion");
-            datosImputado.SexoList = new SelectList(repository.Set<ClaseSexo>().ToList(), "Id", "descripcion", datosImputado.Sexo);
-            datosImputado.ProvinciaList = new SelectList(DynamicQueryable.Distinct(repository.Set<Provincia>().ToList()), "Id", "ProvinciaNombre", datosImputado.Provincia);
-            datosImputado.PaisList = new SelectList(repository.Set<Pais>().ToList(), "Id", "Nacionalidad", datosImputado.PaisNacimiento);
-            datosImputado.InstruccionList = new SelectList(repository.Set<ClaseEstudiosCursados>().ToList(), "Id", "descripcion", datosImputado.Instruccion);
-            datosImputado.TipoDocumentoList = new SelectList(repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion", datosImputado.TipoDocumento);
-            datosImputado.EstadoCivilList = new SelectList(repository.Set<ClaseEstadoCivil>().ToList(), "Id", "descripcion", datosImputado.EstadoCivil);
-            datosImputado.ColorCabellosList = new SelectList(repository.Set<SICClaseColorCabello>().ToList(), "Id", "descripcion", datosImputado.ColorCabellos);
-            datosImputado.RobustezList = new SelectList(repository.Set<SICClaseRobustez>().ToList(), "Id", "descripcion", datosImputado.Robustez);
-            datosImputado.ColorPielList = new SelectList(repository.Set<SICClaseColorPiel>().ToList(), "Id", "descripcion", datosImputado.ColorPiel);
-            datosImputado.ColorOjosList = new SelectList(repository.Set<SICClaseColorOjos>().ToList(), "Id", "descripcion", datosImputado.ColorOjos);
-            datosImputado.TipoCabelloList = new SelectList(repository.Set<SICClaseTipoCabello>().ToList(), "Id", "descripcion", datosImputado.TipoCabello);
-            datosImputado.TipoCalvicieList = new SelectList(repository.Set<SICClaseTipoCalvicie>().ToList(), "Id", "descripcion", datosImputado.TipoCalvicie);
-            datosImputado.FormaCaraList = new SelectList(repository.Set<SICClaseFormaCara>().ToList(), "Id", "descripcion", datosImputado.FormaCara);
-            datosImputado.DimensionCejaList = new SelectList(repository.Set<SICClaseCejasDimension>().ToList(), "Id", "descripcion", datosImputado.DimensionCeja);
-            datosImputado.TipoCejaList = new SelectList(repository.Set<SICClaseCejasTipo>().ToList(), "Id", "descripcion", datosImputado.TipoCeja);
-            datosImputado.FormaMentonList = new SelectList(repository.Set<SICClaseFormaMenton>().ToList(), "Id", "descripcion", datosImputado.FormaMenton);
-            datosImputado.FormaOrejaList = new SelectList(repository.Set<SICClaseFormaOreja>().ToList(), "Id", "descripcion", datosImputado.FormaOreja);
-            datosImputado.FormaNarizList = new SelectList(repository.Set<SICClaseFormaNariz>().ToList(), "Id", "descripcion", datosImputado.FormaNariz);
-            datosImputado.FormaBocaList = new SelectList(repository.Set<SICClaseFormaBoca>().ToList(), "Id", "descripcion", datosImputado.FormaBoca);
-            datosImputado.FormaLabioInferiorList = new SelectList(repository.Set<SICClaseFormaLabioInferior>().ToList(), "Id", "descripcion", datosImputado.FormaLabioInferior);
-            datosImputado.FormaLabioSuperiorList = new SelectList(repository.Set<SICClaseFormaLabioSuperior>().ToList(), "Id", "descripcion", datosImputado.FormaLabioSuperior);
-            datosImputado.FiscaliaGeneralList = new SelectList(repository.Set<ClaseDepartamentoJudicial>().ToList(), "Id", "descripcion", datosImputado.FiscaliaGeneral);
+            datosImputado.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion", datosImputado.Sexo);
+            datosImputado.ProvinciaList = new SelectList(DynamicQueryable.Distinct(_repository.Set<Provincia>().ToList()), "Id", "ProvinciaNombre", datosImputado.Provincia);
+            datosImputado.PaisList = new SelectList(_repository.Set<Pais>().ToList(), "Id", "Nacionalidad", datosImputado.PaisNacimiento);
+            datosImputado.InstruccionList = new SelectList(_repository.Set<ClaseEstudiosCursados>().ToList(), "Id", "descripcion", datosImputado.Instruccion);
+            datosImputado.TipoDocumentoList = new SelectList(_repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion", datosImputado.TipoDocumento);
+            datosImputado.EstadoCivilList = new SelectList(_repository.Set<ClaseEstadoCivil>().ToList(), "Id", "descripcion", datosImputado.EstadoCivil);
+            datosImputado.ColorCabellosList = new SelectList(_repository.Set<SICClaseColorCabello>().ToList(), "Id", "descripcion", datosImputado.ColorCabellos);
+            datosImputado.RobustezList = new SelectList(_repository.Set<SICClaseRobustez>().ToList(), "Id", "descripcion", datosImputado.Robustez);
+            datosImputado.ColorPielList = new SelectList(_repository.Set<SICClaseColorPiel>().ToList(), "Id", "descripcion", datosImputado.ColorPiel);
+            datosImputado.ColorOjosList = new SelectList(_repository.Set<SICClaseColorOjos>().ToList(), "Id", "descripcion", datosImputado.ColorOjos);
+            datosImputado.TipoCabelloList = new SelectList(_repository.Set<SICClaseTipoCabello>().ToList(), "Id", "descripcion", datosImputado.TipoCabello);
+            datosImputado.TipoCalvicieList = new SelectList(_repository.Set<SICClaseTipoCalvicie>().ToList(), "Id", "descripcion", datosImputado.TipoCalvicie);
+            datosImputado.FormaCaraList = new SelectList(_repository.Set<SICClaseFormaCara>().ToList(), "Id", "descripcion", datosImputado.FormaCara);
+            datosImputado.DimensionCejaList = new SelectList(_repository.Set<SICClaseCejasDimension>().ToList(), "Id", "descripcion", datosImputado.DimensionCeja);
+            datosImputado.TipoCejaList = new SelectList(_repository.Set<SICClaseCejasTipo>().ToList(), "Id", "descripcion", datosImputado.TipoCeja);
+            datosImputado.FormaMentonList = new SelectList(_repository.Set<SICClaseFormaMenton>().ToList(), "Id", "descripcion", datosImputado.FormaMenton);
+            datosImputado.FormaOrejaList = new SelectList(_repository.Set<SICClaseFormaOreja>().ToList(), "Id", "descripcion", datosImputado.FormaOreja);
+            datosImputado.FormaNarizList = new SelectList(_repository.Set<SICClaseFormaNariz>().ToList(), "Id", "descripcion", datosImputado.FormaNariz);
+            datosImputado.FormaBocaList = new SelectList(_repository.Set<SICClaseFormaBoca>().ToList(), "Id", "descripcion", datosImputado.FormaBoca);
+            datosImputado.FormaLabioInferiorList = new SelectList(_repository.Set<SICClaseFormaLabioInferior>().ToList(), "Id", "descripcion", datosImputado.FormaLabioInferior);
+            datosImputado.FormaLabioSuperiorList = new SelectList(_repository.Set<SICClaseFormaLabioSuperior>().ToList(), "Id", "descripcion", datosImputado.FormaLabioSuperior);
+            datosImputado.FiscaliaGeneralList = new SelectList(_repository.Set<ClaseDepartamentoJudicial>().ToList(), "Id", "descripcion", datosImputado.FiscaliaGeneral);
         }
 
 

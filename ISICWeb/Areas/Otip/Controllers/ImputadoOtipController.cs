@@ -75,7 +75,7 @@ namespace ISICWeb.Areas.Otip.Controllers
         [HttpGet]
         public ActionResult AltaModificacion(int? id)
         {
-            ViewBag.SubCodBarra = ((ClaimsIdentity)User.Identity).FindFirst("subCodBarra").Value;
+            ViewBag.SubCodBarra = "0200";//((ClaimsIdentity)User.Identity).FindFirst("subCodBarra").Value;
 
 
             if (id != null && id > 0) //para modificar
@@ -137,8 +137,8 @@ namespace ISICWeb.Areas.Otip.Controllers
             if (ModelState.IsValid)
             {
 
-                var idPuntoGestion = ((ClaimsIdentity)User.Identity).FindFirst("idPuntoGestion").Value;
-                var subCodBarra = ((ClaimsIdentity)User.Identity).FindFirst("subCodBarra").Value;
+                var idPuntoGestion = "2866";// ((ClaimsIdentity)User.Identity).FindFirst("idPuntoGestion").Value;
+                var subCodBarra = "0200";//((ClaimsIdentity)User.Identity).FindFirst("subCodBarra").Value;
                 
                 if (idPuntoGestion == null)
                 {
@@ -165,9 +165,13 @@ namespace ISICWeb.Areas.Otip.Controllers
                 if (errores != "")
                 {
                     ModelState.AddModelError("", errores);
-                
+
 
                     return PartialView("SummaryError", imp);
+                }
+                else
+                {
+                    
                 }
 
                 return null;
@@ -198,8 +202,8 @@ namespace ISICWeb.Areas.Otip.Controllers
 
             //ApplicationUser user = TraerApplicationUserActual();
 
-            var subCodBarra = ((ClaimsIdentity)User.Identity).FindFirst("subCodBarra").Value;
-            var idPuntoGestion = ((ClaimsIdentity)User.Identity).FindFirst("idPuntoGestion").Value;
+            var subCodBarra = "0200";// ((ClaimsIdentity)User.Identity).FindFirst("subCodBarra").Value;
+            var idPuntoGestion = "2866";// ((ClaimsIdentity)User.Identity).FindFirst("idPuntoGestion").Value;
 
             ISICContext context = (ISICContext)repository.UnitOfWork.Context;            
             var imputados = (from i in context.Imputado
@@ -280,7 +284,7 @@ namespace ISICWeb.Areas.Otip.Controllers
                 {
                     repository.UnitOfWork.RegisterChanged(imputado);
                     repository.UnitOfWork.Commit();
-                    Issue<IssueFields> issue = _jiraService.CreateIssue(imputado.CodigoDeBarras);
+                    Issue<IssueFields> issue = _jiraService.GetIssue(imputado.CodigoDeBarras);
                     Transition transition = _jiraService.GetTransitions(issue).First();
                     _jiraService.TransitionIssue(issue, transition);
                     envioOk = true;

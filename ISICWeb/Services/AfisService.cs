@@ -7,8 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ISIC.Entities;
-
-using ISICWeb.Areas.Antecedentes.Models;
+using ISICWeb.Areas.Afis.Models;
 using MPBA.DataAccess;
 
 namespace ISICWeb.Services

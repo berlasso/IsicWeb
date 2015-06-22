@@ -48,7 +48,7 @@
         </div>
 
     </div>
-    <div class="row">
+    
         <div class="col-md-4 col-sm-6 wow fadeInDown animated">
             <div class="feature-wrap">
                 <a href='@Url.Action("VisualizaDecaDigital", "Digitalizacion")' onclick=" showPageLoadingSpinner() ">
@@ -78,8 +78,8 @@
                 <h4>Muestra el estado de los imputados asignados al usuario</h4>
             </div>
         </div>
-    </div>
-    <div class="row">
+    
+    
         <div class="col-md-4 col-sm-6 wow fadeInDown animated">
             <div class="feature-wrap">
                 <a href='@Url.Action("CheckRenaper", "Imputado")' onclick=" showPageLoadingSpinner() ">
@@ -107,8 +107,16 @@
                 <h4>Carga de antecedentes en el SIC</h4>
             </div>
         </div>
+    <div class="col-md-4 col-sm-6 wow fadeInDown animated">
+        <div class="feature-wrap">
+            <a href='@Url.Action("Index", "Afis", new {area = "Afis"})' onclick=" showPageLoadingSpinner() ">
+                <i class="fa fa-barcode"></i>
+            </a>
+            <h2>AFIS</h2>
+            <h4>Vinculacion de prontuarios</h4>
+        </div>
     </div>
-    <div class="row">
+    
         <div class="col-md-4 col-sm-6 wow fadeInDown animated">
             <div class="feature-wrap">
                 <a href='@Url.Action("Index", "Usuarios", new {area = "Usuarios"})' onclick=" showPageLoadingSpinner() ">
@@ -118,7 +126,7 @@
                 <h4>Administración de usuarios</h4>
             </div>
         </div>
-    </div>
+    
 </div>
 
 

@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using ISIC.Entities;
 
-namespace ISICWeb.Areas.Antecedentes.Models
+namespace ISICWeb.Areas.Afis.Models
 {
     public class AFISViewModel
     {

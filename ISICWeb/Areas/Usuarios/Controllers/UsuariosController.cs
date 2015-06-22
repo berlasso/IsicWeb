@@ -39,18 +39,20 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             return _usuarioService.BorrarUsuario(id);
         }
 
-        public ActionResult CompletarDatosSicNuevo(string id = "")
+        public ActionResult CompletarDatosSicNuevo(string id = "nada")
         {
             UsuarioViewModel uvm = _usuarioService.LlenarViewModelDesdeBase(id);
             uvm.Validando = true;
-            uvm.UsuarioMPBA = true;
+            uvm.id = null;
+            uvm.UsuarioMPBA = id!="nada";
             LoginDomain ld=new LoginDomain();
             string usuarioDominio = ld.getCommonName(id);
 
-            if (usuarioDominio != "")
+            if (usuarioDominio != "***")
             {
                uvm.Apellido = usuarioDominio.Substring(usuarioDominio.LastIndexOf(' ') + 1);
                 uvm.Nombre = usuarioDominio.Substring(0, usuarioDominio.LastIndexOf(' '));
+                uvm.Email = id + "@MPBA.GOV.AR";
             }
             return View("AltaModificacionUsuario",uvm);
         }
@@ -73,7 +75,7 @@ namespace ISICWeb.Areas.Usuarios.Controllers
                 try
                 {
                     _repository.UnitOfWork.Commit();
-                    EnviarMail(token);
+                    EnviarMail(id,token);
                     envioCorrecto = true;
                 }
                 catch
@@ -84,51 +86,29 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             return envioCorrecto;
         }
 
-        void sendMail(System.Net.Mail.MailMessage message)
+        public ActionResult ConfirmarEmail(string id, string t)
         {
-            #region formatter
-            string text = string.Format("Please click on this link to {0}: {1}", message.Subject, message.Body);
-            string html = "Please confirm your account by clicking this link: <a href=\"" + message.Body + "\">link</a><br/>";
-
-            html += HttpUtility.HtmlEncode(@"Or click on the copy the following link on the browser:" + message.Body);
-            #endregion
-
-            MailMessage msg = new MailMessage();
-            msg.From = new MailAddress("berlasso@hotmail.com");
-            msg.To.Add(new MailAddress("gmberlasso@hotmail.com"));
-            msg.Subject = message.Subject;
-            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
-            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
-
-            SmtpClient smtpClient = new SmtpClient("smtp-mail.outlook.com", Convert.ToInt32(587));
-            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("berlasso@hotmail.com", "CelineDion");
-            smtpClient.Credentials = credentials;
-            smtpClient.EnableSsl = true;
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.UseDefaultCredentials = false;
-
-
-
-            smtpClient.Send(msg);
+            return View();
         }
 
+       
 
-        public bool EnviarMail(Guid token)
+        public bool EnviarMail(string usuario,Guid token)
         {
-            MailMessage mail = new MailMessage();
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress("gberlasso@mpba.gov.ar");
+            msg.To.Add(new MailAddress("berlasso@hotmail.com"));
+            msg.Subject = "Registracion en ISIC";
+            UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
+            string url = u.Action("ConfirmarEmail", "Usuarios", "Usuarios")+@"?id=\"+usuario+"&t="+token;
+            string text = string.Format("Please click on this link to {0}: {1}", msg.Subject, msg.Body);
+            string html = "Por favor, confirme la cuenta haciendo click aqui: <a class='btn' href=\"" +  url + "\">Confirmar Registracion</a><br/>";
 
-            SmtpClient smtpServer = new SmtpClient("smtp-mail.outlook.com");
-            smtpServer.Credentials = new System.Net.NetworkCredential("berlasso@hotmail.com", "SonusFaber");
-            smtpServer.Port = 25;
-            smtpServer.EnableSsl = true;
-            smtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpServer.UseDefaultCredentials = false;
-            
-            mail.From = new MailAddress("berlasso@hotmail.com");
-            mail.To.Add("berlasso@hotmail.com");
-            mail.Subject = "Password recovery";
-            mail.Body = "Recovering the password";
-            smtpServer.Send(mail);
+            //html += HttpUtility.HtmlEncode(@"Or click on the copy the following link on the browser:" + msg.Body);
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+            SmtpClient smtpClient = new SmtpClient("smtp.mpba.gov.ar");
+            smtpClient.Send(msg);
             return true;
         }
 
