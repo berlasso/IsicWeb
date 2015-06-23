@@ -2562,7 +2562,7 @@ div.cartelEspera span {
 /************************/
 
 .loadinggif {
-    background:url('../Content/Images/ajax-loader.gif') no-repeat right center;
+    background:url('../Content/Images/ajax-loader.gif') no-repeat right center!important;
 }
 
 .body-content-loading-spinner {

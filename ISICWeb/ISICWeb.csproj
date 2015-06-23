@@ -283,6 +283,7 @@
     <Compile Include="Areas\Afis\AfisAreaRegistration.cs" />
     <Compile Include="Areas\Afis\Models\ImputadosAfisViewModel.cs" />
     <Compile Include="Areas\Usuarios\Models\UsuarioViewModel.cs" />
+    <Compile Include="Areas\Usuarios\Models\VerificacionEmail.cs" />
     <Compile Include="Areas\Usuarios\UsuariosAreaRegistration.cs" />
     <Compile Include="Areas\Usuarios\Controllers\UsuariosController.cs" />
     <Compile Include="Models\UsuarioIsicViewModel.cs" />
@@ -1479,7 +1480,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -1534,7 +1534,8 @@
     <Content Include="Views\Account\DominioUsuario.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
-    <Content Include="Views\Emails\Contact.cshtml" />
+    <Content Include="Views\Emails\Verificacion.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />

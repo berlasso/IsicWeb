@@ -60,6 +60,11 @@
            }).on("select_node.jstree", function (e, data) {
             data.instance.toggle_node(data.node);
             if (data.event) {
+                if (data.node.parent == "En OTIP") {
+                    var url = '@Url.Action("DetalleConCodBarra", "ImputadoOtip",  new {area="Otip", cb = "__param__" })';
+                    showPageLoadingSpinner();
+                    window.location = url.replace('__param__', data.selected[0]);
+                }
                 if (data.node.parent == "Para segmentar") {
                     var url = '@Url.Action("MarcarHuellasDactilares", "Digitalizacion", new { CodigoBarra = "__param__" })';
                     showPageLoadingSpinner();

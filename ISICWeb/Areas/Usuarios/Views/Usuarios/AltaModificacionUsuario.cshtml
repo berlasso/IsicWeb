@@ -1,4 +1,5 @@
-﻿@using System.Web.UI.WebControls
+﻿@using System.Web.Hosting
+@using System.Web.UI.WebControls
 @model ISICWeb.Areas.Usuarios.Models.UsuarioViewModel
 @{
     bool modificando = !string.IsNullOrEmpty(Model.id);
@@ -25,32 +26,34 @@
 
 
     <div class="panel panel-default tile wow fadeInDown animated" style="margin-bottom: 80px;">
-        <div class="panel-heading">
-            @if (modificando)
+    <div class="panel-heading">
+        @if (modificando)
+        {
+            <h2>
+                <b style="color: red">Modificación</b> del Usuario
+
+            </h2>
+            <small>
+                @Html.Label("Token Enviado sin confirmar", new {style = "color:yellowgreen"})
+                <a href="#" id="EnviarToken" class="btn btn-alt btn-sm">Reenviar</a>
+            </small>
+        }
+        else
+        {
+            if (Model.Validando)
             {
-                <h2>
-                    <b style="color: red">Modificación</b> del Usuario
-
-                </h2>
-                <small>
-                    @Html.Label("Token Enviado sin confirmar", new { style = "color:yellowgreen" })
-                    <a href="#" id="EnviarToken" class="btn btn-alt btn-sm">Reenviar</a>
-                </small>
+                <h2>VALIDACION: PASO FINAL</h2>
             }
-            else
-            {
-                if (Model.Validando)
-                {
-                    <h2>VALIDACION: PASO FINAL</h2>
-                }
-                <h4>Cargando Nuevo Usuario</h4>
+            <h4>Cargando Nuevo Usuario</h4>
 
 
-            }
-            <h5></h5>
+        }
+        <h5></h5>
 
-        </div>
-        <div class="panel-body">
+    </div>
+
+    
+    <div class="panel-body">
 
             <div class="row wow fadeInDown animated">
                 <div class="col-md-4">
@@ -364,6 +367,12 @@
                     url: '@Url.Action("ReenviarToken", "Usuarios")/@Model.id',
                     type: "GET",
                     autoFocus: true,
+                    beforeSend: function() {
+                        $("#EnviarToken").addClass("disabled");
+                    },
+                    complete: function() {
+                        $("#EnviarToken").removeClass("disabled");
+                    },
                     success: function (data) {
                         if (data == "True") {
                             alertify.success("Token enviado correctamente");

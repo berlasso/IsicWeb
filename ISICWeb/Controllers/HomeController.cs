@@ -27,8 +27,8 @@ namespace ISICWeb.Controllers
         public ActionResult PruebaMail()
         {
             //SmtpClient smtpClient = new SmtpClient("smtp.mpba.gov.ar");
-            dynamic email = new Email("Contact");
-            email.To = "berlasso@hotmail.com";
+            dynamic email = new Email("VerificacionCuenta");
+            //email.To = "berlasso@hotmail.com";
             
             //email.FunnyLink = DB.GetRandomLolcatLink();
             //email.Send();

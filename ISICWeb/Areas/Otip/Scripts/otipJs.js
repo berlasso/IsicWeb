@@ -497,6 +497,7 @@ $(function () {
                 url: url,
                 success: function (data) {
                     var json = data;
+                    $("#divIppEncontrado").empty();
                     if (data.HuboError == true) {
                         alertify.alert("Error", data.errorMessage);
                     } else {
@@ -524,9 +525,9 @@ $(function () {
                             if ((imputado.FechaNacimiento instanceof Date && !isNaN(imputado.FechaNacimiento.valueOf())) === false)
                                 imputado.FechaNacimiento = "";
                             if (i == 0) {
-                                $("#divIppEncontrado").append("Imputados en el SIMP para la IPP " + ipp + ":");
+                                $("#divIppEncontrado").html("").append("<b>Imputados en el SIMP para la IPP " + ipp + ":</b>");
                             }
-                            $("#divIppEncontrado").append('<ul><a id="imputadoSimp' + i + '" href="#" onclick="LlenarControlesSimp(imputadoSimp' + i + ')"' +
+                            $("#divIppEncontrado").append('<ul><a id="imputadoSimp' + i + '" href="#CodBarras" onclick="LlenarControlesSimp(imputadoSimp' + i + ')"' +
                                 //'data-comisaria="' + imputado.depPol + '" ' +
                                 'data-fechanacimiento="' + imputado.FechaNacimiento + '" ' +
                                 'data-delito="' + delito.ClaseDelito + '" ' +
@@ -541,13 +542,14 @@ $(function () {
                                 'data-nombre="' + imputado.Nombre + '" ' +
                                 'data-sexo="' + sexo + '" ' +
                                 'data-lugarnacimiento="' + imputado.LugarNacimiento + '" ' +
-                                'data-apellido="' + imputado.Apellido + '">' + imputado.Apellido + ', ' + imputado.Nombre + '</a></ul>').show();
+                                'data-apellido="' + imputado.Apellido + '"><b>' + imputado.Apellido + ', ' + imputado.Nombre + '</b></a></ul>').show();
                             //alert('data.errorMessage');
                         }
                     }
                 },
                 beforeSend: function () {
                     //loader("Buscando datos de la IPP...");
+                    $("#divIppEncontrado").empty();
                     $("#IPP").addClass("loadinggif");
                 },
                 complete: function () {

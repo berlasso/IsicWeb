@@ -12,6 +12,7 @@ using ISICWeb.Services;
 using MPBA.DataAccess;
 using MPBA.Security.Entities;
 using MPBA.Security.Ldap;
+using Postal;
 
 namespace ISICWeb.Areas.Usuarios.Controllers
 {
@@ -75,7 +76,7 @@ namespace ISICWeb.Areas.Usuarios.Controllers
                 try
                 {
                     _repository.UnitOfWork.Commit();
-                    EnviarMail(id,token);
+                    EnviarMail(u);
                     envioCorrecto = true;
                 }
                 catch
@@ -86,29 +87,38 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             return envioCorrecto;
         }
 
-        public ActionResult ConfirmarEmail(string id, string t)
+        public ActionResult ConfirmarEmail(string u, string t)
         {
+            ViewBag.Token = t;
+            ViewBag.Usuario = u;
             return View();
         }
 
-       
+      
 
-        public bool EnviarMail(string usuario,Guid token)
+        public bool EnviarMail( ISIC.Entities.Usuarios u)
         {
-            MailMessage msg = new MailMessage();
-            msg.From = new MailAddress("gberlasso@mpba.gov.ar");
-            msg.To.Add(new MailAddress("berlasso@hotmail.com"));
-            msg.Subject = "Registracion en ISIC";
-            UrlHelper u = new UrlHelper(this.ControllerContext.RequestContext);
-            string url = u.Action("ConfirmarEmail", "Usuarios", "Usuarios")+@"?id=\"+usuario+"&t="+token;
-            string text = string.Format("Please click on this link to {0}: {1}", msg.Subject, msg.Body);
-            string html = "Por favor, confirme la cuenta haciendo click aqui: <a class='btn' href=\"" +  url + "\">Confirmar Registracion</a><br/>";
-
-            //html += HttpUtility.HtmlEncode(@"Or click on the copy the following link on the browser:" + msg.Body);
-            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
-            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
-            SmtpClient smtpClient = new SmtpClient("smtp.mpba.gov.ar");
-            smtpClient.Send(msg);
+         
+            var email = new VerificacionEmail
+            {
+                Sexo = u.PersonalPoderJudicial.Persona.Sexo.Id,
+                Apellido = u.PersonalPoderJudicial.Persona.Apellido,
+                Nombre = u.PersonalPoderJudicial.Persona.Nombre,
+                Email = u.PersonalPoderJudicial.Persona.EMail,
+                Token=u.TokenEnviado,
+                Departamento = u.PersonalPoderJudicial.PuntoGestion.Departamento.DepartamentoNombre,
+                Subject = "Verificacion Cuenta ISIC",
+                NombreUsuario = u.NombreUsuario
+            };
+                email.Dependencia =string.IsNullOrEmpty(u.Dependencia)?u.PersonalPoderJudicial.PuntoGestion.Descripcion:u.Dependencia;            
+            try
+            {
+                email.Send();
+            }
+            catch
+            {
+                return false;
+            }
             return true;
         }
 

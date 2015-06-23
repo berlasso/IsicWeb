@@ -60,12 +60,35 @@ namespace ISICWeb.Areas.Otip.Controllers
             return View();
         }
 
-        // GET: Imputado/Detalle/5
-        public ActionResult Detalle(int id, bool paraEditar = false)
+        public ActionResult DetalleConCodBarra(string cb, bool pe = false)
         {
 
             ViewBag.WordDocumentFilename = "AboutMeDocument";
-            DatosGeneralesViewModel model = ImputadoSrv.LlenarViewModelConImputado(id, paraEditar);
+            Imputado imputado = repository.Set<Imputado>().SingleOrDefault(x => x.CodigoDeBarras == cb);
+            if (imputado != null)
+            {
+
+
+                DatosGeneralesViewModel model = ImputadoSrv.LlenarViewModelConImputado(imputado.Id, pe);
+                if (model != null)
+                    return View("Detalle", model);
+                
+            }
+            String error = "No se encontrol el registro solicitado";
+            return View("~/Views/Shared/Error.cshtml",error);
+        }
+
+        /// <summary>
+        /// Trae detalle del delito
+        /// </summary>
+        /// <param name="id">id del imputado</param>
+        /// <param name="pe">si es para editar</param>
+        /// <returns></returns>
+        public ActionResult Detalle(int id, bool pe = false)
+        {
+
+            ViewBag.WordDocumentFilename = "AboutMeDocument";
+            DatosGeneralesViewModel model = ImputadoSrv.LlenarViewModelConImputado(id, pe);
             if (model != null) return View(model);
             RedirectToAction("Index");
             return null;
@@ -79,7 +102,7 @@ namespace ISICWeb.Areas.Otip.Controllers
 
 
             if (id != null && id > 0) //para modificar
-                return RedirectToAction("Detalle", "ImputadoOtip", new { id, ParaEditar = true });
+                return RedirectToAction("Detalle", "ImputadoOtip", new { id, pe = true });
             DatosGeneralesViewModel datosGenerales = ImputadoSrv.CrearViewModel();
             return View("Detalle", datosGenerales);
         }
@@ -87,10 +110,27 @@ namespace ISICWeb.Areas.Otip.Controllers
         // GET: Imputado/Borrar/5
         public bool Borrar(int id)
         {
-            bool borroBien = ImputadoSrv.DeleteById(id);
+
+
+            bool borroBien = false;
+            Imputado imp = repository.Set<Imputado>().SingleOrDefault(x => x.Id == id);
+            if (imp != null)
+            {
+                imp.Baja = true;
+                repository.UnitOfWork.RegisterChanged(imp);
+                try
+                {
+                    repository.UnitOfWork.Commit();
+                    borroBien = true;
+                }
+                catch { }
+                
+
+            }
             if (!borroBien)
                 ModelState.AddModelError("",
                     "No se pudieron guardar los cambios. Intentar nuevamente, si el problema persiste contacte al administrador del sistema.");
+           
             return borroBien;
         }
 
@@ -209,6 +249,7 @@ namespace ISICWeb.Areas.Otip.Controllers
             var imputados = (from i in context.Imputado
                              from a in context.Archivo.Where(a=>a.Imputado.Id==i.Id && a.TipoArchivo.Id==1).Take(1).DefaultIfEmpty()
                              where i.Estado.Id == 9  //en OTIP
+                                    && i.Baja!=true
                                     //&& (a==null || a.Imputado.Id==i.Id && (a.TipoArchivo==null || a.TipoArchivo.Id==1))
                                    && i.CodigoDeBarras.Substring(2, 4) == subCodBarra && //codbarras coincide con el permitido al usuario 
                                    i.PuntoGestionCreacionI.Id == idPuntoGestion //el punto de gestion que dio de alta es el mismo al que pertenece el usuario

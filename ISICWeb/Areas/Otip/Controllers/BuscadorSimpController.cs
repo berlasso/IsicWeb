@@ -26,12 +26,7 @@ namespace ISICWeb.Areas.Otip.Controllers
             this.repository = repository;
         }
 
-        // GET: Otip/BuscadorSimp
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        
         public JsonResult BuscarIppSimpPrueba(string ipp)
         {
             ipp = ipp.Trim();
@@ -55,7 +50,10 @@ namespace ISICWeb.Areas.Otip.Controllers
             var response = client.Execute<List<WebApiSimpModel>>(request);
             if (response.Data == null)
             {
-                const string error = "IPP inexistente en el SIMP";
+                string error = string.IsNullOrEmpty(response.ErrorMessage)
+                    ? "IPP inexistente en el SIMP"
+                    : response.ErrorMessage;
+                
                 return Json(new { HuboError = true, errorMessage = error }, JsonRequestBehavior.AllowGet);
             }
 
