@@ -108,12 +108,12 @@ namespace ISICWeb.Areas.Afis.Controllers
             return View("ListadoAFIS", prontuario);
         }
 
-
-        public ActionResult AltaModificacionAFIS(string prontuariosic, int idAfis = 0)
+        
+        public ActionResult AltaModificacionAFIS(string prontuariosic,int idAfis=0)
         {
 
             AFISViewModel model = _afisService.LlenarViewModelDesdeBase(prontuariosic, idAfis);
-
+          
             return View(model);
         }
 

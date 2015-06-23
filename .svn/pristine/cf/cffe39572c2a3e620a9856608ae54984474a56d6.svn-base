@@ -1,0 +1,207 @@
+﻿@model ISIC.Entities.Prontuario
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index", "Antecedentes"); }
+
+<div class="row wow fadeInDown animated">
+    <ol class="breadcrumb hidden-xs tile-light" style="float: left !important">
+        <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
+        <li><a href="@url">Resultados</a></li>
+        <li class="active">Lista Migraciones</li>
+    </ol>
+</div>
+<div class=" center wow fadeInDown animated tile-light">
+    <h1>
+        Fichas de Migraciones
+    </h1>
+</div>
+<div class="tile   wow fadeInDown animated">
+    @{
+        Html.RenderAction("MostrarDatosImputado", "Antecedentes", new { prontuarioSic = Model.ProntuarioNro });
+
+    }
+</div>
+
+
+<div class="tile tile  wow fadeInDown animated" style="margin-bottom: 80px;">
+
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <h4>
+                Listado de fichas de Migraciones
+            </h4>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tablaMigraciones" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                TIPO
+                            </th>
+                            <th>
+                                TITULAR
+                            </th>
+                            <th>
+                                TEMA
+                            </th>
+                            <th>
+                                DOCUMENTO
+                            </th>
+         
+                            <th>
+                                EXPEDIENTE
+                            </th>
+                     
+                            <th>
+                                CARATULA
+                            </th>
+                     
+                            <th>
+                            </th>
+                    
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.DatosMigracioneses != null)
+                        {
+                            foreach (var item in Model.DatosMigracioneses.Where(x => x.Baja != true))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TipoRestriccion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Titular)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Tema)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DocumentoNumero)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NroExpediente)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Caratula)
+                                    </td>
+                                    <td style="text-align: right">
+                                        @Html.ActionLink("Editar", "AltaModificacionMigraciones", new { prontuariosic = Model.ProntuarioNro, idMigraciones = item.Id }, new { @class = "btn btn-alt btn-sm ", onclick = "showPageLoadingSpinner();" })
+                                        <input type="button" class="btn btn-alt btn-sm" id="btnBorrarMigraciones" data-id="@item.Id" value="Borrar" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+@section footer
+{
+    <div class="col-md-2 col-sm-2 col-xs-6">
+        @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
+                Volver
+            </a>*@
+        <a class="btn btn-lg btn-alt volver" href='@url' title=" volver" onclick="showPageLoadingSpinner();" type="button">
+            Volver
+        </a>
+    </div>
+    <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
+        @if (Model != null)
+        {
+            @Html.ActionLink("Nuevo", "AltaModificacionMigraciones", new { prontuariosic = Model.ProntuarioNro }, new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
+        }
+
+
+    </div>
+
+}
+
+
+<script>
+    $(document).ready(function () {
+        $('#tablaMigraciones').dataTable({
+            "dom": '<"row"<"col-md-12"ipT>><"clear">rt<"bottom"><"clear">',
+            "tableTools": {
+                "aButtons": [],
+
+            },
+            "columnDefs": [
+                {
+                    "targets": 6,
+                    "sortable": false
+                }
+            ],
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+        $('#tablaMigraciones tbody').on('click', '#btnBorrarMigraciones', function () {
+
+            var id = $(this).data("id");
+            var table = $('#tablaMigraciones').DataTable();
+            var row = table.row($(this).parents('tr'));
+
+            alertify.confirm("Borrar ficha de Migraciones", "Seguro que desea borrar?", function () {
+
+                var url = '@Url.Action("BorrarFichasMigraciones","AntecedentesMigraciones")/' + encodeURI(id);
+                $.get(url, null, function (data) {
+                    if (data === "True") {
+                        row.remove().draw();
+                        alertify.success("Ficha de Migraciones borrada correctamente");
+
+
+                    } else {
+                        alertify.error("Error al borrar");
+                    }
+                });
+
+            }, null)
+         .set('labels', { cancel: 'Cancelar' })
+         .set('defaultFocus', 'cancel');
+        });
+
+    });
+
+
+</script>

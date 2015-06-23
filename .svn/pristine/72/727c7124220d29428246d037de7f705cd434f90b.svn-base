@@ -1,0 +1,6 @@
+﻿@model ISICWeb.Areas.Antecedentes.Models.MigracionesViewModel
+           @Html.HiddenFor(x=>x.Prontuario.Id)
+@Html.HiddenFor(x => x.Id)
+@Html.HiddenFor(x => x.Prontuario.ProntuarioNro)
+
+@Html.ValidationSummary()

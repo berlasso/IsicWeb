@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Para obtener más información acerca de cómo configurar una aplicación ASP.NET, consulte
+  http://go.microsoft.com/fwlink/?LinkId=301880
+  -->
+<configuration>
+  <configSections>
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    <sectionGroup name="elmah">
+      <section name="security" requirePermission="false" type="Elmah.SecuritySectionHandler, Elmah" />
+      <section name="errorLog" requirePermission="false" type="Elmah.ErrorLogSectionHandler, Elmah" />
+      <section name="errorMail" requirePermission="false" type="Elmah.ErrorMailSectionHandler, Elmah" />
+      <section name="errorFilter" requirePermission="false" type="Elmah.ErrorFilterSectionHandler, Elmah" />
+    </sectionGroup>
+    <section name="glimpse" type="Glimpse.Core.Configuration.Section, Glimpse.Core" />
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="ISICWeb.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <connectionStrings>
+    <!--PARA SIAC TEST: comentar base local descomentar este-->
+    <!--<add name="ISICDS" connectionString="Data Source=MPBDTEST01;Initial Catalog=SIAC;Persist Security Info=true;User ID=usuarioSIAC;Password=UsuarioSIAC;MultipleActiveResultSets=true;" providerName="System.Data.SqlClient" />-->
+    <!--PARA SIAC DESA: comentar base local descomentar este-->
+    <add name="ISICDS" connectionString="Data Source=MPBDDESA01;Initial Catalog=SIAC;Persist Security Info=true;User ID=UsuarioSIAC;Password=UsuarioSIAC;MultipleActiveResultSets=true;" providerName="System.Data.SqlClient" />
+    <!--PARA BASE LOCAL: comentar siac test descomentar este--> 
+    <!--<add name="ISICDS" connectionString="Data Source=(LocalDB)\v11.0;Initial Catalog=ISIC;MultipleActiveResultSets=True;Persist Security Info=false;Integrated Security=True;" providerName="System.Data.SqlClient" />-->
+    <add name="ISICWebContext" connectionString="Data Source=(localdb)\v11.0; Initial Catalog=ISICWebContext-20141028094209; Integrated Security=True; MultipleActiveResultSets=True; AttachDbFilename=|DataDirectory|ISICWebContext-20141028094209.mdf" providerName="System.Data.SqlClient" />
+    <add name="ModelISIC" connectionString="data source=(LocalDb)\v11.0;initial catalog=ISICWeb.Models.ModelISIC;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <appSettings>
+    <add key="webpages:Version" value="3.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="elmah.mvc.disableHandler" value="false" />
+    <add key="elmah.mvc.disableHandleErrorFilter" value="false" />
+    <add key="elmah.mvc.requiresAuthentication" value="false" />
+    <add key="elmah.mvc.IgnoreDefaultRoute" value="false" />
+    <add key="elmah.mvc.allowedRoles" value="*" />
+    <add key="elmah.mvc.allowedUsers" value="*" />
+    <add key="elmah.mvc.route" value="elmah" />
+    <add key="renaper.url" value="https://afisrenaper.idear.gov.ar:13443/AFIS_MinJusticia.php" />
+    <add key="webapiSimp" value="https://test.mpba.gov.ar/GlobalDataWebApi" />
+    <!-- Subject Name del certificado -->
+    <add key="renaper.certificate.sn" value="ProcuracionGral" />
+    <!-- Store Location CurrentUser = 1, LocalMachine = 2 -->
+    <add key="renaper.certificate.storelocation" value="1" />
+    <!-- Stroe Name AddressBook = 1, AuthRoot = 2, CertificateAuthority = 3, My = 5, Root = 6, TrustedPeople = 7 -->
+    <add key="renaper.certificate.storename" value="5" />
+  </appSettings>
+  <!-- Ensure only Admins may access elmah and glimpse -->
+  <location path="Admin" inheritInChildApplications="false">
+    <system.web>
+      <httpHandlers>
+        <add verb="GET" path="Glimpse" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" />
+        <add verb="POST,GET,HEAD" path="Errors.axd" type="Elmah.ErrorLogPageFactory, Elmah" />
+      </httpHandlers>
+      <authorization>
+        <allow roles="Admin" />
+        <deny users="*" />
+      </authorization>
+      <customErrors mode="RemoteOnly" />
+    </system.web>
+    <system.webServer>
+      <handlers>
+        <add name="Glimpse" path="Glimpse.axd" verb="GET" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" preCondition="integratedMode" />
+        <add name="Elmah" path="Errors.axd" verb="POST,GET,HEAD" type="Elmah.ErrorLogPageFactory, Elmah" preCondition="integratedMode" />
+      </handlers>
+      <httpErrors>
+        <clear />
+      </httpErrors>
+    </system.webServer>
+  </location>
+  <!--
+    Para obtener una descripción de los cambios de web.config, vea http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    Los siguientes atributos se pueden establecer en la etiqueta <httpRuntime>.
+      <system.Web>
+        <httpRuntime targetFramework="4.5.1" />
+      </system.Web>
+  -->
+  <system.web>
+    <!--<globalization uiCulture="en" culture="en-GB"/>-->
+    <authentication mode="None" />
+    <compilation debug="true" targetFramework="4.5.1" />
+    <httpRuntime targetFramework="4.5" />
+    <httpModules>
+      <add name="ErrorLog" type="Elmah.ErrorLogModule, Elmah" />
+      <add name="ErrorMail" type="Elmah.ErrorMailModule, Elmah" />
+      <add name="ErrorFilter" type="Elmah.ErrorFilterModule, Elmah" />
+      <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" />
+    </httpModules>
+    <httpHandlers />
+  </system.web>
+  <system.webServer>
+    <httpProtocol>
+      <customHeaders>
+        <add name="Access-Control-Allow-Origin" value="*" />
+      </customHeaders>
+    </httpProtocol>
+    <modules>
+      <remove name="FormsAuthenticationModule" />
+      <add name="ErrorLog" type="Elmah.ErrorLogModule, Elmah" preCondition="managedHandler" />
+      <add name="ErrorMail" type="Elmah.ErrorMailModule, Elmah" preCondition="managedHandler" />
+      <add name="ErrorFilter" type="Elmah.ErrorFilterModule, Elmah" preCondition="managedHandler" />
+      <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" preCondition="integratedMode" />
+    </modules>
+    <validation validateIntegratedModeConfiguration="false" />
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <remove name="OPTIONSVerbHandler" />
+      <remove name="TRACEVerbHandler" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    <add verb="GET" path="*.js" name="Static for js" type="System.Web.StaticFileHandler" /><add verb="GET" path="*.css" name="Static for css" type="System.Web.StaticFileHandler" /><add verb="GET" path="*.png" name="Static for png" type="System.Web.StaticFileHandler" /><add verb="GET" path="*.jpg" name="Static for jpg" type="System.Web.StaticFileHandler" /></handlers>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-5.1.0.0" newVersion="5.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Optimization" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-1.1.0.0" newVersion="1.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-1.5.2.14234" newVersion="1.5.2.14234" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="NLog" publicKeyToken="5120e14c03d0593c" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.0.0" newVersion="3.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="MiniProfiler" publicKeyToken="b44f9351044011a3" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.10.0" newVersion="3.0.10.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="v11.0" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+  <elmah>
+    <security allowRemoteAccess="yes" />
+    <errorLog type="Elmah.XmlFileErrorLog, Elmah" logPath="~/App_Data/Elmah.Errors" />
+  </elmah>
+  <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Admin/Glimpse.axd">
+    <!--logging level="Trace" /-->
+    <runtimePolicies>
+      <ignoredTypes>
+        <add type="Glimpse.AspNet.Policy.LocalPolicy, Glimpse.AspNet" />
+      </ignoredTypes>
+    </runtimePolicies>
+  </glimpse>
+  <applicationSettings>
+    <ISICWeb.Properties.Settings>
+      <setting name="ISICWeb_simpWs_WebServiceMesaVirtualNN" serializeAs="String">
+        <value>http://sistemas.mpba.gov.ar/NN/WebServiceMesaVirtualNN.asmx</value>
+      </setting>
+      <setting name="ISICWeb_wsSIC_Services" serializeAs="String">
+        <value>http://sic-site.mpba.gov.ar/cons1/webservice.php</value>
+      </setting>
+    </ISICWeb.Properties.Settings>
+  </applicationSettings>
+  <system.serviceModel>
+    <bindings />
+    <client />
+  </system.serviceModel>
+ </configuration>
