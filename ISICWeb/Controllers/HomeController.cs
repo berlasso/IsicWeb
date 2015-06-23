@@ -24,23 +24,6 @@ namespace ISICWeb.Controllers
         }
 
 
-        public ActionResult PruebaMail()
-        {
-            //SmtpClient smtpClient = new SmtpClient("smtp.mpba.gov.ar");
-            dynamic email = new Email("VerificacionCuenta");
-            //email.To = "berlasso@hotmail.com";
-            
-            //email.FunnyLink = DB.GetRandomLolcatLink();
-            //email.Send();
-            //return View("Index");
-            return new EmailViewResult(email);
-          
-        }
-
-     
-
-
-
 
         public ActionResult Index()
         {
@@ -50,11 +33,20 @@ namespace ISICWeb.Controllers
         }
 
 
+
+
         public ActionResult About()
         {
 
             return View();
         }
+
+        public ActionResult Error()
+        {
+            string s = "probando";
+            return View("Error",null,s);
+        }
+
 
 
         public ActionResult Contact()
@@ -62,8 +54,8 @@ namespace ISICWeb.Controllers
             //ViewBag.Message = "Completar Página de contacto.";
             //ViewBag.dnilist = new SelectList(repository.Set<ClaseExpedienteMigraciones>().ToList(), "Id", "descripcion");
 
-           wsSIC.Services ws=new wsSIC.Services();
-            string perfil = ws.PerfilUsuario("usuario", "clave");
+           //wsSIC.Services ws=new wsSIC.Services();
+           // string perfil = ws.PerfilUsuario("usuario", "clave");
 
 
           

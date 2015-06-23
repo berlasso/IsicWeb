@@ -61,7 +61,7 @@
             data.instance.toggle_node(data.node);
             if (data.event) {
                 if (data.node.parent == "En OTIP") {
-                    var url = '@Url.Action("DetalleConCodBarra", "ImputadoOtip",  new {area="Otip", cb = "__param__" })';
+                    var url = '@Url.Action("DetallePorCodBarra", "ImputadoOtip",  new {area="Otip", cb = "__param__" })';
                     showPageLoadingSpinner();
                     window.location = url.replace('__param__', data.selected[0]);
                 }

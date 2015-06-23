@@ -91,7 +91,33 @@ namespace ISICWeb.Areas.Usuarios.Controllers
         {
             ViewBag.Token = t;
             ViewBag.Usuario = u;
-            return View();
+            string errores = "";
+            ISIC.Entities.Usuarios usuario =
+                _repository.Set<ISIC.Entities.Usuarios>().SingleOrDefault(x => x.id == u && x.TokenEnviado.ToString() == t);
+            if (usuario != null)
+            {
+                usuario.TokenEnviado = null;
+                usuario.activo = true;
+                _repository.UnitOfWork.RegisterChanged(usuario);
+                try
+                {
+                    _repository.UnitOfWork.Commit();
+                    return View();
+                }
+                catch
+                {
+                    errores = "No se pudo guarda el alta.";
+                }
+            }
+            else
+            {
+                errores = "No se encontró ningún usuario con el id y token indicados";
+            }
+            if (errores != "")
+            {
+                return View("Error",null, errores);
+            }
+            return null;
         }
 
       

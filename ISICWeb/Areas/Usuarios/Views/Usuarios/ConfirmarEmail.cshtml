@@ -1,8 +1,9 @@
-﻿    @{
-        ViewBag.Title = "Cuenta confirmada!";
-    }
+﻿
+@{
+    ViewBag.Title = "Cuenta confirmada!";
+}
 
- 
+
 <div class="center wow fadeInDown animated tile-light">
     <h1>@ViewBag.Title</h1>
 </div>
@@ -23,14 +24,14 @@
             <div class="panel-body">
                 <div>
                     <p>
-                        Usuario: @ViewBag.Usuario<br/>
-                        Token recibido: @ViewBag.Token<br/>
+                        Usuario: @ViewBag.Usuario<br />
+                        Token recibido: @ViewBag.Token<br />
                     </p>
                     <p>
                         Gracias por confirmar la cuenta. Ya puede usar el sistema sin inconvenientes.
                     </p>
                     <p>
-                        Para iniciar la sesión, haga click @Html.ActionLink("Aquí", "Login", "Account", new {area = ""}, htmlAttributes: new {id = "loginLink", @class = "btn btn-alt btn-sm"})
+                        Para iniciar la sesión, haga click @Html.ActionLink("Aquí", "Login", "Account", new { area = "" }, htmlAttributes: new { id = "loginLink", @class = "btn btn-alt btn-sm" })
                     </p>
                 </div>
             </div>
@@ -39,4 +40,3 @@
 
 </div>
 
- 
