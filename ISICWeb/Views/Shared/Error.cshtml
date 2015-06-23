@@ -1,6 +1,20 @@
-﻿@model String
-
-    <div class="row">
+﻿@model string
+@section Head
+{
+    <style>
+        .tituloError {
+            color: red;
+            -ms-opacity: 0.8;
+            opacity: 0.8;
+            -ms-text-shadow: 0 0 3px #310909!important;
+            text-shadow: 0 0 3px #310909!important;
+            text-shadow: 0 0 3px rgba(68, 9, 9, 0.4)!important;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+}
+<div class="row">
         <br /><br />
     </div>
     <div class="row" style="margin-top: 100px">
@@ -8,7 +22,7 @@
         <div class="col-md-6">
             <div class="panel panel-default tile wow fadeInDown animated">
                 <div class="panel-heading">
-                    <h2>ERROR!</h2>
+                    <h1 class="tituloError">ERROR EN LA APLICACION!</h1>
                     
 
                 </div>
@@ -19,7 +33,9 @@
 
                     <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
                         <div class="center">
-                            @Model
+                            <h3>
+                                @Model
+                            </h3>
                         </div>
                     </div>
                     <div class="row">

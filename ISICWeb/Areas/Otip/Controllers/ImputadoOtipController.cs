@@ -60,7 +60,7 @@ namespace ISICWeb.Areas.Otip.Controllers
             return View();
         }
 
-        public ActionResult DetalleConCodBarra(string cb, bool pe = false)
+        public ActionResult DetallePorCodBarra(string cb, bool pe = false)
         {
 
             ViewBag.WordDocumentFilename = "AboutMeDocument";
@@ -75,7 +75,7 @@ namespace ISICWeb.Areas.Otip.Controllers
                 
             }
             String error = "No se encontrol el registro solicitado";
-            return View("~/Views/Shared/Error.cshtml",error);
+            return View("Error",null,error);
         }
 
         /// <summary>

@@ -1384,6 +1384,7 @@
     <Content Include="Areas\Antecedentes\Views\Antecedentes\_DetalleImputado.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\Index.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\ResultadoBusqueda.cshtml" />
+    <Content Include="Areas\Usuarios\Views\Usuarios\ConfirmarEmail.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1489,7 +1490,6 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Areas\Usuarios\Views\Usuarios\ConfirmarEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
