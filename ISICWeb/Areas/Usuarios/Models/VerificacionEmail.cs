@@ -17,5 +17,6 @@ namespace ISICWeb.Areas.Usuarios.Models
         public string Departamento { get; set; }
         public string Subject { get; set; }
         public string NombreUsuario { get; set; }
+        public bool? UsuarioMPBA { get; set; }
     }
 }

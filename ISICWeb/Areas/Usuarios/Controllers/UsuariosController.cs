@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Data.Entity.Validation;
 using System.DirectoryServices;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -55,6 +57,8 @@ namespace ISICWeb.Areas.Usuarios.Controllers
                 uvm.Nombre = usuarioDominio.Substring(0, usuarioDominio.LastIndexOf(' '));
                 uvm.Email = id + "@MPBA.GOV.AR";
             }
+            if (id == "nada")
+                uvm.NombreUsuario = "";
             return View("AltaModificacionUsuario",uvm);
         }
 
@@ -64,28 +68,55 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             return View(Usuarios);
         }
 
-        public bool ReenviarToken(string id = "")
+        public string ReenviarToken(string e,string uid = "")
         {
-            ISIC.Entities.Usuarios u = _repository.Set<ISIC.Entities.Usuarios>().SingleOrDefault(x => x.id == id);
-            bool envioCorrecto = false;
+            ISIC.Entities.Usuarios u = _repository.Set<ISIC.Entities.Usuarios>().SingleOrDefault(x => x.id == uid);
+            string errores = "";
             if (u != null)
             {
                 Guid token = Guid.NewGuid();
                 u.TokenEnviado = token;
+                u.PersonalPoderJudicial.Persona.EMail = e;
+                u.activo = false;
                 _repository.UnitOfWork.RegisterChanged(u);
                 try
                 {
                     _repository.UnitOfWork.Commit();
-                    EnviarMail(u);
-                    envioCorrecto = true;
+                   errores= EnviarMail(u);
+                    
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    StringBuilder sb = new StringBuilder();
+
+                    foreach (var failure in ex.EntityValidationErrors)
+                    {
+                        sb.AppendFormat("{0} fallo validacion\n", failure.Entry.Entity.GetType());
+                        foreach (var error in failure.ValidationErrors)
+                        {
+                            sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                            sb.AppendLine();
+                            errores = sb.ToString();
+                        }
+                    }
                 }
                 catch
                 {
-                    
+                    errores = "Error al enviar ";
+                    errores += string.Join("; ", ModelState.Values
+                        .SelectMany(x => x.Errors)
+                        .Select(x => x.ErrorMessage));
+
                 }
             }
-            return envioCorrecto;
+            else
+            {
+                errores = "No se encontro el usuario";
+            }
+            return errores;
         }
+
+
 
         public ActionResult ConfirmarEmail(string u, string t)
         {
@@ -98,6 +129,13 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             {
                 usuario.TokenEnviado = null;
                 usuario.activo = true;
+                if (usuario.UsuarioMPBA != null && usuario.UsuarioMPBA != true)
+                {
+                   UsuarioViewModel uvm= _usuarioService.LlenarViewModelDesdeBase(u);
+                    uvm.TokenEnviado = null;
+                    uvm.activo = true;
+                    return View("~/Views/Account/Register.cshtml",null,uvm);
+                }
                 _repository.UnitOfWork.RegisterChanged(usuario);
                 try
                 {
@@ -122,9 +160,9 @@ namespace ISICWeb.Areas.Usuarios.Controllers
 
       
 
-        public bool EnviarMail( ISIC.Entities.Usuarios u)
+        public string EnviarMail( ISIC.Entities.Usuarios u)
         {
-         
+            string errores = "";
             var email = new VerificacionEmail
             {
                 Sexo = u.PersonalPoderJudicial.Persona.Sexo.Id,
@@ -134,7 +172,9 @@ namespace ISICWeb.Areas.Usuarios.Controllers
                 Token=u.TokenEnviado,
                 Departamento = u.PersonalPoderJudicial.PuntoGestion.Departamento.DepartamentoNombre,
                 Subject = "Verificacion Cuenta ISIC",
-                NombreUsuario = u.NombreUsuario
+                NombreUsuario = u.NombreUsuario,
+                UsuarioMPBA = u.UsuarioMPBA
+                
             };
                 email.Dependencia =string.IsNullOrEmpty(u.Dependencia)?u.PersonalPoderJudicial.PuntoGestion.Descripcion:u.Dependencia;            
             try
@@ -143,9 +183,19 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             }
             catch
             {
-                return false;
+                if (!ModelState.IsValid)
+                {
+                    errores = string.Join("; ", ModelState.Values
+                        .SelectMany(x => x.Errors)
+                        .Select(x => x.ErrorMessage));
+                }
+                else
+                {
+                    errores = "Error al enviar";
+                }
+                return errores;
             }
-            return true;
+            return "";
         }
 
         [HttpPost]
@@ -155,11 +205,21 @@ namespace ISICWeb.Areas.Usuarios.Controllers
 
             if (u.Sexo.Id==0)
             {
-                ModelState.AddModelError("", "Debe indicar el sexo");
+                ModelState.AddModelError("Sexo", "Debe indicar el sexo");
             }
-            if (u.PuntoGestion==null || string.IsNullOrEmpty(u.PuntoGestion.Id))
+            if (u.UsuarioMPBA)
             {
-                ModelState.AddModelError("", "Debe indicar el Punto de Gestion");
+                if (u.PuntoGestion == null || string.IsNullOrEmpty(u.PuntoGestion.Id))
+                {
+                    ModelState.AddModelError("", "Debe indicar el Punto de Gestion");
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(u.Dependencia))
+                {
+                    ModelState.AddModelError("Dependencia", "Debe indicar la dependencia");
+                }
             }
             if (u.Departamento == null)
             {
@@ -168,6 +228,8 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             if (ModelState.IsValid)
             {
                 errores = _usuarioService.GuardarUsuario(u);
+                if (errores!="")
+                    ModelState.AddModelError("", errores);
             }
             else
             {
@@ -176,9 +238,9 @@ namespace ISICWeb.Areas.Usuarios.Controllers
                                           .Select(x => x.ErrorMessage));
             }
 
-            if (errores != "")
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", errores);
+            //    ModelState.AddModelError("", errores);
                 return PartialView("_SummaryErrorUsuario", u);
             }
             return null;

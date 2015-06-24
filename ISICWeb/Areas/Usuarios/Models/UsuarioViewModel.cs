@@ -31,7 +31,6 @@ namespace ISICWeb.Areas.Usuarios.Models
         public string Apellido { get; set; }
         [RegularExpression("^[a-zA-Z]*$")]
         public string NombreUsuario { get; set; }
-        public string ClaveUsuario { get; set; }
         public bool activo { get; set; }
         public string Dependencia { get; set; }
         public virtual GrupoUsuario GrupoUsuario { get; set; }
@@ -50,6 +49,16 @@ namespace ISICWeb.Areas.Usuarios.Models
         public bool UsuarioMPBA { get; set; }
         [Display(Name = "Token Enviado")]
         public Guid? TokenEnviado { get; set; }
+        //[Required]
+        [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Contraseña")]
+        public string ClaveUsuario { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirmar contraseña")]
+        [System.ComponentModel.DataAnnotations.Compare("ClaveUsuario", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
+        public string ConfirmarClaveUsuario { get; set; }
 
     }
 }

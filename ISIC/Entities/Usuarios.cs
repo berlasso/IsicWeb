@@ -14,7 +14,6 @@ namespace ISIC.Entities
         public virtual PersonalPoderJudicial PersonalPoderJudicial { get; set; }
         [Display(Name = "Usuario")]
         public string NombreUsuario { get; set; }
-        public string ClaveUsuario { get; set; }
         public bool activo { get; set; }
         public virtual GrupoUsuario GrupoUsuario { get; set; }
         public Guid? TokenEnviado { get; set; }
@@ -25,6 +24,9 @@ namespace ISIC.Entities
         public string Dependencia { get; set; }
         public string SubCodBarra { get; set; }
         public bool? UsuarioMPBA { get; set; }
+        [Display(Name = "Contraseña")]
+        public string ClaveUsuario { get; set; }
+
 
     }
 }

@@ -122,8 +122,10 @@
                             @Html.ValidationMessageFor(m => m.Conyuge)
                         </div>
                         <div class="col-xs-4">
+                            
                             @Html.LabelFor(model => model.EstadoCivil)
-                            @Html.DropDownListFor(m => m.EstadoCivil, Model.EstadoCivilList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
+                            @Html.DropDownListFor(m => m.EstadoCivil, Model.EstadoCivilList, !esSoloDetalle ? new {@class = "form-control"} : new {@class = "form-control", @readonly = "readonly"} as object)
+
                         </div>
                         <div class="col-xs-4">
                             @Html.LabelFor(model => model.Telefono)

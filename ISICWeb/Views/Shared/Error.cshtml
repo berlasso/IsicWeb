@@ -41,7 +41,7 @@
                     <div class="row">
                         <br/>
                         <div class="center">
-                            <a href="javascript: history.go(-1)" class=" btn btn-alt btn-lg">Volver</a>
+                           @Html.ActionLink("Volver", "Index", "Home", new { area = "" }, htmlAttributes: new { id = "loginLink", @class = "btn btn-alt btn-lg" })
                         </div>
                     </div>
                 

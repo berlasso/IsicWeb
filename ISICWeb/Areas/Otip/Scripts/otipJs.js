@@ -69,7 +69,7 @@ $(function () {
             "render": function (data, type, row) {
                 if (data !== "" && data != null)
 
-                    return '<img src=' + data + '?r=' + Math.random() + ' style="max-width: 100px"  class="thumb" />';
+                    return '<p class="thumb"><img src=' + data + '?r=' + Math.random() + ' style="max-width: 100px"  /><br/></p>';
                 else
                     return '';
 

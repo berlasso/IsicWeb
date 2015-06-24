@@ -148,11 +148,13 @@ namespace ISICWeb.Services
             uvm.DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre");
             uvm.id = id;
             uvm.NombreUsuario = id;
+            
             if (usuario != null)
             {
 
-                //  uvm.ClaveUsuario = usuario.ClaveUsuario;
-                //uvm.NombreUsuario = usuario.NombreUsuario;
+                uvm.ClaveUsuario = usuario.ClaveUsuario;
+                uvm.NombreUsuario = usuario.NombreUsuario;
+                uvm.TokenEnviado = usuario.TokenEnviado;
                 uvm.SubCodBarra = usuario.SubCodBarra;
                 if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.Persona != null && usuario.PersonalPoderJudicial.Persona.Sexo!=null)
                     uvm.Sexo =_repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.Persona.Sexo.Id);

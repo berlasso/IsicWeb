@@ -18,6 +18,7 @@
 {    @Html.AntiForgeryToken()
 
     @Html.HiddenFor(model => model.Validando)
+    @Html.HiddenFor(model => model.UsuarioMPBA)
     <div class=" center wow fadeInDown animated tile-light">
         <h3>
             Carga datos del Usuario
@@ -26,34 +27,42 @@
 
 
     <div class="panel panel-default tile wow fadeInDown animated" style="margin-bottom: 80px;">
-    <div class="panel-heading">
-        @if (modificando)
-        {
-            <h2>
-                <b style="color: red">Modificación</b> del Usuario
-
-            </h2>
-            <small>
-                @Html.Label("Token Enviado sin confirmar", new {style = "color:yellowgreen"})
-                <a href="#" id="EnviarToken" class="btn btn-alt btn-sm">Reenviar</a>
-            </small>
-        }
-        else
-        {
-            if (Model.Validando)
+        <div class="panel-heading">
+            @if (modificando)
             {
-                <h2>VALIDACION: PASO FINAL</h2>
+                <h2>
+                    <b style="color: red">Modificación</b> del Usuario
+
+                </h2>
+                {
+                    string displayCartelToken = @Model.TokenEnviado.HasValue ? "" : "hidden";
+
+
+                    <small id="cartelTokenEnviado">
+                        @Html.Label("Token Enviado sin confirmar", new { style = "color:yellowgreen", @class = @displayCartelToken })
+
+                    </small>
+                }
+
+
+                <a href="#" id="EnviarToken" class="btn btn-alt btn-sm" title="Reenvia el token al mail indicado, desactivando la cuenta hasta que sea confirmada por el usuario">Reenviar Token</a>
             }
-            <h4>Cargando Nuevo Usuario</h4>
+            else
+            {
+                if (Model.Validando)
+                {
+                    <h2>VALIDACION: PASO FINAL</h2>
+                }
+                <h4>Cargando Nuevo Usuario</h4>
 
 
-        }
-        <h5></h5>
+            }
+            <h5></h5>
 
-    </div>
+        </div>
 
-    
-    <div class="panel-body">
+
+        <div class="panel-body">
 
             <div class="row wow fadeInDown animated">
                 <div class="col-md-4">
@@ -92,9 +101,10 @@
                                     </div>
 
                                 </div>
-                            }else if (Model.Validando && Model.UsuarioMPBA==false)
+                            }
+                            else if (Model.Validando && Model.UsuarioMPBA == false)
                             {
-                                @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control"})
+                                @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control" })
 
                             }
                             else
@@ -139,8 +149,23 @@
 
                 </div>
                 <div class="clearfix"></div>
+                @if (Model.Validando && Model.UsuarioMPBA == false)
+                {
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ClaveUsuario, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ClaveUsuario, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ClaveUsuario, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ConfirmarClaveUsuario, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ConfirmarClaveUsuario, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ConfirmarClaveUsuario, "", new { @class = "text-danger" })
+
+                    </div>
+                }
                 @{
-                    var usuarioMPBA = Model.UsuarioMPBA==true?"none":"block";
+    var usuarioMPBA = Model.UsuarioMPBA == true ? "none" : "block";
                 }
                 <div id="colDependencia" class="col-md-4 " style="display: @usuarioMPBA">
                     @Html.Label("Dependencia", htmlAttributes: new { @class = "control-label" })
@@ -165,29 +190,21 @@
                 </div>
 
                 <div class="col-md-4">
-                    @Html.LabelFor(model => model.Email, htmlAttributes: new {@class = "control-label required"})
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label required" })
                     @if (Model.UsuarioMPBA)
                     {
-                        @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     }
                     else
                     {
-                        @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                     }
 
-                    @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
                 </div>
-                @if (Model.Validando && Model.UsuarioMPBA == false)
-                {
-                    <div class="col-md-4">
-                        @Html.LabelFor(model => model.ClaveUsuario, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.ClaveUsuario, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ClaveUsuario, "", new { @class = "text-danger" })
+               
 
-                    </div>
-                }
-                
                 <div class="col-md-4">
                     @Html.LabelFor(model => model.DocumentoNumero, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.DocumentoNumero, new { htmlAttributes = new { @class = "form-control" } })
@@ -197,7 +214,7 @@
                 <div class="col-md-4">
                     @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label required" })
                     @Html.DropDownListFor(x => x.Sexo.Id, Model.SexoList as SelectList, new { @class = "form-control" })
-
+                    @Html.ValidationMessageFor(model => model.Sexo, "", new { @class = "text-danger" })
 
                 </div>
 
@@ -364,31 +381,34 @@
             $("#SubCodBarra").mask("9999");
             $("#EnviarToken").click(function () {
                 $.ajax({
-                    url: '@Url.Action("ReenviarToken", "Usuarios")/@Model.id',
+                    url: '@Url.Action("ReenviarToken", "Usuarios")?uid=@Model.id&e=@Model.Email',
                     type: "GET",
                     autoFocus: true,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $("#EnviarToken").addClass("disabled");
                     },
-                    complete: function() {
+                    complete: function () {
                         $("#EnviarToken").removeClass("disabled");
                     },
                     success: function (data) {
-                        if (data == "True") {
+                        if (data == "") {
                             alertify.success("Token enviado correctamente");
+                            $("#activo").attr("checked", false);
+                            $("#cartelTokenEnviado").removeClass("hidden");
                         } else {
-                            alertify.error("Error al enviar el token");
+                            alertify.error(data, 0);
                         }
 
                     }
                 });
             });
             $("#NombreUsuario").keyup(function () {
-
-                $("#Email").val($(this).val() + '@@MPBA.gov.ar');
+                if ($("#UsuarioMPBA").val()=="True")
+                    $("#Email").val($(this).val() + '@@MPBA.gov.ar');
             });
 
             $("#UsuarioMPBA").change(function () {
+                alert('dfdsf');
                 $("#colDependencia").toggle("slide", "up");
                 $("#colPuntoGestion").toggle("slide", "up");
                 $("#colDepartamento").toggle("slide", "up");

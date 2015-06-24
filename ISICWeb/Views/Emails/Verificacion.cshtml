@@ -54,6 +54,7 @@ Subject: @Model.Subject
                                 @*<div style="text-indent: 300px">*@
                                 <div style="text-align: center">
                                     @{
+                                        
                                         string link = string.Format("{0}://{1}{2}{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"), Url.Action("ConfirmarEmail", "Usuarios", new {area="Usuarios", u = @Model.NombreUsuario, t = @Model.Token }));
                                     }
                                     <a href='@link' style="text-align: center; text-decoration: none; font-size: 14px; padding: 20px 26px 20px; line-height: 1.3333; background-color: rgb(109, 40, 45); border-radius: 0 !important; border: 0; color: #fff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.7); -ms-opacity: 1 !important; opacity: 1 !important; color: #fff; border-top-color: rgba(255, 255, 255, 0.6); display: inline-block; margin-bottom: 0; font-weight: normal; text-align: center; white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; font-family: 'open-sans-light', sans-serif !important; border: 1px solid transparent;">

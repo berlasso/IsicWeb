@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using ISIC.Entities;
 using ISIC.Persistence.Context;
+using ISICWeb.Areas.Usuarios.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -143,6 +144,45 @@ namespace ISICWeb.Controllers
             ViewBag.RegistrandoUsuarioViejo = RegistrandoUsuarioViejo;
 
             return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Registrar(UsuarioViewModel model)
+        {
+            //if (ModelState.IsValid)
+            //{
+            if (string.IsNullOrEmpty(model.ClaveUsuario))
+            {
+                ModelState.AddModelError("ClaveUsuario", "La contraseña es requerida");
+                   return View("Register",model);   
+            }
+                Usuarios u = _repository.Set<Usuarios>().Single(x => x.NombreUsuario == model.NombreUsuario);
+                u.TokenEnviado = model.TokenEnviado;
+                u.activo = model.activo;
+                u.ClaveUsuario = model.ClaveUsuario;
+                _repository.UnitOfWork.RegisterChanged(u);
+                try
+                {
+                    _repository.UnitOfWork.Commit();
+                    return View("~/Areas/Usuarios/Views/Usuarios/ConfirmarEmail.cshtml");
+                }
+                catch
+                {
+                    return View("Error", null, "No se pudo guardar el alta.");
+                }
+            //}
+            //else
+            //{
+            //    string errores = string.Join("; ", ModelState.Values
+            //                          .SelectMany(x => x.Errors)
+            //                          .Select(x => x.ErrorMessage));
+            
+
+            //    ModelState.AddModelError("", errores);
+            //   return View("Register",model);
+            //}
         }
 
         //
