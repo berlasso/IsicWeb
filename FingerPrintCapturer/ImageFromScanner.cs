@@ -159,7 +159,7 @@ namespace FingerCapturer
             if (_subjectFinger.Status == NBiometricStatus.Ok)
             {
                 saveFileDialog.FileName = string.Empty;
-                saveFileDialog.Title = @"Save Image File";
+                saveFileDialog.Title = @"Guardar Imagen";
                 saveFileDialog.Filter = NImages.GetSaveFileFilterString();
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -188,7 +188,7 @@ namespace FingerCapturer
             {
                 saveFileDialog.FileName = string.Empty;
                 saveFileDialog.Filter = string.Empty;
-                saveFileDialog.Title = @"Save Template File";
+                saveFileDialog.Title = @"Guardar Template";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try

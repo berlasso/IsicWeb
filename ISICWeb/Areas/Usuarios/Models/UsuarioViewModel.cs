@@ -17,6 +17,7 @@ namespace ISICWeb.Areas.Usuarios.Models
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string Email { get; set; }
+        [Display(Name = "Documento Nro.")]
         [Range(0, int.MaxValue, ErrorMessage = "Número de documento incorrecto")]
         public string DocumentoNumero { get; set; }
         [Required(ErrorMessage = "El nombre es requerido")]
@@ -30,6 +31,7 @@ namespace ISICWeb.Areas.Usuarios.Models
         [MaxLength(100, ErrorMessage = "El apellido es demasiado largo")]
         public string Apellido { get; set; }
         [RegularExpression("^[a-zA-Z]*$")]
+        [Display(Name = "Usuario")]
         public string NombreUsuario { get; set; }
         public bool activo { get; set; }
         public string Dependencia { get; set; }
@@ -38,11 +40,13 @@ namespace ISICWeb.Areas.Usuarios.Models
         //public SelectList PuntoGestionList { get; set; }
         public SelectList DepartamentoList { get; set; }
         public SelectList SexoList { get; set; }
+        public SelectList JerarquiaList { get; set; }
         [Required]
         public virtual PuntoGestion PuntoGestion { get; set; }
         [Required]
         public virtual Departamento Departamento { get; set; }
         public virtual ClaseSexo Sexo { get; set; }
+        public virtual JerarquiaPoderJudicial Jerarquia { get; set; }
         public string SubCodBarra { get; set; }
         public bool Validando { get; set; }
         [Display(Name = "Usuario MPBA")]

@@ -112,7 +112,7 @@
         <div class="row" id="botones">
             <div class="col-md-6">
                 @Html.ActionLink("Carga IDGx", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaIdgx", onclick = "showPageLoadingSpinner()" })
-                @Html.ActionLink("Carga AFIS", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaAfis", onclick = "showPageLoadingSpinner()" })
+                @*@Html.ActionLink("Carga AFIS", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaAfis", onclick = "showPageLoadingSpinner()" })*@
                 @Html.ActionLink("Carga GNA", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaGna", onclick = "showPageLoadingSpinner()" })
                 @Html.ActionLink("Migraciones", null, new { area = "Antecedentes" }, new { @class = "btn disabled", id = "btnCargaMig", onclick = "showPageLoadingSpinner()" })
             </div>
@@ -212,7 +212,7 @@
     function VincularBotones(prontuariosic) {
         if (prontuariosic !== "") {
             var urlIdgx = '@Url.Action("BuscarProntuariosIdgx", "AntecedentesIdgx")?prontuariosic=' + prontuariosic;
-            var urlAfis = '@Url.Action("BuscarFichasAFIS", "AntecedentesAfis")?prontuariosic=' + prontuariosic;
+            @*var urlAfis = '@Url.Action("BuscarFichasAFIS", "AntecedentesAfis")?prontuariosic=' + prontuariosic;*@
             var urlMigraciones = '@Url.Action("BuscarFichasMigraciones", "AntecedentesMigraciones")?prontuariosic=' + prontuariosic;
             var urlGna = '@Url.Action("BuscarFichasGNA", "AntecedentesGna")?prontuariosic=' + prontuariosic;
                 $("#btnCargaIdgx").removeClass("disabled").prop("href", urlIdgx);

@@ -15,6 +15,6 @@ namespace ISIC.Entities
         public string Id { get; set; }
         public virtual Persona Persona { get; set; }
         public virtual PuntoGestion PuntoGestion { get; set; }
-
+        public virtual JerarquiaPoderJudicial JerarquiaPoderJudicial { get; set; }
     }
 }

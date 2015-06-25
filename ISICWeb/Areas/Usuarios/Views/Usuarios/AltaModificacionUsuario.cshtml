@@ -38,8 +38,8 @@
                 string displayCartelToken = @Model.TokenEnviado.HasValue ? "" : "hidden";
 
 
-                <small id="cartelTokenEnviado">
-                    @Html.Label("Token Enviado sin confirmar", new { style = "color:yellowgreen", @class = @displayCartelToken })
+                <small>
+                    @Html.Label("Token Enviado sin confirmar", new {@id="cartelTokenEnviado", style = "color:yellowgreen", @class = @displayCartelToken })
 
                 </small>
             }
@@ -70,6 +70,11 @@
                     {
                         @Html.LabelFor(model => model.UsuarioMPBA)
                         @Html.CheckBoxFor(model => model.UsuarioMPBA)
+                    }
+                    else
+                    {
+                      
+                        @Html.HiddenFor(model=>model.UsuarioMPBA)
                     }
                 </div>
                 <div class="col-md-4">
@@ -238,7 +243,9 @@
                 }
 
 
-                <div class="col-md-4">
+                <div class="col-md-4 ">
+                    @Html.LabelFor(model => model.Jerarquia, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(x => x.Jerarquia.Id, Model.JerarquiaList as SelectList, new { @class = "form-control" })
                 </div>
             </div>
 
@@ -273,11 +280,11 @@
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6">
                         <input type="submit" value="Guardar" class="btn btn-alt btn-lg" />
-                        @if (!Model.Validando)
+                        @*@if (!Model.Validando)
                         {
                             @Html.Label("Enviar Email de confirmación")
                             @Html.CheckBox("EnviarMail", true)
-                        }
+                        }*@
 
                     </div>
                 </div>
@@ -398,14 +405,17 @@
                         } else {
                             alertify.error(data, 0);
                         }
-
                     }
                 });
             });
+
+
+
             $("#NombreUsuario").keyup(function () {
                 if ($("#UsuarioMPBA").val()=="True")
                     $("#Email").val($(this).val() + '@@MPBA.gov.ar');
             });
+
 
             $("#UsuarioMPBA").change(function () {
                 $("#colDependencia").toggle("slide", "up");
@@ -413,7 +423,8 @@
                 $("#colDepartamento").toggle("slide", "up");
                 if (this.checked) {
                     $("#Email").prop("readonly", "readonly");
-                    $("#colDependencia").hide().effect("fold", "up");;
+                    $("#colDependencia").hide().effect("fold", "up");
+                    $("#Email").val($("#NombreUsuario").val() + "@@MPBA.GOV.AR");
                 } else {
                     $("#Email").prop("readonly", "");
                     $("#colDependencia").show().effect("slide", "up");

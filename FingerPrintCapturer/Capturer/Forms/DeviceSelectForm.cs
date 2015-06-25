@@ -66,7 +66,8 @@ namespace Capturer.Forms
 
 				foreach (NFPosition item in SelectedDevice.GetSupportedPositions())
 				{
-					if (!NBiometricTypes.IsPositionFourFingers(item)) continue;
+					/*if (!NBiometricTypes.IsPositionFourFingers(item)) continue;*/
+                    if (!NBiometricTypes.IsPositionTwoFingers(item)) continue;
 					canCaptureSlaps = true;
 					break;
 				}

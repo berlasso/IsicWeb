@@ -17,6 +17,7 @@ namespace ISIC.Persistence.Mappings
             this.HasKey(x => x.Id);
             //this.HasOptional(x => x.PuntoGestion).WithOptionalDependent().Map(m => m.MapKey("idPuntoGestion"));
             this.HasOptional(x => x.PuntoGestion).WithMany().Map(m => m.MapKey("idPuntoGestion"));
+            this.HasOptional(x => x.JerarquiaPoderJudicial).WithMany().Map(m => m.MapKey("idJerarquia"));
             this.HasOptional(x => x.Persona).WithOptionalDependent().Map(m => m.MapKey("idPersona"));
 
 

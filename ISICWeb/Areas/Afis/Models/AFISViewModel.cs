@@ -20,7 +20,7 @@ namespace ISICWeb.Areas.Afis.Models
         public string idTipoDoc { get; set; }
         [Required(ErrorMessage = "El apellido es requerido")]
         [MinLength(2, ErrorMessage = "El apellido no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el apellido")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÑñÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el apellido")]
         [MaxLength(100, ErrorMessage = "El apellido es demasiado largo")]
         public string Apellido { get; set; }
         [MinLength(2, ErrorMessage = "El nombre no puede tener menos de 2 letras")]

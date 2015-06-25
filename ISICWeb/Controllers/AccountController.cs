@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using ISIC.Entities;
 using ISIC.Persistence.Context;
@@ -161,11 +162,12 @@ namespace ISICWeb.Controllers
                 Usuarios u = _repository.Set<Usuarios>().Single(x => x.NombreUsuario == model.NombreUsuario);
                 u.TokenEnviado = model.TokenEnviado;
                 u.activo = model.activo;
-                u.ClaveUsuario = model.ClaveUsuario;
+                u.ClaveUsuario =Crypto.HashPassword(model.ClaveUsuario);
                 _repository.UnitOfWork.RegisterChanged(u);
                 try
                 {
                     _repository.UnitOfWork.Commit();
+                    ViewBag.Usuario = model.NombreUsuario;
                     return View("~/Areas/Usuarios/Views/Usuarios/ConfirmarEmail.cshtml");
                 }
                 catch

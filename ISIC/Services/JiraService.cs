@@ -25,6 +25,13 @@ namespace ISIC.Services
             var issues = jira.CreateIssue("IG", "Task", new IssueFields { summary = codigoBarra });
             return issues;
         }
+        public Issue<IssueFields> UpdateIssue(Issue<IssueFields> issue)
+        {
+            //var issues = jira.CreateIssue("IG", "Task", new IssueFields { summary = codigoBarra });
+            
+            var issues = jira.UpdateIssue(issue);
+            return issues;
+        }
         public Issue<IssueFields> GetIssue(string codigoBarra)
         {
             Issue<IssueFields> issue = null;
@@ -34,6 +41,7 @@ namespace ISIC.Services
            
             return issue;
         }
+        
         
         public Issue<IssueFields> TransitionIssue(Issue<IssueFields> issue, Transition transition)
         {
@@ -87,6 +95,7 @@ namespace ISIC.Services
 
         Issue<IssueFields> GetIssue(string codigoBarra);
 
+        Issue<IssueFields> UpdateIssue(Issue<IssueFields> issue);
 
     }
 }

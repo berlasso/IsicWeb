@@ -492,8 +492,53 @@ namespace Capturer.Controls
 
 		private void OnDataChanged()
 		{
+
+            // Modificacion preparado para 4 + 4 +2 
+            // 
 			bool needsRepaint = false;
-			foreach (SvgPath item in _painter.Elements.Values)
+            //  _selectedPosition es una combincacion de dedos
+
+            
+            List<NFPosition> listaIluminar = new List<NFPosition> ();
+
+            switch (_selectedPosition)
+            {
+                
+
+                case NFPosition.PlainThumbs:
+                    listaIluminar.Add(NFPosition.PlainThumbs);
+                    break;
+                case NFPosition.LeftIndexMiddleFingers:
+                    listaIluminar.Add(NFPosition.LeftIndexFinger);
+                    listaIluminar.Add(NFPosition.LeftMiddleFinger);
+                    
+                    break;
+                case NFPosition.LeftMiddleRingFingers:
+                    listaIluminar.Add(NFPosition.LeftMiddleFinger);
+                    listaIluminar.Add(NFPosition.LeftRingFinger);
+                    break;
+                case NFPosition.LeftRingLittleFingers:
+                    listaIluminar.Add(NFPosition.LeftRingFinger);
+                    listaIluminar.Add(NFPosition.LeftLittleFinger);
+                    break;
+                case NFPosition.RightIndexMiddleFingers:
+                    listaIluminar.Add(NFPosition.RightIndexFinger);
+                    listaIluminar.Add(NFPosition.RightMiddleFinger);
+                    break;
+                case NFPosition.RightMiddleRingFingers:
+                     listaIluminar.Add(NFPosition.RightMiddleFinger);
+                    listaIluminar.Add(NFPosition.RightRingFinger);
+                    break;
+                case NFPosition.RightRingLittleFingers:
+                    listaIluminar.Add(NFPosition.RightRingFinger);
+                    listaIluminar.Add(NFPosition.RightLittleFinger);
+                    break;
+                default:
+                    listaIluminar.Add(_selectedPosition);
+                    break;
+            }
+
+		/*	foreach (SvgPath item in _painter.Elements.Values)
 			{
 				Color color = Color.Transparent;
 				if (_allowHighlight && item.HitTest(_mousePosition) && NBiometricTypes.IsPositionSingleFinger(item.Position))
@@ -507,7 +552,24 @@ namespace Capturer.Controls
 					item.FillColor = color;
 					needsRepaint = true;
 				}
-			}
+			}*/
+
+
+            foreach (SvgPath item in _painter.Elements.Values)
+            {
+                Color color = Color.Transparent;
+                if (_allowHighlight && item.HitTest(_mousePosition) && NBiometricTypes.IsPositionSingleFinger(item.Position))
+                    color = Color.DarkRed;
+                else if (_missingPositions.Contains(item.Position))
+                    color = Color.Red;
+                else if (listaIluminar.Contains(item.Position))
+                    color = Color.Green;
+                if (item.FillColor != color)
+                {
+                    item.FillColor = color;
+                    needsRepaint = true;
+                }
+            }
 
 			if (IsRolled && NBiometricTypes.IsPositionSingleFinger(_selectedPosition))
 			{

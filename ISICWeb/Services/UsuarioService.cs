@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using ISIC.Entities;
 
@@ -47,7 +48,15 @@ namespace ISICWeb.Services
             string errores = "";
             model.id = model.NombreUsuario;
             Usuarios usuario = _repository.Set<Usuarios>().SingleOrDefault(x => x.id == model.id.ToString());
-
+            PuntoGestion pg = null;
+            if (model.UsuarioMPBA)
+            {
+                pg = _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == model.PuntoGestion.Id);
+            }
+            else
+            {
+                pg = _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == "00000000000000");//No Especifica
+            }
             if (usuario == null)
             {
                 string ppjid = (Convert.ToInt32(_repository.Set<PersonalPoderJudicial>().Max(x => x.Id)) + 1).ToString();
@@ -62,16 +71,14 @@ namespace ISICWeb.Services
                         {
 
                         },
-                        PuntoGestion =
-                            _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == model.PuntoGestion.Id)
+                        PuntoGestion =pg
 
                     }
                 };
             }
             else
             {
-                usuario.PersonalPoderJudicial.PuntoGestion =
-                    _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == model.PuntoGestion.Id);
+                usuario.PersonalPoderJudicial.PuntoGestion =pg;
 
             }
 
@@ -94,13 +101,17 @@ namespace ISICWeb.Services
 
 
             //usuario.ClaveUsuario = u.ClaveUsuario;
-
+            if ( model.UsuarioMPBA == false && model.Validando)
+            {
+                usuario.ClaveUsuario = Crypto.HashPassword(model.ClaveUsuario);
+            }
             usuario.PersonalPoderJudicial.Persona.Apellido = model.Apellido;
             usuario.PersonalPoderJudicial.Persona.Nombre = model.Nombre;
             usuario.PersonalPoderJudicial.Persona.DocumentoNumero = model.DocumentoNumero;
             usuario.PersonalPoderJudicial.Persona.FechaAlta = DateTime.Now;
             usuario.PersonalPoderJudicial.Persona.FechaUltimaModificacion = DateTime.Now;
             usuario.PersonalPoderJudicial.Persona.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == model.Sexo.Id);
+            usuario.PersonalPoderJudicial.JerarquiaPoderJudicial = _repository.Set<JerarquiaPoderJudicial>().Single(x => x.Id == model.Jerarquia.Id);
             if (model.GrupoUsuario!=null)
                 usuario.GrupoUsuario = _repository.Set<GrupoUsuario>().SingleOrDefault(x => x.id == model.GrupoUsuario.id);
             else
@@ -144,6 +155,7 @@ namespace ISICWeb.Services
             UsuarioViewModel uvm = new UsuarioViewModel();
             uvm.UsuarioMPBA = true;
             uvm.GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion");
+            uvm.JerarquiaList = new SelectList(_repository.Set<JerarquiaPoderJudicial>().ToList().OrderBy(x=>x.Descripcion), "id", "Descripcion");
             uvm.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion");
             uvm.DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre");
             uvm.id = id;
@@ -158,17 +170,21 @@ namespace ISICWeb.Services
                 uvm.SubCodBarra = usuario.SubCodBarra;
                 if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.Persona != null && usuario.PersonalPoderJudicial.Persona.Sexo!=null)
                     uvm.Sexo =_repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.Persona.Sexo.Id);
+                if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.JerarquiaPoderJudicial != null)
+                    uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.JerarquiaPoderJudicial.Id);
                 if (usuario.PersonalPoderJudicial!=null && usuario.PersonalPoderJudicial.PuntoGestion!=null)
                     uvm.PuntoGestion =_repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.PuntoGestion.Id);
                 if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.PuntoGestion != null && usuario.PersonalPoderJudicial.PuntoGestion.Departamento!=null)
                     uvm.Departamento =_repository.Set<Departamento>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.PuntoGestion.Departamento.Id);
                 uvm.activo = usuario.activo;
+                uvm.Dependencia = usuario.Dependencia;
                 uvm.GrupoUsuario = usuario.GrupoUsuario;
                 uvm.UsuarioMPBA = usuario.UsuarioMPBA ?? true;
+                
             }
             else
             {
-
+                uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == 3);//No especifica
             }
             if (usuario != null && usuario.id != "" && usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.Persona != null)
             {

@@ -32,7 +32,7 @@ namespace FingerCapturer
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 				//Application.Run(new MainForm());
-				Application.Run(new Capturer.Forms.MainForm());
+               Application.Run(new Capturer.Forms.MainForm());
 			}
 			catch (Exception ex)
 			{

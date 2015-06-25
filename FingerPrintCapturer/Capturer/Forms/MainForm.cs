@@ -15,6 +15,13 @@ using Neurotec.Licensing;
 using Capturer.Controls;
 using FingerCapturer.Properties;
 using Neurotec;
+using System.ComponentModel;
+using System.Text;
+using System.Drawing.Imaging;
+using MPBA.RenaperClient;
+using System.Configuration;
+using System.Security.Cryptography.X509Certificates;
+
 
 
 namespace Capturer.Forms
@@ -32,11 +39,27 @@ namespace Capturer.Forms
 
 		#region Private fields
 
-		private readonly NFPosition[] _slaps = new NFPosition[]
+		/*private readonly NFPosition[] _slaps = new NFPosition[]
 		{
 			NFPosition.PlainLeftFourFingers,
 			NFPosition.PlainRightFourFingers,
 			NFPosition.PlainThumbs,
+		};*/
+
+        /* Parametro cantidad de huellas que toma */
+        private int cantHuellas;
+        private int resultadoficticio = 0;
+        private readonly NFPosition[] _slaps = new NFPosition[]
+		{
+			NFPosition.LeftIndexMiddleFingers,
+            NFPosition.RightIndexMiddleFingers,
+
+            NFPosition.LeftMiddleRingFingers,
+            NFPosition.RightMiddleRingFingers,
+
+            NFPosition.LeftRingLittleFingers,
+            NFPosition.RightRingLittleFingers,
+            NFPosition.PlainThumbs
 		};
 
 		private readonly NFPosition[] _fingers = new NFPosition[]
@@ -56,9 +79,12 @@ namespace Capturer.Forms
 		private bool _canCaptureSlaps;
 		private bool _canCaptureRolled;
 		private bool _captureStarted;
+       public NFinger _huellaCapturada;
 		private bool _newSubject = true;
 		private FingerCaptureForm _captureForm;
+        private FingerSingleForm _captureSingle;
 		private bool _exit;
+        private NFinger[] dedos = new NFinger[10];
 
 		private DataModel _model;
 		private NBiometricClient _biometricClient;
@@ -87,30 +113,106 @@ namespace Capturer.Forms
 
 		private void BtnStartCapturingClick(object sender, EventArgs e)
 		{
-			if (_model.Subject == null)
-			{
+            if ((this.apellido.Text == "" || this.nombres.Text == "" || this.DNI.Text == "" ) &&  this.rFemenino.Checked == false && this.rMasculino.Checked == false )
+            {
+                Utilities.ShowWarning(this, "Debe ingresar los datos filiatorios");
+                return;
+            }
+
+            /*Si el sujeto tiene dedos faltantes, va a la captura individual
+             */
+
+            if (fSelector.MissingPositions.Count() > 0 && chbCapturePlainFingers.Checked && chbCaptureSlaps.Checked)
+            {
+                Utilities.ShowWarning(this, "Si tiene dedos faltantes, ingrese la huella individualmente");
+                return;
+            }
+            /*Plana o Rodada no ambas             */
+           if (chbCapturePlainFingers.Checked && chbCaptureRolled.Checked)
+           {
+               Utilities.ShowWarning(this, "Debe especificar huella plana o Rodada, no Ambas");
+               return;
+           }
+           if (chbCaptureSlaps.Checked && !chbCapturePlainFingers.Checked)
+           {
+               Utilities.ShowWarning(this, "Atención: Si captura más de una huella, la captura  debe ser plana!");
+               return;
+           }
+
+            // Esto es porque siempre empieza con un sujeto nuevo en cada captura
+            // Agregado
+
+            _model.Subject = null;
+            LimpiarImagenes();
+			
 				_model.Subject = new NSubject();
 				_model.Subject.Fingers.CollectionChanged += OnFingersCollectionChanged;
 				CreateFingers(_model.Subject);
 				if (_model.Subject.Fingers.Count == 0)
 				{
-					Utilities.ShowWarning(this, "No fingers selected for capturing");
+					Utilities.ShowWarning(this, "No hay dedos seleccionados para la captura");
 					return;
 				}
-			}
+			
 			_captureStarted = true;
 			_newSubject = false;
 			EnableControls(false);
 
-			_captureForm = new FingerCaptureForm();
-			_captureForm.BiometricClient = _biometricClient;
-			_captureForm.Subject = _model.Subject;
-			_captureForm.FormClosed += new FormClosedEventHandler(CaptureFormFormClosed);
-			_captureForm.Show(this);
+            if (chbCapturePlainFingers.Checked == true && chbCaptureSlaps.Checked == true)
+            {
+                _captureForm = new FingerCaptureForm();
+                _captureForm.BiometricClient = _biometricClient;
+                _captureForm.Subject = _model.Subject;
+
+                _captureForm.FormClosed += new FormClosedEventHandler(CaptureFormFormClosed);
+
+                _captureForm.Show(this);
+            
+            }
+            else
+            { _captureSingle = new FingerSingleForm();
+            _captureSingle.BiometricClient = _biometricClient;
+            _captureSingle.Subject = _model.Subject;
+
+            _captureSingle.FormClosed += new FormClosedEventHandler(CaptureFormSingleClosed);
+
+            _captureSingle.Show(this);
+            
+            
+            }
+
+                
+
+
 		}
 
+        private void OnChangeHuellaCorriente(object sender, PropertyChangedEventArgs e)
+        {
+            string a;
+            a = e.PropertyName;
+        
+        }
+        private static string EnumToString(Enum value)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in value.ToString())
+            {
+                if (char.IsUpper(c)) sb.Append(' ');
+                sb.Append(c);
+            }
+            return sb.ToString().Trim();
+        }
 		private void OnFingersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
+
+            if (_model.Subject.Fingers.Count() == 0)
+            {
+                LimpiarImagenes();
+                chbCapturePlainFingers.Enabled=true;
+                chbCaptureSlaps.Enabled = true;
+                chbCaptureRolled.Enabled = true;
+
+            }
 			switch (e.Action)
 			{
 				case NotifyCollectionChangedAction.Add:
@@ -125,6 +227,9 @@ namespace Capturer.Forms
 										view.Finger = f;
 								}
 							}), (object)e.NewItems.Cast<NFinger>().ToArray());
+                      
+                      
+
 							break;
 					}
 				case NotifyCollectionChangedAction.Remove:
@@ -146,11 +251,49 @@ namespace Capturer.Forms
 						BeginInvoke(new Action(() =>
 						{
 							NFingerView view = null;
+
 							foreach (NFPosition position in _slaps)
 							{
-								view = GetView(position, false);
-								view.Finger = null;
+                                switch (position)
+                                {
+                                    case NFPosition.LeftIndexMiddleFingers:
+                                        nfvLeftIndex.Finger = null;
+                                        nfvLeftMiddle.Finger = null;
+                                        break;
+
+                                    case NFPosition.LeftMiddleRingFingers:
+                                        nfvLeftMiddle.Finger = null;
+                                        nfvLeftRing.Finger = null;
+                                        break;
+
+                                    case NFPosition.LeftRingLittleFingers:
+                                        nfvLeftLittle.Finger = null;
+                                        nfvLeftRing.Finger = null;
+                                        break;
+
+                                    case NFPosition.RightIndexMiddleFingers:
+                                        nfvRightIndex.Finger = null;
+                                        nfvRightMiddle.Finger = null;
+                                        break;
+
+                                    case NFPosition.RightMiddleRingFingers:
+                                        nfvRightRing.Finger = null;
+                                        nfvRightMiddle.Finger = null;
+                                        break;
+
+                                    case NFPosition.RightRingLittleFingers:
+                                        nfvRightLittle.Finger = null;
+                                        nfvRightRing.Finger = null;
+                                        break;
+
+                                    case NFPosition.PlainThumbs:
+                                        nfvRightThumb.Finger = null;
+                                        nfvLeftThumb.Finger = null;
+                                        break;
+
+                                }
 							}
+
 							foreach (NFPosition position in _fingers)
 							{
 								view = GetView(position, false);
@@ -177,18 +320,35 @@ namespace Capturer.Forms
 				_exit = true;
 				_captureForm.Close();
 			}
+            if (_captureSingle != null)
+			{
+				Text = @"Enrollment Sample: Closing ...";
+				e.Cancel = true;
+				_exit = true;
+				_captureSingle.Close();
+			}
 		}
 
 		private void CaptureFormFormClosed(object sender, FormClosedEventArgs e)
 		{
 			_captureForm.Dispose();
 			_captureForm = null;
-
+        
 			_captureStarted = false;
 			EnableControls(true);
 
 			if (_exit) Close();
 		}
+        private void CaptureFormSingleClosed(object sender, FormClosedEventArgs e)
+        {
+            _captureSingle.Dispose();
+            _captureSingle = null;
+
+            _captureStarted = false;
+            EnableControls(true);
+
+            if (_exit) Close();
+        }
 
 		private void CaptureComboBoxCheckedChanged(object sender, EventArgs e)
 		{
@@ -250,7 +410,7 @@ namespace Capturer.Forms
 						{
 							canSaveRecord = finger.Objects.ToArray().Any(x => x.Template != null);
 						}
-						tsbSaveRecord.Visible = canSaveRecord;
+				     	tsbSaveRecord.Visible = canSaveRecord;
 						toolStripViewControls.Tag = finger;
 						view.Parent.Controls.Add(toolStripViewControls);
 						toolStripViewControls.Visible = true;
@@ -311,7 +471,7 @@ namespace Capturer.Forms
 
 		private void NewToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			if (!Utilities.ShowQuestion(this, "This will erase all images and records. Are you sure you want to continue?")) return;
+			/*if (!Utilities.ShowQuestion(this, "This will erase all images and records. Are you sure you want to continue?")) return;*/
 
 			if (_model.Subject != null)
 			{
@@ -325,7 +485,23 @@ namespace Capturer.Forms
 			infoPanel.Model = _model;
 			_newSubject = true;
 			EnableControls(true);
+            EnableRenaper(false);
+            this.apellido.Text = "";
+            this.nombres.Text = "";
+            this.DNI.Text = "";
+            this.cidentifica.Text = "";
 		}
+        private void EnableRenaper(Boolean b)
+        { 
+            
+        this.DNIRNR.Visible = b;
+        this.ApyNomRNR.Visible=b;
+        this.scoreRNR.Visible = b;
+        this.RESULTADO.Visible = b;
+        this.resultadoRNR.Visible = b;
+        
+        
+        }
 
 		private void SaveTemplateToolStripMenuItemClick(object sender, EventArgs e)
 		{
@@ -334,7 +510,7 @@ namespace Capturer.Forms
 
 			if (_model.Subject == null)
 			{
-				Utilities.ShowWarning("Nothing to save");
+				Utilities.ShowWarning("No hay datos para guardar");
 			}
 			else
 			{
@@ -342,7 +518,7 @@ namespace Capturer.Forms
 				{
 					if (template.Fingers == null)
 					{
-						Utilities.ShowWarning("Nothing to save");
+                        Utilities.ShowWarning("No hay datos para guardar");
 					}
 					else if (saveFileDialog.ShowDialog() == DialogResult.OK)
 					{
@@ -377,9 +553,9 @@ namespace Capturer.Forms
 						Utilities.ShowError(ex);
 					}
 				}
-				else Utilities.ShowWarning("Nothing to save");
+                else Utilities.ShowWarning("No hay datos para guardar");
 			}
-			else Utilities.ShowWarning("Nothing to save");
+            else Utilities.ShowWarning("No hay datos para guardar");
 		}
 
 		private void ExitToolStripMenuItemClick(object sender, EventArgs e)
@@ -528,7 +704,8 @@ namespace Capturer.Forms
 			{
 				chbCaptureRolled.Checked = Settings.Default.ScanRolled;
 				chbCapturePlainFingers.Checked = Settings.Default.ScanPlain;
-				chbCaptureSlaps.Checked = Settings.Default.ScanSlaps;
+
+				//chbCaptureSlaps.Checked = Settings.Default.ScanSlaps;
 				chbShowOriginal.Checked = Settings.Default.ShowOriginal;
 			}
 			catch { }
@@ -596,6 +773,18 @@ namespace Capturer.Forms
 			return client;
 		}
 
+        private void LimpiarImagenes()
+        {       nfvLeftIndex.Finger= null;
+				 nfvLeftLittle.Finger = null;
+			     nfvLeftMiddle.Finger = null;;
+				nfvLeftRing.Finger = null;
+				 nfvLeftThumb.Finger = null;
+			      nfvRightIndex.Finger=null ;
+				nfvRightLittle.Finger=null;
+			    nfvRightMiddle.Finger = null;
+				 nfvRightRing.Finger = null;
+				 nfvRightThumb.Finger=null;
+        }
 		private NFingerView GetView(NFPosition position, bool isRolled)
 		{
 			switch (position)
@@ -610,9 +799,21 @@ namespace Capturer.Forms
 				case NFPosition.RightMiddle: return isRolled ? nfvRightMiddleRolled : nfvRightMiddle;
 				case NFPosition.RightRing: return isRolled ? nfvRightRingRolled : nfvRightRing;
 				case NFPosition.RightThumb: return isRolled ? nfvRightThumbRolled : nfvRightThumb;
-				case NFPosition.PlainLeftFourFingers: return nfvLeftFour;
-				case NFPosition.PlainRightFourFingers: return nfvRightFour;
-				case NFPosition.PlainThumbs: return nfvThumbs;
+			//	case NFPosition.PlainLeftFourFingers: return nfvLeftFour;
+			//	case NFPosition.PlainRightFourFingers: return nfvRightFour;
+                case NFPosition.LeftIndexMiddleFingers:
+           
+                    return nfvLeftFour;
+                case NFPosition.LeftMiddleRingFingers:
+           
+                    return nfvLeftFour;
+                case NFPosition.LeftRingLittleFingers:
+           
+                    return nfvLeftFour;
+                case NFPosition.RightIndexMiddleFingers: return nfvLeftMiddle;
+                case NFPosition.RightMiddleRingFingers: return nfvRightRing;
+                case NFPosition.RightRingLittleFingers: return nfvRightLittle;
+                case NFPosition.PlainThumbs: return nfvRightThumb;
 				default: return null;
 			}
 		}
@@ -653,6 +854,15 @@ namespace Capturer.Forms
 			var fingers = _fingers.Where(x => !missing.Contains(x));
 			if (chbCaptureSlaps.Checked)
 			{
+                // missing es a lista de dedos faltantes
+                // habria que sacar de las combinaciones los dedos que no puede scanear
+                /* 	case NFPosition.LeftIndex: return isRolled ? nfvLeftIndexRolled : nfvLeftIndex;
+				case NFPosition.LeftLittle: return isRolled ? nfvLeftLittleRolled : nfvLeftLittle;
+				case NFPosition.LeftMiddle: return isRolled ? nfvLeftMiddleRolled : nfvLeftMiddle;
+				case NFPosition.LeftRing: return isRolled ? nfvLeftRingRolled : nfvLeftRing;
+				case NFPosition.LeftThumb: return isRolled ? nfvLeftThumbRolled : nfvLeftThumb;
+                 * */
+
 				var slaps = _slaps.Where(x => NBiometricTypes.GetPositionAvailableParts(x, missing).Length != 0);
 				foreach (var pos in slaps)
 				{
@@ -679,7 +889,7 @@ namespace Capturer.Forms
 		private void OnSelectedDeviceChanging(NFScanner newDevice)
 		{
 			bool canCaptureRolled = false;
-			bool canCaptureSlaps = false;
+			bool canCaptureSlaps = true;
 			if (newDevice != null)
 			{
 				foreach (NFPosition item in newDevice.GetSupportedPositions())
@@ -760,7 +970,7 @@ namespace Capturer.Forms
 			saveTemplateToolStripMenuItem.Enabled = enable;
 			newToolStripMenuItem.Enabled = enable;
 			exportToolStripMenuItem.Enabled = enable;
-			enrollToServerToolStripMenuItem.Enabled = enable;
+			//enrollToServerToolStripMenuItem.Enabled = enable;
 		}
 
 		private static void ZoomView(NFingerView view)
@@ -787,9 +997,9 @@ namespace Capturer.Forms
 
 		private void ZoomViews()
 		{
-			ZoomView(nfvLeftFour);
-			ZoomView(nfvRightFour);
-			ZoomView(nfvThumbs);
+			//ZoomView(nfvLeftFour);
+			//ZoomView(nfvRightFour);
+			//ZoomView(nfvThumbs);
 			ZoomView(nfvLeftLittle);
 			ZoomView(nfvLeftRing);
 			ZoomView(nfvLeftMiddle);
@@ -813,5 +1023,274 @@ namespace Capturer.Forms
 		}
 
 		#endregion
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void nfvLeftThumb_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+
+        private void SalvaImagenTemplate(NFinger finger)
+        {
+
+            // salva el tempalte
+
+            bool isRolled = NBiometricTypes.IsImpressionTypeRolled(finger.ImpressionType);
+            saveFileDialog.FileName = string.Format("{0}{1}", finger.Position, isRolled ? "_Rolled" : string.Empty);
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                NFRecord record = finger.Objects.ToArray().First().Template;
+                using (NBuffer buffer = record.Save())
+                {
+                    File.WriteAllBytes(saveFileDialog.FileName, buffer.ToArray());
+                }
+            }
+
+
+
+            /////
+        
+        
+        }
+
+        public String ConvertBytesToWSQBase64(byte[] imagebytes, ImageFormat format)
+        {
+            MemoryStream msImage = new MemoryStream(imagebytes);
+            var imageBytes = this.ConvertStreamToWSQ(msImage, format);
+            var stringBase64 = Convert.ToBase64String(imageBytes);
+            return stringBase64;
+        }
+
+
+        public byte[] ConvertStreamToWSQ(Stream imageStream, ImageFormat format)
+        {
+          //  const string Components = "Images.WSQ";
+          
+
+            MemoryStream msWSQ = new MemoryStream();
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (NImage nimage = NImage.FromStream(imageStream))
+                {
+                    using (var info = (WsqInfo)NImageFormat.Wsq.CreateInfo(nimage))
+                    {
+                        info.BitRate = WsqInfo.DefaultBitRate;
+                        nimage.Save(msWSQ, info);
+                    }
+                }
+            }
+            byte[] result = msWSQ.ToArray();
+            msWSQ.Dispose();
+
+            return result;
+        }
+        private void CheckRenaper()
+        {
+            int cantidad = _model.Subject.Fingers.Count();
+            string h1, h2, h1d, h2d;
+
+            NFinger finger1 = _model.Subject.Fingers[cantidad - 1];
+            NFinger finger2 = _model.Subject.Fingers[cantidad - 2];
+            NImage image1 = finger1.GetImage(false);
+            NImage image2 = finger2.GetImage(false);
+            byte[] imagenArreglo1,imagenArreglo2;
+           
+            MemoryStream imgStream = new MemoryStream();
+            MemoryStream imgStream2 = new MemoryStream();
+
+            image1.Save(imgStream, NImageFormat.Jpeg);
+            imgStream.Close();
+          
+            
+            imagenArreglo1 = imgStream.ToArray();
+
+            
+            image2.Save(imgStream2, NImageFormat.Jpeg);
+            imgStream2.Close();
+
+
+            imagenArreglo2 = imgStream2.ToArray();
+
+
+            h1 = ConvertBytesToWSQBase64(imagenArreglo1, ImageFormat.Png);
+            h2 = ConvertBytesToWSQBase64(imagenArreglo2, ImageFormat.Png);
+            h1d = DedosUtils.GetIdentificacionRenaper(finger1.Position).ToString();
+            h2d = DedosUtils.GetIdentificacionRenaper(finger2.Position).ToString();
+
+
+            int dni;
+            dni = 17816143;
+            string sexo = "F";
+    /*           <add key="renaper.url" value="https://afisrenaper.idear.gov.ar:13443/AFIS_MinJusticia.php" />
+    <!-- Subject Name del certificado -->
+    <add key="renaper.certificate.sn" value="ProcuracionGral" />
+    <!-- Store Location CurrentUser = 1, LocalMachine = 2 -->
+    <add key="renaper.certificate.storelocation" value="1" />
+    <!-- Stroe Name AddressBook = 1, AuthRoot = 2, CertificateAuthority = 3, My = 5, Root = 6, TrustedPeople = 7 -->
+    <add key="renaper.certificate.storename" value="5" /> 
+            */
+
+          
+          /*  var subjectName = "ProcuracionGral" ;
+            var StoreLocation = "1";
+            var StoreName = "5";*/
+
+
+         
+
+          RenaperClient rc = new RenaperClient(Utilities.RenaperGetUrl(), Utilities.RenaperGetSubject(), (StoreLocation)Enum.Parse(typeof(StoreLocation), Utilities.RenaperGetSoreLocation()),
+                (StoreName)Enum.Parse(typeof(StoreName), Utilities.RenaperGetstoreName()));
+
+
+            string tcn = rc.GenerarTransaccion(dni, sexo, h1, h1d, h2, h2d);
+
+        
+        }
+        private void bSalvar_Click(object sender, EventArgs e)
+        {
+            //CheckRenaper();
+           //return;
+          
+            string fileName = string.Empty;
+            int cantidad = _model.Subject.Fingers.Count();
+           
+
+            NFinger finger = _model.Subject.Fingers[cantidad - 1];
+
+
+
+
+            saveFileDialog.Filter = NImages.GetSaveFileFilterString();
+            saveFileDialog.FileName = fileName;
+            if (finger != null)
+            {
+                bool originalImage = chbShowOriginal.Checked && NBiometricTypes.IsPositionSingleFinger(finger.Position);
+                bool isRolled = NBiometricTypes.IsImpressionTypeRolled(finger.ImpressionType);
+                using (NImage image = originalImage ? finger.GetImage(false) : finger.GetProcessedImage(false))
+                {
+                    fileName = string.Format("{0}{1}{2}", finger.Position, isRolled ? "_Rolled" : string.Empty, originalImage ? string.Empty : "_Binarized");
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                      //  image.Save(saveFileDialog.FileName);
+          /*              NGrayscaleImage  _prvImage;*/
+
+                        
+                        MemoryStream imgStream = new MemoryStream();
+                        
+                        image.Save(imgStream,NImageFormat.Jpeg);
+                         
+
+                          imgStream.Close();
+                        
+                      byte[]  imagenArreglo ;
+
+                        imagenArreglo = imgStream.ToArray();
+                        File.WriteAllBytes(saveFileDialog.FileName, imagenArreglo);
+                                            
+                      
+                        
+                    }
+                }
+
+
+                // salva el tempalte
+
+
+                SalvaImagenTemplate(finger);
+
+
+                /////
+            }
+          
+                finger = _model.Subject.Fingers[cantidad - 2];
+                saveFileDialog.Filter = NImages.GetSaveFileFilterString();
+                saveFileDialog.FileName = fileName;
+                if (finger != null)
+                {
+                    bool originalImage = chbShowOriginal.Checked && NBiometricTypes.IsPositionSingleFinger(finger.Position);
+                    bool isRolled = NBiometricTypes.IsImpressionTypeRolled(finger.ImpressionType);
+                    using (NImage image = originalImage ? finger.GetImage(false) : finger.GetProcessedImage(false))
+                    {
+                        fileName = string.Format("{0}{1}{2}", finger.Position, isRolled ? "_Rolled" : string.Empty, originalImage ? string.Empty : "_Binarized");
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            image.Save(saveFileDialog.FileName);
+                        }
+                    }
+                    SalvaImagenTemplate(finger);
+                }
+           // }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+           
+            switch (resultadoficticio)
+            {
+                case 0:
+                    this.ApyNomRNR.Text = this.apellido.Text;
+                    this.scoreRNR.Text = "92% ";
+                    this.resultadoRNR.Text = "AFIRMATIVO";
+                    this.DNIRNR.Text = this.DNI.Text;
+                    break;
+                case 1:
+                    this.ApyNomRNR.Text = this.apellido.Text;
+                    this.scoreRNR.Text = "87% ";
+                    this.resultadoRNR.Text = "AFIRMATIVO";
+                    this.DNIRNR.Text = this.DNI.Text;
+                    break;
+                case 2:
+                    this.ApyNomRNR.Text = "";
+                    this.scoreRNR.Text = "27%";
+                    this.resultadoRNR.Text = "NEGATIVO";
+                    this.DNIRNR.Text = "";
+                    break;
+                case 3:
+                    this.ApyNomRNR.Text = this.apellido.Text;
+                    this.scoreRNR.Text = "97%";
+                    this.resultadoRNR.Text = "AFIRMATIVO";
+                    this.DNIRNR.Text = this.DNI.Text;
+                    break;
+                case 4:
+                    this.ApyNomRNR.Text = this.apellido.Text;
+                    this.scoreRNR.Text = "85%";
+                    this.resultadoRNR.Text = "AFIRMATIVO";
+                    this.DNIRNR.Text = this.DNI.Text;
+                    break;
+                default:
+
+                    this.ApyNomRNR.Text = this.apellido.Text;
+                    this.scoreRNR.Text = "97%";
+                    this.resultadoRNR.Text = "AFIRMATIVO";
+                    this.DNIRNR.Text = this.DNI.Text;
+                    break;
+
+            }
+                                  
+            resultadoficticio++;
+            EnableRenaper(true);
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
 	}
 }

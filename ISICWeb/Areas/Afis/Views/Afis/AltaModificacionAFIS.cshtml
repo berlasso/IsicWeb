@@ -184,15 +184,34 @@
             }
         }
 
+        $(document).on("blur", "#NIF", function (e) {
+            $("#frmGuardarDatosAfis").valid();
+            if ($(this).val().substr(0, 2) == "01") {
+                $("#btnBuscarNif").click();
+            } else {
+                $("#Apellido").removeAttr("readonly");
+                $("#Nombre").removeAttr("readonly");
+                $("#idClaseSexo").removeAttr("readonly");
+                $("#idTipoDoc").removeAttr("readonly");
+                $("#DNI").removeAttr("readonly");
+                $("#Clase").removeAttr("readonly");
+                $("#CTL").removeAttr("readonly");
+            }
+        });
+
         $(document).on("click", "#btnGuardar", function(e) {
             e.preventDefault();
             if (!$("#frmGuardarDatosAfis").valid())
                 return;
-            alertify.confirm("Confirma", "Confirma asociacion del NIF" + $("#NIF").val() + " al prontuario " + $("#Prontuario_ProntuarioNro").val() + "?", function () {
+            if ($("#NIF").val() == $("#Prontuario_ProntuarioNro").val()) {
+                alertify.error("El NIF no puede ser igual al Prontuario");
+                return;
+            }
+            alertify.confirm("Confirma", "Confirma asociacion del NIF" + $("#NIF").val() + " al prontuario " + $("#Prontuario_ProntuarioNro").val() + "?", function() {
                     $("#frmGuardarDatosAfis").submit();
                 }, null)
-    .set('labels', { cancel: 'Cancelar' })
-    .set('defaultFocus', 'cancel');
+                .set('labels', { cancel: 'Cancelar' })
+                .set('defaultFocus', 'cancel');
         });
 
         $(document).ready(function() {
@@ -204,10 +223,16 @@
                     $("#btnBuscarNif").click();
                 }
             });
+            $("#NIF").mask("999999999999a");
 
-            $("#btnBuscarNif").click(function() {
+            $("#btnBuscarNif").click(function () {
+                
                 if ($("#NIF").valid() == false)
                     return;
+                if ($("#NIF").val() == $("#Prontuario_ProntuarioNro").val()) {
+                    alertify.error("El NIF es igual al Prontuario");
+                    return;
+                }
                 else {
 
                     var nif = $("#NIF").val();
@@ -218,7 +243,14 @@
                             success: function(data) {
                                 var json = data;
                                 if (data.HuboError == true) {
-                                    alertify.alert("Error", data.datos.errorMessage);
+                                    alertify.error(data.datos.errorMessage);
+                                    $("#Apellido").val("");
+                                    $("#Nombre").val("");
+                                    $("#idClaseSexo").val("0");
+                                    $("#idTipoDoc").val("0");
+                                    $("#DNI").val("");
+                                    $("#Clase").val("");
+                                    $("#CTL").val("");
                                 } else {
                                     var datos = data.datos.data;
                                     $("#Apellido").val(datos.Apellido).attr("readonly", "readonly");
@@ -240,7 +272,6 @@
                         $("#DNI").val("").removeAttr("readonly");
                         $("#Clase").val("").removeAttr("readonly");
                         $("#CTL").val("").removeAttr("readonly");
-
 
 
                     }

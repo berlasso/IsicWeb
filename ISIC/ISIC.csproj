@@ -141,6 +141,7 @@
     <Compile Include="Entities\GrupoUsuario.cs" />
     <Compile Include="Entities\IdgxProntuario.cs" />
     <Compile Include="Entities\ImputadoEstadoTramite.cs" />
+    <Compile Include="Entities\JerarquiaPoderJudicial.cs" />
     <Compile Include="Entities\Migraciones.cs" />
     <Compile Include="Entities\PersonalPoderJudicial.cs" />
     <Compile Include="Entities\Prontuario.cs" />

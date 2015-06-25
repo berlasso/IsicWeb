@@ -5,20 +5,30 @@
 
 <div class="container-detalle">
     <div class="center wow fadeInDown animated tile-light">
-        <h1>Visualiza las Huellas Dactilares Digitalizadas </h1>
+        <h1>Huellas Dactilares Digitalizadas </h1>
     </div>
 </div>
 
 
 <div class="row">
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
 
+            <h2>
+                Toma las huellas desde scanner  y extracción del Patrón de Reconocimiento Biométrico
 
+            </h2>
+            <a class="btn btn-lg btn-alt volver" href='#' onclick=" window.location.replace('https://test.mpba.gov.ar/isic/CapturaDecaDeployed/CapturaDecaDactilar.application'); return false; " title=" Captura Huellas" type="button">
+                Captura DecaDactilar
+            </a>
+        </div>
 
+</div>
 
-    <div class="col-md-12">
+        <div class="col-md-12">
 
-        @using (Html.BeginForm("VisualizaHuellasDigitalDeca", "Digitalizacion", FormMethod.Post, new { Id = "formResultadoBusqueda" }))
-        {
+            @using (Html.BeginForm("VisualizaHuellasDigitalDeca", "Digitalizacion", FormMethod.Post, new { Id = "formResultadoBusqueda" }))
+            {
 
             <div class="panel panel-default tile wow fadeInDown animated">
                 <div class="panel-heading">
@@ -67,12 +77,12 @@
                     </div>
                 </div>
             </div>
-        }
+            }
 
-      
 
+
+        </div>
     </div>
-</div>
 
 
 @section footer

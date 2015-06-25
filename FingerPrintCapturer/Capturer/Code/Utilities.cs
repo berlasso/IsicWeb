@@ -11,7 +11,29 @@ namespace Capturer
 		private const string InformationTitle = "Information";
 		private const string QuestionTitle = "Question";
 		private const string WarningTitle = "Warning";
+        private const string urlRenaper = "https://afisrenaper.idear.gov.ar:13443/AFIS_MinJusticia.php";
+        private const string subjectNameRenaper = "ProcuracionGral" ;
+        private const string storeLocationRenaper = "1";
+         private const string storeNameRenaper = "5";
 
+         public static string RenaperGetSubject()
+         {
+             return subjectNameRenaper;
+         }
+         public static string RenaperGetSoreLocation()
+         {
+             return storeLocationRenaper;
+         }
+
+         public static string RenaperGetUrl()
+         {
+             return urlRenaper;
+         }
+
+         public static string RenaperGetstoreName()
+         {
+             return storeNameRenaper;
+         }
 		/// <summary>
 		/// Gets location for current applicaiton folder.
 		/// </summary>
@@ -20,6 +42,8 @@ namespace Capturer
 		{
 			return Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + Path.DirectorySeparatorChar;
 		}
+
+        
 
 		/// <summary>
 		/// Returns the current application name.

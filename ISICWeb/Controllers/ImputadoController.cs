@@ -96,23 +96,49 @@ namespace ISICWeb.Controllers
 
         public JsonResult GetJsTree3DataNode(string estado)
         {
-            var nodeEstado = JsTree3Node.NewNode(estado);
-            var issues = jiraService.GetIssuesByQuery("IG", "Task", "status = \"" + estado + "\"");
             ArrayList alNodos = new ArrayList();
 
-         
-            foreach (Issue<IssueFields> issue in issues)
+            if (estado == "En OTIP")
             {
-                string id = issue.fields.summary.Trim();
-                var root = new  // Create our root node and ensure it is opened
+                var departamentos = repository.Set<Departamento>().Where(d => d.Id != 0 && d.Id != 20 && d.Id != 21).ToList();
+                foreach (Departamento departamento in departamentos)
                 {
-                    id = id,
-                    text = id,
-                    state = new State(false, false, false),
-                    //children = true
-                };
-                alNodos.Add(root);
-               // nodeEstado.children.Add(JsTree3Node.NewNode(issue.fields.summary));
+                    string id = departamento.Id.ToString();
+                    var root = new // Create our root node and ensure it is opened
+                    {
+                        id = id,
+                        text = departamento.DepartamentoNombre,
+                        state = new State(false, false, false),
+                        children = new List<JsTree3Node>()
+                    };
+                    var issues = jiraService.GetIssuesByQuery("IG", "Task", "status = \"" + estado + "\"");
+
+                    foreach (Issue<IssueFields> issue in issues)
+                    {
+                        string deptoIssue = issue.fields.summary.Trim().Substring(2,2);
+                        if (Convert.ToInt32(deptoIssue) == departamento.Id )
+                        root.children.Add(JsTree3Node.NewNode(issue.fields.summary.Trim()));
+                    }
+                    alNodos.Add(root);
+                }
+            }
+            else
+            {
+                var issues = jiraService.GetIssuesByQuery("IG", "Task", "status = \"" + estado + "\""); // AND assignee = " + User.Identity.Name.ToString());
+                
+                foreach (Issue<IssueFields> issue in issues)
+                {
+                    string id = issue.fields.summary.Trim();
+                    var root = new  // Create our root node and ensure it is opened
+                    {
+                        id = id,
+                        text = id,
+                        state = new State(false, false, false),
+                        //children = true
+                    };
+                    alNodos.Add(root);
+                    // nodeEstado.children.Add(JsTree3Node.NewNode(issue.fields.summary));
+                }
             }
 
             

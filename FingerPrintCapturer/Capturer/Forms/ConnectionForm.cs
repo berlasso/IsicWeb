@@ -1,3 +1,4 @@
+using Neurotec.Licensing;
 using System;
 using System.Windows.Forms;
 
@@ -34,33 +35,40 @@ namespace Capturer.Forms
 
 		private void BtnCheckClusterConnectionClick(object sender, EventArgs e)
 		{
-			if (ClusterClient.Instance.CheckConnection(Address, AdminPort))
+		/*	if (ClusterClient.Instance.CheckConnection(Address, AdminPort))
 			{
 				Utilities.ShowInformation("Connection test succeeded.");
 			}
 			else
 			{
 				Utilities.ShowError("Connection check failed.");
-			}
+			}*/
+
 		}
 
 		private void BtnDefaultClick(object sender, EventArgs e)
 		{
-			tbServerAddress.Text = @"localhost";
-			nudAdminPort.Value = 24932;
+			tbServerAddress.Text = @"mphv12.mpba.gov.ar";
+			nudAdminPort.Value = 5000;
 		}
 
 		private void BtnOKClick(object sender, EventArgs e)
 		{
-			if (!ClusterClient.Instance.CheckConnection(Address, AdminPort))
-			{
-				if (Utilities.ShowQuestion(this, "Failed to connect to server, continue anyway?"))
-				{
+            const string Components = "Images.WSQ,Biometrics.FingerExtraction,Biometrics.FingerMatching,Devices.FingerScanners,Biometrics.FingerSegmentation,Biometrics.FingerQualityAssessmentBase,Devices.Cameras";
+            try
+            {
+                foreach (string component in Components.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    NLicense.ObtainComponents("mphv12.mpba.gov.ar", 5000, component);
+                }
+            }
+            catch (Exception ex)
+            { Utilities.ShowError("Fallo para obtener las licencias ");
+ 
+               return ; }
+
 					DialogResult = DialogResult.OK;
-				}
-				return;
-			}
-			DialogResult = DialogResult.OK;
+			
 		}
 
 		#endregion

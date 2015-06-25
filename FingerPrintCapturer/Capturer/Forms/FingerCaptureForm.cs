@@ -9,12 +9,15 @@ using Neurotec.Biometrics;
 using Neurotec.Biometrics.Client;
 using Neurotec.Biometrics.Gui;
 using Neurotec.Images;
+using Capturer;
+using Capturer.Code;
 
 namespace Capturer.Forms
 {
 	public partial class FingerCaptureForm : Form
 	{
 		#region Public constructor
+       
 
 		public FingerCaptureForm()
 		{
@@ -22,6 +25,7 @@ namespace Capturer.Forms
 			var tool = new NFingerView.SegmentManipulationTool();
 			tool.SegmentManipulationEnded += new EventHandler(OnSegmentManipulationEnded);
 			fingerView.ActiveTool = tool;
+          
 		}
 
 		#endregion
@@ -32,6 +36,7 @@ namespace Capturer.Forms
 		private NSubject _subject;
 		private List<NFinger> _captureList;
 		private NFinger _current;
+       
 
 		private volatile bool _isProcessing;
 		private volatile bool _isCapturing;
@@ -69,30 +74,94 @@ namespace Capturer.Forms
 			set { _subject = value; }
 		}
 
+
+        public NFinger Current 
+        {
+            get { return _current; }
+            set { _current = value; }
+        }
 		#endregion
 
 		#region Private form events
 
 		private void CaptureFormLoad(object sender, EventArgs e)
 		{
+            string[,] slapPos = new string[7, 2] { { "PlainThumbs", "Ambos Pulgares" }, { "LeftIndexMiddleFingers", "Izq. Indice + Medio"},
+                    {"LeftMiddleRingFingers","Izq. Medio + Anular"},{"LeftRingLittleFingers","Izq. Anular + Meñique"},
+                    { "RightIndexMiddleFingers", "Der. Indice + Medio"} , { "RightMiddleRingFingers","Der. Medio + Anular"},{"RightRingLittleFingers","Der. Anular + Meñique"} };
+
+
+                    
+           
 			if (_biometricClient != null && _subject != null)
 			{
+                // cuando es slaps empieza por los PkainThumbs
+                //ListView.SelectedIndexCollection selected = lvQueue.SelectedIndices;
+                // selecciono el Plain Thumbs y deselecciono el resto
+              
+
 				fSelector.MissingPositions = _subject.MissingFingers.ToArray();
 				SetStatus(string.Empty);
+                fSelector.SelectedPosition = NFPosition.PlainThumbs;
+             
 
-				_captureList = _subject.Fingers.Where(x => x.ParentObject == null).ToList();
+              
+
+
+
+                 _captureList = _subject.Fingers.Where(x => x.ParentObject == null).OrderBy(x => x.Position.ToString()).ToList();
+                 _current = _captureList.Where(x => x.Position == NFPosition.PlainThumbs).FirstOrDefault();
+                
+                 ListViewItem pulgar = null;
 				foreach (var item in _captureList)
 				{
 					bool isRolled = NBiometricTypes.IsImpressionTypeRolled(item.ImpressionType);
-					string text = string.Format("{0}{1}", PositionToString(item.Position), isRolled ? "(rolled)" : string.Empty);
-					var lvi = lvQueue.Items.Add(text);
+                   int fila = ArrayHelper.FindInDimensions(slapPos, item.Position.ToString());
+                
+					//string text = string.Format("{0}{1}", PositionToString(item.Position), isRolled ? "(rolled)" : string.Empty);
+                  
+
+                    string text = string.Format("{0}{1}", slapPos[fila,1], isRolled ? "(rolada)" : string.Empty);
+					ListViewItem lvi = lvQueue.Items.Add(text);
+                    if (text == "Ambos Pulgares")
+                    {
+                        pulgar = lvi;
+                    }
+                    
 					if (IsCreateTemplateDone(item)) lvi.ForeColor = Color.Green;
 				}
+              
 
+                int pos = lvQueue.Items.IndexOf(pulgar);
+                lvQueue.Items[pos].ForeColor = Color.Azure;
+                lvQueue.Items[pos].Selected = true;
+                StartTask(_current);
+               
+
+              //_current.Image = null;
+            //    int index = _captureList.IndexOf(_current);
+             //   lvQueue.Items[index].ForeColor = Color.Black;
+
+               
+                /*for (var j = 0; j <= lvQueue.Items.Count; j++)
+                {
+                    if (lvQueue.Items[j].Text == "Ambos Pulgares")
+                    {  
+                        lvQueue.Items[j].Selected = true; }
+                    else
+                    {
+                       lvQueue.Items[j].Selected = false;
+                    }
+                }
+
+                /*
+             
 				if (!NextTask())
 				{
-					SetError("Failed to start capturing");
+					SetError("Falló para comenzar la captura");
 				}
+                */
+               
 			}
 		}
 
@@ -103,20 +172,20 @@ namespace Capturer.Forms
 				_current.Image = null;
 		}
 
-		private void BtnPreviousClick(object sender, EventArgs e)
+		/*private void BtnPreviousClick(object sender, EventArgs e)
 		{
 			int index = _captureList.IndexOf(_current) - 1;
 			if (index >= 0)
 			{
 				StartTask(_captureList[index]);
 			}
-		}
+		}*/
 
-		private void BtnNextClick(object sender, EventArgs e)
+	/*	private void BtnNextClick(object sender, EventArgs e)
 		{
 			NextTask();
 		}
-
+        */
 		private void BtnRescanClick(object sender, EventArgs e)
 		{
 			_current.Image = null;
@@ -134,7 +203,7 @@ namespace Capturer.Forms
 				task.Biometric = _current;
 				_isProcessing = true;
 				_biometricClient.BeginPerformTask(task, OnCreateTemplateCompleted, null);
-				SetStatus("Extracting record(s). Please wait ...");
+				SetStatus("Extracción del registro(s). Por favor espere...");
 			}
 			EnableControls();
 		}
@@ -153,6 +222,8 @@ namespace Capturer.Forms
 				int index = selected[0];
 				if (index != current)
 				{
+                               
+
 					StartTask(_captureList[index]);
 				}
 			}
@@ -175,18 +246,27 @@ namespace Capturer.Forms
 					if (status == NBiometricStatus.Ok)
 					{
 						int index = _captureList.IndexOf(_current);
+                        
 						lvQueue.Items[index].ForeColor = Color.Green;
-						SetStatus(Color.Green, Color.White, "Create template completed successfully");
+						SetStatus(Color.Green, Color.White, "El template fue creado exitosamente");
+                        /* Vuelve a  la pantalla principal con las imagenes y templates capturados !!!! Martha */
+                        _isProcessing = false;
+                      // LOS ULTIMOS DOS ELEMENTOS DE SUBJECT SON LOS SLAPS
+                        fingerView.Finger = null;
+                        Close();
+                        return;
+                        /*hasta aca*/
+                       
 					}
 					else
 					{
-						SetError("Create template failed, status = {0}", EnumToString(status));
+						SetError("Falló la creación del template, estado = {0}", EnumToString(status));
 					}
 				}
 				catch (Exception ex)
 				{
 					Utilities.ShowError(ex);
-					SetError("Create template failed: {0}", ex.Message);
+					SetError("La creación del template falló  {0}", ex.Message);
 				}
 				finally
 				{
@@ -202,16 +282,9 @@ namespace Capturer.Forms
 		}
 
 		private void OnSegmentManipulationEnded(object sender, EventArgs e)
-		{
-			if (_current != null && _biometricClient.FingersCalculateNfiq)
-			{
-				NBiometricTask task = _biometricClient.CreateTask(NBiometricOperations.Segment | NBiometricOperations.AssessQuality, _subject);
-				task.Biometric = _current;
-				_isProcessing = true;
-				_biometricClient.BeginPerformTask(task, OnAssessQualityCompleted, null);
-				EnableControls();
-			}
-		}
+        {
+
+        }
 
 		private void OnAssessQualityCompleted(IAsyncResult result)
 		{
@@ -224,11 +297,11 @@ namespace Capturer.Forms
 				try
 				{
 					_biometricClient.EndPerformTask(result);
-					SetStatus(Color.Green, Color.White, "Successfully captured {0}. Adjust segment(s) if needed and press accept button", PositionToString(_current.Position));
+					SetStatus(Color.Green, Color.White, "Captura exitosa {0}. Ajuste el area rectangular(s) de ser necesario y presione el botón Aceptar", PositionToString(_current.Position));
 				}
 				catch (Exception ex)
 				{
-					SetError("Assess quality failed: {0}", ex.Message);
+					SetError("Falló el control de la calidad {0}", ex.Message);
 					Utilities.ShowError(ex);
 				}
 				finally
@@ -241,12 +314,16 @@ namespace Capturer.Forms
 
 		private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
+            NBiometricStatusEsp traducirEstado;
 			if (args.PropertyName == "Status")
 			{
 				BeginInvoke(new Action<NBiometricStatus>(status =>
 				{
 					Color statusColor = status == NBiometricStatus.Ok || status == NBiometricStatus.None ? Color.Green : Color.Red;
-					lblStatus.Text = string.Format("Status: {0}", EnumToString(status));
+                    int valor = (int) status;
+                    traducirEstado = (NBiometricStatusEsp) valor;
+                    lblStatus.Text = string.Format("Score: {0}", EnumToString(traducirEstado));
+					//lblStatus.Text = string.Format("Score: {0}", EnumToString(status));
 					lblStatus.ForeColor = statusColor;
 				}), _current.Status);
 			}
@@ -274,11 +351,15 @@ namespace Capturer.Forms
 					NBiometricStatus status = _current.Status;
 					if (status == NBiometricStatus.Ok)
 					{
-						SetStatus(Color.Green, Color.White, "Successfully captured {0}. Adjust segment(s) if needed and press accept button", PositionToString(_current.Position));
+                        SetStatus(Color.Green, Color.White, "Captura exitosa {0}. Ajuste el area rectangular(s) de ser necesario y presione el botón Aceptar", PositionToString(_current.Position));
+                        // la captura es completa y exitosa marca en verde las posiciones delas manos correspondientes  agregado
+                        fSelector.SelectedPosition = _current.Position;
+                        btnRescan.Enabled = true;
+                        btnAccept.Enabled = true;
 					}
 					else
 					{
-						SetError("Operation failed, status = {0}", EnumToString(status));
+						SetError("Operación fallida = {0}", EnumToString(status));
 					}
 				}
 				catch (Exception ex)
@@ -330,7 +411,8 @@ namespace Capturer.Forms
 
 		private bool NextTask()
 		{
-			if (_captureList != null && _captureList.Count > 0)
+			
+             if (_captureList != null && _captureList.Count > 0)
 			{
 				int index = 0;
 				if (_current != null)
@@ -350,17 +432,19 @@ namespace Capturer.Forms
 
 		private void StartTask(NFinger task)
 		{
-			if (_current != null)
+		
+         if (_current != null)
 			{
 				if (IsCaptureDone(_current) && !IsCreateTemplateDone(_current))
 				{
-					if (!Utilities.ShowQuestion(this, "Records not extracted from this image! Press 'Yes' to continue anyway, press 'No' and then Accept button to extract records"))
+					if (!Utilities.ShowQuestion(this, "Registros no extraídos para esta imagen! Presione 'Yes' para continuar de todos modos, presione 'No' para permitir su resguardo"))
 					{
-						toolTip.Show("Accept image and extract recors", btnAccept);
+						toolTip.Show("Acepta la extracción de la imagen", btnAccept);
 						return;
 					}
 				}
 			}
+
 
 			DisableNavigation();
 			FinishTask();
@@ -368,14 +452,16 @@ namespace Capturer.Forms
 			fingerView.Finger = null;
 			_current = task;
 			fSelector.SelectedPosition = task.Position;
+
 			bool isRolled = NBiometricTypes.IsImpressionTypeRolled(_current.ImpressionType);
 			fSelector.IsRolled = isRolled;
-			SetStatus(isRolled ? "Please roll {0} finger on scanner" : "Please place {0} on scanner", PositionToString(task.Position));
+			
 
 			int index = _captureList.IndexOf(_current);
 			lvQueue.Items[index].Selected = true;
-
+            lvQueue.Items[index].ForeColor = Color.Black;
 			fingerView.Finger = _current;
+            SetStatus("Por favor coloque {0} dedo(s) sobre el scanner ", PositionToString(task.Position));
 			if (!IsCreateTemplateDone(_current))
 			{
 				var biometricTask = _biometricClient.CreateTask(NBiometricOperations.Capture | NBiometricOperations.Segment | NBiometricOperations.AssessQuality, _subject);
@@ -386,7 +472,7 @@ namespace Capturer.Forms
 			}
 			else
 			{
-				SetStatus(Color.Green, Color.White, "Record(s) successfully extracted");
+				SetStatus(Color.Green, Color.White, "Registro(s) extraídos exitosamente");
 				OnFingerViewResize();
 			}
 			EnableControls();
@@ -423,8 +509,7 @@ namespace Capturer.Forms
 					tool.AllowManipulations = !_isProcessing && !_isCapturing && _current != null && _current.Status == NBiometricStatus.Ok;
 					fingerView.Invalidate();
 				}
-				btnPrevious.Enabled = _current != _captureList.First() && !_isProcessing;
-				btnNext.Enabled = _current != _captureList.Last() && !_isProcessing;
+			
 				btnAccept.Enabled = !_isCapturing && !_isProcessing && IsCaptureDone(_current) && !IsCreateTemplateDone(_current);
 				btnRescan.Enabled = !_isCapturing && !_isProcessing && IsCaptureDone(_current);
 				lvQueue.Enabled = true;
@@ -434,11 +519,10 @@ namespace Capturer.Forms
 
 		private void DisableNavigation()
 		{
-			btnNext.Enabled = false;
-			btnPrevious.Enabled = false;
+			
 			btnRescan.Enabled = false;
 			btnAccept.Enabled = false;
-			lvQueue.Enabled = false;
+		//	lvQueue.Enabled = false;
 		}
 
 		private void UpdateViewSize(int width, int height)
@@ -465,13 +549,24 @@ namespace Capturer.Forms
 
 		private static string PositionToString(NFPosition value)
 		{
-			switch (value)
+            string[,] slapPos = new string[7, 2] { { "PlainThumbs", "Ambos Pulgares" }, { "LeftIndexMiddleFingers", "Izq. Indice + Medio"},
+                    {"LeftMiddleRingFingers","Izq. Medio + Anular"},{"LeftRingLittleFingers","Izq. Anular + Meñique"},
+                    { "RightIndexMiddleFingers", "Der. Indice + Medio"} , { "RightMiddleRingFingers","Der. Medio + Anular"},{"RightRingLittleFingers","Der. Anular + Meñique"} };
+
+
+            int fila = ArrayHelper.FindInDimensions(slapPos, value.ToString());
+
+            //string text = string.Format("{0}{1}", PositionToString(item.Position), isRolled ? "(rolled)" : string.Empty);
+            string text = string.Format("{0}", slapPos[fila, 1]);
+
+			/*switch (value)
 			{
-				case NFPosition.PlainLeftFourFingers:
-				case NFPosition.PlainRightFourFingers:
+				case NFPosition.LeftIndexMiddleRingFingers:
+				case NFPosition.LeftMiddleRingFingers:
 				case NFPosition.PlainThumbs: return EnumToString(value).Replace("Plain ", string.Empty);
 				default: return EnumToString(value);
-			}
+			}*/
+            return text;
 		}
 
 		private static string EnumToString(Enum value)
@@ -486,5 +581,57 @@ namespace Capturer.Forms
 		}
 
 		#endregion
+
+        private void LvQueueSelectedIndexChanged(object sender, MouseEventArgs e)
+        {
+            
+            ListView.SelectedIndexCollection selected = lvQueue.SelectedIndices;
+            if (selected.Count > 0)
+            {
+                int current = _captureList.IndexOf(_current);
+                int index = selected[0];
+                if (index != current)
+                {
+                    StartTask(_captureList[index]);
+                }
+            }
+
+        }
+
+        private void ChangeFingers(object sender, EventArgs e)
+        {
+            ListView.SelectedIndexCollection selected = lvQueue.SelectedIndices;
+            if (selected.Count > 0)
+            {
+                int current = _captureList.IndexOf(_current);
+                int index = selected[0];
+                // if (index != current)
+                //{
+                NFinger dedoMouse = _captureList[index];
+                fSelector.SelectedPosition = dedoMouse.Position;
+
+                //  }
+            }
+
+        }
+
+        private void captureWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        private void cancela_Click(object sender, EventArgs e)
+        {
+            FinishTask();
+
+            fingerView.Finger = null;
+            _current = null;
+            SetStatus(string.Empty);
+            _subject.Fingers.Clear();
+            Close();
+            return;
+
+            
+        }
 	}
 }

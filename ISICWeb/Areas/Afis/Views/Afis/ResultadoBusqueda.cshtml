@@ -69,7 +69,7 @@
                         {
                             <tr id="@Html.DisplayFor(modelItem => item.Id)">
                                 <td>
-                                    @Html.ActionLink("Editar", "BuscarFichasAFIS", new { area = "Afis", prontuariosic = @item.ProntuarioSIC }, new { @class = "btn btn-alt btn-sm", id = "btnCargaAfis", onclick = "showPageLoadingSpinner()" })
+                                    @Html.ActionLink("Elegir", "BuscarFichasAFIS", new { area = "Afis", prontuariosic = @item.ProntuarioSIC }, new { @class = "btn btn-alt btn-sm", id = "btnCargaAfis", onclick = "showPageLoadingSpinner()" })
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ProntuarioSIC)

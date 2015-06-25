@@ -19,19 +19,30 @@ namespace ISIC.Persistence.Context
 {
     public class ContextInitializer : IDatabaseInitializer<ISICContext>
     {
-        private IJiraService jiraService = new JiraService();
-        private Repository repository;
-       
-
+        IRepository repository;
+        private IJiraService jiraService;
+        private IImputadoService imputadoService;
         
-        public void InitializeDatabase(ISICContext context)
+        
+        public void InitializeDatabase(ISICContext context )
         {
 
             if (!context.Database.Exists())
             {
                 context.Database.Create();
             }
-
+            jiraService = new JiraService();
+            //Issue<IssueFields> issue = jiraService.CreateIssue("150100000015S");
+            Issue<IssueFields> issue = jiraService.GetIssue("010200000006V");
+            MPBA.Jira.Model.JiraUser usuario = new JiraUser();
+            issue.fields.assignee = new JiraUser(); 
+            usuario.name = "meveleens";
+            usuario.displayName = "Mariana Eveleens";
+            usuario.emailAddress = "meveleens@mpba.gov.ar";
+            usuario.active = true;
+            issue.fields.assignee = usuario;
+            Issue<IssueFields> issuemodificada = jiraService.UpdateIssue(issue);
+            // CrearDatosJira(context);
 #if DEBUG
 
             if (!context.Database.CompatibleWithModel(false))
@@ -48,8 +59,41 @@ namespace ISIC.Persistence.Context
 #endif
 
         }
-             
 
+        public void CrearDatosJira(ISICContext context)
+        {
+
+            jiraService = new JiraService();
+            //var imputados = imputadoService.GetAll();
+            var imputados = context.Set<Imputado>().ToList();
+
+            foreach (Imputado impu in imputados) 
+            {
+                if (impu.CodigoDeBarras != "010200000006V" || impu.CodigoDeBarras != "010200000008M" || impu.CodigoDeBarras != "010200000009W" || impu.CodigoDeBarras != "010200000012P" || impu.CodigoDeBarras != "010200000019A")
+                {
+
+                    Issue<IssueFields> issue = jiraService.CreateIssue(impu.CodigoDeBarras);
+                    if (impu.CodigoDeBarras.Substring(0, 4) == "0117")
+                    {
+                        Transition transition = jiraService.GetTransitions(issue).First();
+                        jiraService.TransitionIssue(issue, transition);
+                    }
+                }
+                else
+                {
+                    Issue<IssueFields> issue = jiraService.GetIssue("010200000006V");
+                    MPBA.Jira.Model.JiraUser usuario = new JiraUser();
+                    usuario.name = "ftapo";
+                    issue.fields.assignee = usuario;
+                    jiraService.UpdateIssue(issue);
+                }
+            }
+            
+            
+       
+
+        }
+        
         public void CrearDatosDePrueba(ISICContext context)
         {
             ClaseSexo m = new ClaseSexo {Id = 0, descripcion = "Indeterminado"};
