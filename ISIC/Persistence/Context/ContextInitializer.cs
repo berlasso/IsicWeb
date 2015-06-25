@@ -630,7 +630,7 @@ namespace ISIC.Persistence.Context
                 {
                     new Imputado()
                     {
-                        ProntuarioSIC = "010200012345W", 
+                        Prontuario = new Prontuario{ProntuarioNro = "010200012345W"}, 
                         CodigoDeBarras = "010200012345W", 
                         FechaCreacionI = DateTime.Now,
                         CodigoDeBarrasOriginal = "010200012345W",
@@ -753,7 +753,7 @@ namespace ISIC.Persistence.Context
                 {
                     new Imputado() { 
                         //Id = 1,
-                        ProntuarioSIC = "010600012457R", 
+                        Prontuario = new Prontuario{ProntuarioNro = "010600012457R"}, 
                         CodigoDeBarras = "010600012457R", 
                         FechaCreacionI = DateTime.Now,
                         CodigoDeBarrasOriginal= "010600012457R", 
@@ -852,7 +852,7 @@ namespace ISIC.Persistence.Context
                             }
                         }
                     },
-                    new Imputado() { ProntuarioSIC = "Imputado2", FechaCreacionI = DateTime.Now, CodigoDeBarras = "010200000004E", CodigoDeBarrasOriginal= "010200000004E",
+                    new Imputado() { Prontuario = new Prontuario{ProntuarioNro = "Imputado2"}, FechaCreacionI = DateTime.Now, CodigoDeBarras = "010200000004E", CodigoDeBarrasOriginal= "010200000004E",
                         Persona=  new Persona()
                         {
                             FechaNacimiento = DateTime.ParseExact("01/01/1966","dd/MM/yyyy",CultureInfo.InvariantCulture),

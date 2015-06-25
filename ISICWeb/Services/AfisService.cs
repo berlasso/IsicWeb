@@ -44,20 +44,28 @@ namespace ISICWeb.Services
         {
             string errores = "";
             string prontuariosic = model.Prontuario.ProntuarioNro;
-            Prontuario prontuario = _repository.Set<Prontuario>().FirstOrDefault(x => x.ProntuarioNro == prontuariosic);
+            Prontuario prontuario = _repository.Set<Prontuario>().SingleOrDefault(x => x.Id == model.Prontuario.Id);
             AFIS afis = _repository.Set<AFIS>().SingleOrDefault(x => x.Id == model.Id);
             if (afis==null)
             {
                 afis = new AFIS{FechaCreacion = DateTime.Now,};
             }
-          
+
+            
             if (prontuario == null)
             {
-                prontuario = new Prontuario{ProntuarioNro = prontuariosic};
+                //prontuario = new Prontuario{ProntuarioNro = prontuariosic};
+                errores = "No se hallo prontuario asociado.";
+                    return errores;
             }
+            if (afis.Prontuario != null && afis.Prontuario.Id != model.Prontuario.Id)
+            {
+                afis.Prontuario.baja = true;
+            }
+            afis.Prontuario = prontuario;
             afis.NIF = model.NIF;
             afis.DNI = model.DNI;
-            afis.Prontuario = prontuario;
+          
             afis.Apellido = model.Apellido;
             afis.Nombre = model.Nombre;
             afis.CTL = model.CTL;
@@ -81,6 +89,23 @@ namespace ISICWeb.Services
             catch (Exception e)
             {
                 errores = e.InnerException == null ? "Error al guardar. " + e.Message : e.InnerException.ToString().Substring(0, 400);
+            }
+
+            Imputado imputado = _repository.Set<Imputado>().FirstOrDefault(x => x.CodigoDeBarras == model.NIF);
+            if (imputado != null)
+            {
+                imputado.Prontuario = prontuario;
+                _repository.UnitOfWork.RegisterChanged(imputado);
+                try
+                {
+                    _repository.UnitOfWork.Commit();
+                }
+                catch (Exception e)
+                {
+                    errores = e.InnerException == null ? "Error al guardar. " + e.Message : e.InnerException.ToString().Substring(0, 400);
+                }
+
+
             }
             return errores;
 

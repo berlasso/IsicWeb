@@ -45,11 +45,11 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
             var imputados = ctx.Imputado.Where(querystring).OrderBy(x => x.CodigoDeBarras).Take(100);
             var resultados = from imp in imputados
-                from p in ctx.Prontuario.Where(p => p.ProntuarioNro == imp.ProntuarioSIC).DefaultIfEmpty()
+                from p in ctx.Prontuario.Where(p => p.ProntuarioNro == imp.Prontuario.ProntuarioNro).DefaultIfEmpty()
                 select new ImputadosAntecedentesViewModel
                 {
                     Id = imp.Id,
-                    ProntuarioSIC = imp.ProntuarioSIC,
+                    ProntuarioSIC = imp.Prontuario.ProntuarioNro,
                     CodigoDeBarras = imp.CodigoDeBarras,
                     Apellido = imp.Persona.Apellido,
                     Nombre = imp.Persona.Nombre,
@@ -97,7 +97,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
             if (prontuarioSic == "" && idIdgxprontuario > 0)
                 prontuarioSic = _repository.Set<IdgxProntuario>().First(x => x.Id == idIdgxprontuario).Prontuario.ProntuarioNro;
 
-            Imputado imputado = _repository.Set<Imputado>().First(x => x.ProntuarioSIC == prontuarioSic);
+            Imputado imputado = _repository.Set<Imputado>().First(x => x.Prontuario.ProntuarioNro == prontuarioSic);
             return PartialView("_DetalleImputado", imputado);
         }
 

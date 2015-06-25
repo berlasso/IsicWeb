@@ -36,7 +36,7 @@ namespace ISICWeb.Services
 
 
 
-            IEnumerable<Imputado> imputadosp = repository.Set<Imputado>().Where(x => x.ProntuarioSIC == CodProntuario).ToList();
+            IEnumerable<Imputado> imputadosp = repository.Set<Imputado>().Where(x => x.Prontuario.ProntuarioNro == CodProntuario).ToList();
        
             return  ActualizaScore(imputadosp.ToList(), imputado).ToList();
         
@@ -58,7 +58,7 @@ namespace ISICWeb.Services
                     NombreMadre = i.Persona.Madre,
                     EdadActual = (i.Persona.FechaNacimiento != null) ?( (i.Persona.FechaNacimiento.Value.Month < DateTime.Today.Month || (i.Persona.FechaNacimiento.Value.Month == DateTime.Today.Month && i.Persona.FechaNacimiento.Value.Day < DateTime.Today.Day)) ? DateTime.Today.Year - i.Persona.FechaNacimiento.Value.Year : DateTime.Today.Year - i.Persona.FechaNacimiento.Value.Year - 1) : 0,
                     BioManoDerecha = i.BioManoDerecha,
-                    ProntuarioSIC = i.ProntuarioSIC,
+                    ProntuarioSIC = i.Prontuario.ProntuarioNro,
                     CodigoDeBarras = i.CodigoDeBarrasOriginal,
                     Id = i.Id,
                     BioManoIzquierda = i.BioManoIzquierda,

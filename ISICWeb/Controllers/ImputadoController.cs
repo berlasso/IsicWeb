@@ -196,7 +196,7 @@ namespace ISICWeb.Controllers
             try
             {
                 var ImputadoDB = repository.Set<Imputado>().SingleOrDefault(s => s.Id == id);
-                ImputadoDB.ProntuarioSIC = Imputado.ProntuarioSIC;
+                ImputadoDB.Prontuario = Imputado.Prontuario;
                 ImputadoDB.CodigoDeBarras = Imputado.CodigoDeBarras;
                 ImputadoDB.CodigoDeBarrasOriginal = Imputado.CodigoDeBarrasOriginal;
                 

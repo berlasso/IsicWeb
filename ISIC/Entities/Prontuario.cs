@@ -14,5 +14,6 @@ namespace ISIC.Entities
         public virtual ICollection<GNA> DatosGNA { get; set; }
         public virtual ICollection<AFIS> DatosAFIS { get; set; }
         public virtual ICollection<Migraciones> DatosMigracioneses { get; set; }
+        public bool? baja { get; set; }
     }
 }

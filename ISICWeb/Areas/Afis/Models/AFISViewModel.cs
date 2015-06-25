@@ -12,6 +12,8 @@ namespace ISICWeb.Areas.Afis.Models
     {
         public int Id { get; set; }
         public virtual Prontuario Prontuario { get; set; }
+        [Required(ErrorMessage = "El {0} es requerido")]
+        [RegularExpression("([0-9]{12})([a-zA-Z])", ErrorMessage = "{0} incorrecto")]
         public string NIF { get; set; } //prontuario de Policía Federal
         public string CTL { get; set; }
         [Display(Name = "Tipo Doducmento")]

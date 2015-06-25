@@ -203,7 +203,7 @@ namespace ISICWeb.Areas.Otip.Models
             {
                 imputado.CodigoDeBarrasOriginal = imp.CodBarras;
                 imputado.CodigoDeBarras = imp.CodBarras;
-                imputado.ProntuarioSIC = imp.CodBarras;
+                imputado.Prontuario = new Prontuario{ProntuarioNro = imp.CodBarras};
                 imputado.FechaCreacionI = DateTime.Now;
             }
             

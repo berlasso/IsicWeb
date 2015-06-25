@@ -13,7 +13,7 @@ namespace ISIC.Entities
 {
     public partial class Imputado : Autor
     {
-        public string ProntuarioSIC { get; set; }
+        //public string ProntuarioSIC { get; set; }
         public string CodigoDeBarrasOriginal { get; set; }
         [Index(IsUnique = true)]
         [MaxLength(13)] // 
@@ -50,7 +50,8 @@ namespace ISIC.Entities
         public virtual ICollection<ImputadoEstadoTramite> ImputadoestadosTramites { get; set; }
         public virtual ICollection<BioDactilar> BioManoDerecha { get; set; }
         public virtual ICollection<BioDactilar> BioManoIzquierda { get; set; }
-        public virtual ICollection<Archivo> Archivos { get; set; } 
+        public virtual ICollection<Archivo> Archivos { get; set; }
+        public virtual Prontuario Prontuario { get; set; }
 
     }
 }

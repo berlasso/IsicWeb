@@ -215,7 +215,7 @@ namespace ISICWeb.Services
             {
                 imputado.CodigoDeBarrasOriginal = imp.CodBarras;
                 imputado.CodigoDeBarras = imp.CodBarras;
-                imputado.ProntuarioSIC = imp.CodBarras;
+                imputado.Prontuario = new Prontuario {ProntuarioNro = imp.CodBarras};
                 imputado.FechaCreacionI = DateTime.Now;
                 //CAMBIAR!!
                 imputado.PuntoGestionCreacionI =
@@ -391,6 +391,7 @@ namespace ISICWeb.Services
                 _repository.UnitOfWork.Commit();
                 if (id == 0 && imputado.Id>0)
                 {
+                
                     Issue<IssueFields> issue = _jiraService.CreateIssue(imputado.CodigoDeBarras);
                     //Transition transition = _jiraService.GetTransitions(issue).First();
                     //_jiraService.TransitionIssue(issue, transition);

@@ -86,7 +86,7 @@ namespace ISICWeb.Areas.Otip.Controllers
                 doc.ReplaceText("${otrosnombres}", dg.OtrosNombres);
                 doc.ReplaceText("${juzgar}", dg.JuzgadoGarantias);
                 doc.ReplaceText("${fecarga}", dg.FechaCarga);
-                string prontuario=repository.Set<Imputado>().First(d => d.CodigoDeBarras == dg.CodBarras).ProntuarioSIC;
+                string prontuario=repository.Set<Imputado>().First(d => d.CodigoDeBarras == dg.CodBarras).Prontuario.ProntuarioNro;
                 doc.ReplaceText("${prontuariopcia}", prontuario);
                 int dj =Convert.ToInt32(dg.CodBarras.Substring(2, 2));
                 string deptoJud=repository.Set<ClaseDepartamentoJudicial>().First(d => d.Id == dj).descripcion;

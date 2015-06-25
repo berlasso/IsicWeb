@@ -28,7 +28,37 @@ namespace ISICWeb.Areas.Afis.Controllers
             _busquedaService = busquedaService;
         }
 
-
+        public JsonResult BuscarCodBarras(string id)
+        {
+            Imputado imp = _repository.Set<Imputado>().FirstOrDefault(x => x.CodigoDeBarras == id);
+            if (imp != null)
+            {
+                var data = new
+                {
+                    errorMessage = "",
+                    Apellido = imp.Persona.Apellido,
+                    Nombre = imp.Persona.Nombre,
+                    DNI = imp.Persona.DocumentoNumero,
+                    TipoDoc = imp.Persona.TipoDNI.Id,
+                    Sexo = imp.Persona.Sexo.Id,
+                    Clase = imp.Persona.FechaNacimiento == null ? 0 : imp.Persona.FechaNacimiento.Value.Year
+                };
+                JsonResult json = new JsonResult
+                {
+                    Data = new {HuboError=false, datos=new {data}},
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+                return json;
+            }
+            else
+            {
+                return new JsonResult
+                {
+                    Data = new {HuboError=true, datos=new {errorMessage = "No se encontro el imputado en la base del SIC"}},
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+        }
 
         [HttpPost]
         public ActionResult GuardarDatosAfis(AFISViewModel model)
@@ -66,11 +96,11 @@ namespace ISICWeb.Areas.Afis.Controllers
 
             var imputados = ctx.Imputado.Where(querystring).OrderBy(x => x.CodigoDeBarras).Take(100);
             var resultados = from imp in imputados
-                             from p in ctx.Prontuario.Where(p => p.ProntuarioNro == imp.ProntuarioSIC).DefaultIfEmpty()
+                             from p in ctx.Prontuario.Where(p => p.ProntuarioNro == imp.Prontuario.ProntuarioNro).DefaultIfEmpty()
                              select new ImputadosAfisViewModel
                              {
                                  Id = imp.Id,
-                                 ProntuarioSIC = imp.ProntuarioSIC,
+                                 ProntuarioSIC = imp.Prontuario.ProntuarioNro,
                                  CodigoDeBarras = imp.CodigoDeBarras,
                                  Apellido = imp.Persona.Apellido,
                                  Nombre = imp.Persona.Nombre,
@@ -137,7 +167,7 @@ namespace ISICWeb.Areas.Afis.Controllers
             if (prontuarioSic == "" && idIdgxprontuario > 0)
                 prontuarioSic = _repository.Set<IdgxProntuario>().First(x => x.Id == idIdgxprontuario).Prontuario.ProntuarioNro;
 
-            Imputado imputado = _repository.Set<Imputado>().First(x => x.ProntuarioSIC == prontuarioSic);
+            Imputado imputado = _repository.Set<Imputado>().First(x => x.Prontuario.ProntuarioNro == prontuarioSic);
             return PartialView("_DetalleImputado", imputado);
         }
 
