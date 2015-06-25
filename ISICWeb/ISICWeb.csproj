@@ -1385,6 +1385,7 @@
     <Content Include="Areas\Antecedentes\Views\Antecedentes\Index.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\ResultadoBusqueda.cshtml" />
     <Content Include="Areas\Usuarios\Views\Usuarios\ConfirmarEmail.cshtml" />
+    <Content Include="Areas\Usuarios\Views\Usuarios\Index.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1527,7 +1528,7 @@
     <Content Include="Views\CotejoManual\VisualizaParesDecaDactilares.cshtml" />
     <Content Include="Views\Shared\DataTable.cshtml" />
     <None Include="Areas\Afis\Views\Afis\Index.cshtml" />
-    <Content Include="Areas\Usuarios\Views\Usuarios\Index.cshtml" />
+    <Content Include="Areas\Usuarios\Views\Usuarios\ResultadosBusqueda.cshtml" />
     <Content Include="Views\Account\ValidarLoginSicViejo.cshtml" />
     <Content Include="Views\Account\_SummaryErrorSic.cshtml" />
     <Content Include="Views\Account\ValidarLoginSicNuevo.cshtml" />

@@ -1,157 +1,134 @@
-﻿@model  IEnumerable<ISIC.Entities.Usuarios>
+﻿@model ISICWeb.Areas.Usuarios.Models.UsuarioViewModel
 
 
-<div class=" center wow fadeInDown animated tile-light">
-    <h1>
-        USUARIOS
-    </h1>
-</div>
+@{
+
+    ViewBag.Title = "Carga Antecedentes";
+    //Layout = null;
 
 
+}
 
-<div class="tile tile  wow fadeInDown animated" style="margin-bottom: 80px;">
+<div class="container-detalle">
 
-    <div class="panel panel-default ">
-        <div class="panel-heading">
-            <h4>
-                Listado de Usuarios
-            </h4>
-        </div>
+    <div class="center wow fadeInDown animated tile-light">
+        <h1>AFIS</h1>
     </div>
 
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-12">
-                <table id="tablaUsuarios" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.NombreUsuario)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.Apellido)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.Nombre)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.PuntoGestion.Descripcion)
-                            </th>
-                            <th>
-                                DEPTO. JUDICIAL
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.EMail)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.activo)
-                            </th>
-                            <th>
-                                Email sin confirmar
-                            </th>
-                            <th>
+    <div class="row">
+        <div class="col-md-12" role="main">
 
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            @using (Html.BeginForm("Buscar", "Usuarios", FormMethod.Get, new { id = "frmBuscar" }))
+            {
 
-                        @foreach (var item in Model)
-                        {
-
-                            <tr>
-                                <td>
-                                    @Html.ActionLink("Editar", "AltaModificacionUsuario", new { id = item.id }, new { @class = "btn btn-alt btn-sm ", onclick = "showPageLoadingSpinner();" })
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NombreUsuario)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.Persona.Apellido)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.Persona.Nombre)
-                                </td>
-                                <td>
-                                    @if (item.PersonalPoderJudicial != null)
-                                    {
-                                        @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.PuntoGestion.Descripcion)
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.PuntoGestion.Departamento.DepartamentoNombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelitem => item.PersonalPoderJudicial.Persona.EMail)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.activo)
-                                </td>
-                                <td>
-                                    @{
-                            bool tokenenviado = item.TokenEnviado != null;
-                                    }
-                                    @*<input type="checkbox" value=@tokenenviado disabled="disabled"/>*@
-                                    @Html.CheckBox("tokenenv", tokenenviado, new { disabled = "disabled" })
+                //Html.RenderPartial("_DatosGeneralesImputado");
+                //ViewBag.EsSoloDetalle = Model.EsSoloDetalle;
+                //Html.RenderPartial("_DatosSomaticos");
+                //Html.RenderPartial("_ImagenesImputado");
 
 
-                                </td>
+                <div class="panel panel-default tile wow fadeInDown animated">
+                    <div class="panel-heading">
 
-                                <td style="text-align: right">
-                                    @if (item.activo)
-                                    {
-                                        <input type="button" class="btn btn-alt btn-sm" id="btnBorrarUsuario" data-id="@item.id" value="Desactivar" />
-                                    }
-                                </td>
+                        <h3>
+                            Indique Departamento Judicial
+                            <small>
+                                @*<div class="btn-group pull-right" data-toggle="buttons">
+                                        <label id="lblBusquedaAvanzada" class="btn btn-alt">
+                                            <input type="checkbox" autocomplete="off" id="btnBusquedaAvanzada"> Búsqueda Avanzada
+                                        </label>
+                                    </div>*@
+                            </small>
+                        </h3>
 
-                            </tr>
-                        }
+                    </div>
 
 
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="pull-right">
+
+
+
+                    <div class="panel-body">
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+
+
+                            <div class="col-xs-4">
+                                @Html.LabelFor(model => model.Departamento)
+                                @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, new { @class = "form-control" })
+                            </div>
+                            
 
                         </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-4">
+
+                            </div>
+                            <div class="col-xs-4">
+
+                            </div>
+                            <div class="col-xs-4">
+
+                            </div>
+
+
+                        </div>
+
+
                     </div>
                 </div>
-            </div>
 
+
+                <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-3 col-xs-4">
+                            @Html.ActionLink("Volver", "Index", "Home", new { area = "" }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+                        </div>
+                        <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-8">
+                            <div class="row ">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+
+                                    <input type="submit" class="btn btn-lg btn-alt" value="Buscar" id="btnBuscar" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </nav>
+            }
         </div>
     </div>
-
-
-
 </div>
+
+
 
 @section footer
 {
-    <div class="col-md-2 col-sm-2 col-xs-6">
+    <div class="col-md-2">
         @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
                 Volver
             </a>*@
-        <a class="btn btn-lg btn-alt volver" href=' @Url.Action("Index", "Home", new { Area = "" }) ' title=" volver" onclick="showPageLoadingSpinner();" type="button">
-            Volver
-        </a>
+        @Html.ActionLink("Volver", "Index", new { area = "" }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
     </div>
-    <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
-        @if (Model != null)
-        {
-            @Html.ActionLink("Nuevo", "AltaModificacionUsuario", "Usuarios", new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
-        }
-
+    <div class="col-md-10">
 
     </div>
 
 }
-
-
 <script>
-    var urlBorrarUsuario = '@Url.Action("BorrarUsuario","Usuarios")/';
+    $("#btnBuscar").on("click", function() {
+        if ($("#frmBuscar").valid() === true)
+            showPageLoadingSpinner();
+    });
 
-
+    $(document).ready(function () {
+        $("#navFooter").hide();
+        $('#Departamento').keydown(function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                $("#btnBuscar").click();
+            }
+        });
+    });
 </script>
-

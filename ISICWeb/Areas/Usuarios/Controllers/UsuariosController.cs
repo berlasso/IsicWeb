@@ -64,8 +64,12 @@ namespace ISICWeb.Areas.Usuarios.Controllers
 
         public ActionResult Index()
         {
-            var Usuarios = _repository.Set<ISIC.Entities.Usuarios>().ToList();
-            return View(Usuarios);
+            //var Usuarios = _repository.Set<ISIC.Entities.Usuarios>().ToList();
+            UsuarioViewModel uvm = new UsuarioViewModel
+            {
+                DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "id", "Descripcion")
+            };
+            return View(uvm);
         }
 
         public string ReenviarToken(string e,string uid = "")
