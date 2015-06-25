@@ -18,6 +18,7 @@
 {    @Html.AntiForgeryToken()
 
     @Html.HiddenFor(model => model.Validando)
+    @Html.HiddenFor(model => model.UsuarioSicViejo)
     @*@Html.Hidden("UsuarioMPBA",Model.UsuarioMPBA.ToString())*@
     <div class=" center wow fadeInDown animated tile-light">
         <h3>

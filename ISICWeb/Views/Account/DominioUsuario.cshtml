@@ -1,4 +1,4 @@
-﻿@Model string
+﻿@model string
 @using (Ajax.BeginForm("ControlarUsuarioIsic", "Account",
     new AjaxOptions
     {
@@ -33,7 +33,7 @@
                                     
                                 </div>
                                 <div class="col-xs-9 col-md-5 " style="text-align: center">
-                                   @Html.ActionLink("Pertenezco a la red del MPBA", "ValidarLoginSicNuevo", new { id = "1", us=@Model }, new { @class = "btn btn-lg" })
+                                   @Html.ActionLink("Pertenezco a la red del MPBA", "ValidarLoginSicNuevo", new { us = @Model, @id = "1" }, new { @class = "btn btn-lg" })
 
                                 </div>
 
@@ -45,7 +45,7 @@
                                     
                                 </div>
                                 <div class="col-xs-9 col-md-5" style="text-align: center">
-                                    @Html.ActionLink("Usuario Externo a la red del MPBA", "ValidarLoginSicNuevo", new { id = "2", us=@Model  }, new { @class = "btn btn-lg" })
+                                    @Html.ActionLink("Usuario Externo a la red del MPBA", "ValidarLoginSicNuevo", new { us = @Model, @id = "2" }, new { @class = "btn btn-lg" })
                                 </div>
 
                             </div>

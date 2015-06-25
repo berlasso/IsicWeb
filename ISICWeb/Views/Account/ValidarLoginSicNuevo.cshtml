@@ -108,7 +108,7 @@
 @section scripts
 {
         <script>
-                //GUARDAR DATOS AFIS
+                //GUARDAR DATOS
                 function onControlarBegin() {
                     loader("Controlando, espere un momento...");
                 }
@@ -121,7 +121,7 @@
                     if (data == "") {
                         //alertify.success("Alta exitosa");
                         var u = $("#usuario").val();
-                        var url = '@Url.Action("CompletarDatosSicNuevo","Usuarios",new {area="Usuarios"})/'+u;
+                        var url = '@Url.Action("CompletarDatosSicNuevo","Usuarios",new {area="Usuarios"})?id='+u+'&us=@ViewBag.us';
                         alertify.alert("Exito", "<i class='Exito'>Usuario MPBA Correcto</i><br/>Presione OK para avanzar al siguiente paso...").set({
                             onclose: function () {
                                 showPageLoadingSpinner();

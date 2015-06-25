@@ -668,10 +668,18 @@ namespace ISICWeb.Controllers
         }
         #endregion
 
-        public ActionResult ValidarLoginSicNuevo(int id=0)
+        /// <summary>
+        /// valida los datos en el sic nuevo
+        /// </summary>
+        /// <param name="us">usuario en el sic viejo</param>
+        /// <param name="id">si es usuario mpba(1) o externo(2)</param>
+        /// <returns></returns>
+        public ActionResult ValidarLoginSicNuevo(string us,int id=0)
         {
+            ViewBag.us = us;
             if (id == 1)
             {
+                
                 return View();
             }
                 
@@ -690,7 +698,7 @@ namespace ISICWeb.Controllers
 
         public ActionResult SeleccionDominio(string id)
         {
-            return View("DominioUsuario",id);
+            return View("DominioUsuario",null,id);
         }
 
         [HttpPost]

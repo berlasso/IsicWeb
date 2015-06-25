@@ -64,5 +64,6 @@ namespace ISICWeb.Areas.Usuarios.Models
         [System.ComponentModel.DataAnnotations.Compare("ClaveUsuario", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmarClaveUsuario { get; set; }
 
+        public string UsuarioSicViejo { get; set; }
     }
 }

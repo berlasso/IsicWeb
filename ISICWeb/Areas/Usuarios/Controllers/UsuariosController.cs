@@ -42,11 +42,18 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             return _usuarioService.BorrarUsuario(id);
         }
 
-        public ActionResult CompletarDatosSicNuevo(string id = "nada")
+        /// <summary>
+        /// Completa registracion el en el isic habiendo estado registrado en el sic viejo
+        /// </summary>
+        /// <param name="us">usuario en el sic viejo</param>
+        /// <param name="id">usuario para el isic</param>
+        /// <returns></returns>
+        public ActionResult CompletarDatosSicNuevo(string us, string id = "nada")
         {
             UsuarioViewModel uvm = _usuarioService.LlenarViewModelDesdeBase(id);
             uvm.Validando = true;
             uvm.id = null;
+            uvm.UsuarioSicViejo = us;
             uvm.UsuarioMPBA = id!="nada";
             LoginDomain ld=new LoginDomain();
             string usuarioDominio = ld.getCommonName(id);

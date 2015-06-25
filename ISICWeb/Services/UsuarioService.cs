@@ -59,18 +59,16 @@ namespace ISICWeb.Services
             }
             if (usuario == null)
             {
-                string ppjid = (Convert.ToInt32(_repository.Set<PersonalPoderJudicial>().Max(x => x.Id)) + 1).ToString();
+                int temp;
+                int ppjid = _repository.Set<PersonalPoderJudicial>().Select(x => x.Id).ToList().Select(n => int.TryParse(n, out temp) ? temp : 0).Max()+1;
                 usuario = new Usuarios
                 {
                     FechaCreacion = DateTime.Now,
 
                     PersonalPoderJudicial = new PersonalPoderJudicial
                     {
-                        Id = ppjid,
-                        Persona = new Persona
-                        {
-
-                        },
+                        Id =ppjid.ToString(),
+                        Persona = new Persona(),
                         PuntoGestion =pg
 
                     }
@@ -105,6 +103,7 @@ namespace ISICWeb.Services
             {
                 usuario.ClaveUsuario = Crypto.HashPassword(model.ClaveUsuario);
             }
+            usuario.UsuarioSicViejo = model.UsuarioSicViejo;
             usuario.PersonalPoderJudicial.Persona.Apellido = model.Apellido;
             usuario.PersonalPoderJudicial.Persona.Nombre = model.Nombre;
             usuario.PersonalPoderJudicial.Persona.DocumentoNumero = model.DocumentoNumero;
