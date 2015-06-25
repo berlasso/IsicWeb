@@ -120,7 +120,7 @@
                 function onControlarSuccess(data) {
                     if (data == "") {
                         //alertify.success("Alta exitosa");
-                        var url = '@Url.Action("SeleccionDominio","Account")';
+                        var url = '@Url.Action("SeleccionDominio","Account")/@Model.usuario';
                         alertify.alert("Exito", "<i class='Exito'>Usuario SIC Correcto</i><br />Presione OK para avanzar al siguiente paso...").set({
                             onclose: function () {
                                 showPageLoadingSpinner();

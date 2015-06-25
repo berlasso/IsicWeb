@@ -688,9 +688,9 @@ namespace ISICWeb.Controllers
             return View();
         }
 
-        public ActionResult SeleccionDominio()
+        public ActionResult SeleccionDominio(string id)
         {
-            return View("DominioUsuario");
+            return View("DominioUsuario",id);
         }
 
         [HttpPost]
@@ -707,12 +707,17 @@ namespace ISICWeb.Controllers
                 {
                     errores = "No se encontró el usuario";
                 }
+                else
+                {
+                    if (_repository.Set<Usuarios>().SingleOrDefault(x => x.UsuarioSicViejo == u.usuario) != null)
+                    {
+                        errores = "Usuario SIC ya existente en el sistema nuevo";
+                    }
+                }
             }
             else
             {
-                errores = string.Join("; ", ModelState.Values
-                                          .SelectMany(x => x.Errors)
-                                          .Select(x => x.ErrorMessage));
+                return PartialView("_SummaryErrorSic");
             }
 
             if (errores != "")

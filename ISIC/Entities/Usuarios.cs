@@ -26,6 +26,7 @@ namespace ISIC.Entities
         public bool? UsuarioMPBA { get; set; }
         [Display(Name = "Contraseña")]
         public string ClaveUsuario { get; set; }
+        public string UsuarioSicViejo { get; set; }
 
 
     }
