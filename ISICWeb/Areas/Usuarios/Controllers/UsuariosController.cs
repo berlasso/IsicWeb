@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.DirectoryServices;
 using System.Linq;
@@ -77,6 +78,7 @@ namespace ISICWeb.Areas.Usuarios.Controllers
                 DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre"),
                 Departamento = depto!=""?_repository.Set<Departamento>().SingleOrDefault(x=>x.Id.ToString()==depto):null
             };
+          
             return View(uvm);
         }
 
@@ -338,10 +340,21 @@ namespace ISICWeb.Areas.Usuarios.Controllers
         [HttpPost]
         public ActionResult Buscar(UsuarioViewModel model)
         {
-            var usuarios =
-                _repository.Set<ISIC.Entities.Usuarios>()
-                    .Where(x => x.PersonalPoderJudicial.PuntoGestion.Departamento.Id == model.Departamento.Id);
-            return PartialView("ResultadosBusqueda",usuarios);
+            IEnumerable<ISIC.Entities.Usuarios> usuarios = null;
+            switch (model.Departamento.Id)
+            {
+                case 0: //todos
+                    usuarios = _repository.Set<ISIC.Entities.Usuarios>().ToList();
+                    break;
+                case 22: // fuera mpba
+                    usuarios = _repository.Set<ISIC.Entities.Usuarios>().Where(x => x.Dependencia != null && x.Dependencia!="");
+                    break;
+                default:
+                    usuarios = _repository.Set<ISIC.Entities.Usuarios>()
+                        .Where(x => x.PersonalPoderJudicial.PuntoGestion.Departamento.Id == model.Departamento.Id);
+                    break;
+            }
+            return PartialView("_ResultadosBusqueda",usuarios);
         }
     }
 }

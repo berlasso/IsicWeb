@@ -364,13 +364,14 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                 if (validando == true) {
                     msg = msg + "<br/>A la brevedad se le enviará un email a la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC."
                 }
-                alertify.alert("Exito", msg).set({
-                    onclose: function () {
-                        showPageLoadingSpinner();
-                        location.href = url;
+                alertify.success("Carga Exitosa");
+                //alertify.alert("Exito", msg).set({
+                //    onclose: function () {
+                //        showPageLoadingSpinner();
+                //        location.href = url;
 
-                    }
-                });
+                //    }
+                //});
 
 
             } else {

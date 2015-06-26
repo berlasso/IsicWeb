@@ -4,13 +4,22 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Globalization;
 using System.Linq;
+using System.Security.Policy;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Glimpse.AspNet.Tab;
 using ISIC.Entities;
-
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Owin;
 using ISICWeb.Areas.Antecedentes.Models;
 using ISICWeb.Areas.Usuarios.Models;
+using ISICWeb.Models;
+using Microsoft.AspNet.Identity;
 using MPBA.DataAccess;
 
 namespace ISICWeb.Services
@@ -18,11 +27,13 @@ namespace ISICWeb.Services
     public class UsuarioService
     {
         private IRepository _repository;
+        private ApplicationUserManager _userManager;
 
 
-        public UsuarioService(IRepository repository)
+        public UsuarioService(IRepository repository, ApplicationUserManager userManager)
         {
             _repository = repository;
+            _userManager = userManager;
 
         }
 
@@ -42,6 +53,43 @@ namespace ISICWeb.Services
             }
 
         }
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Register(RegisterViewModel model)
+        //{
+           
+        //        var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, };
+        //        IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+        //        if (result.Succeeded)
+        //        {
+        //            await SignInAsync(user, isPersistent: false);
+        //            var userProp = TraerPropiedades(model.Email);
+        //            /////////////////////////////////////////////////
+
+
+        //            user.idPuntoGestion = userProp["idPuntoGestion"];
+        //            user.subCodBarra = userProp["subCodBarra"];
+              
+        //            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+        //            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+        //            await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
+
+        //            return RedirectToAction("Index", "Home");
+        //        }
+        //        else
+        //        {
+        //            AddErrors(result);
+        //        }
+        //    }
+
+        //    // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
+        //    return View(model);
+        //}
+
+
+
 
         public string GuardarUsuario(UsuarioViewModel model)
         {

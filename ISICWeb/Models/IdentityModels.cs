@@ -1,4 +1,7 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -18,15 +21,34 @@ namespace ISICWeb.Models
     {
         public string idPuntoGestion { get; set; }
         public string subCodBarra { get; set; }
+        public string NombreUsuario { get; set; }
+        
+        public string ClaveUsuario { get; set; }
+        public string UsuarioSicViejo { get; set; }
+        //public virtual PersonalPoderJudicial PersonalPoderJudicial { get; set; }
+        public bool activo { get; set; }
+        public virtual GrupoUsuario GrupoUsuario { get; set; }
+        public Guid? TokenEnviado { get; set; }
+        public DateTime? FechaCreacion { get; set; }
+        public string UsuarioCreacion { get; set; }
+        public DateTime? FechaModificacion { get; set; }
+        public string UsuarioModificacion { get; set; }
+        public string Dependencia { get; set; }
+        public bool? UsuarioMPBA { get; set; }
+
+     
+      
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             subCodBarra = subCodBarra ?? "";
             idPuntoGestion = idPuntoGestion ?? "";
+            
             // Agregar reclamaciones de usuario personalizado aquí
             userIdentity.AddClaim(new Claim("idPuntoGestion", this.idPuntoGestion));
             userIdentity.AddClaim(new Claim("subCodBarra", this.subCodBarra));
+            
 
             return userIdentity;
         }
@@ -50,12 +72,12 @@ namespace ISICWeb.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<IdentityUser>().ToTable("Users");
-            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
-            modelBuilder.Entity<IdentityUserRole>().ToTable("UsersRoles");
-            modelBuilder.Entity<IdentityUserLogin>().ToTable("Logins");
-            modelBuilder.Entity<IdentityUserClaim>().ToTable("Claims");
-            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUser>().ToTable("Usuarios1");
+            modelBuilder.Entity<ApplicationUser>().ToTable("Usuarios1");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UsuariosRoles1");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("Logins1");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("Claims1");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles1");
         }
     }
 
@@ -84,7 +106,9 @@ namespace ISICWeb.Models
         {
             var u = context.Users.Where(b => b.UserName == "prueba").FirstOrDefault();
             if (u == null)
+            
             {
+
                 var UserManager = new UserManager<ApplicationUser>(new
                                                UserStore<ApplicationUser>(context));
 
@@ -114,7 +138,7 @@ namespace ISICWeb.Models
         public bool CheckIfTableUsersExists(ApplicationDbContext context)
         {
             int result = context.Database.SqlQuery<int>(@"
-                IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Users') 
+                IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Usuarios1') 
                     SELECT 1
                 ELSE
                     SELECT 0

@@ -137,6 +137,18 @@ namespace ISICWeb.Controllers
 
         }
 
+
+        //
+        // GET: /Account/Register
+        [AllowAnonymous]
+        public ActionResult Register1()
+        {
+            
+
+            return View();
+        }
+
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -196,7 +208,7 @@ namespace ISICWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -770,6 +782,117 @@ namespace ISICWeb.Controllers
                 return PartialView("_SummaryErrorSic");
             }
             return null;
+        }
+
+        [Authorize]
+        public ActionResult AltaModificacionUsuario(string depto = "", string id = "")
+        {
+            UsuarioViewModel uvm = LlenarViewModelDesdeBase(id, depto);
+            
+            return View(uvm);
+        }
+
+        
+
+        //
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> GuardarDatosUsuario(UsuarioViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(model.ClaveUsuario))
+                    model.ClaveUsuario = "cambiar";
+                var user = new ApplicationUser()
+                {
+                    UserName = model.NombreUsuario, 
+                    NombreUsuario = model.NombreUsuario,
+                    Email = model.Email,
+                    Dependencia = model.Dependencia,
+                    FechaCreacion = DateTime.Now,
+                    UsuarioMPBA = false,
+                    ClaveUsuario = model.ClaveUsuario
+                };
+                IdentityResult result = await UserManager.CreateAsync(user, model.ClaveUsuario);
+                if (result.Succeeded)
+                {
+                    await SignInAsync(user, isPersistent: false);
+                    var userProp = TraerPropiedades(model.Email);
+                    /////////////////////////////////////////////////
+
+
+                    user.idPuntoGestion = userProp["idPuntoGestion"];
+                    user.subCodBarra = userProp["subCodBarra"];
+                    // Para obtener más información sobre cómo habilitar la confirmación de cuenta y el restablecimiento de contraseña, visite http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Enviar correo electrónico con este vínculo
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
+
+                    return Content("");
+                    //return textre;
+                }
+                else
+                {
+                    AddErrors(result);
+                  //  return Content("error");
+                }
+            }
+
+            // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
+            //return View(model);
+            return PartialView("_SummaryErrorUsuario", model);
+        }
+
+        public UsuarioViewModel LlenarViewModelDesdeBase(string id, string depto = "")
+        {
+            Usuarios usuario = _repository.Set<Usuarios>().SingleOrDefault(x => x.id == id);
+            UsuarioViewModel uvm = new UsuarioViewModel();
+            uvm.UsuarioMPBA = true;
+            uvm.GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion");
+            uvm.JerarquiaList = new SelectList(_repository.Set<JerarquiaPoderJudicial>().ToList().OrderBy(x => x.Descripcion), "id", "Descripcion");
+            uvm.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion");
+            uvm.DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre");
+            uvm.id = id;
+            uvm.NombreUsuario = id;
+
+            if (usuario != null)
+            {
+
+                uvm.ClaveUsuario = usuario.ClaveUsuario;
+                uvm.NombreUsuario = usuario.NombreUsuario;
+                uvm.TokenEnviado = usuario.TokenEnviado;
+                uvm.SubCodBarra = usuario.SubCodBarra;
+                if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.Persona != null && usuario.PersonalPoderJudicial.Persona.Sexo != null)
+                    uvm.Sexo = _repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.Persona.Sexo.Id);
+                if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.JerarquiaPoderJudicial != null)
+                    uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.JerarquiaPoderJudicial.Id);
+                if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.PuntoGestion != null)
+                    uvm.PuntoGestion = _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.PuntoGestion.Id);
+                if (usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.PuntoGestion != null && usuario.PersonalPoderJudicial.PuntoGestion.Departamento != null)
+                    uvm.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id == usuario.PersonalPoderJudicial.PuntoGestion.Departamento.Id);
+                uvm.activo = usuario.activo;
+                uvm.Dependencia = usuario.Dependencia;
+                uvm.GrupoUsuario = usuario.GrupoUsuario;
+                uvm.UsuarioMPBA = usuario.UsuarioMPBA ?? true;
+
+            }
+            else
+            {
+                uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == 3);//No especifica
+                uvm.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id.ToString() == depto);
+            }
+            if (usuario != null && usuario.id != "" && usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.Persona != null)
+            {
+                uvm.DocumentoNumero = usuario.PersonalPoderJudicial.Persona.DocumentoNumero;
+                uvm.Email = usuario.PersonalPoderJudicial.Persona.EMail;
+                uvm.Apellido = usuario.PersonalPoderJudicial.Persona.Apellido;
+                uvm.Nombre = usuario.PersonalPoderJudicial.Persona.Nombre;
+
+            }
+            return uvm;
         }
     }
 }
