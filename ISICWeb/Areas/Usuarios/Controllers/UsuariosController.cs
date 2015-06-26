@@ -31,9 +31,9 @@ namespace ISICWeb.Areas.Usuarios.Controllers
         }
 
         [Authorize]
-        public ActionResult AltaModificacionUsuario(string id = "")
+        public ActionResult AltaModificacionUsuario(string depto="",string id = "")
         {
-            UsuarioViewModel uvm= _usuarioService.LlenarViewModelDesdeBase(id);
+            UsuarioViewModel uvm= _usuarioService.LlenarViewModelDesdeBase(id,depto);
             return View(uvm);
         }
 
@@ -69,12 +69,13 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             return View("AltaModificacionUsuario",uvm);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string depto="")
         {
             //var Usuarios = _repository.Set<ISIC.Entities.Usuarios>().ToList();
             UsuarioViewModel uvm = new UsuarioViewModel
             {
-                DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "id", "Descripcion")
+                DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre"),
+                Departamento = depto!=""?_repository.Set<Departamento>().SingleOrDefault(x=>x.Id.ToString()==depto):null
             };
             return View(uvm);
         }
@@ -332,6 +333,15 @@ namespace ISICWeb.Areas.Usuarios.Controllers
             //}
             //return View("AltaModificacionUsuario", "Usuario", uvm);
             return RedirectToAction("AltaModificacionUsuario",u);
+        }
+
+        [HttpPost]
+        public ActionResult Buscar(UsuarioViewModel model)
+        {
+            var usuarios =
+                _repository.Set<ISIC.Entities.Usuarios>()
+                    .Where(x => x.PersonalPoderJudicial.PuntoGestion.Departamento.Id == model.Departamento.Id);
+            return PartialView("ResultadosBusqueda",usuarios);
         }
     }
 }

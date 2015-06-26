@@ -12,25 +12,37 @@
 <div class="container-detalle">
 
     <div class="center wow fadeInDown animated tile-light">
-        <h1>AFIS</h1>
+        @if (Model.Departamento==null || Model.Departamento.Id == null)
+        {
+            <h1 id="titulo">Usuarios</h1>
+        }
+        else
+        {
+            <h1 id="titulo">Usuarios Departamento @Model.Departamento.DepartamentoNombre</h1>
+        }
+        
     </div>
 
     <div class="row">
         <div class="col-md-12" role="main">
 
-            @using (Html.BeginForm("Buscar", "Usuarios", FormMethod.Get, new { id = "frmBuscar" }))
+            
+                @using (Ajax.BeginForm("Buscar", "Usuarios",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "resultados",
+                    HttpMethod = "Post",
+                    OnBegin = "onBuscarBegin",
+                    OnComplete = "onBuscarComplete",
+                    OnSuccess = "onBuscarSuccess"
+                },
+                new { id = "frmBuscar" }))
             {
-
-                //Html.RenderPartial("_DatosGeneralesImputado");
-                //ViewBag.EsSoloDetalle = Model.EsSoloDetalle;
-                //Html.RenderPartial("_DatosSomaticos");
-                //Html.RenderPartial("_ImagenesImputado");
-
-
+             
                 <div class="panel panel-default tile wow fadeInDown animated">
                     <div class="panel-heading">
 
-                        <h3>
+                        <h4>
                             Indique Departamento Judicial
                             <small>
                                 @*<div class="btn-group pull-right" data-toggle="buttons">
@@ -39,7 +51,7 @@
                                         </label>
                                     </div>*@
                             </small>
-                        </h3>
+                        </h4>
 
                     </div>
 
@@ -52,22 +64,17 @@
 
 
                             <div class="col-xs-4">
-                                @Html.LabelFor(model => model.Departamento)
-                                @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, new { @class = "form-control" })
+                                @Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label required" })
+                                @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, "--Seleccionar--",new { @class = "form-control" })
                             </div>
                             
 
                         </div>
                         <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                            <div class="col-xs-4">
+                            <div id="resultados" class="col-xs-12">
 
                             </div>
-                            <div class="col-xs-4">
-
-                            </div>
-                            <div class="col-xs-4">
-
-                            </div>
+                            
 
 
                         </div>
@@ -87,8 +94,8 @@
                                 <div class="col-md-6 col-sm-6 col-xs-6">
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-
-                                    <input type="submit" class="btn btn-lg btn-alt" value="Buscar" id="btnBuscar" />
+                                    @Html.ActionLink("Nuevo","AltaModificacionUsuario",new {area="Usuarios"} ,new {@id="btnNuevoUsuario",@class="btn btn-alt btn-lg"})
+                                    @*<input type="submit" class="btn btn-lg btn-alt" value="Buscar" id="btnBuscar" />*@
                                 </div>
                             </div>
                         </div>
@@ -109,7 +116,7 @@
         @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
                 Volver
             </a>*@
-        @Html.ActionLink("Volver", "Index", new { area = "" }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+        @*@Html.ActionLink("Volver", "Index", new { area = "" }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })*@
     </div>
     <div class="col-md-10">
 
@@ -122,13 +129,30 @@
             showPageLoadingSpinner();
     });
 
+    $("#frmBuscar").on("change", "#Departamento_Id", function () {
+        if ($("#Departamento_Id").val() == "")
+            $("#titulo").text("Usuarios");
+        else
+            $("#titulo").text("Usuarios Departamento " + $("#Departamento_Id option:selected").text());
+        $("#btnNuevoUsuario").attr("href",' @Url.Action("AltaModificacionUsuario","Usuarios")?depto='+$("#Departamento_Id").val());
+        $("#frmBuscar").submit();
+    });
+
     $(document).ready(function () {
         $("#navFooter").hide();
-        $('#Departamento').keydown(function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-                $("#btnBuscar").click();
-            }
-        });
+       
     });
+
+    //buscar datos
+    function onBuscarBegin() {
+        loader("Buscando, espere un momento...");
+    }
+
+    function onBuscarComplete() {
+        $.unblockUI();
+    }
+
+    function onBuscarSuccess(data) {
+        
+    }
 </script>

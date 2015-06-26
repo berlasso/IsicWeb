@@ -1,6 +1,5 @@
-﻿@using System.Web.Hosting
-@using System.Web.UI.WebControls
-@model ISICWeb.Areas.Usuarios.Models.UsuarioViewModel
+﻿@model ISICWeb.Areas.Usuarios.Models.UsuarioViewModel
+string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index", "Usuarios"); 
 @{
     bool modificando = !string.IsNullOrEmpty(Model.id);
     string display = Model.UsuarioMPBA ? "block" : "none";
@@ -268,7 +267,7 @@
             <div class="  col-sm-3 col-xs-3">
                 @if (!Model.Validando)
                 {
-                    @Html.ActionLink("Volver", "Index", "", new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+                    @Html.ActionLink("Volver", "Index", new {depto=@Model.Departamento.Id}, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
                 }
 
 

@@ -31,17 +31,16 @@ namespace ISIC.Persistence.Context
             {
                 context.Database.Create();
             }
-            jiraService = new JiraService();
-            //Issue<IssueFields> issue = jiraService.CreateIssue("150100000015S");
-            Issue<IssueFields> issue = jiraService.GetIssue("010200000006V");
-            MPBA.Jira.Model.JiraUser usuario = new JiraUser();
-            issue.fields.assignee = new JiraUser(); 
-            usuario.name = "meveleens";
-            usuario.displayName = "Mariana Eveleens";
-            usuario.emailAddress = "meveleens@mpba.gov.ar";
-            usuario.active = true;
-            issue.fields.assignee = usuario;
-            Issue<IssueFields> issuemodificada = jiraService.UpdateIssue(issue);
+            //jiraService = new JiraService();
+            //Issue<IssueFields> issue = jiraService.GetIssue("010200000006V");
+            //MPBA.Jira.Model.JiraUser usuario = new JiraUser();
+            //issue.fields.assignee = new JiraUser(); 
+            //usuario.name = "meveleens";
+            //usuario.displayName = "Mariana Eveleens";
+            //usuario.emailAddress = "meveleens@mpba.gov.ar";
+            //usuario.active = true;
+            //issue.fields.assignee = usuario;
+            //Issue<IssueFields> issuemodificada = jiraService.UpdateIssue(issue);
             // CrearDatosJira(context);
 #if DEBUG
 

@@ -148,7 +148,7 @@ namespace ISICWeb.Services
         }
 
 
-        public UsuarioViewModel LlenarViewModelDesdeBase(string id)
+        public UsuarioViewModel LlenarViewModelDesdeBase(string id, string depto="")
         {
             Usuarios usuario = _repository.Set<Usuarios>().SingleOrDefault(x => x.id == id);
             UsuarioViewModel uvm = new UsuarioViewModel();
@@ -184,6 +184,7 @@ namespace ISICWeb.Services
             else
             {
                 uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == 3);//No especifica
+                uvm.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id.ToString() == depto);
             }
             if (usuario != null && usuario.id != "" && usuario.PersonalPoderJudicial != null && usuario.PersonalPoderJudicial.Persona != null)
             {
