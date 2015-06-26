@@ -2,7 +2,7 @@
 
 
 @{
-
+    string depto = @Model.Departamento != null ? Model.Departamento.Id.ToString() : "null";
     ViewBag.Title = "Carga Antecedentes";
     //Layout = null;
 
@@ -124,6 +124,11 @@
 
 }
 <script>
+    $(document).ready(function() {
+        var depto=@depto;
+        if (depto!="null")
+            $("#frmBuscar").submit();
+    });
     $("#btnBuscar").on("click", function() {
         if ($("#frmBuscar").valid() === true)
             showPageLoadingSpinner();
