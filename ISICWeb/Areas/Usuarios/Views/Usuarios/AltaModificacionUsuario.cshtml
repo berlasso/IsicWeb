@@ -425,13 +425,43 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                     $("#Email").prop("readonly", "readonly");
                     $("#colDependencia").hide().effect("fold", "up");
                     $("#Email").val($("#NombreUsuario").val() + "@@MPBA.GOV.AR");
+                    DeshabilitarControles();
+                    $("#Usuario").addClass("input-focused");
                 } else {
                     $("#Email").prop("readonly", "");
                     $("#colDependencia").show().effect("slide", "up");
+                    HabilitarControles();
+                    $("#Usuario").removeClass("input-focused");
                 }
             });
         });
 
+        function DeshabilitarControles() {
+            $("#Apellido").attr("readonly", "readonly");
+            $("#Nombre").attr("readonly", "readonly");
+            $("#Departamento_Id").attr("readonly", "readonly");
+            $("#PuntoGestion_Id").attr("readonly", "readonly");
+            $("#Email").attr("readonly", "readonly");
+            $("#DocumentoNumero").attr("readonly", "readonly");
+            $("#Sexo_Id").attr("readonly", "readonly");
+            $("#GrupoUsuario_Id").attr("readonly", "readonly");
+            $("#SubCodBarra").attr("readonly", "readonly");
+            $("#Jerarquia_Id").attr("readonly", "readonly");
+            
+        }
+
+        function HabilitarControles() {
+            $("#Apellido").removeAttr("readonly");
+            $("#Nombre").removeAttr("readonly");
+            $("#Departamento_Id").removeAttr("readonly");
+            $("#PuntoGestion_Id").removeAttr("readonly");
+            $("#Email").removeAttr("readonly");
+            $("#DocumentoNumero").removeAttr("readonly");
+            $("#Sexo_Id").removeAttr("readonly");
+            $("#GrupoUsuario_Id").removeAttr("readonly");
+            $("#SubCodBarra").removeAttr("readonly");
+            $("#Jerarquia_Id").removeAttr("readonly");
+        }
 
     </script>
 }

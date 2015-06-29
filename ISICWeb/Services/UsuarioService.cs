@@ -21,6 +21,7 @@ using ISICWeb.Areas.Usuarios.Models;
 using ISICWeb.Models;
 using Microsoft.AspNet.Identity;
 using MPBA.DataAccess;
+using UsuarioViewModel = ISICWeb.Areas.Usuarios.Models.UsuarioViewModel;
 
 namespace ISICWeb.Services
 {

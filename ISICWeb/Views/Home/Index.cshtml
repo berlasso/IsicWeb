@@ -119,16 +119,18 @@
     
         <div class="col-md-4 col-sm-6 wow fadeInDown animated">
             <div class="feature-wrap">
-                <a href='@Url.Action("Index", "Usuarios", new {area = "Usuarios"})' onclick=" showPageLoadingSpinner() ">
+                <a href='@Url.Action("Index", "Account", new {area = ""})' onclick=" showPageLoadingSpinner() ">
                     <i class="fa fa-user-plus"></i>
                 </a>
                 <h2>Usuarios</h2>
                 <h4>Administración de usuarios</h4>
             </div>
         </div>
-   
+
+    <a href='@Url.Action("Prueba", "Account", new {area = ""})' onclick=" showPageLoadingSpinner() " class="btn btn-lg">
+        Prueba</a>
 </div>
-<a href=@Url.Action("AltaModificacionUsuario","Account") class="btn btn-lg">Prueba</a>
+
 
 
             @if (User.IsInRole("Admin"))

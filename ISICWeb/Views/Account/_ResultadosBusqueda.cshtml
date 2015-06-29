@@ -1,0 +1,232 @@
+﻿
+@model  IEnumerable<ISICWeb.Models.UsuarioViewModel>
+
+
+
+
+<div class="tile tile  wow fadeInDown animated" style="margin-bottom: 80px;">
+
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            @*<h4>
+                    Listado de Usuarios
+                </h4>*@
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tablaUsuarios" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NombreUsuario)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.Apellido)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.PuntoGestion.Descripcion)
+                            </th>
+                            <th>
+                                DEPTO. JUDICIAL
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PersonalPoderJudicial.Persona.EMail)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.activo)
+                            </th>
+                            <th>
+                                Email Confirmado
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("Editar", "AltaModificacionUsuario", new { id = item.id }, new { @class = "btn btn-alt btn-sm ", onclick = "showPageLoadingSpinner();" })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NombreUsuario)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.Persona.Apellido)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.Persona.Nombre)
+                                </td>
+                                <td>
+                                    @if (item.PersonalPoderJudicial != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.PuntoGestion.Descripcion)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PersonalPoderJudicial.PuntoGestion.Departamento.DepartamentoNombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelitem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.activo)
+                                </td>
+                                <td>
+                                    @{
+                                        bool emailconfirmed = item.EmailConfirmed != null?item.EmailConfirmed.Value:false;
+                                    }
+                                    @*<input type="checkbox" value=@tokenenviado disabled="disabled"/>*@
+                                    @Html.CheckBox("tokenenv", emailconfirmed, new { disabled = "disabled" })
+
+
+                                </td>
+
+                                <td style="text-align: right">
+                                    @if (item.activo)
+                                    {
+                                        <input type="button" class="btn btn-alt btn-sm" id="btnBorrarUsuario" data-id="@item.id" value="Desactivar" />
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+@section footer
+{
+    <div class="col-md-2 col-sm-2 col-xs-6">
+        @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
+                Volver
+            </a>*@
+        <a class="btn btn-lg btn-alt volver" href=' @Url.Action("Index", "Home", new { Area = "" }) ' title=" volver" onclick="showPageLoadingSpinner();" type="button">
+            Volver
+        </a>
+    </div>
+    <div class="col-md-6 col-md-offset-4 col-sm-2 col-sm-offset-4 col-xs-6">
+        @if (Model != null)
+        {
+            @Html.ActionLink("Nuevo", "AltaModificacionUsuario", "Usuarios", new { @class = "btn btn-alt btn-lg ", onclick = "showPageLoadingSpinner();" })
+        }
+
+
+    </div>
+
+}
+
+
+<script>
+    var urlBorrarUsuario = '@Url.Action("BorrarUsuario","Usuarios")/';
+    $(function () {
+        $('#tablaUsuarios').dataTable({
+            "dom": '<"row"<"col-md-12"ipTf>><"clear">rt<"bottom"><"clear">',
+            "tableTools": {
+                "aButtons": [],
+
+            },
+            //"columns": [
+            //         { "data": "nombreusuario" },
+            //         { "data": "apellido" },
+            //         { "data": "nombre" },
+            //         { "data": "dependencia" },
+            //         { "data": "descripcion" },
+            //         { "data": "activo" },
+            //         { "data": null },
+            //],
+            "columnDefs": [
+                {
+                    "targets": 0,
+                    "sortable": false
+                }
+            ],
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+        $('#tablaUsuarios tbody').on('click', '#btnBorrarUsuario', function () {
+            var id = $(this).data("id");
+            var table = $('#tablaUsuarios').DataTable();
+            var row = table.row($(this).parents('tr'));
+
+            alertify.confirm("Desacivar Usuario", "Seguro que desea desactivar?", function () {
+
+                var url = urlBorrarUsuario + encodeURI(id);
+                $.get(url, null, function (data) {
+                    if (data === "True") {
+                        //row.remove().draw();
+                        var cellActivo = table.cell(row, 7).node();
+                        $(cellActivo).children().removeAttr("checked");
+                        alertify.success("Usuario desactivado correctamente");
+
+
+                    } else {
+                        alertify.error("Error al desactivar");
+                    }
+                });
+
+            }, null)
+                .set('labels', { cancel: 'Cancelar' })
+                .set('defaultFocus', 'cancel');
+        });
+
+
+
+        $("div.dataTables_filter>label>input").addClass("form-control"); //estilo correcto a filtro
+        $("div.dataTables_length>label>select").addClass("form-control"); //estilo correcto a cant de filas
+        //$(".DTTT_container >a").each($).removeClass().addClass("btn btn-sm"); //agrego estilo correcto a botones de tabla
+        //$("#table_filter").addClass("tile");
+
+    });
+
+</script>
+

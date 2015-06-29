@@ -30,6 +30,7 @@ namespace ISICWeb.Areas.Usuarios.Models
         [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el apellido")]
         [MaxLength(100, ErrorMessage = "El apellido es demasiado largo")]
         public string Apellido { get; set; }
+        [Required]
         [RegularExpression("^[a-zA-Z]*$")]
         [Display(Name = "Usuario")]
         public string NombreUsuario { get; set; }
@@ -58,7 +59,7 @@ namespace ISICWeb.Areas.Usuarios.Models
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string ClaveUsuario { get; set; }
-
+        public virtual PersonalPoderJudicial PersonalPoderJudicial { get; set; }
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar contraseña")]
         [System.ComponentModel.DataAnnotations.Compare("ClaveUsuario", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]

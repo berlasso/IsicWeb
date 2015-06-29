@@ -11,11 +11,13 @@ using System.Web.Mvc;
 using System.Web.UI;
 using ISIC.Entities;
 using ISICWeb.Areas.Usuarios.Models;
+using ISICWeb.Models;
 using ISICWeb.Services;
 using MPBA.DataAccess;
 using MPBA.Security.Entities;
 using MPBA.Security.Ldap;
 using Postal;
+using UsuarioViewModel = ISICWeb.Areas.Usuarios.Models.UsuarioViewModel;
 
 namespace ISICWeb.Areas.Usuarios.Controllers
 {
