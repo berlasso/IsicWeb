@@ -9,22 +9,64 @@ using ISICWeb.Services;
 using DataTables.Mvc;
 
 using ISIC.Entities;
+using ISIC.Services;
+using MPBA.Jira.Model;
+using MPBA.Jira;
+using MPBA.DataAccess;
+
 
 namespace ISICWeb.Controllers
 {
     public class CotejoManualController : Controller
     {
 
+        
+        private IJiraService jiraService;
         private ImputadosSimilaresService imputadoService;
+        private IBioDactilarService bioDactilarService;
+        private  IRepository repository;
+
+        public CotejoManualController(ImputadosSimilaresService imputadoService,
+                                       IBioDactilarService bioDactilarService,
+            IJiraService jiraService, IRepository repository)
+        {
+            this.imputadoService = imputadoService;
+            
+            this.bioDactilarService = bioDactilarService;
+            this.jiraService = jiraService;
+            this.repository = repository;
+        }
+
+
 
         // GET: CotejoManual
 
-
-       
-         public CotejoManualController(ImputadosSimilaresService imputadoService)
+        public ActionResult UnificarImputados(string CodigoBarraImpNuevo, string CodigoBarraImpArchivo)
         {
-            this.imputadoService = imputadoService;
-         }
+            var issue = jiraService.GetIssue(CodigoBarraImpNuevo);
+            if (issue != null)
+            {  
+                Transition transition = jiraService.GetTransitions(issue).First();
+
+              //  issue = jiraService.TransitionIssue(issue, transition);
+            }
+            return View("Index");
+        }
+
+        public ActionResult FINCotejoAFIS(string CodigoBarraImpNuevo)
+        {
+            var issue = jiraService.GetIssue(CodigoBarraImpNuevo);
+            if (issue != null)
+            {  
+                Transition transition = jiraService.GetTransitions(issue).First();
+
+                //issue = jiraService.TransitionIssue(issue, transition);
+            }
+            return View("Index");
+        }
+
+        
+        
 
          public ActionResult Index(string CodigoBarra)
          {
@@ -99,15 +141,12 @@ namespace ISICWeb.Controllers
                   ViewBag.Apellido = imputadoBuscado.Persona.Apellido;
                   ViewBag.Nombres = imputadoBuscado.Persona.Nombre;
                   ViewBag.Apodo = imputadoBuscado.Persona.Apodo;
-                  ViewBag.Edad = imputadoBuscado.Persona.Edad;
+              
+                  ViewBag.Edad = (DateTime.Now - imputadoBuscado.Persona.FechaNacimiento.Value).Days / 366;
                   ViewBag.NombreMadre = imputadoBuscado.Persona.Madre;
                   ViewBag.DocumentoNro = imputadoBuscado.Persona.DocumentoNumero;
 
-                  // German    ViewBag.NombreArchivo = Server.MapPath(String.Format(@"/Images/FotosImputado/{0}/{1}/{2}", CodigoBarra.Substring(0, 4), (Convert.ToInt32(CodigoBarra.Substring(7, 5)) / 1000).ToString("00"), CodigoBarra+".JPG"));
-
-
-                  //ViewBag.NombreArchivo = String.Format(@"~/Images/FotosImputado/{0}/{1}/{2}", CodigoBarra.Substring(0, 4), (Convert.ToInt32(CodigoBarra.Substring(7, 5)) / 1000).ToString("00"), CodigoBarra + ".JPG");
-
+                
                   ViewBag.NombreArchivo = FuncionesGrales.DirectorioImagenes(CodigoBarra, false,
                       FuncionesGrales.TipoImagen.Rostro, 1);
                   if (ImpSimilares.Count() == 0)

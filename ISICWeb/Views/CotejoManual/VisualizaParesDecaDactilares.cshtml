@@ -1,18 +1,14 @@
 ﻿@model  IEnumerable<ISIC.Entities.Imputado>
 
 
-@{  IEnumerator<ISIC.Entities.Imputado> enumer = Model.GetEnumerator();
+@{ 
   var imputadoNuevo = Model.First();
 
   var imputadoArchivo = Model.Last();
-  ViewBag.Title = "Cotejo de las huellas del Imputado ingresado  " + imputadoNuevo.Persona.Apellido + ' ' + imputadoNuevo.Persona.Nombre;
+  ViewBag.Title = "Cotejo de las huellas del Imputado ingresado con Cod.Barra: "+ imputadoNuevo.CodigoDeBarras +',' + imputadoNuevo.Persona.Apellido + ' ' + imputadoNuevo.Persona.Nombre;
 }
 <style>
-    /*  SACAAAR HASTA ACA UNIFICAR*/
-    #fondo {
-        /*background-image: none;*/
-        /*color: black;*/
-    }
+   
       .alertify .ajs-dialog {
 
           min-height: 600px !important;
@@ -23,48 +19,22 @@
           min-width: 800px !important;
       }
 </style>
-@*<div class="page-header" style="margin-top:5px!important">
-    <ol class="breadcrumb" style="color:#337ab7;float:left;font-size:medium">
-        <li style="color:#337ab7;float:left;font-size:medium">@Html.ActionLink("Inicio", "Index", "Home") </li>
-        <li style="color:#337ab7;float:left;font-size:medium"><a href=@Url.Action("BusquedaNominal", "CotejoManual", new { CodigoBarra = imputadoNuevo.CodigoDeBarras })>Digitalización</a></li>
-    </ol>
-
-
-<div class="container-detalle">
-    <div class="center wow fadeInDown animated tile-light">
-        <h1>Clasificación</h1>
-    </div>
-</div>
-        <div class="panel panel-primary" style="overflow-x: scroll;overflow-y: hidden;">
-    *@
 
 
 <div class="container-detalle" style="margin-bottom: 80px;">
-    <div class="center wow fadeInDown animated tile-light">
-        <h3>Cotejo de las huellas del Nuevo imputado <span> @imputadoNuevo.Persona.Apellido @imputadoNuevo.Persona.Nombre</span></h3>
-    </div>
-
+   
     <div class="row" style="overflow-x: scroll; overflow-y: hidden;">
         
             @{
 
 
-                Html.RenderPartial("ArmadoDecaDactilar", imputadoNuevo);
+                Html.RenderPartial("ComparaDecaDactilar", @Model.ToList());
             }
         
 
     </div>
 
-    <div class="center wow fadeInDown animated tile-light">
-        <h3 class="panel-title">Buscando similitud con las huellas del imputado en el registro del SIC : <span> @imputadoArchivo.Persona.Apellido @imputadoArchivo.Persona.Nombre </span></h3>
-    </div>
-
-    <div class="row" style="overflow-x: scroll; overflow-y: hidden;">
-
-
-        @Html.Partial("ArmadoDecaDactilar", imputadoArchivo);
-
-    </div>
+  
 </div>
 
 

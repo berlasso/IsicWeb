@@ -56,7 +56,7 @@ namespace ISICWeb.Services
                     Nombres = i.Persona.Nombre,
                     Apodo = i.Persona.Apodo,
                     NombreMadre = i.Persona.Madre,
-                    EdadActual = (i.Persona.FechaNacimiento != null) ?( (i.Persona.FechaNacimiento.Value.Month < DateTime.Today.Month || (i.Persona.FechaNacimiento.Value.Month == DateTime.Today.Month && i.Persona.FechaNacimiento.Value.Day < DateTime.Today.Day)) ? DateTime.Today.Year - i.Persona.FechaNacimiento.Value.Year : DateTime.Today.Year - i.Persona.FechaNacimiento.Value.Year - 1) : 0,
+                    EdadActual = (i.Persona.FechaNacimiento != null && i.Persona.FechaNacimiento.Value.Year > 1910 ) ? ((i.Persona.FechaNacimiento.Value.Month < DateTime.Today.Month || (i.Persona.FechaNacimiento.Value.Month == DateTime.Today.Month && i.Persona.FechaNacimiento.Value.Day < DateTime.Today.Day)) ? DateTime.Today.Year - i.Persona.FechaNacimiento.Value.Year : DateTime.Today.Year - i.Persona.FechaNacimiento.Value.Year - 1) : 0,
                     BioManoDerecha = i.BioManoDerecha,
                     ProntuarioSIC = i.Prontuario.ProntuarioNro,
                     CodigoDeBarras = i.CodigoDeBarrasOriginal,
@@ -69,14 +69,14 @@ namespace ISICWeb.Services
                     SCDocumento = i.Persona.DocumentoNumero == imputado.Persona.DocumentoNumero ? 15 : 0,
                     SCApeyNom = (i.Persona.Nombre == imputado.Persona.Nombre && i.Persona.Apellido == imputado.Persona.Apellido ? 10 : 0),
                     SCApellido = (i.Persona.Apellido == imputado.Persona.Apellido ? 9 : 0),
-                    SCEdad = (i.Persona.FechaNacimiento != null && imputado.Persona.FechaNacimiento != null) ?
+                    SCEdad = (i.Persona.FechaNacimiento != null && imputado.Persona.FechaNacimiento != null && imputado.Persona.FechaNacimiento.Value.Year > 1910 && i.Persona.FechaNacimiento.Value.Year > 1910) ?
                     ( (i.Persona.FechaNacimiento == null ? 0 : (DateTime.Compare(DateTime.Now, i.Persona.FechaNacimiento.Value) <=
                     DateTime.Compare(DateTime.Now, imputado.Persona.FechaNacimiento.Value) + 10 &&
                   DateTime.Compare(DateTime.Now, i.Persona.FechaNacimiento.Value) >=
                   DateTime.Compare(DateTime.Now, imputado.Persona.FechaNacimiento.Value) - 10) ? 4 : 0)): 0
                 };
                 elemento.ScoreTotal = elemento.SCEdad + elemento.SCApellido + elemento.SCApeyNom + elemento.SCDocumento;
-                if (elemento.ScoreTotal >= 10)
+                if (elemento.ScoreTotal >= 5)
                 {
                     // Atencion SOLAMENTE se agregan los imputados cuyo Score sea mayor o igual a 10 
                     elemento.Extraccion = i.BioManoDerecha.ToList().Exists(x => x.imagen.Length > 0) || i.BioManoIzquierda.ToList().Exists(x => x.imagen.Length > 0);
@@ -95,22 +95,22 @@ namespace ISICWeb.Services
             if (imputado == null)
                 return null;
            imputadoR = imputado;
-
+           
            IList<ImputadosSimilaresViewModel> imputadosParecidos = new List<ImputadosSimilaresViewModel>();
            //IList<Imputado> imputados 
            IEnumerable<Imputado> imputadosp = repository.Set<Imputado>().Where(x =>
-              ( ((x.Persona.Sexo.descripcion != null) && (imputado.Persona.Sexo.descripcion != null)) && (x.Persona.Sexo.descripcion == imputado.Persona.Sexo.descripcion ? true : false)) &&
+              (   x.Persona.Sexo.descripcion != null && imputado.Persona.Sexo.descripcion != null   && (x.Persona.Sexo.descripcion == imputado.Persona.Sexo.descripcion ? true : false)) &&
                                                               ( x.Id != imputado.Id) &&
-                                                           ((x.Persona.Apellido == imputado.Persona.Apellido ||
+                                                           (  x.Persona.Apellido == imputado.Persona.Apellido ||
                                                              (x.Persona.Apellido == imputado.Persona.Apellido && x.Persona.Nombre == imputado.Persona.Nombre) ||
                                                              x.Persona.Apodo == imputado.Persona.Apodo ||
                                                              x.Persona.DocumentoNumero == imputado.Persona.DocumentoNumero ||
-                                                             x.Persona.Madre == imputado.Persona.Madre || (x.Persona.FechaNacimiento != null && imputado.Persona.FechaNacimiento != null)) && ((System.Data.Entity.DbFunctions.DiffYears(DateTime.Now, x.Persona.FechaNacimiento) <=
-                                                                                                                                                                                                System.Data.Entity.DbFunctions.DiffYears(DateTime.Now, imputado.Persona.FechaNacimiento) + 10
-                                                                                                                                                                                                &&
-                                                                                                                                                                                                System.Data.Entity.DbFunctions.DiffYears(DateTime.Now, x.Persona.FechaNacimiento) >=
-                                                                                                                                                                                                System.Data.Entity.DbFunctions.DiffYears(DateTime.Now, imputado.Persona.FechaNacimiento) - 10))
-                                                              )).ToList();
+                                                             x.Persona.Madre == imputado.Persona.Madre ||
+                                                             (x.Persona.FechaNacimiento != null && imputado.Persona.FechaNacimiento != null && x.Persona.FechaNacimiento.Value.Year > 1910 && imputado.Persona.FechaNacimiento.Value.Year > 1910) && 
+                                                              ( System.Data.Entity.DbFunctions.DiffYears(DateTime.Now, x.Persona.FechaNacimiento) <=
+                                                                  System.Data.Entity.DbFunctions.DiffYears(DateTime.Now, imputado.Persona.FechaNacimiento) + 10      &&
+                                                                 System.Data.Entity.DbFunctions.DiffYears(DateTime.Now, x.Persona.FechaNacimiento) >=
+                                                                 System.Data.Entity.DbFunctions.DiffYears(DateTime.Now, imputado.Persona.FechaNacimiento) - 10)  )).ToList();
 
       
 

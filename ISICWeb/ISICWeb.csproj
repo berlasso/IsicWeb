@@ -64,6 +64,9 @@
     <Reference Include="BarCodeGenerator">
       <HintPath>..\packages\BarcodeGenerator.1.0.0.0\lib\BarCodeGenerator.dll</HintPath>
     </Reference>
+    <Reference Include="ConfigurationCL">
+      <HintPath>..\..\ConfigurationCL.dll</HintPath>
+    </Reference>
     <Reference Include="DataTables.Mvc">
       <HintPath>..\packages\datatables.mvc5.0.1.0\lib\net45\DataTables.Mvc.dll</HintPath>
     </Reference>
@@ -1519,19 +1522,20 @@
     <None Include="Areas\Afis\Views\Afis\Index.cshtml" />
     <Content Include="Views\Account\ValidarLoginSicViejo.cshtml" />
     <Content Include="Views\Account\_SummaryErrorSic.cshtml" />
+    <Content Include="Views\CotejoManual\ComparaDecaDactilar.cshtml" />
     <Content Include="Views\Account\ValidarLoginSicNuevo.cshtml" />
     <Content Include="Views\Account\DominioUsuario.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
     <Content Include="Views\Emails\Verificacion.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Account\Register1.cshtml" />
     <Content Include="Views\Account\AltaModificacionUsuario.cshtml" />
     <Content Include="Views\Account\_SummaryErrorUsuario.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\_ResultadosBusqueda.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ConfirmarEmail.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />

@@ -93,19 +93,19 @@ namespace ISICWeb.Models
         public void InitializeDatabase(ApplicationDbContext context)
         {
             // Me aseguro que la base ISIC este creada
-            //IDbContext ctx = DependencyResolver.Current.GetService<IDbContext>();
-            //if (!ctx.Database.Exists())
-            //{
-            //    ctx.Database.Initialize(true);
-            //}
+            IDbContext ctx = DependencyResolver.Current.GetService<IDbContext>();
+            if (!ctx.Database.Exists())
+            {
+                ctx.Database.Initialize(true);
+            }
 
-            //if (!CheckIfTableUsersExists(context))
-            //{
-            //    // create all model tables
-            //    var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
-            //    context.Database.ExecuteSqlCommand(dbCreationScript);
-            //}
-            //CreateUserPrueba(context);
+            if (!CheckIfTableUsersExists(context))
+            {
+                // create all model tables
+                var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
+                context.Database.ExecuteSqlCommand(dbCreationScript);
+            }
+            CreateUserPrueba(context);
         }
 
         public void CreateUserPrueba(ApplicationDbContext context)
@@ -127,9 +127,11 @@ namespace ISICWeb.Models
                     var roleresult = RoleManager.Create(new IdentityRole(roleName));
                 }
                 //Create User=Admin with password=123456
+                
                 var user = new ApplicationUser();
                 user.Email = "prueba@mpba.gov.ar";
-                user.EmailConfirmed = false;
+                user.EmailConfirmed = true;
+                user.activo = true;
                 //user.PasswordHash = Crypto.HashPassword("pa$$w0rd");
                 user.UserName = "prueba@mpba.gov.ar";
                 var adminresult = UserManager.Create(user, "pa$$w0rd");

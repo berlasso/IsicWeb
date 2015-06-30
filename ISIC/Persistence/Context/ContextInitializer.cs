@@ -27,10 +27,10 @@ namespace ISIC.Persistence.Context
         public void InitializeDatabase(ISICContext context )
         {
 
-            //if (!context.Database.Exists())
-            //{
-            //    context.Database.Create();
-            //}
+            if (!context.Database.Exists())
+            {
+                context.Database.Create();
+            }
             //jiraService = new JiraService();
             //Issue<IssueFields> issue = jiraService.GetIssue("010200000006V");
             //MPBA.Jira.Model.JiraUser usuario = new JiraUser();
@@ -44,13 +44,13 @@ namespace ISIC.Persistence.Context
             // CrearDatosJira(context);
 #if DEBUG
 
-            //if (!context.Database.CompatibleWithModel(false))
-            //{
-            //    context.Database.Delete();
-            //    context.Database.Create();
-            //}
+            if (!context.Database.CompatibleWithModel(false))
+            {
+                context.Database.Delete();
+                context.Database.Create();
+            }
 
-            //CrearDatosDePrueba(context);
+            CrearDatosDePrueba(context);
 
 
             

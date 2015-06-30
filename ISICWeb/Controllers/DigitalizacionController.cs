@@ -284,8 +284,12 @@ namespace ISICWeb.Controllers
             imputadoDb.ExisteMonodactilar = 1;
             imputadoDb.FechaUltimaModificacion = DateTime.Now;
             var issue = jiraService.GetIssue(imputadoDb.CodigoDeBarras);
-            Transition transition = jiraService.GetTransitions(issue).First();
-            issue = jiraService.TransitionIssue(issue, transition);
+            if (issue != null)
+            {  /*Actualiza estados del Jira cuando los imputados son nuevos y se esta segmentando, es nulo para los imputados segmentados a partir del cotejo manual*/
+                Transition transition = jiraService.GetTransitions(issue).First();
+
+                issue = jiraService.TransitionIssue(issue, transition);
+            }
             //imputadoDb.Estado = repository.Set<SICEstadoTramite>().First(x => x.Descripcion == "Para Clasificar");
 
             imputadoService.Actualizar(imputadoDb);

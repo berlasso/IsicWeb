@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.DirectoryServices;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Security.Claims;
@@ -61,7 +64,8 @@ namespace ISICWeb.Controllers
             return View(uvm);
         }
 
-        public ApplicationUserManager UserManager {
+        public ApplicationUserManager UserManager
+        {
             get
             {
                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -94,7 +98,7 @@ namespace ISICWeb.Controllers
 
                 if (user != null)
                 {
-                    if (user.activo==false)
+                    if (user.activo == false)
                         ModelState.AddModelError("", "El usuario se encuentra desactivado.");
                     else if (user.EmailConfirmed == false)
                         ModelState.AddModelError("", "El usuario no ha confirmado el email de verificación.");
@@ -116,9 +120,9 @@ namespace ISICWeb.Controllers
                         await UserManager.UpdateAsync(user);
 
 
-                        return RedirectToLocal(returnUrl);    
+                        return RedirectToLocal(returnUrl);
                     }
-                    
+
                 }
                 else
                 {
@@ -130,21 +134,21 @@ namespace ISICWeb.Controllers
             return View(model);
         }
 
-  
+
         /// <summary>
         /// trae propiedades adicionales de la tabla Users
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        private Dictionary<string,string> TraerPropiedades(string email)
+        private Dictionary<string, string> TraerPropiedades(string email)
         {
             ISICContext ctx = (ISICContext)_repository.UnitOfWork.Context;
             string usuario = Regex.Split(email, "@")[0];
             var pg = from u in ctx.Usuarios
-                join ppj in ctx.PersonalPoderJudicial
-                    on u.PersonalPoderJudicial.Id equals ppj.Id
-                where u.NombreUsuario == usuario
-                select ppj.PuntoGestion.Id;
+                     join ppj in ctx.PersonalPoderJudicial
+                         on u.PersonalPoderJudicial.Id equals ppj.Id
+                     where u.NombreUsuario == usuario
+                     select ppj.PuntoGestion.Id;
             string punto = pg.FirstOrDefault() ?? "";
             var subCodB = from s in ctx.ClaseCodBarraPuntoGestion
                           join p in ctx.PuntoGestion
@@ -152,34 +156,25 @@ namespace ISICWeb.Controllers
                           where s.PuntoGestion.Id == punto
                           select s.SubCodBarra;
             string subCodBarra = subCodB.FirstOrDefault() ?? "";
-            var dict = new Dictionary<string,string>();
-            dict.Add("idPuntoGestion",punto);
-            dict.Add("subCodBarra",subCodBarra);
+            var dict = new Dictionary<string, string>();
+            dict.Add("idPuntoGestion", punto);
+            dict.Add("subCodBarra", subCodBarra);
             return dict;
 
         }
 
 
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register1()
-        {
-            
-
-            return View();
-        }
 
 
         //
         // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ViewResult> Registrar(bool RegistrandoUsuarioViejo=false, string userId="", string code="")
+        public async Task<ViewResult> Registrar(bool RegistrandoUsuarioViejo = false, string userId = "", string code = "")
         {
             ViewBag.RegistrandoUsuarioViejo = RegistrandoUsuarioViejo;
-            
-            UsuarioViewModel uvm =await LlenarViewModelDesdeBase(userId);
+
+            UsuarioViewModel uvm = await LlenarViewModelDesdeBase(userId);
             uvm.code = code;
             return View(uvm);
         }
@@ -194,39 +189,39 @@ namespace ISICWeb.Controllers
             if (string.IsNullOrEmpty(model.ClaveUsuario))
             {
                 ModelState.AddModelError("ClaveUsuario", "La contraseña es requerida");
-                   return View("Registrar",model);   
+                return View("Registrar", model);
             }
             ApplicationUser u = UserManager.FindById(model.id);
-                //Usuarios u = _repository.Set<Usuarios>().Single(x => x.NombreUsuario == model.NombreUsuario);
-                //u.TokenEnviado = !model.EmailConfirmed;
-                u.activo = model.activo;
+            //Usuarios u = _repository.Set<Usuarios>().Single(x => x.NombreUsuario == model.NombreUsuario);
+            //u.TokenEnviado = !model.EmailConfirmed;
+            u.activo = model.activo;
             u.EmailConfirmed = true;
-                u.PasswordHash =Crypto.HashPassword(model.ClaveUsuario);
-                //_repository.UnitOfWork.RegisterChanged(u);
+            u.PasswordHash = Crypto.HashPassword(model.ClaveUsuario);
+            //_repository.UnitOfWork.RegisterChanged(u);
             IdentityResult resultado = null;
-                try
+            try
+            {
+                resultado = UserManager.Update(u);
+                //_repository.UnitOfWork.Commit();
+                if (resultado.Succeeded)
                 {
-                    resultado = UserManager.Update(u);
-                    //_repository.UnitOfWork.Commit();
-                    if (resultado.Succeeded)
-                    {
 
-                        RedirectToAction("ConfirmarEmail", new {userId = model.id, code = model.code});
-                    }
-                    ViewBag.Usuario = model.NombreUsuario;
-                    return View("~/Areas/Usuarios/Views/Usuarios/ConfirmarEmail.cshtml");
+                    RedirectToAction("ConfirmarEmail", new { userId = model.id, code = model.code });
                 }
-                catch
-                {
-                    return View("Error", null, "No se pudo guardar el alta.");
-                }
+                ViewBag.Usuario = model.NombreUsuario;
+                return View("ConfirmarEmail");
+            }
+            catch
+            {
+                return View("Error", null, "No se pudo guardar el alta.");
+            }
             //}
             //else
             //{
             //    string errores = string.Join("; ", ModelState.Values
             //                          .SelectMany(x => x.Errors)
             //                          .Select(x => x.ErrorMessage));
-            
+
 
             //    ModelState.AddModelError("", errores);
             //   return View("Register",model);
@@ -278,7 +273,7 @@ namespace ISICWeb.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmarEmail(string userId, string code)
         {
-            if (userId == null || code == null) 
+            if (userId == null || code == null)
             {
                 return View("Error");
             }
@@ -338,13 +333,13 @@ namespace ISICWeb.Controllers
         {
             return View();
         }
-	
+
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            if (code == null) 
+            if (code == null)
             {
                 return View("Error");
             }
@@ -360,7 +355,7 @@ namespace ISICWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await  UserManager.FindByEmailAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null)
                 {
                     ModelState.AddModelError("", "No se encontró ningún usuario.");
@@ -575,13 +570,13 @@ namespace ISICWeb.Controllers
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);
-                        
+
                         // Para obtener más información sobre cómo habilitar la confirmación de la cuenta y el restablecimiento de la contraseña, visite http://go.microsoft.com/fwlink/?LinkID=320771
                         // Enviar un correo electrónico con este vínculo
-                         //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // SendEmail(user.Email, callbackUrl, "Confirmar cuenta", "Haga clic en este vínculo para confirmar la cuenta");
-                        
+
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -599,7 +594,7 @@ namespace ISICWeb.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home", new {area=""});
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         //
@@ -685,14 +680,15 @@ namespace ISICWeb.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home", new {area=""});
+                return RedirectToAction("Index", "Home", new { area = "" });
             }
         }
 
-     
+
         private class ChallengeResult : HttpUnauthorizedResult
         {
-            public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
             {
             }
 
@@ -728,7 +724,7 @@ namespace ISICWeb.Controllers
         /// <returns></returns>
         public async Task<ViewResult> CompletarDatosSicNuevo(string us, string id = "nada")
         {
-            UsuarioViewModel uvm =await LlenarViewModelDesdeBase(id);
+            UsuarioViewModel uvm = await LlenarViewModelDesdeBase(id);
             uvm.Validando = true;
             uvm.id = null;
             uvm.UsuarioSicViejo = us;
@@ -753,18 +749,18 @@ namespace ISICWeb.Controllers
         /// <param name="us">usuario en el sic viejo</param>
         /// <param name="id">si es usuario mpba(1) o externo(2)</param>
         /// <returns></returns>
-        public ActionResult ValidarLoginSicNuevo(string us,int id=0)
+        public ActionResult ValidarLoginSicNuevo(string us, int id = 0)
         {
             ViewBag.us = us;
             if (id == 1)
             {
-                
+
                 return View();
             }
-                
+
             else if (id == 2)
             {
-              //  return RedirectToAction("Register",new {RegistrandoUsuarioViejo=true});
+                //  return RedirectToAction("Register",new {RegistrandoUsuarioViejo=true});
                 return RedirectToAction("CompletarDatosSicNuevo");
             }
             return null;
@@ -777,15 +773,15 @@ namespace ISICWeb.Controllers
 
         public ActionResult SeleccionDominio(string id)
         {
-            return View("DominioUsuario",null,id);
+            return View("DominioUsuario", null, id);
         }
 
         [HttpPost]
         public ActionResult ControlarUsuarioSic(UsuarioIsicViewModel u)
         {
-           // return null;
+            // return null;
             string perfil = "";
-          string errores = "";
+            string errores = "";
             if (ModelState.IsValid)
             {
                 wsSIC.Services ws = new wsSIC.Services();
@@ -818,7 +814,7 @@ namespace ISICWeb.Controllers
         [HttpPost]
         public ActionResult ControlarUsuarioIsic(UsuarioIsicViewModel u)
         {
-     //       return null;
+            //       return null;
             string errores = "";
             if (ModelState.IsValid)
             {
@@ -833,8 +829,8 @@ namespace ISICWeb.Controllers
                 {
                     errores = "No se pudo conectar al servidor remoto";
                 }
-                
-                
+
+
             }
             else
             {
@@ -845,7 +841,7 @@ namespace ISICWeb.Controllers
 
             if (errores == "")
             {
-                bool existente=_repository.Set<Usuarios>().Any(x => x.NombreUsuario.ToLower().Contains(u.usuario.Trim().ToLower()));
+                bool existente = _repository.Set<Usuarios>().Any(x => x.NombreUsuario.ToLower().Contains(u.usuario.Trim().ToLower()));
                 if (existente)
                     errores = "El usuario ya existe en la base del Isic";
 
@@ -863,11 +859,11 @@ namespace ISICWeb.Controllers
         public async Task<ViewResult> AltaModificacionUsuario(string depto = "", string id = "")
         {
             UsuarioViewModel uvm = await LlenarViewModelDesdeBase(id, depto);
-            
+
             return View(uvm);
         }
 
-        
+
 
         //
         // POST: /Account/Register
@@ -900,7 +896,7 @@ namespace ISICWeb.Controllers
             {
                 ModelState.AddModelError("", "Debe indicar el Departamento");
             }
-            
+
 
             if (ModelState.IsValid)
             {
@@ -914,12 +910,12 @@ namespace ISICWeb.Controllers
                     pg = _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == "00000000000000");//No Especifica
                 }
                 PersonalPoderJudicial ppj = null;
-                ApplicationUser usuario= await UserManager.FindByIdAsync(model.id);
+                ApplicationUser usuario = await UserManager.FindByIdAsync(model.id);
                 if (usuario == null)
                 {
                     int temp;
                     int ppjid = _repository.Set<PersonalPoderJudicial>().Select(x => x.Id).ToList().Select(n => int.TryParse(n, out temp) ? temp : 0).Max() + 1;
-                    ppj= new PersonalPoderJudicial
+                    ppj = new PersonalPoderJudicial
                     {
                         Id = ppjid.ToString(),
                         Persona = new Persona
@@ -930,7 +926,7 @@ namespace ISICWeb.Controllers
                             FechaCreacion = DateTime.Now,
                             FechaAlta = DateTime.Now,
                             FechaUltimaModificacion = DateTime.Now,
-                            Sexo = _repository.Set<ClaseSexo>().SingleOrDefault(x=>x.Id==model.Sexo.Id),
+                            Sexo = _repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == model.Sexo.Id),
                         },
                         PuntoGestion = pg
                     };
@@ -939,22 +935,22 @@ namespace ISICWeb.Controllers
                     usuario = new ApplicationUser
                     {
                         FechaCreacion = DateTime.Now,
-                        
-                        
+
+
                     };
                 }
                 else
                 {
-                    ppj =_repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == usuario.idPersonalPoderJudicial);
+                    ppj = _repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == usuario.idPersonalPoderJudicial);
                     if (ppj != null)
                     {
                         ppj.PuntoGestion = pg;
-                        ppj.JerarquiaPoderJudicial =_repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == model.Jerarquia.Id);
+                        ppj.JerarquiaPoderJudicial = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == model.Jerarquia.Id);
                         ppj.Persona.EMail = model.Email;
                         ppj.Persona.Apellido = model.Apellido;
                         ppj.Persona.Nombre = model.Nombre;
                         ppj.Persona.DocumentoNumero = model.DocumentoNumero;
-                        ppj.Persona.FechaUltimaModificacion=DateTime.Now;
+                        ppj.Persona.FechaUltimaModificacion = DateTime.Now;
                         ppj.Persona.Sexo = _repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == model.Sexo.Id);
                         _repository.UnitOfWork.RegisterChanged(ppj);
                         _repository.UnitOfWork.Commit();
@@ -965,7 +961,7 @@ namespace ISICWeb.Controllers
                     usuario.PasswordHash = null;
                 else
                 {
-                    usuario.PasswordHash = Crypto.HashPassword(model.ClaveUsuario);    
+                    usuario.PasswordHash = Crypto.HashPassword(model.ClaveUsuario);
                 }
                 usuario.idPersonalPoderJudicial = ppj.Id;
                 usuario.UserName = model.NombreUsuario;
@@ -976,17 +972,17 @@ namespace ISICWeb.Controllers
                 usuario.UsuarioMPBA = model.UsuarioMPBA;
                 usuario.idPuntoGestion = pg.Id;
                 usuario.subCodBarra = model.SubCodBarra;
-            
+
                 IdentityResult result = null;
                 bool usuarioNuevo = model.id == null;
                 if (usuarioNuevo)
                 {
-                   result= UserManager.Create(usuario);
+                    result = UserManager.Create(usuario);
                     //result = await UserManager.CreateAsync(usuario, _repository);
                 }
                 else
                 {
-                    result=await UserManager.UpdateAsync(usuario);
+                    result = await UserManager.UpdateAsync(usuario);
                 }
                 if (result.Succeeded)
                 {
@@ -996,8 +992,8 @@ namespace ISICWeb.Controllers
 
                     if (usuarioNuevo)
                     {
-                       errores=await ReenviarToken(usuario.Id);
-                        
+                        errores = await ReenviarToken(usuario.Id);
+
                     }
                     //user.idPuntoGestion = userProp["idPuntoGestion"];
                     //user.subCodBarra = userProp["subCodBarra"];
@@ -1015,7 +1011,7 @@ namespace ISICWeb.Controllers
                     AddErrors(result);
                     _repository.UnitOfWork.RegisterDeleted(ppj);
                     _repository.UnitOfWork.Commit();
-                  //  return Content("error");
+                    //  return Content("error");
                 }
             }
 
@@ -1031,10 +1027,10 @@ namespace ISICWeb.Controllers
             UsuarioViewModel uvm = new UsuarioViewModel
             {
                 UsuarioMPBA = true,
-                GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(),"id","Descripcion"),
-                JerarquiaList = new SelectList(_repository.Set<JerarquiaPoderJudicial>().ToList().OrderBy(x => x.Descripcion),"id","Descripcion"),
-                SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(),"Id","Descripcion"),
-                DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(),"Id","DepartamentoNombre"),
+                GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion"),
+                JerarquiaList = new SelectList(_repository.Set<JerarquiaPoderJudicial>().ToList().OrderBy(x => x.Descripcion), "id", "Descripcion"),
+                SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion"),
+                DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre"),
                 id = id,
                 NombreUsuario = id
             };
@@ -1050,15 +1046,15 @@ namespace ISICWeb.Controllers
                 uvm.Email = usuario.Email;
                 if (usuario.idPersonalPoderJudicial != null)
                 {
-                    PersonalPoderJudicial ppj =_repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == usuario.idPersonalPoderJudicial);
-                    if (ppj!=null && ppj.Persona != null && ppj.Persona.Sexo != null)
-                        uvm.Sexo =_repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == ppj.Persona.Sexo.Id);
+                    PersonalPoderJudicial ppj = _repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == usuario.idPersonalPoderJudicial);
+                    if (ppj != null && ppj.Persona != null && ppj.Persona.Sexo != null)
+                        uvm.Sexo = _repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == ppj.Persona.Sexo.Id);
                     if (ppj != null && ppj.JerarquiaPoderJudicial != null)
-                        uvm.Jerarquia =_repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == ppj.JerarquiaPoderJudicial.Id);
+                        uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == ppj.JerarquiaPoderJudicial.Id);
                     if (ppj != null && ppj.PuntoGestion != null)
-                        uvm.PuntoGestion =_repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == ppj.PuntoGestion.Id);
+                        uvm.PuntoGestion = _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == ppj.PuntoGestion.Id);
                     if (ppj != null && ppj.PuntoGestion != null && ppj.PuntoGestion.Departamento != null)
-                        uvm.Departamento =_repository.Set<Departamento>().SingleOrDefault(x => x.Id == ppj.PuntoGestion.Departamento.Id);
+                        uvm.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id == ppj.PuntoGestion.Departamento.Id);
                     if (ppj != null && ppj.Persona != null)
                     {
                         uvm.DocumentoNumero = ppj.Persona.DocumentoNumero;
@@ -1070,7 +1066,7 @@ namespace ISICWeb.Controllers
                 uvm.activo = usuario.activo;
                 uvm.Dependencia = usuario.Dependencia;
                 if (usuario.idGrupoUsuario != null)
-                    uvm.GrupoUsuario =_repository.Set<GrupoUsuario>().SingleOrDefault(x => x.id == usuario.idGrupoUsuario);
+                    uvm.GrupoUsuario = _repository.Set<GrupoUsuario>().SingleOrDefault(x => x.id == usuario.idGrupoUsuario);
                 uvm.UsuarioMPBA = usuario.UsuarioMPBA ?? true;
 
             }
@@ -1079,11 +1075,11 @@ namespace ISICWeb.Controllers
                 uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == 3);//No especifica
                 uvm.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id.ToString() == depto);
             }
-            
+
             return uvm;
         }
 
-        public async Task<string> ReenviarToken( string uid = "")
+        public async Task<string> ReenviarToken(string uid = "")
         {
             ApplicationUser u = await UserManager.FindByIdAsync(uid);
             //ApplicationUser u =await UserManager.FindByIdExtendido(uid, _repository);
@@ -1093,8 +1089,8 @@ namespace ISICWeb.Controllers
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(uid);
 
                 string callbackUrl = "";
-                if (u.UsuarioMPBA==true)
-                    callbackUrl=Url.Action("ConfirmarEmail", "Account", new { userId = uid, code = code }, protocol: Request.Url.Scheme);
+                if (u.UsuarioMPBA == true)
+                    callbackUrl = Url.Action("ConfirmarEmail", "Account", new { userId = uid, code = code }, protocol: Request.Url.Scheme);
                 else
                 {
                     //callbackUrl = Url.Action("Registrar", "Account", new { userId = uid, code = code }, protocol: Request.Url.Scheme);
@@ -1104,24 +1100,24 @@ namespace ISICWeb.Controllers
                 try
                 {
                     u.EmailConfirmed = false;
-                 errores=   EnviarMail(u, callbackUrl);
+                    errores = EnviarMail(u, callbackUrl);
                     IdentityResult result = await UserManager.UpdateAsync(u);
                     if (result == IdentityResult.Failed())
                     {
                         errores += "No se pudo desmarcar emailconfirmed";
                     }
                 }
-                
+
                 //u.PersonalPoderJudicial =
                 //    _repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == u.PersonalPoderJudicial.Id);
                 //Guid token = Guid.NewGuid();
                 //u.TokenEnviado = token;
                 //u.Email = e;
-                
-                
+
+
                 //u.SecurityStamp = token.ToString();
                 //_repository.UnitOfWork.RegisterChanged(u);
-                
+
                 catch (DbEntityValidationException ex)
                 {
                     StringBuilder sb = new StringBuilder();
@@ -1171,7 +1167,7 @@ namespace ISICWeb.Controllers
                 Subject = "Verificacion Cuenta ISIC",
                 NombreUsuario = u.NombreUsuario,
                 UsuarioMPBA = u.UsuarioMPBA,
-                Link=callbackUrl,
+                Link = callbackUrl,
                 Dependencia = string.IsNullOrEmpty(u.Dependencia) ? ppj.PuntoGestion.Descripcion : u.Dependencia
             };
 
@@ -1200,7 +1196,7 @@ namespace ISICWeb.Controllers
         [HttpPost]
         public ActionResult Buscar(UsuarioViewModel model)
         {
-            var ctx=new ApplicationDbContext();
+            var ctx = new ApplicationDbContext();
 
             IEnumerable<ApplicationUser> usuarios = null;
             switch (model.Departamento.Id)
@@ -1209,28 +1205,28 @@ namespace ISICWeb.Controllers
                     usuarios = UserManager.Users.ToList();
                     break;
                 case 22: // fuera mpba
-                    usuarios = UserManager.Users.Where(x=>x.Dependencia != null && x.Dependencia != "");
+                    usuarios = UserManager.Users.Where(x => x.Dependencia != null && x.Dependencia != "");
                     break;
                 default:
-                    usuarios = UserManager.Users.Where(x => x.idPersonalPoderJudicial!=null && x.idPuntoGestion!=null);
+                    usuarios = UserManager.Users.Where(x => x.idPersonalPoderJudicial != null && x.idPuntoGestion != null);
 
                     break;
             }
             var lista = (from u in usuarios
-                from p in _repository.Set<PersonalPoderJudicial>().Where(x => x.Id == u.idPersonalPoderJudicial)
-                select new UsuarioViewModel
-                {
-                    id=u.Id,
-                    Apellido = p.Persona.Apellido,
-                    NombreUsuario = u.NombreUsuario,
-                    PersonalPoderJudicial = p,
-                    Dependencia = u.Dependencia,
-                    Email = u.Email,
-                    Nombre = p.Persona.Nombre,
-                    PuntoGestion = p.PuntoGestion,
-                    EmailConfirmed = u.EmailConfirmed,
-                    UsuarioMPBA = (u.UsuarioMPBA ?? false),
-                }
+                         from p in _repository.Set<PersonalPoderJudicial>().Where(x => x.Id == u.idPersonalPoderJudicial)
+                         select new UsuarioViewModel
+                         {
+                             id = u.Id,
+                             Apellido = p.Persona.Apellido,
+                             NombreUsuario = u.NombreUsuario,
+                             PersonalPoderJudicial = p,
+                             Dependencia = u.Dependencia,
+                             Email = u.Email,
+                             Nombre = p.Persona.Nombre,
+                             PuntoGestion = p.PuntoGestion,
+                             EmailConfirmed = u.EmailConfirmed,
+                             UsuarioMPBA = (u.UsuarioMPBA ?? false),
+                         }
                 );
             return PartialView("_ResultadosBusqueda", lista);
         }
@@ -1238,7 +1234,7 @@ namespace ISICWeb.Controllers
         public async Task<RedirectToRouteResult> Prueba()
         {
             ApplicationUser user = await UserManager.FindByIdAsync("d4de5ab1-bc89-4965-93a8-746040fe5ce6");
-            
+
             //int temp;
             //int ppjid = _repository.Set<PersonalPoderJudicial>().Select(x => x.Id).ToList().Select(n => int.TryParse(n, out temp) ? temp : 0).Max() + 1;
             //PersonalPoderJudicial ppj = new PersonalPoderJudicial
@@ -1270,8 +1266,8 @@ namespace ISICWeb.Controllers
             string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             UserManager.VerifyUserToken("d4de5ab1-bc89-4965-93a8-746040fe5ce6", "email", "bla");
             UserManager.GenerateUserToken("email", "d4de5ab1-bc89-4965-93a8-746040fe5ce6");
-          //  var callbackUrl = Url.Action("ConfirmarEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-           // EnviarMail(user, callbackUrl);
+            //  var callbackUrl = Url.Action("ConfirmarEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            // EnviarMail(user, callbackUrl);
             return RedirectToAction("Index", "Home");
         }
 
@@ -1313,6 +1309,60 @@ namespace ISICWeb.Controllers
 
         }
 
+
+        public JsonResult BuscarUsuariosMPBAPorApellido(string apellido)
+        {
+
+            string nombre = "";
+            bool huboError = false;
+            string errorMessage = "";
+            DirectoryEntry objRoot = new DirectoryEntry("LDAP://rootDSE");
+            DirectoryEntry objUsers = new DirectoryEntry("LDAP://" + (string)objRoot.Properties["defaultNamingContext"].Value);
+            DirectorySearcher Filter1 = new DirectorySearcher(objUsers);
+            Filter1.Filter = "(&(objectClass=user)(CN=*" + apellido + "*))";
+            SearchResultCollection FilterResult1 = Filter1.FindAll();
+            int cant = FilterResult1.Count;
+            string usuarios = "";
+            ArrayList lista = new ArrayList();
+            if (cant > 0)
+            {
+                foreach (SearchResult iter in FilterResult1)
+                {
+                    //TableRow row = new TableRow();
+                    
+                    string usuario = (string)iter.GetDirectoryEntry().Properties["sAMAccountName"].Value;
+                    string apenom = (string)iter.GetDirectoryEntry().Properties["CN"].Value;
+                    if (apenom != "")
+                    {
+                        apellido = apenom.Substring(apenom.LastIndexOf(' ') + 1);
+                        nombre = apenom.Substring(0, apenom.LastIndexOf(' '));
+                    }
+                    lista.Add(new {usuario = usuario, apellido = apellido, nombre = nombre});
+                }
+
+            }
+            //var json = new { apellido = r.Id, label = r.Descripcion.Trim(), name = "PuntoGestionID", deptoId = r.Departamento.Id });
+            return Json(lista, JsonRequestBehavior.AllowGet);
+
+            //if (cant > 0)
+            //{
+            //}
+
+
+            //JsonResult json = new JsonResult
+            //{
+            //    Data = new
+            //    {
+            //        HuboError = huboError,
+            //        ErrorMessage = errorMessage,
+            //        Apellido = apellido,
+            //        Nombre = nombre
+            //    },
+            //    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            //};
+            //return new JsonResult {Data = json, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+
+        }
         public ActionResult BuscarPuntoGestion(string term, string depto)
         {
             if (depto == "0")

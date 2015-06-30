@@ -36,13 +36,11 @@ namespace ISIC.Services
         {
             Issue<IssueFields> issue = null;
             var issues = GetIssuesByQuery("IG", "TASK", "summary ~ \"" + codigoBarra + "\"");
-            if (issues != null)
+            if (issues.Count() > 0)
                 issue = issues.First();
            
             return issue;
         }
-        
-        
         public Issue<IssueFields> TransitionIssue(Issue<IssueFields> issue, Transition transition)
         {
             var issues = jira.TransitionIssue(issue, transition);

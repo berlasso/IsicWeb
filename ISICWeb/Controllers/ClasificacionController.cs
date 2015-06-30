@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MPBA.Jira;
+using MPBA.Jira.Model;
+
 
 namespace ISICWeb.Controllers
 {
@@ -16,6 +19,7 @@ namespace ISICWeb.Controllers
     {
         private IImputadoService imputadoService;
         private IBioDactilarService bioDactilarService;
+         private IJiraService jiraService;
 
         public ClasificacionController(IImputadoService imputadoService,
                                        IBioDactilarService bioDactilarService)
@@ -33,7 +37,13 @@ namespace ISICWeb.Controllers
             }
             return View();
         }
-
+         
+        [HttpPost]
+        public ActionResult Index()
+        {
+            return View();
+          
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ResultadoBusquedaImputado(CodigoBarraViewModel model)
@@ -88,6 +98,18 @@ namespace ISICWeb.Controllers
             return View();
         }
 
+        public ActionResult Finalizar(string codBarra)
+        {
+            jiraService = new JiraService();
+            Issue<IssueFields> issue = jiraService.GetIssue(codBarra);
+            if (issue != null)
+            {
+                Transition transition = jiraService.GetTransitions(issue).First();
+                jiraService.TransitionIssue(issue, transition);
+            }
+            return RedirectToAction("IndexPorTareas", "Imputado");
+        }
+
         [HttpPost]
         public ActionResult Clasificar(BioDactilarViewModel BioDactilarViewModel)
         {
@@ -124,5 +146,8 @@ namespace ISICWeb.Controllers
 
             return Json(listaSubclasificaciones, JsonRequestBehavior.AllowGet);
         }
+        
+        
+        
     }
 }
