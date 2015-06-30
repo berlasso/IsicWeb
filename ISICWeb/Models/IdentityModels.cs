@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -23,12 +24,11 @@ namespace ISICWeb.Models
         public string subCodBarra { get; set; }
         public string NombreUsuario { get; set; }
         
-        public string ClaveUsuario { get; set; }
+        //public string ClaveUsuario { get; set; }
         public string UsuarioSicViejo { get; set; }
-        //public virtual PersonalPoderJudicial PersonalPoderJudicial { get; set; }
+        public string idPersonalPoderJudicial { get; set; }
         public bool activo { get; set; }
-        public virtual GrupoUsuario GrupoUsuario { get; set; }
-        public Guid? TokenEnviado { get; set; }
+        public int? idGrupoUsuario { get; set; }
         public DateTime? FechaCreacion { get; set; }
         public string UsuarioCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
@@ -52,7 +52,10 @@ namespace ISICWeb.Models
 
             return userIdentity;
         }
+
+
     }
+
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -71,35 +74,38 @@ namespace ISICWeb.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<IdentityUser>().ToTable("Usuarios1");
-            modelBuilder.Entity<ApplicationUser>().ToTable("Usuarios1");
-            modelBuilder.Entity<IdentityUserRole>().ToTable("UsuariosRoles1");
-            modelBuilder.Entity<IdentityUserLogin>().ToTable("Logins1");
-            modelBuilder.Entity<IdentityUserClaim>().ToTable("Claims1");
-            modelBuilder.Entity<IdentityRole>().ToTable("Roles1");
+
+            modelBuilder.Entity<IdentityUser>().ToTable("UsuariosIsic");
+            modelBuilder.Entity<ApplicationUser>().ToTable("UsuariosIsic");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UsuariosRoles");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("Logins");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("Claims");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+
         }
     }
 
-
+    
     public class SecurityContextInitializer : IDatabaseInitializer<ApplicationDbContext>
     {
         public void InitializeDatabase(ApplicationDbContext context)
         {
             // Me aseguro que la base ISIC este creada
-            IDbContext ctx = DependencyResolver.Current.GetService<IDbContext>();
-            if (!ctx.Database.Exists())
-            {
-                ctx.Database.Initialize(true);
-            }
+            //IDbContext ctx = DependencyResolver.Current.GetService<IDbContext>();
+            //if (!ctx.Database.Exists())
+            //{
+            //    ctx.Database.Initialize(true);
+            //}
 
-            if (!CheckIfTableUsersExists(context))
-            {
-                // create all model tables
-                var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
-                context.Database.ExecuteSqlCommand(dbCreationScript);
-            }
-            CreateUserPrueba(context);
+            //if (!CheckIfTableUsersExists(context))
+            //{
+            //    // create all model tables
+            //    var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
+            //    context.Database.ExecuteSqlCommand(dbCreationScript);
+            //}
+            //CreateUserPrueba(context);
         }
 
         public void CreateUserPrueba(ApplicationDbContext context)
@@ -124,7 +130,7 @@ namespace ISICWeb.Models
                 var user = new ApplicationUser();
                 user.Email = "prueba@mpba.gov.ar";
                 user.EmailConfirmed = false;
-                user.PasswordHash = Crypto.HashPassword("pa$$w0rd");
+                //user.PasswordHash = Crypto.HashPassword("pa$$w0rd");
                 user.UserName = "prueba@mpba.gov.ar";
                 var adminresult = UserManager.Create(user, "pa$$w0rd");
 
@@ -138,7 +144,7 @@ namespace ISICWeb.Models
         public bool CheckIfTableUsersExists(ApplicationDbContext context)
         {
             int result = context.Database.SqlQuery<int>(@"
-                IF EXISTS (SELECT * FROM sys.tables WHERE name = 'Usuarios1') 
+                IF EXISTS (SELECT * FROM sys.tables WHERE name = 'UsuariosIsic') 
                     SELECT 1
                 ELSE
                     SELECT 0

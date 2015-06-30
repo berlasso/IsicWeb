@@ -282,11 +282,9 @@
   <ItemGroup>
     <Compile Include="Areas\Afis\AfisAreaRegistration.cs" />
     <Compile Include="Areas\Afis\Models\ImputadosAfisViewModel.cs" />
-    <Compile Include="Areas\Usuarios\Models\UsuarioViewModel.cs" />
-    <Compile Include="Areas\Usuarios\Models\VerificacionEmail.cs" />
-    <Compile Include="Areas\Usuarios\UsuariosAreaRegistration.cs" />
-    <Compile Include="Areas\Usuarios\Controllers\UsuariosController.cs" />
+    <Compile Include="Models\UsuarioViewModel.cs" />
     <Compile Include="Models\UsuarioIsicViewModel.cs" />
+    <Compile Include="Models\VerificacionEmail.cs" />
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Web References\wsSIC\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -395,8 +393,6 @@
     <Content Include="Areas\PortalSIC\Scripts\portalsicJs.js" />
     <Content Include="Areas\PortalSIC\Scripts\prettyPhotoSetup.js" />
     <Content Include="Areas\PortalSIC\Scripts\printThis.js" />
-    <Content Include="Areas\Usuarios\Content\usuariosStyle.css" />
-    <Content Include="Areas\Usuarios\Scripts\usuariosJs.js" />
     <Content Include="Content\alertifyjs\alertify.css" />
     <Content Include="Content\alertifyjs\alertify.min.css" />
     <Content Include="Content\alertifyjs\alertify.rtl.css" />
@@ -1374,18 +1370,11 @@
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\ListadoMigraciones.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\_SummaryErrorMigraciones.cshtml" />
     <Content Include="Areas\Antecedentes\Views\AntecedentesMigraciones\AltaModificacionMigraciones.cshtml" />
-    <Content Include="Areas\Usuarios\Views\Usuarios\AltaModificacionUsuario.cshtml" />
-    <Content Include="Areas\Usuarios\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Usuarios\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Usuarios\Views\web.config" />
-    <Content Include="Areas\Usuarios\Views\Usuarios\_SummaryErrorUsuario.cshtml" />
     <Content Include="Areas\Afis\Views\web.config" />
     <Content Include="Areas\Afis\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\_DetalleImputado.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\Index.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\ResultadoBusqueda.cshtml" />
-    <Content Include="Areas\Usuarios\Views\Usuarios\ConfirmarEmail.cshtml" />
-    <Content Include="Areas\Usuarios\Views\Usuarios\Index.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1497,7 +1486,7 @@
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Registrar.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -1528,7 +1517,6 @@
     <Content Include="Views\CotejoManual\VisualizaParesDecaDactilares.cshtml" />
     <Content Include="Views\Shared\DataTable.cshtml" />
     <None Include="Areas\Afis\Views\Afis\Index.cshtml" />
-    <Content Include="Areas\Usuarios\Views\Usuarios\_ResultadosBusqueda.cshtml" />
     <Content Include="Views\Account\ValidarLoginSicViejo.cshtml" />
     <Content Include="Views\Account\_SummaryErrorSic.cshtml" />
     <Content Include="Views\Account\ValidarLoginSicNuevo.cshtml" />
@@ -1540,6 +1528,10 @@
     <Content Include="Views\Account\Register1.cshtml" />
     <Content Include="Views\Account\AltaModificacionUsuario.cshtml" />
     <Content Include="Views\Account\_SummaryErrorUsuario.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\_ResultadosBusqueda.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ConfirmarEmail.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />
@@ -1555,10 +1547,10 @@
     <Content Include="Web References\wsSIC\MyResultadoObject.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
-    <Content Include="Web References\wsSIC\Reference.map">
+    <None Include="Web References\wsSIC\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Web References\wsSIC\webservice.wsdl" />
     <None Include="Web.Desa.config">
       <DependentUpon>Web.config</DependentUpon>

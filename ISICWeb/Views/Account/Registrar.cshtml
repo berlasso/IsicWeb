@@ -1,4 +1,4 @@
-﻿@model ISICWeb.Areas.Usuarios.Models.UsuarioViewModel
+﻿@model ISICWeb.Models.UsuarioViewModel
 @{
     ViewBag.Title = "Registrarse";
 }
@@ -16,7 +16,7 @@
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.NombreUsuario)
                 @Html.HiddenFor(m => m.id)
-                @Html.HiddenFor(m => m.TokenEnviado)
+                @Html.HiddenFor(m=>m.code)
                 @Html.HiddenFor(m => m.activo)
 
                 <div class="panel panel-default tile wow fadeInDown animated" style="margin: 60px 0 80px 0">

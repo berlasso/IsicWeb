@@ -9,6 +9,8 @@ using MPBA.RenaperClient;
 using System.Configuration;
 using System.Security.Cryptography.X509Certificates;
 using System;
+using ISICWeb.Models;
+using Microsoft.AspNet.Identity;
 
 namespace ISICWeb
 {
@@ -43,7 +45,7 @@ namespace ISICWeb
                     (StoreName)Enum.Parse(typeof(StoreName), storeName)
                 )
             );
-
+            
             container.RegisterType<AccountController>(new InjectionConstructor(new ResolvedParameter<IRepository>()));
             //container.RegisterType<AccountController>(new InjectionConstructor());
             

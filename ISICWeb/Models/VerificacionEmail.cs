@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Postal;
 
-namespace ISICWeb.Areas.Usuarios.Models
+namespace ISICWeb.Models
 {
     public class VerificacionEmail : Email
     {
@@ -18,5 +18,6 @@ namespace ISICWeb.Areas.Usuarios.Models
         public string Subject { get; set; }
         public string NombreUsuario { get; set; }
         public bool? UsuarioMPBA { get; set; }
+        public string Link { get; set; }
     }
 }

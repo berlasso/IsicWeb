@@ -1,4 +1,4 @@
-﻿@model ISICWeb.Areas.Usuarios.Models.UsuarioViewModel
+﻿@model ISICWeb.Models.UsuarioViewModel
 
 
 @{
@@ -96,7 +96,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-6">
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    @Html.ActionLink("Nuevo","AltaModificacionUsuario",new {area="Usuarios"} ,new {@id="btnNuevoUsuario",@class="btn btn-alt btn-lg"})
+                                    @Html.ActionLink("Nuevo","AltaModificacionUsuario",new {area=""} ,new {@id="btnNuevoUsuario",@class="btn btn-alt btn-lg"})
                                     @*<input type="submit" class="btn btn-lg btn-alt" value="Buscar" id="btnBuscar" />*@
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
             $("#titulo").text("Usuarios");
         else
             $("#titulo").text("Usuarios Departamento " + $("#Departamento_Id option:selected").text());
-        $("#btnNuevoUsuario").attr("href",' @Url.Action("AltaModificacionUsuario","Usuarios")?depto='+$("#Departamento_Id").val());
+        $("#btnNuevoUsuario").attr("href",' @Url.Action("AltaModificacionUsuario","Account")?depto='+$("#Departamento_Id").val());
         $("#frmBuscar").submit();
     });
 
