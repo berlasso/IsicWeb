@@ -93,19 +93,19 @@ namespace ISICWeb.Models
         public void InitializeDatabase(ApplicationDbContext context)
         {
             // Me aseguro que la base ISIC este creada
-            IDbContext ctx = DependencyResolver.Current.GetService<IDbContext>();
-            if (!ctx.Database.Exists())
-            {
-                ctx.Database.Initialize(true);
-            }
+           // IDbContext ctx = DependencyResolver.Current.GetService<IDbContext>();
+            //if (!ctx.Database.Exists())
+            //{
+            //    ctx.Database.Initialize(true);
+            //}
 
-            if (!CheckIfTableUsersExists(context))
-            {
-                // create all model tables
-                var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
-                context.Database.ExecuteSqlCommand(dbCreationScript);
-            }
-            CreateUserPrueba(context);
+            //if (!CheckIfTableUsersExists(context))
+            //{
+            //    // create all model tables
+            //    var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
+            //    context.Database.ExecuteSqlCommand(dbCreationScript);
+            //}
+            //CreateUserPrueba(context);
         }
 
         public void CreateUserPrueba(ApplicationDbContext context)
