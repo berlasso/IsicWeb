@@ -1,0 +1,434 @@
+﻿@using System.Web.Hosting
+@using System.Web.UI.WebControls
+@model ISICWeb.Areas.Usuarios.Models.UsuarioViewModel
+@{
+    bool modificando = !string.IsNullOrEmpty(Model.id);
+    string display = Model.UsuarioMPBA ? "block" : "none";
+}
+@using (Ajax.BeginForm("GuardarDatosUsuario", "Usuarios",
+  new AjaxOptions
+                {
+                    UpdateTargetId = "divValidation",
+                    HttpMethod = "Post",
+                    OnBegin = "onGuardarBegin",
+                    OnComplete = "onGuardarComplete",
+                    OnSuccess = "onGuardarSuccess"
+                },
+                new { id = "frmGuardarDatosUsuario" }))
+{    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Validando)
+    @*@Html.Hidden("UsuarioMPBA",Model.UsuarioMPBA.ToString())*@
+    <div class=" center wow fadeInDown animated tile-light">
+        <h3>
+            Carga datos del Usuario
+        </h3>
+    </div>
+
+
+    <div class="panel panel-default tile wow fadeInDown animated" style="margin-bottom: 80px;">
+    <div class="panel-heading">
+        @if (modificando)
+        {
+            <h2>
+                <b style="color: red">Modificación</b> del Usuario
+
+            </h2>
+            {
+                string displayCartelToken = @Model.TokenEnviado.HasValue ? "" : "hidden";
+
+
+                <small id="cartelTokenEnviado">
+                    @Html.Label("Token Enviado sin confirmar", new { style = "color:yellowgreen", @class = @displayCartelToken })
+
+                </small>
+            }
+
+
+            <a href="#" id="EnviarToken" class="btn btn-alt btn-sm" title="Reenvia el token al mail indicado, desactivando la cuenta hasta que sea confirmada por el usuario">Reenviar Token</a>
+        }
+        else
+        {
+            if (Model.Validando)
+            {
+                <h2>VALIDACION: PASO FINAL</h2>
+            }
+            <h4>Cargando Nuevo Usuario</h4>
+
+
+        }
+        <h5></h5>
+
+    </div>
+
+    
+    <div class="panel-body">
+
+            <div class="row wow fadeInDown animated">
+                <div class="col-md-4">
+                    @if (!Model.Validando)
+                    {
+                        @Html.LabelFor(model => model.UsuarioMPBA)
+                        @Html.CheckBoxFor(model => model.UsuarioMPBA)
+                    }
+                    else
+                    {
+                      
+                        @Html.HiddenFor(model=>model.UsuarioMPBA)
+                    }
+                </div>
+                <div class="col-md-4">
+
+
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+
+            <div class="row wow fadeInDown animated">
+
+
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-10">
+                            @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label required" })
+
+
+                            @*@Html.EditorFor(model => model.NombreUsuario, !modificando ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)*@
+                            @if (!modificando && Model.Validando != null && Model.Validando != true)
+                            {
+                                <div class="form-group">
+                                    <div class='input-group '>
+                                        @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control" })
+                                        <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA" title="Consultar usuario en MPBA">
+                                            <span class="flaticon-zoom22"></span>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            }else if (Model.Validando && Model.UsuarioMPBA==false)
+                            {
+                                @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control"})
+
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control", @readonly = "readonly" })
+
+                            }
+
+                            @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger " })<br />
+                            <div class="alert alert-info" id="divUsuarioMPBAEncontrado" style="display: none" role="alert"></div>
+                        </div>
+                        <div class="col-md-2">
+                            @if (!Model.Validando)
+                            {
+                                <div class="col-xs-1">
+                                    <br />
+                                    @Html.LabelFor(model => model.activo, htmlAttributes: new { @class = "control-label", style = "font-style: italic; color: yellow" })
+
+                                    @Html.CheckBoxFor(model => model.activo, new { title = "Se activa automaticamente cuando usuario confirma mail. Solo tildar para casos excepcionales.", style = "font-style: italic; color: yellow" })
+
+
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="clearfix"></div>
+                @if (Model.Validando && Model.UsuarioMPBA == false)
+                {
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ClaveUsuario, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ClaveUsuario, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ClaveUsuario, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ConfirmarClaveUsuario, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ConfirmarClaveUsuario, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ConfirmarClaveUsuario, "", new { @class = "text-danger" })
+
+                    </div>
+                }
+                @{
+    var usuarioMPBA = Model.UsuarioMPBA == true ? "none" : "block";
+                }
+          
+                <div id="colDependencia" class="col-md-4 " style="display: @usuarioMPBA">
+                    @Html.Label("Dependencia", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Dependencia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Dependencia, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div id="colDepartamento" class="col-md-4" style="display: @display ">
+                    @Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label required" })
+                    @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, new { @class = "form-control" })
+
+
+                </div>
+                <div id="colPuntoGestion" class="col-md-4" style="display: @display ">
+                    @Html.HiddenFor(model => model.PuntoGestion.Id)
+
+                    @Html.Label("Punto Gestión", new { Id = "lblPuntoGestion required" })
+
+                    @Html.EditorFor(model => model.PuntoGestion.Descripcion, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Seleccione Depto. para filtrar" } })
+                    @Html.ValidationMessageFor(model => model.PuntoGestion.Descripcion, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label required" })
+                    @if (Model.UsuarioMPBA)
+                    {
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    }
+                    else
+                    {
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    }
+
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                </div>
+         
+                
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.DocumentoNumero, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.DocumentoNumero, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DocumentoNumero, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label required" })
+                    @Html.DropDownListFor(x => x.Sexo.Id, Model.SexoList as SelectList, new { @class = "form-control" })
+@Html.ValidationMessageFor(model => model.Sexo, "", new { @class = "text-danger" })
+
+                </div>
+
+                @if (!Model.Validando)
+                {
+                    <div class="col-md-4 ">
+                        @Html.LabelFor(model => model.GrupoUsuario, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(x => x.GrupoUsuario.id, Model.GrupoUsuarioList as SelectList, new { @class = "form-control" })
+                    </div>
+                }
+
+
+
+                @if (!Model.Validando)
+                {
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.SubCodBarra, htmlAttributes: new { @class = "control-label " })
+                        @Html.EditorFor(model => model.SubCodBarra, new { htmlAttributes = new { @class = "form-control", Title = "Para carga de OTIPs: por ej.: en 011701000001A seria 1701" } })
+                        @Html.ValidationMessageFor(model => model.SubCodBarra, "", new { @class = "text-danger" })
+                    </div>
+                }
+
+
+                <div class="col-md-4 ">
+                    @Html.LabelFor(model => model.Jerarquia, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(x => x.Jerarquia.Id, Model.JerarquiaList as SelectList, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+
+
+            <div class="row wow fadeInDown animated">
+                <div class="col-md-12" id="divValidation">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.id)
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+        <div class="row">
+            <div class="  col-sm-3 col-xs-3">
+                @if (!Model.Validando)
+                {
+                    @Html.ActionLink("Volver", "Index", "", new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+                }
+
+
+
+
+            </div>
+            <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-8">
+                <div class="row ">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <input type="submit" value="Guardar" class="btn btn-alt btn-lg" />
+                        @if (!Model.Validando)
+                        {
+                            @Html.Label("Enviar Email de confirmación")
+                            @Html.CheckBox("EnviarMail", true)
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </nav>
+}
+
+@section scripts
+{
+    <script>
+
+        $("#Departamento_Id").change(function () {
+            $("#PuntoGestion_Id").val("");
+            $("#PuntoGestion_Descripcion").val("");
+            $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
+        });
+        $('#PuntoGestion_Descripcion').bind('autocompleteselect', function (event, ui) {
+            $("#PuntoGestion_Id").val(ui.item.id);
+            $("#Departamento_Id").val(ui.item.deptoId);
+            $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
+        });
+
+
+        $("#PuntoGestion_Descripcion").on("autocompletechange", function (event, ui) {
+            if (this.value.trim() === '') {
+                $("#PuntoGestion_Id").val("");
+            }
+            if ($("#PuntoGestion_Id").val().trim() === "") {
+                this.value = "";
+            };
+
+        });
+
+        $("#PuntoGestion_Descripcion").autocomplete({
+            minLength: 3,
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("BuscarPuntoGestion", "Usuarios")',
+                    type: "GET",
+                    dataType: "json",
+                    autoFocus: true,
+
+
+                    data: { term: request.term, depto: $("#Departamento_Id").val() },
+
+                    success: function (data) {
+                        $("#PuntoGestion_Id").val("");
+                        response($.map(data, function (item) {
+
+                            return { label: item.label, value: item.label, id: item.id, deptoId: item.deptoId };
+                        }));
+                    }
+                });
+            },
+        });
+
+        var urlBuscarUsuario = '@Url.Action("BuscarUsuarioMPBA", "Usuarios")?u=';
+
+        //GUARDAR DATOS Usuario
+        function onGuardarBegin() {
+            loader("Guardando, espere un momento...");
+        }
+
+        function onGuardarComplete() {
+            $.unblockUI();
+        }
+
+        function onGuardarSuccess(data) {
+            if (data == "") {
+                //alertify.success("Alta exitosa");
+                var url = '@Url.Action("Index", "Usuarios")';
+                var msg = "<i class='Exito'>Carga Exitosa</i>";
+                var validando = $("#validando").val();
+                if (validando == true) {
+                    msg = msg + "<br/>A la brevedad se le enviará un email a la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC."
+                }
+                alertify.alert("Exito", msg).set({
+                    onclose: function () {
+                        showPageLoadingSpinner();
+                        location.href = url;
+
+                    }
+                });
+
+
+            } else {
+                alertify.error("Error en la carga");
+
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+            }
+        }
+
+
+        $(document).ready(function () {
+            $('[title]').tooltip();
+            $("#navFooter").hide();
+            $("#SubCodBarra").mask("9999");
+            $("#EnviarToken").click(function () {
+                $.ajax({
+                    url: '@Url.Action("ReenviarToken", "Usuarios")?uid=@Model.id&e=@Model.Email',
+                    type: "GET",
+                    autoFocus: true,
+                    beforeSend: function () {
+                        $("#EnviarToken").addClass("disabled");
+                    },
+                    complete: function () {
+                        $("#EnviarToken").removeClass("disabled");
+                    },
+                    success: function (data) {
+                        if (data == "") {
+                            alertify.success("Token enviado correctamente");
+                            $("#activo").attr("checked", false);
+                            $("#cartelTokenEnviado").removeClass("hidden");
+                        } else {
+                            alertify.error(data, 0);
+                        }
+
+                    }
+                });
+            });
+            $("#NombreUsuario").keyup(function () {
+                if ($("#UsuarioMPBA").val()=="True")
+                    $("#Email").val($(this).val() + '@@MPBA.gov.ar');
+            });
+
+            $("#UsuarioMPBA").change(function () {
+                $("#colDependencia").toggle("slide", "up");
+                $("#colPuntoGestion").toggle("slide", "up");
+                $("#colDepartamento").toggle("slide", "up");
+                if (this.checked) {
+                    $("#Email").prop("readonly", "readonly");
+                    $("#colDependencia").hide().effect("fold", "up");
+                    $("#Email").val($("#NombreUsuario").val() + "@@MPBA.GOV.AR");
+                } else {
+                    $("#Email").prop("readonly", "");
+                    $("#colDependencia").show().effect("slide", "up");
+                }
+            });
+        });
+
+
+    </script>
+}

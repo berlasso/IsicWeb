@@ -1,0 +1,11 @@
+Como generar el package Nuget
+
+..\.nuget\NuGet.exe pack MPBA.Security.csproj
+
+Como publicar el paquete
+
+..\.nuget\NuGet.exe push MPBA.Security.1.0.0.1.nupkg -s http://nuget.mpba.gov.ar/nuget
+
+En el caso que el server requiera password
+
+..\.nuget\NuGet.exe setApiKey password -s http://nuget.mpba.gov.ar

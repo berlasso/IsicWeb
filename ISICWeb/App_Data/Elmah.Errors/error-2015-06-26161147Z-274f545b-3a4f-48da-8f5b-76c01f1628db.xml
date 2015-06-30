@@ -1,0 +1,247 @@
+﻿<error errorId="274f545b-3a4f-48da-8f5b-76c01f1628db" application="/LM/W3SVC/28/ROOT" host="LPSICINFOR02" type="System.InvalidOperationException" message="El elemento ViewData con la clave 'Departamento.Id' es de tipo 'System.Int32' pero debe ser de tipo 'IEnumerable&lt;SelectListItem&gt;'." source="System.Web.Mvc" detail="System.InvalidOperationException: El elemento ViewData con la clave 'Departamento.Id' es de tipo 'System.Int32' pero debe ser de tipo 'IEnumerable&lt;SelectListItem&gt;'.&#xD;&#xA;   en System.Web.Mvc.Html.SelectExtensions.GetSelectData(HtmlHelper htmlHelper, String name)&#xD;&#xA;   en System.Web.Mvc.Html.SelectExtensions.SelectInternal(HtmlHelper htmlHelper, ModelMetadata metadata, String optionLabel, String name, IEnumerable`1 selectList, Boolean allowMultiple, IDictionary`2 htmlAttributes)&#xD;&#xA;   en System.Web.Mvc.Html.SelectExtensions.DropDownListHelper(HtmlHelper htmlHelper, ModelMetadata metadata, String expression, IEnumerable`1 selectList, String optionLabel, IDictionary`2 htmlAttributes)&#xD;&#xA;   en System.Web.Mvc.Html.SelectExtensions.DropDownListFor[TModel,TProperty](HtmlHelper`1 htmlHelper, Expression`1 expression, IEnumerable`1 selectList, String optionLabel, IDictionary`2 htmlAttributes)&#xD;&#xA;   en System.Web.Mvc.Html.SelectExtensions.DropDownListFor[TModel,TProperty](HtmlHelper`1 htmlHelper, Expression`1 expression, IEnumerable`1 selectList, Object htmlAttributes)&#xD;&#xA;   en ASP._Page_Views_Account_AltaModificacionUsuario_cshtml.Execute() en c:\Proyectos\ISIC Web 2.0 - copia (2)\ISICWeb\Views\Account\AltaModificacionUsuario.cshtml:línea 184&#xD;&#xA;   en System.Web.WebPages.WebPageBase.ExecutePageHierarchy()&#xD;&#xA;   en System.Web.Mvc.WebViewPage.ExecutePageHierarchy()&#xD;&#xA;   en System.Web.WebPages.StartPage.RunPage()&#xD;&#xA;   en System.Web.WebPages.StartPage.ExecutePageHierarchy()&#xD;&#xA;   en System.Web.WebPages.WebPageBase.ExecutePageHierarchy(WebPageContext pageContext, TextWriter writer, WebPageRenderingBase startPage)&#xD;&#xA;   en System.Web.Mvc.RazorView.RenderView(ViewContext viewContext, TextWriter writer, Object instance)&#xD;&#xA;   en System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)&#xD;&#xA;   en System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)&#xD;&#xA;   en System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   en System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   en System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   en System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;&gt;c__DisplayClass2b.&lt;BeginInvokeAction&gt;b__1c()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Controller.&lt;BeginExecute&gt;b__15(IAsyncResult asyncResult, Controller controller)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)&#xD;&#xA;   en System.Web.HttpApplication.CallHandlerExecutionStep.OnAsyncHandlerCompletion(IAsyncResult ar)" user="German" time="2015-06-26T16:11:47.0743198Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_CONTENT_LENGTH:517&#xD;&#xA;HTTP_CONTENT_TYPE:application/x-www-form-urlencoded; charset=UTF-8&#xD;&#xA;HTTP_ACCEPT:*/*&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:es-419,es;q=0.8,en;q=0.6&#xD;&#xA;HTTP_COOKIE:__RequestVerificationToken=iNqIC8wuCEshMyDW--uV2CZ5oXc0YfpXlygxjzeMDV-GnA-i9i2H98gem3M6PhbbKwdbqPie-aCvuVoDEb3_rxHwEGo34Bynhw7A13jC94g1; ASP.NET_SessionId=bipy33nzma2ydulhhbgfyigx; .AspNet.ApplicationCookie=Aq9IXzBPiiL4K1ec-nFxl3FiLj2BAgC8iDN_AtihfH-8nGijLXhCeYohABsqEUGRzmZsq0_zSbk2YJBnjW3jILkLP1am7lsb8PH5wvlQ279dZDPYst41pFAX5LmzIA_J97_vmFkucoxKC30NLda57IaRNfoHHhSTblgR-O1MGs7G-FHNZ1YOmWERZ47TKv3pjIRYJC6Mhkl5S7vMxmdG50Wc8WsP44TVwQNRcBILCMLu8KnaVnEZx6TeiayQcxvP_bkhj3e-J7NTtE_lgL2LW-6CeM7_0u3zW0LlspkiB-81ibe-b7O5nkY3MZfA5zd1HWtytQ1obIyna1dwskrZ6FZTKJEfetw1CIH8FSbhbxm5koJOD4-Thge2SF4dlYvYgQ5RNG3DL5Wg8az93rT4-gUonLcC6ZQBe0Ml7d_SHEdU6N0U1kVnugY6QVINzjq9fJt1ifXV70WquqWEbf7FEdw1XIsdobsIN9kRp4igeHOMElPinS4iJ53ZeUKfiO23wV0YovZS2TL6FC9bAoYinA&#xD;&#xA;HTTP_HOST:localhost:22443&#xD;&#xA;HTTP_REFERER:http://localhost:22443/Account/AltaModificacionUsuario&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36&#xD;&#xA;HTTP_ORIGIN:http://localhost:22443&#xD;&#xA;HTTP_X_REQUESTED_WITH:XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Content-Length: 517&#xD;&#xA;Content-Type: application/x-www-form-urlencoded; charset=UTF-8&#xD;&#xA;Accept: */*&#xD;&#xA;Accept-Encoding: gzip, deflate&#xD;&#xA;Accept-Language: es-419,es;q=0.8,en;q=0.6&#xD;&#xA;Cookie: __RequestVerificationToken=iNqIC8wuCEshMyDW--uV2CZ5oXc0YfpXlygxjzeMDV-GnA-i9i2H98gem3M6PhbbKwdbqPie-aCvuVoDEb3_rxHwEGo34Bynhw7A13jC94g1; ASP.NET_SessionId=bipy33nzma2ydulhhbgfyigx; .AspNet.ApplicationCookie=Aq9IXzBPiiL4K1ec-nFxl3FiLj2BAgC8iDN_AtihfH-8nGijLXhCeYohABsqEUGRzmZsq0_zSbk2YJBnjW3jILkLP1am7lsb8PH5wvlQ279dZDPYst41pFAX5LmzIA_J97_vmFkucoxKC30NLda57IaRNfoHHhSTblgR-O1MGs7G-FHNZ1YOmWERZ47TKv3pjIRYJC6Mhkl5S7vMxmdG50Wc8WsP44TVwQNRcBILCMLu8KnaVnEZx6TeiayQcxvP_bkhj3e-J7NTtE_lgL2LW-6CeM7_0u3zW0LlspkiB-81ibe-b7O5nkY3MZfA5zd1HWtytQ1obIyna1dwskrZ6FZTKJEfetw1CIH8FSbhbxm5koJOD4-Thge2SF4dlYvYgQ5RNG3DL5Wg8az93rT4-gUonLcC6ZQBe0Ml7d_SHEdU6N0U1kVnugY6QVINzjq9fJt1ifXV70WquqWEbf7FEdw1XIsdobsIN9kRp4igeHOMElPinS4iJ53ZeUKfiO23wV0YovZS2TL6FC9bAoYinA&#xD;&#xA;Host: localhost:22443&#xD;&#xA;Referer: http://localhost:22443/Account/AltaModificacionUsuario&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36&#xD;&#xA;Origin: http://localhost:22443&#xD;&#xA;X-Requested-With: XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/28/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Proyectos\ISIC Web 2.0 - copia (2)\ISICWeb\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="ApplicationCookie" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="German" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="German" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="German" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="517" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="application/x-www-form-urlencoded; charset=UTF-8" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="28" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/28" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Account/GuardarDatosUsuario" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Proyectos\ISIC Web 2.0 - copia (2)\ISICWeb\Account\GuardarDatosUsuario" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="Length=8" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="50394" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="POST" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Account/GuardarDatosUsuario" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="22443" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/8.0" />
+    </item>
+    <item name="URL">
+      <value string="/Account/GuardarDatosUsuario" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_CONTENT_LENGTH">
+      <value string="517" />
+    </item>
+    <item name="HTTP_CONTENT_TYPE">
+      <value string="application/x-www-form-urlencoded; charset=UTF-8" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="*/*" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="es-419,es;q=0.8,en;q=0.6" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="__RequestVerificationToken=iNqIC8wuCEshMyDW--uV2CZ5oXc0YfpXlygxjzeMDV-GnA-i9i2H98gem3M6PhbbKwdbqPie-aCvuVoDEb3_rxHwEGo34Bynhw7A13jC94g1; ASP.NET_SessionId=bipy33nzma2ydulhhbgfyigx; .AspNet.ApplicationCookie=Aq9IXzBPiiL4K1ec-nFxl3FiLj2BAgC8iDN_AtihfH-8nGijLXhCeYohABsqEUGRzmZsq0_zSbk2YJBnjW3jILkLP1am7lsb8PH5wvlQ279dZDPYst41pFAX5LmzIA_J97_vmFkucoxKC30NLda57IaRNfoHHhSTblgR-O1MGs7G-FHNZ1YOmWERZ47TKv3pjIRYJC6Mhkl5S7vMxmdG50Wc8WsP44TVwQNRcBILCMLu8KnaVnEZx6TeiayQcxvP_bkhj3e-J7NTtE_lgL2LW-6CeM7_0u3zW0LlspkiB-81ibe-b7O5nkY3MZfA5zd1HWtytQ1obIyna1dwskrZ6FZTKJEfetw1CIH8FSbhbxm5koJOD4-Thge2SF4dlYvYgQ5RNG3DL5Wg8az93rT4-gUonLcC6ZQBe0Ml7d_SHEdU6N0U1kVnugY6QVINzjq9fJt1ifXV70WquqWEbf7FEdw1XIsdobsIN9kRp4igeHOMElPinS4iJ53ZeUKfiO23wV0YovZS2TL6FC9bAoYinA" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:22443" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:22443/Account/AltaModificacionUsuario" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36" />
+    </item>
+    <item name="HTTP_ORIGIN">
+      <value string="http://localhost:22443" />
+    </item>
+    <item name="HTTP_X_REQUESTED_WITH">
+      <value string="XMLHttpRequest" />
+    </item>
+  </serverVariables>
+  <queryString>
+    <item name="Length">
+      <value string="8" />
+    </item>
+  </queryString>
+  <form>
+    <item name="__RequestVerificationToken">
+      <value string="-dQ2jdR75DETEyz4XE6r25S9U9AyeVhRfAG5HLcxWMxWer_e2EFtZHd99mgnxX1O3shendG9GVPNTIPAlwqUXtulhU9akzSoDMYyxWXcRLBvgsWmNSsSl-93ZbBZSd3116gfIqFyE89o4NUIoFSzxQ2" />
+    </item>
+    <item name="Validando">
+      <value string="False" />
+    </item>
+    <item name="UsuarioSicViejo">
+      <value string="" />
+    </item>
+    <item name="UsuarioMPBA">
+      <value string="false" />
+    </item>
+    <item name="NombreUsuario">
+      <value string="German" />
+    </item>
+    <item name="activo">
+      <value string="false" />
+    </item>
+    <item name="Apellido">
+      <value string="Berlasso" />
+    </item>
+    <item name="Nombre">
+      <value string="German Berlasso" />
+    </item>
+    <item name="Dependencia">
+      <value string="" />
+    </item>
+    <item name="Departamento.Id">
+      <value string="0" />
+    </item>
+    <item name="PuntoGestion.Id">
+      <value string="" />
+    </item>
+    <item name="PuntoGestion.Descripcion">
+      <value string="" />
+    </item>
+    <item name="Email">
+      <value string="berlasso@hotmail3.com" />
+    </item>
+    <item name="DocumentoNumero">
+      <value string="" />
+    </item>
+    <item name="Sexo.Id">
+      <value string="0" />
+    </item>
+    <item name="GrupoUsuario.id">
+      <value string="0" />
+    </item>
+    <item name="SubCodBarra">
+      <value string="" />
+    </item>
+    <item name="Jerarquia.Id">
+      <value string="3" />
+    </item>
+    <item name="id">
+      <value string="" />
+    </item>
+    <item name="X-Requested-With">
+      <value string="XMLHttpRequest" />
+    </item>
+  </form>
+  <cookies>
+    <item name="__RequestVerificationToken">
+      <value string="iNqIC8wuCEshMyDW--uV2CZ5oXc0YfpXlygxjzeMDV-GnA-i9i2H98gem3M6PhbbKwdbqPie-aCvuVoDEb3_rxHwEGo34Bynhw7A13jC94g1" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="bipy33nzma2ydulhhbgfyigx" />
+    </item>
+    <item name=".AspNet.ApplicationCookie">
+      <value string="Aq9IXzBPiiL4K1ec-nFxl3FiLj2BAgC8iDN_AtihfH-8nGijLXhCeYohABsqEUGRzmZsq0_zSbk2YJBnjW3jILkLP1am7lsb8PH5wvlQ279dZDPYst41pFAX5LmzIA_J97_vmFkucoxKC30NLda57IaRNfoHHhSTblgR-O1MGs7G-FHNZ1YOmWERZ47TKv3pjIRYJC6Mhkl5S7vMxmdG50Wc8WsP44TVwQNRcBILCMLu8KnaVnEZx6TeiayQcxvP_bkhj3e-J7NTtE_lgL2LW-6CeM7_0u3zW0LlspkiB-81ibe-b7O5nkY3MZfA5zd1HWtytQ1obIyna1dwskrZ6FZTKJEfetw1CIH8FSbhbxm5koJOD4-Thge2SF4dlYvYgQ5RNG3DL5Wg8az93rT4-gUonLcC6ZQBe0Ml7d_SHEdU6N0U1kVnugY6QVINzjq9fJt1ifXV70WquqWEbf7FEdw1XIsdobsIN9kRp4igeHOMElPinS4iJ53ZeUKfiO23wV0YovZS2TL6FC9bAoYinA" />
+    </item>
+  </cookies>
+</error>

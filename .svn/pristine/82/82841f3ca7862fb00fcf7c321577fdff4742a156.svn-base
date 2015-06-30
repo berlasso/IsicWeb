@@ -1,0 +1,5 @@
+﻿@model ISICWeb.Areas.Afis.Models.AFISViewModel
+@Html.HiddenFor(x => x.Prontuario.Id)
+@Html.HiddenFor(x => x.Id)
+@Html.HiddenFor(x => x.Prontuario.ProntuarioNro)
+@Html.ValidationSummary()

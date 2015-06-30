@@ -1,0 +1,129 @@
+﻿@model ISICWeb.Areas.PortalSIC.Models.BusquedaViewModel
+
+
+@{
+
+    ViewBag.Title = "Carga Antecedentes";
+    //Layout = null;
+
+
+}
+
+<div class="container-detalle">
+    
+        <div class="center wow fadeInDown animated tile-light">
+            <h1>Carga de Antecedentes</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" role="main">
+
+                @using (Html.BeginForm("Buscar", "Antecedentes",FormMethod.Get,new {id="frmBuscar"}))
+                {
+
+                    //Html.RenderPartial("_DatosGeneralesImputado");
+                    //ViewBag.EsSoloDetalle = Model.EsSoloDetalle;
+                    //Html.RenderPartial("_DatosSomaticos");
+                    //Html.RenderPartial("_ImagenesImputado");
+
+
+                    <div class="panel panel-default tile wow fadeInDown animated">
+                        <div class="panel-heading">
+
+                            <h3>
+                                Filtros de búsqueda
+                                <small>
+                                    @*<div class="btn-group pull-right" data-toggle="buttons">
+                                            <label id="lblBusquedaAvanzada" class="btn btn-alt">
+                                                <input type="checkbox" autocomplete="off" id="btnBusquedaAvanzada"> Búsqueda Avanzada
+                                            </label>
+                                        </div>*@
+                                </small>
+                            </h3>
+
+                        </div>
+
+
+
+
+
+                        <div class="panel-body">
+                            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+
+
+                                <div class="col-xs-4">
+                                    @Html.LabelFor(model => model.CodBarras)
+                                    @Html.EditorFor(m => m.CodBarras, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.CodBarras)
+                                </div>
+                                <div class="col-xs-4">
+                                    @Html.LabelFor(model => model.Apellido)
+                                    @Html.EditorFor(m => m.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Apellido)
+                                </div>
+                                <div class="col-xs-4">
+                                    @Html.Label("Nombre")
+                                    @Html.EditorFor(m => m.Nombres, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.Nombres)
+                                </div>
+
+
+                            </div>
+                            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                                <div class="col-xs-4">
+                                    @Html.LabelFor(model => model.NumeroDocumento)
+                                    @Html.EditorFor(m => m.NumeroDocumento, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.ValidationMessageFor(m => m.NumeroDocumento)
+                                </div>
+                                <div class="col-xs-4">
+                                    @Html.LabelFor(model => model.Delito)
+                                    @Html.EditorFor(m => m.Delito, new {htmlAttributes = new {@class = "form-control"}})
+                                    @Html.ValidationMessageFor(m => m.Delito)
+                                </div>
+                                <div class="col-xs-4">
+
+                                </div>
+
+
+                            </div>
+                            
+                          
+                        </div>
+                    </div>
+
+
+    <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+        <div class="row">
+            <div class="col-md-2 col-sm-3 col-xs-4">
+                @Html.ActionLink("Volver", "Index", "Home", new { area = "" }, new { @class = "btn btn-lg btn-alt", title = "Volver" })
+            </div>
+            <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-8">
+                <div class="row ">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+
+                        <input type="submit" class="btn btn-lg btn-alt" value="Buscar" id="btnBuscar" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </nav>
+                }
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    $("#btnBuscar").on("click", function() {
+        if ($("#frmBuscar").valid() === true)
+            showPageLoadingSpinner();
+    });
+
+    $(document).ready(function () {
+        $("#navFooter").hide();
+    });
+</script>
