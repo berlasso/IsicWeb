@@ -13,7 +13,6 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using ISIC.Entities;
 using ISIC.Persistence.Context;
-using ISICWeb.Areas.Usuarios.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -174,12 +173,15 @@ namespace ISICWeb.Controllers
 
         //
         // GET: /Account/Register
+        [HttpGet]
         [AllowAnonymous]
-        public ActionResult Register(bool RegistrandoUsuarioViejo=false)
+        public async Task<ViewResult> Registrar(bool RegistrandoUsuarioViejo=false, string userId="", string code="")
         {
             ViewBag.RegistrandoUsuarioViejo = RegistrandoUsuarioViejo;
-
-            return View();
+            
+            UsuarioViewModel uvm =await LlenarViewModelDesdeBase(userId);
+            uvm.code = code;
+            return View(uvm);
         }
 
         [HttpPost]
@@ -192,16 +194,25 @@ namespace ISICWeb.Controllers
             if (string.IsNullOrEmpty(model.ClaveUsuario))
             {
                 ModelState.AddModelError("ClaveUsuario", "La contraseña es requerida");
-                   return View("Register",model);   
+                   return View("Registrar",model);   
             }
-                Usuarios u = _repository.Set<Usuarios>().Single(x => x.NombreUsuario == model.NombreUsuario);
+            ApplicationUser u = UserManager.FindById(model.id);
+                //Usuarios u = _repository.Set<Usuarios>().Single(x => x.NombreUsuario == model.NombreUsuario);
                 //u.TokenEnviado = !model.EmailConfirmed;
                 u.activo = model.activo;
-                u.ClaveUsuario =Crypto.HashPassword(model.ClaveUsuario);
-                _repository.UnitOfWork.RegisterChanged(u);
+            u.EmailConfirmed = true;
+                u.PasswordHash =Crypto.HashPassword(model.ClaveUsuario);
+                //_repository.UnitOfWork.RegisterChanged(u);
+            IdentityResult resultado = null;
                 try
                 {
-                    _repository.UnitOfWork.Commit();
+                    resultado = UserManager.Update(u);
+                    //_repository.UnitOfWork.Commit();
+                    if (resultado.Succeeded)
+                    {
+
+                        RedirectToAction("ConfirmarEmail", new {userId = model.id, code = model.code});
+                    }
                     ViewBag.Usuario = model.NombreUsuario;
                     return View("~/Areas/Usuarios/Views/Usuarios/ConfirmarEmail.cshtml");
                 }
@@ -349,7 +360,7 @@ namespace ISICWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await  UserManager.FindByEmailAsync(model.Email);
                 if (user == null)
                 {
                     ModelState.AddModelError("", "No se encontró ningún usuario.");
@@ -358,6 +369,9 @@ namespace ISICWeb.Controllers
                 IdentityResult result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
                 if (result.Succeeded)
                 {
+                    user.EmailConfirmed = true;
+                    user.activo = true;
+                    await UserManager.UpdateAsync(user);
                     return RedirectToAction("ResetPasswordConfirmation", "Account");
                 }
                 else
@@ -705,6 +719,34 @@ namespace ISICWeb.Controllers
         }
         #endregion
 
+
+        /// <summary>
+        /// Completa registracion el en el isic habiendo estado registrado en el sic viejo
+        /// </summary>
+        /// <param name="us">usuario en el sic viejo</param>
+        /// <param name="id">usuario para el isic</param>
+        /// <returns></returns>
+        public async Task<ViewResult> CompletarDatosSicNuevo(string us, string id = "nada")
+        {
+            UsuarioViewModel uvm =await LlenarViewModelDesdeBase(id);
+            uvm.Validando = true;
+            uvm.id = null;
+            uvm.UsuarioSicViejo = us;
+            uvm.UsuarioMPBA = id != "nada";
+            //LoginDomain ld = new LoginDomain();
+            //string usuarioDominio = ld.getCommonName(id);
+
+            //if (usuarioDominio != "***")
+            //{
+            //    uvm.Apellido = usuarioDominio.Substring(usuarioDominio.LastIndexOf(' ') + 1);
+            //    uvm.Nombre = usuarioDominio.Substring(0, usuarioDominio.LastIndexOf(' '));
+            //    uvm.Email = id + "@MPBA.GOV.AR";
+            //}
+            if (id == "nada")
+                uvm.NombreUsuario = "";
+            return View("AltaModificacionUsuario", uvm);
+        }
+
         /// <summary>
         /// valida los datos en el sic nuevo
         /// </summary>
@@ -723,7 +765,7 @@ namespace ISICWeb.Controllers
             else if (id == 2)
             {
               //  return RedirectToAction("Register",new {RegistrandoUsuarioViejo=true});
-                return RedirectToAction("CompletarDatosSicNuevo","Usuarios", new {area="Usuarios"});
+                return RedirectToAction("CompletarDatosSicNuevo");
             }
             return null;
         }
@@ -781,9 +823,17 @@ namespace ISICWeb.Controllers
             if (ModelState.IsValid)
             {
                 var loginDomain = new LoginDomain();
-                bool validado = loginDomain.CheckLogin(u.usuario, u.clave);
-                if (!validado)
-                    errores = "No se encontró el usuario y/o contraseña indicados";
+                try
+                {
+                    bool validado = loginDomain.CheckLogin(u.usuario, u.clave);
+                    if (!validado)
+                        errores = "No se encontró el usuario y/o contraseña indicados";
+                }
+                catch
+                {
+                    errores = "No se pudo conectar al servidor remoto";
+                }
+                
                 
             }
             else
@@ -1042,7 +1092,15 @@ namespace ISICWeb.Controllers
             {
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(uid);
 
-                var callbackUrl = Url.Action("ConfirmarEmail", "Account", new { userId = uid, code = code }, protocol: Request.Url.Scheme);
+                string callbackUrl = "";
+                if (u.UsuarioMPBA==true)
+                    callbackUrl=Url.Action("ConfirmarEmail", "Account", new { userId = uid, code = code }, protocol: Request.Url.Scheme);
+                else
+                {
+                    //callbackUrl = Url.Action("Registrar", "Account", new { userId = uid, code = code }, protocol: Request.Url.Scheme);
+                    code = await UserManager.GeneratePasswordResetTokenAsync(uid);
+                    callbackUrl = Url.Action("ResetPassword", "Account", new { userId = uid, code = code }, protocol: Request.Url.Scheme);
+                }
                 try
                 {
                     u.EmailConfirmed = false;
@@ -1216,5 +1274,68 @@ namespace ISICWeb.Controllers
            // EnviarMail(user, callbackUrl);
             return RedirectToAction("Index", "Home");
         }
+
+
+
+        public JsonResult BuscarUsuarioMPBA(string u)
+        {
+
+            string apellido = "";
+            string nombre = "";
+            bool huboError = false;
+            string errorMessage = "";
+            var loginDomain = new LoginDomain();
+
+            string usuarioDominio = loginDomain.getCommonName(u);
+
+            if (usuarioDominio != "")
+            {
+                apellido = usuarioDominio.Substring(usuarioDominio.LastIndexOf(' ') + 1);
+                nombre = usuarioDominio.Substring(0, usuarioDominio.LastIndexOf(' '));
+            }
+            else
+            {
+                huboError = true;
+                errorMessage = "No se encontraron resultados";
+            }
+            JsonResult json = new JsonResult
+            {
+                Data = new
+                {
+                    HuboError = huboError,
+                    ErrorMessage = errorMessage,
+                    Apellido = apellido,
+                    Nombre = nombre
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+            return json;
+
+        }
+
+        public ActionResult BuscarPuntoGestion(string term, string depto)
+        {
+            if (depto == "0")
+            {
+                var routeList =
+                    _repository.Set<PuntoGestion>()
+                        .Where(r => r.Descripcion.Contains(term))
+                        .Take(50)
+                        .Select(r => new { id = r.Id, label = r.Descripcion.Trim(), name = "PuntoGestionID", deptoId = r.Departamento.Id });
+                return Json(routeList, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var routeList =
+                    _repository.Set<PuntoGestion>()
+                        .Where(r => r.Descripcion.Contains(term) && (r.Departamento.Id.ToString() == depto))
+                        .Take(50)
+                        .Select(r => new { id = r.Id, label = r.Descripcion.Trim(), name = "PuntoGestionID", deptoId = r.Departamento.Id });
+                return Json(routeList, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
+
+
 }

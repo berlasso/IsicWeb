@@ -46,7 +46,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
             }
 
 
-            <a href="#" id="EnviarToken" class="btn btn-alt btn-sm" title="Reenvia el token al mail indicado, desactivando la cuenta hasta que sea confirmada por el usuario">Reenviar Token</a>
+            <a href="#" id="EnviarToken" class="btn btn-alt btn-sm" title="Reenvia el token al mail indicado, desactivando la cuenta hasta que sea confirmada por el usuario. Usuario MPBA: email confirmacion. Usuario NO MPBA: email con cambio de clave.">Reenviar Token</a>
         }
         else
         {
@@ -154,7 +154,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
 
                 </div>
                 <div class="clearfix"></div>
-                @if (Model.Validando && Model.UsuarioMPBA == false)
+                @*@if (Model.Validando && Model.UsuarioMPBA == false)
                 {
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.ClaveUsuario, htmlAttributes: new { @class = "control-label" })
@@ -168,7 +168,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                         @Html.ValidationMessageFor(model => model.ConfirmarClaveUsuario, "", new { @class = "text-danger" })
 
                     </div>
-                }
+                }*@
                 @{
     var usuarioMPBA = Model.UsuarioMPBA == true ? "none" : "block";
                 }
@@ -332,7 +332,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
             minLength: 3,
             source: function (request, response) {
                 $.ajax({
-                    url: '@Url.Action("BuscarPuntoGestion", "Usuarios")',
+                    url: '@Url.Action("BuscarPuntoGestion")',
                     type: "GET",
                     dataType: "json",
                     autoFocus: true,
@@ -351,7 +351,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
             },
         });
 
-        var urlBuscarUsuario = '@Url.Action("BuscarUsuarioMPBA", "Usuarios")?u=';
+        var urlBuscarUsuario = '@Url.Action("BuscarUsuarioMPBA")?u=';
 
         //GUARDAR DATOS Usuario
         function onGuardarBegin() {
@@ -477,6 +477,58 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
             $("#btnBuscarUsuarioMPBA").hide();
         }
 
+
+        $(function () {
+
+
+            $('#NombreUsuario').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    $("#btnBuscarUsuarioMPBA").click();
+                }
+            });
+
+            $("#btnBuscarUsuarioMPBA").click(function () {
+                if ($("#NombreUsuario").valid() == true) {
+                    var nombreusuario = $("#NombreUsuario").val();
+                    var url = urlBuscarUsuario + nombreusuario + '&r=' + new Date().getTime();
+                    $("#divUsuarioMPBAEncontrado").empty();
+                    $("#divUsuarioMPBAEncontrado").hide();
+                    $.ajax({
+                        url: url,
+                        success: function (data) {
+                            var json = data;
+                            if (data.HuboError == true) {
+                                alertify.alert("Error", data.ErrorMessage);
+                            } else {
+                                //if (data.DatosSimp.length == 0 || data.DatosSimp[0].Imputados.length == 0) {
+                                //    alertify.alert("No hubo resultados");
+                                //    return;
+                                //}
+                                var apellido = data.Apellido;
+                                var nombre = data.Nombre;
+                                $("#divUsuarioMPBAEncontrado").append("Usuario MPBA:");
+
+                                $("#divUsuarioMPBAEncontrado").append('<ul><a id="usuarioMPBA" href="#" onclick="LlenarControlesSimp(usuarioMPBA)" data-apellido="' + data.Apellido + '" data-nombre="' + data.Nombre + '">' + data.Apellido + ', ' + data.Nombre + '</a></ul>').show();
+                            }
+
+                        },
+                        beforeSend: function () {
+                            //loader("Buscando datos de la IPP...");
+                            $("#NombreUsuario").addClass("loadinggif");
+                        },
+                        complete: function () {
+                            //$.unblockUI();    
+                            $("#NombreUsuario").removeClass("loadinggif");
+                        },
+                        dataType: "json"
+                    });
+
+                } else {
+                    $("#NombreUsuario").data("validator");
+                }
+            });
+        });
 
     </script>
 }

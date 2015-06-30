@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Postal;
 
-namespace ISICWeb.Areas.Usuarios.Models
+namespace ISICWeb.Models
 {
     public class VerificacionEmail : Email
     {
