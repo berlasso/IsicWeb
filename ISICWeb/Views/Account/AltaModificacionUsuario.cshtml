@@ -98,33 +98,33 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
             <div class="row wow fadeInDown animated">
 
 
-                <div class="col-md-4">
-                    <div class="row">
-                        <div class="col-md-10">
+            
 
 
 
                             @*@Html.EditorFor(model => model.NombreUsuario, !modificando ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)*@
                             @if (!modificando && Model.Validando != null && Model.Validando != true)
                             {
-                                <div class="form-group">
-                                    <div class='input-group ' style="width: 100%">
-                                        @Html.TextBox("NombreBuscar", "", new { @class = "form-control", placeholder = "Buscar usuarios por Alias" })
-                                        <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA" title="Consultar usuario en MPBA">
-                                            <span class="flaticon-zoom22"></span>
-                                        </span>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class='input-group ' style="width: 100%">
+                                            @Html.TextBox("NombreBuscar", "", new {@class = "form-control", placeholder = "Buscar usuarios por Alias"})
+                                            <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA" title="Consultar usuario en MPBA">
+                                                <span class="flaticon-zoom22"></span>
+                                            </span>
+                                        </div>
                                     </div>
+                               
+        <div class="form-group">
+            <div class='input-group ' style="width: 100%">
+                @Html.TextBox("ApellidoBuscar", "", new { @class = "form-control", placeholder = "Buscar usuarios por Apellido " })
+                <span class="input-group-addon btn btn-alt" id="btnBuscarUsuariosApellido" title="Consultar usuario en MPBA por apellido">
+                    <span class="flaticon-zoom22"></span>
+                </span>
+            </div>
 
-                                </div>
-                                <div class="form-group">
-                                    <div class='input-group ' style="width: 100%">
-                                        @Html.TextBox("ApellidoBuscar", "", new { @class = "form-control", placeholder = "Buscar usuarios por Apellido " })
-                                        <span class="input-group-addon btn btn-alt" id="btnBuscarUsuariosApellido" title="Consultar usuario en MPBA por apellido">
-                                            <span class="flaticon-zoom22"></span>
-                                        </span>
-                                    </div>
-
-                                </div>
+        </div>
+    </div>
                             }
                             else if (Model.Validando && Model.UsuarioMPBA == false)
                             {
@@ -139,25 +139,16 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
 
 
                             <div class="alert alert-info" id="divUsuarioMPBAEncontrado" style="display: none" role="alert"></div>
-                        </div>
-                        <div class="col-md-2">
-                            @if (!Model.Validando)
-                            {
-                                <div class="col-xs-1">
-                                    <br />
-                                    @*@Html.LabelFor(model => model.activo, htmlAttributes: new { @class = "control-label", style = "font-style: italic; color: yellow" })
+                        
+        
 
-                                        @Html.CheckBoxFor(model => model.activo, new { title = "Se activa automaticamente cuando usuario confirma mail. Solo tildar para casos excepcionales.", style = "font-style: italic; color: yellow" })*@
-
-
-
-                                </div>
-                            }
-                        </div>
-                    </div>
+                    
 
                 </div>
-                <div class="clearfix"></div>
+
+            <div class="row tile"><br/>
+            </div>
+            <div class="row wow fadeInDown animated">
                 <div class="col-md-4">
                     @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label required" })
                     @Html.EditorFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "form-control" } })
@@ -178,20 +169,20 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                 </div>
                 <div class="clearfix"></div>
                 @*@if (Model.Validando && Model.UsuarioMPBA == false)
-                    {
-                        <div class="col-md-4">
-                            @Html.LabelFor(model => model.ClaveUsuario, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.ClaveUsuario, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.ClaveUsuario, "", new { @class = "text-danger" })
+            {
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.ClaveUsuario, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ClaveUsuario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ClaveUsuario, "", new { @class = "text-danger" })
 
-                        </div>
-                        <div class="col-md-4">
-                            @Html.LabelFor(model => model.ConfirmarClaveUsuario, htmlAttributes: new { @class = "control-label" })
-                            @Html.EditorFor(model => model.ConfirmarClaveUsuario, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.ConfirmarClaveUsuario, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.ConfirmarClaveUsuario, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ConfirmarClaveUsuario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ConfirmarClaveUsuario, "", new { @class = "text-danger" })
 
-                        </div>
-                    }*@
+                </div>
+            }*@
                 @{
     var usuarioMPBA = Model.UsuarioMPBA == true ? "none" : "block";
                 }
@@ -346,12 +337,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
             $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
         });
 
-        $('#ApellidoBuscar').bind('autocompleteselect', function(event, ui) {
-            $("#Apellido").val($("#ApellidoBuscar").data('apellido'));
-            $("#Nombre").val($("#ApellidoBuscar").data('nombre'));
-            $("#NombreUsuario").val($("#ApellidoBuscar").data('usuario'));
-            $("#Email").val($("#NombreUsuario").val() + "@@mpba.gov.ar");
-        });
+  
 
         $("#PuntoGestion_Descripcion").on("autocompletechange", function(event, ui) {
             if (this.value.trim() === '') {
@@ -392,6 +378,12 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
 
         $("#ApellidoBuscar").autocomplete({
             minLength: 4,
+            select: function(event, ui) {
+                $("#Apellido").val(ui.item.apellido);
+                $("#Nombre").val(ui.item.nombre);
+                $("#NombreUsuario").val(ui.item.usuario);
+                $("#Email").val(ui.item.usuario + "@@mpba.gov.ar");
+            },
             source: function(request, response) {
                 $.ajax({
                     url: '@Url.Action("BuscarUsuariosMPBAPorApellido")',
@@ -403,23 +395,24 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                     data: { apellido: $("#ApellidoBuscar").val() },
 
                     success: function(data) {
-                        
+
                         response($.map(data, function(item) {
                             $("#ApellidoBuscar").data('apellido', item.apellido);
                             $("#ApellidoBuscar").data('nombre', item.nombre);
                             $("#ApellidoBuscar").data('usuario', item.usuario);
-                            return { label: item.apellido +', '+item.nombre, apellido: item.apellido, nombre:item.nombre };
+                            return { label: item.apellido + ', ' + item.nombre, apellido: item.apellido, nombre: item.nombre, usuario: item.usuario };
                         }));
                     }
                 });
             },
-        }).data( "autocomplete" )._renderItem = function( ul, item ) {
-            return $( "<li></li>" )
-                .data( "item.autocomplete", item )
-                .append( "<a>"+ item.label + "</a>" ) 
-                .addClass(a.id) // <---
-                .appendTo( ul );
-        };
+        });
+        //    .data("autocomplete")._renderItem = function(ul, item) {
+        //    return $("<li></li>")
+        //        .data("item.autocomplete", item)
+        //        .append("<a>" + item.label + "</a>")
+        //        .addClass(a.id) // <---
+        //        .appendTo(ul);
+        //};
 
         var urlBuscarUsuario = '@Url.Action("BuscarUsuarioMPBA")?u=';
 
