@@ -53,8 +53,11 @@ Subject: @Model.Subject
                                 </p>
                                 @*<div style="text-indent: 300px">*@
                                 <div style="text-align: center">
+                                    <p style="text-align: center">
+                                        Usuario: <b>@Model.NombreUsuario</b>
+                                    </p>
                                     @{
-                                        
+
                                         //string link = string.Format("{0}://{1}{2}{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"), Url.Action("ConfirmarEmail", "Usuarios", new {area="Usuarios", u = @Model.NombreUsuario, t = @Model.Token }));
                                         string link = Model.Link;
                                     }

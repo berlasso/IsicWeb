@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.DirectoryServices;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Linq.Expressions;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Security.Claims;
@@ -761,7 +762,7 @@ namespace ISICWeb.Controllers
             else if (id == 2)
             {
                 //  return RedirectToAction("Register",new {RegistrandoUsuarioViejo=true});
-                return RedirectToAction("CompletarDatosSicNuevo");
+                return RedirectToAction("CompletarDatosSicNuevo",new {us});
             }
             return null;
         }
@@ -962,7 +963,9 @@ namespace ISICWeb.Controllers
                 else
                 {
                     usuario.PasswordHash = Crypto.HashPassword(model.ClaveUsuario);
+                
                 }
+                usuario.UsuarioSicViejo = model.UsuarioSicViejo;
                 usuario.idPersonalPoderJudicial = ppj.Id;
                 usuario.UserName = model.NombreUsuario;
                 usuario.NombreUsuario = model.NombreUsuario;
@@ -1281,32 +1284,53 @@ namespace ISICWeb.Controllers
             bool huboError = false;
             string errorMessage = "";
             var loginDomain = new LoginDomain();
+            try
+            {
 
-            string usuarioDominio = loginDomain.getCommonName(u);
+                string usuarioDominio = loginDomain.getCommonName(u);
 
-            if (usuarioDominio != "")
-            {
-                apellido = usuarioDominio.Substring(usuarioDominio.LastIndexOf(' ') + 1);
-                nombre = usuarioDominio.Substring(0, usuarioDominio.LastIndexOf(' '));
-            }
-            else
-            {
-                huboError = true;
-                errorMessage = "No se encontraron resultados";
-            }
-            JsonResult json = new JsonResult
-            {
-                Data = new
+
+                if (usuarioDominio != "")
                 {
-                    HuboError = huboError,
-                    ErrorMessage = errorMessage,
-                    Apellido = apellido,
-                    Nombre = nombre
-                },
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-            return json;
+                    apellido = usuarioDominio.Substring(usuarioDominio.LastIndexOf(' ') + 1);
+                    nombre = usuarioDominio.Substring(0, usuarioDominio.LastIndexOf(' '));
+                }
+                else
+                {
+                    huboError = true;
+                    errorMessage = "No se encontraron resultados";
+                }
 
+                JsonResult json = new JsonResult
+                {
+                    Data = new
+                    {
+                        HuboError = huboError,
+                        ErrorMessage = errorMessage,
+                        Apellido = apellido,
+                        Nombre = nombre
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+
+                return json;
+            }
+            catch
+            {
+                JsonResult json = new JsonResult
+                {
+                    Data = new
+                    {
+                        HuboError = true,
+                        ErrorMessage = "No se pudo conectar al servidor",
+                        Apellido = "",
+                        Nombre = ""
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+
+                return json;
+            }
         }
 
 
@@ -1316,30 +1340,44 @@ namespace ISICWeb.Controllers
             string nombre = "";
             bool huboError = false;
             string errorMessage = "";
-            DirectoryEntry objRoot = new DirectoryEntry("LDAP://rootDSE");
-            DirectoryEntry objUsers = new DirectoryEntry("LDAP://" + (string)objRoot.Properties["defaultNamingContext"].Value);
-            DirectorySearcher Filter1 = new DirectorySearcher(objUsers);
-            Filter1.Filter = "(&(objectClass=user)(CN=*" + apellido + "*))";
-            SearchResultCollection FilterResult1 = Filter1.FindAll();
-            int cant = FilterResult1.Count;
-            string usuarios = "";
             ArrayList lista = new ArrayList();
-            if (cant > 0)
+            try
             {
-                foreach (SearchResult iter in FilterResult1)
-                {
-                    //TableRow row = new TableRow();
-                    
-                    string usuario = (string)iter.GetDirectoryEntry().Properties["sAMAccountName"].Value;
-                    string apenom = (string)iter.GetDirectoryEntry().Properties["CN"].Value;
-                    if (apenom != "")
-                    {
-                        apellido = apenom.Substring(apenom.LastIndexOf(' ') + 1);
-                        nombre = apenom.Substring(0, apenom.LastIndexOf(' '));
-                    }
-                    lista.Add(new {usuario = usuario, apellido = apellido, nombre = nombre});
-                }
+                DirectoryEntry objRoot = new DirectoryEntry("LDAP://rootDSE");
+                DirectoryEntry objUsers =
+                    new DirectoryEntry("LDAP://" + (string) objRoot.Properties["defaultNamingContext"].Value);
+                DirectorySearcher Filter1 = new DirectorySearcher(objUsers);
 
+                Filter1.Filter = "(&(objectClass=user)(CN=*" + apellido + "*))";
+                SearchResultCollection FilterResult1 = Filter1.FindAll();
+                int cant = FilterResult1.Count;
+                string usuarios = "";
+                
+                if (cant > 0)
+                {
+                    foreach (SearchResult iter in FilterResult1)
+                    {
+                        //TableRow row = new TableRow();
+
+                        string usuario = (string) iter.GetDirectoryEntry().Properties["sAMAccountName"].Value;
+                        string apenom = (string) iter.GetDirectoryEntry().Properties["CN"].Value;
+                        if (apenom != "")
+                        {
+                            apellido = apenom.Substring(apenom.LastIndexOf(' ') + 1);
+                            nombre = apenom.Substring(0, apenom.LastIndexOf(' '));
+                        }
+                        lista.Add(new {usuario = usuario, apellido = apellido, nombre = nombre});
+                    }
+                    
+                }
+                else
+                {
+                    lista.Add(new { usuario = "", apellido = "NO HAY RESULTADOS", nombre = "" });
+                }
+            }
+            catch
+            {
+                lista.Add(new { usuario = "", apellido = "ERROR CON EL SERVIDOR", nombre = "" });
             }
             //var json = new { apellido = r.Id, label = r.Descripcion.Trim(), name = "PuntoGestionID", deptoId = r.Departamento.Id });
             return Json(lista, JsonRequestBehavior.AllowGet);
