@@ -96,15 +96,37 @@ namespace ISICWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.UserName, model.Password);
-
+                ApplicationUser user = null;
+                
+                user = await UserManager.FindAsync(model.UserName, model.Password);
+                if (user == null)
+                {
+                    user = await UserManager.FindByNameAsync(model.UserName);
+                }
                 if (user != null)
                 {
-                    
-                    if (user.activo == false)
-                        ModelState.AddModelError("", "El usuario se encuentra desactivado.");
-                    else if (user.EmailConfirmed == false)
+                    if (user.UsuarioMPBA == true)
+                    {
+                        LoginDomain loginmpba=new LoginDomain();
+                        try
+                        {
+                            bool userOk = loginmpba.CheckLogin(model.UserName, model.Password);
+                            if (!userOk)
+                            {
+                                ModelState.AddModelError("", "Nombre de usuario o contraseña no válidos.");
+                                return View(model);
+                            }
+                        }
+                        catch
+                        {
+                            ModelState.AddModelError("", "Error en la conexion a MPBA");
+                            return View(model);
+                        }
+                    }
+                    if (user.EmailConfirmed == false)
                         ModelState.AddModelError("", "El usuario no ha confirmado el email de verificación.");
+                    else if (user.activo == false)
+                        ModelState.AddModelError("", "El usuario se encuentra desactivado.");
                     else if (UserManager.IsLockedOut(user.Id))
                         ModelState.AddModelError("", "El usuario ha perdido autorizacion.");
                     else

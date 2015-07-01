@@ -1534,7 +1534,6 @@
     <Content Include="Views\Account\_SummaryErrorUsuario.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\_ResultadosBusqueda.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ConfirmarEmail.cshtml" />
     <Content Include="Views\Account\InfoRegistracion.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
