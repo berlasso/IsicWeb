@@ -29,11 +29,11 @@
                         @Html.AntiForgeryToken()
                         <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
                             <div class="col-xs-3">
-                                @Html.LabelFor(m => m.Email)
+                                @Html.LabelFor(m => m.UserName)
                             </div>
                             <div class="col-xs-9 col-md-5 ">
-                                @Html.TextBoxFor(m => m.Email, new { @Value = "prueba@mpba.gov.ar", @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(m => m.UserName, new { @Value = "prueba", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                             </div>
 
                         </div>
@@ -69,7 +69,7 @@
                         <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
                             <div class="col-xs-3">
                                 <p>
-                                    @Html.ActionLink("Registrarse como usuario nuevo", "Register1", null, new { @class = "btn btn-alt btn-sm" })
+                                    @Html.ActionLink("Registrarse como usuario nuevo", "InfoRegistracion", null, new { @class = "btn btn-alt btn-sm" })
                                 </p>
                                 @* Habilitar tras habilitar la confirmación de la cuenta para la funcionalidad de restablecimiento de la contraseña
                                 <p>

@@ -288,6 +288,7 @@
     <Compile Include="Models\UsuarioViewModel.cs" />
     <Compile Include="Models\UsuarioIsicViewModel.cs" />
     <Compile Include="Models\VerificacionEmail.cs" />
+    <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Web References\wsSIC\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -1535,7 +1536,7 @@
     <Content Include="Views\Account\_ResultadosBusqueda.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ConfirmarEmail.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\InfoRegistracion.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />

@@ -31,9 +31,9 @@ namespace ISICWeb.Models
         [MaxLength(100, ErrorMessage = "El apellido es demasiado largo")]
         public string Apellido { get; set; }
         [Required]
-        [RegularExpression("^[a-zA-Z]*$")]
+        [RegularExpression("^[a-zA-Z0-9]*$")]
         [Display(Name = "Usuario")]
-        public string NombreUsuario { get; set; }
+        public string UserName { get; set; }
         public bool activo { get; set; }
         public string Dependencia { get; set; }
         public virtual GrupoUsuario GrupoUsuario { get; set; }

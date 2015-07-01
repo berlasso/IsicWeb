@@ -14,7 +14,7 @@
             @using (Html.BeginForm("Registrar", "Account", new { area = "" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(m => m.NombreUsuario)
+                @Html.HiddenFor(m => m.UserName)
                 @Html.HiddenFor(m => m.id)
                 @Html.HiddenFor(m=>m.code)
                 @Html.HiddenFor(m => m.activo)

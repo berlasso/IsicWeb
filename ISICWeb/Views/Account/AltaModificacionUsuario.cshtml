@@ -1,5 +1,7 @@
 ﻿@model ISICWeb.Models.UsuarioViewModel
-string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index", "Home");
+@{
+    string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index", "Home");
+}
 @{
     bool modificando = !string.IsNullOrEmpty(Model.id);
     string display = Model.UsuarioMPBA ? "block" : "none";
@@ -72,14 +74,27 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
         </div>
 
 
+
         <div class="panel-body">
 
             <div class="row wow fadeInDown animated">
                 <div class="col-md-4">
-                    @if (!Model.Validando)
+                    @if (!Model.Validando )
                     {
-                        @Html.LabelFor(model => model.UsuarioMPBA)
-                        @Html.CheckBoxFor(model => model.UsuarioMPBA)
+
+
+                        @Html.LabelFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic" })
+                        if (modificando)
+                        {
+                            @Html.CheckBoxFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic;margin-left: 20px;", id = "UsuarioMPBA", disabled = "disabled" })
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic;margin-left: 20px;", id = "UsuarioMPBA" })
+                        }
+
+
+
                     }
                     else
                     {
@@ -104,27 +119,27 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
 
 
                 @{
-                    string mostrar = (!modificando && Model.Validando != null && Model.Validando != true)?"block":"none";
-                    <div class="col-md-4" id="Buscadores" style="display:@mostrar">
-                        <div class="form-group">
-                            <div class='input-group ' style="width: 100%">
-                                @Html.TextBox("NombreBuscar", "", new { @class = "form-control", placeholder = "Buscar usuarios por Alias" })
-                                <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA" title="Consultar usuario en MPBA">
-                                    <span class="flaticon-zoom22"></span>
-                                </span>
-                            </div>
-                        </div>
+    string mostrar = (!modificando && Model.Validando != null && Model.Validando != true) ? "block" : "none";
+    <div class="col-md-4" id="Buscadores" style="display:@mostrar">
+        <div class="form-group">
+            <div class='input-group ' style="width: 100%">
+                @Html.TextBox("NombreBuscar", "", new { @class = "form-control input-focused", placeholder = "Buscar usuarios por Alias" })
+                <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA" title="Consultar usuario en MPBA">
+                    <span class="flaticon-zoom22"></span>
+                </span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class='input-group ' style="width: 100%">
+                @Html.TextBox("ApellidoBuscar", "", new { @class = "form-control input-focused", placeholder = "Buscar usuarios por Apellido " })
+                @*<span class="input-group-addon btn btn-alt" id="btnBuscarUsuariosApellido" title="Consultar usuario en MPBA por apellido">
+                        <span class="flaticon-zoom22"></span>
+                    </span>*@
+            </div>
 
-                        <div class="form-group">
-                            <div class='input-group ' style="width: 100%">
-                                @Html.TextBox("ApellidoBuscar", "", new { @class = "form-control", placeholder = "Buscar usuarios por Apellido " })
-                                @*<span class="input-group-addon btn btn-alt" id="btnBuscarUsuariosApellido" title="Consultar usuario en MPBA por apellido">
-                                    <span class="flaticon-zoom22"></span>
-                                </span>*@
-                            </div>
-
-                        </div>
-                    </div>
+        </div>
+    </div>
                 }
 
 
@@ -140,7 +155,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                 <br />
             </div>
             <div class="row wow fadeInDown animated">
-            
+
 
 
                 <div class="col-md-4">
@@ -149,15 +164,15 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                     @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-4">
-                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new {@class = "control-label required"})
-                    @Html.EditorFor(model => model.Nombre, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new {@class = "text-danger"})
+                    @Html.Label("Nombres", htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
 
                 </div>
                 <div class="col-md-4">
-                    @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "control-label required" })
-                    @Html.EditorFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @readonly="readonly" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                 </div>
                 <div class="clearfix"></div>
                 @*@if (Model.Validando && Model.UsuarioMPBA == false)
@@ -176,11 +191,11 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                         </div>
                     }*@
                 @{
-    var usuarioMPBA = Model.UsuarioMPBA == true ? "none" : "block";
+                  var usuarioMPBA = Model.UsuarioMPBA == true ? "none" : "block";
                 }
 
                 <div id="colDependencia" class="col-md-4 " style="display: @usuarioMPBA">
-                    @Html.Label("Dependencia", htmlAttributes: new { @class = "control-label" })
+                    @Html.Label("Dependencia y Cargo", htmlAttributes: new { @class = "control-label required" })
                     @Html.EditorFor(model => model.Dependencia, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Dependencia, "", new { @class = "text-danger" })
 
@@ -249,8 +264,8 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                     </div>
                 }
 
-
-                <div class="col-md-4 ">
+                @{ string mostrarJerarquia = Model.UsuarioMPBA == true ? "block" : "none"; }
+                <div class="col-md-4 " id="colJerarquia" style="display: @mostrarJerarquia">
                     @Html.LabelFor(model => model.Jerarquia, htmlAttributes: new { @class = "control-label" })
                     @Html.DropDownListFor(x => x.Jerarquia.Id, Model.JerarquiaList as SelectList, new { @class = "form-control" })
                 </div>
@@ -372,7 +387,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
             select: function(event, ui) {
                 $("#Apellido").val(ui.item.apellido);
                 $("#Nombre").val(ui.item.nombre);
-                $("#NombreUsuario").val(ui.item.usuario);
+                $("#UserName").val(ui.item.usuario);
                 $("#Email").val(ui.item.usuario + "@@mpba.gov.ar");
             },
             source: function(request, response) {
@@ -416,9 +431,10 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
 
                 var url = '@Url.Action("Index", "Account")?depto=' + @depto;
                 var msg = "<i class='Exito'>Carga Exitosa</i>";
-                var validando = $("#validando").val();
-                if (validando == true) {
-                    msg = msg + "<br/>A la brevedad se le enviará un email a la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC."
+                var validando = $("#Validando").val();
+                if (validando == "True") {
+                    msg = msg + "<br/>A la brevedad se le enviará un email a la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC.";
+                    url = '@Url.Action("Login","Account", routeValues: null)/loginLink';
                 }
                 //alertify.success("Carga Exitosa");
                 alertify.alert("Exito", msg).set({
@@ -474,12 +490,12 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                 if (matches != null) {
                     var acronym = matches.join('');
 
-                    $("#NombreUsuario").val(acronym + apellido);
+                    $("#UserName").val(acronym.toLowerCase() + apellido.toLowerCase());
                 } else
-                    $("#NombreUsuario").val(apellido);
+                    $("#UserName").val(apellido.toLowerCase());
             }
 
-            $("#NombreUsuario").change(function() {
+            $("#UserName").change(function() {
                 if ($("#UsuarioMPBA").val() == "True")
                     $("#Email").val($(this).val() + '@@MPBA.gov.ar');
             });
@@ -501,15 +517,22 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                 $("#colPuntoGestion").toggle("slide", "up");
                 $("#colDepartamento").toggle("slide", "up");
                 $("#ApellidoBuscar").toggle("slide", "up");
+                $("#NombreBuscar").toggle("slide", "up");
+                $("#colJerarquia").toggle("slide", "up");
                 $("#btnBuscarUsuariosApellido").toggle("slide", "up");
                 if (this.checked) {
                     $("#Buscadores").show();
                     $("#Email").prop("readonly", "readonly");
                     $("#colDependencia").hide().effect("fold", "up");
-                    $("#Email").val($("#NombreUsuario").val() + "@@mpba.gov.ar");
+                    $("#Email").val($("#UserName").val() + "@@mpba.gov.ar");
+                    $("#Nombre").val("");
+                    $("#Apellido").val("");
+                    $("#UserName").val("");
                     DeshabilitarControles();
 
+
                 } else {
+
                     $("#Buscadores").hide();
                     $("#Email").prop("readonly", "");
                     $("#colDependencia").show().effect("slide", "up");
@@ -521,7 +544,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
 
         function DeshabilitarControles() {
             $("#Apellido").attr("readonly", "readonly");
-            $("#NombreUsuario").attr("readonly", "readonly");
+            $("#UserName").attr("readonly", "readonly");
             $("#Nombre").attr("readonly", "readonly");
             //$("#Departamento_Id").attr("readonly", "readonly");
             ////$("#PuntoGestion_Descripcion").attr("readonly", "readonly");
@@ -537,7 +560,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
 
         function HabilitarControles() {
             $("#Apellido").removeAttr("readonly");
-            //$("#NombreUsuario").removeAttr("readonly");
+            //$("#UserName").removeAttr("readonly");
             $("#Nombre").removeAttr("readonly");
             //$("#Departamento_Id").removeAttr("readonly");
             //$("#PuntoGestion_Descripcion").removeAttr("readonly");
@@ -588,7 +611,7 @@ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : 
                                 var nombre = data.Nombre;
                                 var usuario = $("#NombreBuscar").val();
                                 $("#Apellido").val(apellido);
-                                $("#NombreUsuario").val(usuario);
+                                $("#UserName").val(usuario);
                                 $("#Nombre").val(nombre);
                                 $("#Email").val(usuario + "@@mpba.gov.ar");
                                 //$("#divUsuarioMPBAEncontrado").append("Usuario MPBA:");

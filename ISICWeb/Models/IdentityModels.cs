@@ -22,7 +22,7 @@ namespace ISICWeb.Models
     {
         public string idPuntoGestion { get; set; }
         public string subCodBarra { get; set; }
-        public string NombreUsuario { get; set; }
+        //public string NombreUsuario { get; set; }
         
         //public string ClaveUsuario { get; set; }
         public string UsuarioSicViejo { get; set; }
