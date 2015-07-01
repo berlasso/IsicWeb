@@ -369,7 +369,7 @@ namespace ISICWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByEmailAsync(model.Email);
+                var user = await UserManager.FindByNameAsync(model.UserName);
                 if (user == null)
                 {
                     ModelState.AddModelError("", "No se encontró ningún usuario.");
@@ -1121,6 +1121,7 @@ namespace ISICWeb.Controllers
                 try
                 {
                     u.EmailConfirmed = false;
+                    u.activo = false;
                     errores = EnviarMail(u, callbackUrl);
                     IdentityResult result = await UserManager.UpdateAsync(u);
                     if (result == IdentityResult.Failed())

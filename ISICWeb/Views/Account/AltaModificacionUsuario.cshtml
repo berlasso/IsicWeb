@@ -83,7 +83,7 @@
                     {
 
 
-                        @Html.LabelFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic" })
+                        @Html.Label( " Es Usuario de MPBA?", new { style = "font-size: large; font-style: italic" })
                         if (modificando)
                         {
                             @Html.CheckBoxFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic;margin-left: 20px;", id = "UsuarioMPBA", disabled = "disabled" })
