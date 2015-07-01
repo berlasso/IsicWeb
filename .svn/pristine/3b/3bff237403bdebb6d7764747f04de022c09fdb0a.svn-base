@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Confirmación de restablecimiento de contraseña";
+}
+
+
+<div class="center wow fadeInDown animated tile-light">
+    <h1>@ViewBag.Title</h1>
+</div>
+<div class="row wow fadeInDown animated tile center">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div>
+            <h3>
+                Se restableció la contraseña. @Html.ActionLink("Haga clic aquí para iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new {id = "loginLink", @class = "btn btn-alt btn-lg"})
+            </h3>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>

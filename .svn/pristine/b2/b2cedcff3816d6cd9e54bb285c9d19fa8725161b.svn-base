@@ -1,0 +1,5 @@
+﻿@model ISICWeb.Models.UsuarioViewModel
+@Html.HiddenFor(x => x.id)
+
+@Html.ValidationSummary()
+

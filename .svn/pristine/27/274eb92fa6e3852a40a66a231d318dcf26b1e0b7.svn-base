@@ -1,0 +1,98 @@
+﻿@model ISICWeb.Models.UsuarioViewModel
+@{
+    ViewBag.Title = "Registrarse";
+}
+
+<div class="center wow fadeInDown animated tile-light">
+    <h1>@ViewBag.Title</h1>
+</div>
+<div class="row wow fadeInDown animated">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <section id="loginForm">
+
+            @using (Html.BeginForm("Registrar", "Account", new { area = "" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.NombreUsuario)
+                @Html.HiddenFor(m => m.id)
+                @Html.HiddenFor(m=>m.code)
+                @Html.HiddenFor(m => m.activo)
+
+                <div class="panel panel-default tile wow fadeInDown animated" style="margin: 60px 0 80px 0">
+                    <div class="panel-heading">
+                        @if (ViewBag.RegistrandoUsuarioViejo != null && ViewBag.RegistrandoUsuarioViejo == true)
+                        {
+                            <h2>VALIDACION: PASO 3</h2>
+                        }
+                        <h4>Cree una cuenta nueva.</h4>
+
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-3">
+                                @Html.LabelFor(m => m.Email)
+                            </div>
+                            <div class="col-xs-9 col-md-5">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger " })<br />
+                            </div>
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <br />
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-3">
+                                @Html.LabelFor(m => m.ClaveUsuario)
+                            </div>
+                            <div class="col-xs-9 col-md-5">
+                                @Html.PasswordFor(m => m.ClaveUsuario, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ClaveUsuario, "", new { @class = "text-danger " })<br />
+                            </div>
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <br />
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-3">
+                                @Html.LabelFor(m => m.ConfirmarClaveUsuario)
+                            </div>
+                            <div class="col-xs-9 col-md-5">
+                                @Html.PasswordFor(m => m.ConfirmarClaveUsuario, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ConfirmarClaveUsuario, "", new { @class = "text-danger " })<br />
+                            </div>
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <br />
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-9 text-center col-md-5">
+                                <input type="submit" value="Confirmar" class="btn btn-lg" />
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-12">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+    <div class="col-md-3"></div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
