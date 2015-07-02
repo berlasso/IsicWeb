@@ -36,6 +36,7 @@ namespace ISICWeb.Controllers
         private ApplicationUserManager _userManager;
         private IRepository _repository;
 
+
         public AccountController()
         {
         }
@@ -188,7 +189,64 @@ namespace ISICWeb.Controllers
 
         }
 
+        public async Task<UsuarioViewModel> LlenarViewModelDesdeBase(string id, string depto = "")
+        {
+            //Usuarios usuario = _repository.Set<Usuarios>().SingleOrDefault(x => x.id == id);
+            ApplicationUser usuario = await UserManager.FindByIdAsync(id);
+            UsuarioViewModel uvm = new UsuarioViewModel
+            {
+                UsuarioMPBA = true,
+                GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion"),
+                JerarquiaList = new SelectList(_repository.Set<JerarquiaPoderJudicial>().ToList().OrderBy(x => x.Descripcion), "id", "Descripcion"),
+                SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion"),
+                DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList().Where(x=>x.Id!=0), "Id", "DepartamentoNombre"), //todos menos item [todos]
+                id = (usuario != null ? usuario.Id : ""),
+                UserName = id
+            };
 
+            if (usuario != null)
+            {
+
+                uvm.ClaveUsuario = usuario.PasswordHash;
+                uvm.UserName = usuario.UserName;
+                uvm.EmailConfirmed = usuario.EmailConfirmed;
+                //uvm.TokenEnviado = usuario.TokenEnviado;
+                uvm.SubCodBarra = usuario.subCodBarra;
+                uvm.Email = usuario.Email;
+                if (usuario.idPersonalPoderJudicial != null)
+                {
+                    PersonalPoderJudicial ppj = _repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == usuario.idPersonalPoderJudicial);
+                    if (ppj != null && ppj.Persona != null && ppj.Persona.Sexo != null)
+                        uvm.Sexo = _repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == ppj.Persona.Sexo.Id);
+                    if (ppj != null && ppj.JerarquiaPoderJudicial != null)
+                        uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == ppj.JerarquiaPoderJudicial.Id);
+                    if (ppj != null && ppj.PuntoGestion != null)
+                        uvm.PuntoGestion = _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == ppj.PuntoGestion.Id);
+                    if (ppj != null && ppj.PuntoGestion != null && ppj.PuntoGestion.Departamento != null)
+                        uvm.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id == ppj.PuntoGestion.Departamento.Id);
+                    if (ppj != null && ppj.Persona != null)
+                    {
+                        uvm.DocumentoNumero = ppj.Persona.DocumentoNumero;
+                        uvm.Nombre = ppj.Persona.Nombre;
+                        uvm.Apellido = ppj.Persona.Apellido;
+
+                    }
+                }
+                uvm.activo = usuario.activo;
+                uvm.Dependencia = usuario.Dependencia;
+                if (usuario.idGrupoUsuario != null)
+                    uvm.GrupoUsuario = _repository.Set<GrupoUsuario>().SingleOrDefault(x => x.id == usuario.idGrupoUsuario);
+                uvm.UsuarioMPBA = usuario.UsuarioMPBA ?? true;
+
+            }
+            else
+            {
+                uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == 3);//No especifica
+                uvm.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id.ToString() == depto);
+            }
+
+            return uvm;
+        }
 
 
         //
@@ -924,7 +982,7 @@ namespace ISICWeb.Controllers
             }
             else
             {
-                if (string.IsNullOrEmpty(model.Dependencia))
+                if (string.IsNullOrEmpty(model.Dependencia)&& model.UsuarioMPBA==false)
                 {
                     ModelState.AddModelError("Dependencia", "Debe indicar la dependencia");
                 }
@@ -934,6 +992,10 @@ namespace ISICWeb.Controllers
                 ModelState.AddModelError("", "Debe indicar el Departamento");
             }
 
+            if (model.UsuarioMPBA == false )
+            {
+                model.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id == 22);//fuera mpba
+            }
 
             if (ModelState.IsValid)
             {
@@ -1063,64 +1125,7 @@ namespace ISICWeb.Controllers
             return PartialView("_SummaryErrorUsuario", model);
         }
 
-        public async Task<UsuarioViewModel> LlenarViewModelDesdeBase(string id, string depto = "")
-        {
-            //Usuarios usuario = _repository.Set<Usuarios>().SingleOrDefault(x => x.id == id);
-            ApplicationUser usuario = await UserManager.FindByIdAsync(id);
-            UsuarioViewModel uvm = new UsuarioViewModel
-            {
-                UsuarioMPBA = true,
-                GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion"),
-                JerarquiaList = new SelectList(_repository.Set<JerarquiaPoderJudicial>().ToList().OrderBy(x => x.Descripcion), "id", "Descripcion"),
-                SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion"),
-                DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList(), "Id", "DepartamentoNombre"),
-                id = (usuario!=null?usuario.Id:""),
-                UserName = id
-            };
-
-            if (usuario != null)
-            {
-
-                uvm.ClaveUsuario = usuario.PasswordHash;
-                uvm.UserName = usuario.UserName;
-                uvm.EmailConfirmed = usuario.EmailConfirmed;
-                //uvm.TokenEnviado = usuario.TokenEnviado;
-                uvm.SubCodBarra = usuario.subCodBarra;
-                uvm.Email = usuario.Email;
-                if (usuario.idPersonalPoderJudicial != null)
-                {
-                    PersonalPoderJudicial ppj = _repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == usuario.idPersonalPoderJudicial);
-                    if (ppj != null && ppj.Persona != null && ppj.Persona.Sexo != null)
-                        uvm.Sexo = _repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == ppj.Persona.Sexo.Id);
-                    if (ppj != null && ppj.JerarquiaPoderJudicial != null)
-                        uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == ppj.JerarquiaPoderJudicial.Id);
-                    if (ppj != null && ppj.PuntoGestion != null)
-                        uvm.PuntoGestion = _repository.Set<PuntoGestion>().SingleOrDefault(x => x.Id == ppj.PuntoGestion.Id);
-                    if (ppj != null && ppj.PuntoGestion != null && ppj.PuntoGestion.Departamento != null)
-                        uvm.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id == ppj.PuntoGestion.Departamento.Id);
-                    if (ppj != null && ppj.Persona != null)
-                    {
-                        uvm.DocumentoNumero = ppj.Persona.DocumentoNumero;
-                        uvm.Nombre = ppj.Persona.Nombre;
-                        uvm.Apellido = ppj.Persona.Apellido;
-
-                    }
-                }
-                uvm.activo = usuario.activo;
-                uvm.Dependencia = usuario.Dependencia;
-                if (usuario.idGrupoUsuario != null)
-                    uvm.GrupoUsuario = _repository.Set<GrupoUsuario>().SingleOrDefault(x => x.id == usuario.idGrupoUsuario);
-                uvm.UsuarioMPBA = usuario.UsuarioMPBA ?? true;
-
-            }
-            else
-            {
-                uvm.Jerarquia = _repository.Set<JerarquiaPoderJudicial>().SingleOrDefault(x => x.Id == 3);//No especifica
-                uvm.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id.ToString() == depto);
-            }
-
-            return uvm;
-        }
+    
 
         public async Task<string> ReenviarToken(string uid = "")
         {
@@ -1169,7 +1174,7 @@ namespace ISICWeb.Controllers
                 }
                 catch
                 {
-                    errores = "Error al enviar ";
+                    errores = "Error al enviar el mail. ";
                     errores += string.Join("; ", ModelState.Values
                         .SelectMany(x => x.Errors)
                         .Select(x => x.ErrorMessage));
@@ -1209,7 +1214,7 @@ namespace ISICWeb.Controllers
             {
                 email.Send();
             }
-            catch
+            catch(Exception ex)
             {
                 if (!ModelState.IsValid)
                 {
@@ -1219,7 +1224,7 @@ namespace ISICWeb.Controllers
                 }
                 else
                 {
-                    errores = "Error al enviar";
+                    errores = "Error al enviar: "+ex.Message;
                 }
                 return errores;
             }
@@ -1251,20 +1256,7 @@ namespace ISICWeb.Controllers
             var ctx = new ApplicationDbContext();
 
             IEnumerable<ApplicationUser> usuarios = null;
-            switch (model.Departamento.Id)
-            {
-                case 0: //todos
-                    usuarios = UserManager.Users.ToList();
-                    break;
-                case 22: // fuera mpba
-                    usuarios = UserManager.Users.Where(x => x.Dependencia != null && x.Dependencia != "");
-                    break;
-                default:
-                    usuarios = UserManager.Users.Where(x => x.idPersonalPoderJudicial != null && x.idPuntoGestion != null);
-
-                    break;
-            }
-            var lista = (from u in usuarios
+            IEnumerable<UsuarioViewModel>   lista = (from u in UserManager.Users.ToList()
                          from p in _repository.Set<PersonalPoderJudicial>().Where(x => x.Id == u.idPersonalPoderJudicial)
                          select new UsuarioViewModel
                          {
@@ -1281,7 +1273,21 @@ namespace ISICWeb.Controllers
                              UsuarioMPBA = (u.UsuarioMPBA ?? false),
                          }
                 );
-            return PartialView("_ResultadosBusqueda", lista);
+            IEnumerable<UsuarioViewModel> listaNueva = null;
+            switch (model.Departamento.Id)
+            {
+                case 0: //todos
+                    listaNueva = lista.ToList();
+                    break;
+                case 22: // fuera mpba
+                    listaNueva= lista.Where(x => !string.IsNullOrEmpty(x.Dependencia)).ToList();
+                    break;
+                default:
+                    listaNueva = lista.Where(x => x.PersonalPoderJudicial != null && x.PuntoGestion != null && x.PuntoGestion.Departamento!=null && x.PuntoGestion.Departamento.Id==model.Departamento.Id).ToList();
+                    break;
+            }
+         
+            return PartialView("_ResultadosBusqueda", listaNueva);
         }
 
         public async Task<RedirectToRouteResult> Prueba()
@@ -1315,6 +1321,11 @@ namespace ISICWeb.Controllers
                 {
                     apellido = usuarioDominio.Substring(usuarioDominio.LastIndexOf(' ') + 1);
                     nombre = usuarioDominio.Substring(0, usuarioDominio.LastIndexOf(' '));
+                    if (UserManager.FindByName(u) != null)
+                    {
+                        huboError = true;
+                        errorMessage = "Usuario ya existente en el sistema";
+                    }
                 }
                 else
                 {

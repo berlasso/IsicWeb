@@ -288,8 +288,6 @@
     <Compile Include="Models\UsuarioViewModel.cs" />
     <Compile Include="Models\UsuarioIsicViewModel.cs" />
     <Compile Include="Models\VerificacionEmail.cs" />
-    <Compile Include="Services\AccountService.cs" />
-    <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Web References\wsSIC\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

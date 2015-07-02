@@ -44,7 +44,7 @@ namespace ISICWeb.Models
         public SelectList JerarquiaList { get; set; }
         [Required]
         public virtual PuntoGestion PuntoGestion { get; set; }
-        [Required]
+        //[Required]
         public virtual Departamento Departamento { get; set; }
         public virtual ClaseSexo Sexo { get; set; }
         public virtual JerarquiaPoderJudicial Jerarquia { get; set; }
