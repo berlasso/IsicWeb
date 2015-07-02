@@ -910,6 +910,7 @@ namespace ISICWeb.Controllers
         public async Task<ActionResult> GuardarDatosUsuario(UsuarioViewModel model)
         {
             string errores = "";
+            bool cambioEmail = false;
 
             if (model.Sexo.Id == 0)
             {
@@ -934,6 +935,10 @@ namespace ISICWeb.Controllers
                 ModelState.AddModelError("", "Debe indicar el Departamento");
             }
 
+            //if (UserManager.FindByEmail(model.Email)!= null)
+            //{
+            //    ModelState.AddModelError("", "Email ya existente.");
+            //}
 
             if (ModelState.IsValid)
             {
@@ -982,6 +987,8 @@ namespace ISICWeb.Controllers
                 }
                 else
                 {
+                    cambioEmail = (model.Email != usuario.Email);
+                    usuario.FechaModificacion=DateTime.Now;
                     ppj = _repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == usuario.idPersonalPoderJudicial);
                     if (ppj != null)
                     {
@@ -1033,7 +1040,7 @@ namespace ISICWeb.Controllers
                     //var userProp = TraerPropiedades(model.Email);
                     /////////////////////////////////////////////////
 
-                    if (usuarioNuevo)
+                    if (usuarioNuevo || (cambioEmail))
                     {
                         errores = await ReenviarToken(usuario.Id);
 
@@ -1052,9 +1059,20 @@ namespace ISICWeb.Controllers
                 else
                 {
                     AddErrors(result);
-                    _repository.UnitOfWork.RegisterDeleted(ppj);
-                    _repository.UnitOfWork.Commit();
-                    //  return Content("error");
+                    if (usuarioNuevo)
+                    {
+                        _repository.UnitOfWork.RegisterDeleted(ppj);
+                        try
+                        {
+                            _repository.UnitOfWork.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            ModelState.AddModelError("", e.Message);
+                            return PartialView("_SummaryErrorUsuario", model);
+                        }
+                        //  return Content("error");
+                    }
                 }
             }
 

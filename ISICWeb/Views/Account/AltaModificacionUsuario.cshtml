@@ -30,6 +30,7 @@
 
     @Html.HiddenFor(model => model.Validando)
     @Html.HiddenFor(model => model.UsuarioSicViejo)
+    @Html.HiddenFor(model => model.id)
     @*@Html.Hidden("UsuarioMPBA",Model.UsuarioMPBA.ToString())*@
     <div class=" center wow fadeInDown animated tile-light">
         <h3>
@@ -277,7 +278,7 @@
             <div class="row wow fadeInDown animated">
                 <div class="col-md-12" id="divValidation">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.id)
+                    
 
                 </div>
             </div>
@@ -323,319 +324,332 @@
 @section scripts
 {
     <script>
-        function LlenarControlesSimp(control) {
-            $("#Apellido").val(control.dataset.apellido);
-            $("#Nombre").val(control.dataset.nombre);
+    function LlenarControlesSimp(control) {
+        $("#Apellido").val(control.dataset.apellido);
+        $("#Nombre").val(control.dataset.nombre);
 
-        }
+    }
 
-        $(document).ready(function() {
-            if ('@Model.UsuarioMPBA' == 'True')
-                DeshabilitarControles();
-        })
-        $("#Departamento_Id").change(function() {
+    $(document).ready(function() {
+        if ('@Model.UsuarioMPBA' == 'True')
+            DeshabilitarControles();
+    })
+    $("#Departamento_Id").change(function() {
+        $("#PuntoGestion_Id").val("");
+        $("#PuntoGestion_Descripcion").val("");
+        $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
+    });
+    $('#PuntoGestion_Descripcion').bind('autocompleteselect', function(event, ui) {
+        $("#PuntoGestion_Id").val(ui.item.id);
+        $("#Departamento_Id").val(ui.item.deptoId);
+        $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
+    });
+
+
+    $("#PuntoGestion_Descripcion").on("autocompletechange", function(event, ui) {
+        if (this.value.trim() === '') {
             $("#PuntoGestion_Id").val("");
-            $("#PuntoGestion_Descripcion").val("");
-            $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
-        });
-        $('#PuntoGestion_Descripcion').bind('autocompleteselect', function(event, ui) {
-            $("#PuntoGestion_Id").val(ui.item.id);
-            $("#Departamento_Id").val(ui.item.deptoId);
-            $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
-        });
-
-
-        $("#PuntoGestion_Descripcion").on("autocompletechange", function(event, ui) {
-            if (this.value.trim() === '') {
-                $("#PuntoGestion_Id").val("");
-            }
-            if ($("#PuntoGestion_Id").val().trim() === "") {
-                this.value = "";
-            };
-
-        });
-
-        //$("#Departamento_Id").change(function() {
-        //    $("lblPuntoGestion").html("Punto Gestion - Depto: " + $(this).val());
-        //});
-
-        $("#PuntoGestion_Descripcion").autocomplete({
-            minLength: 3,
-            source: function(request, response) {
-                $.ajax({
-                    url: '@Url.Action("BuscarPuntoGestion")',
-                    type: "GET",
-                    dataType: "json",
-                    autoFocus: true,
-
-
-                    data: { term: request.term, depto: $("#Departamento_Id").val() },
-
-                    success: function(data) {
-                        $("#PuntoGestion_Id").val("");
-                        response($.map(data, function(item) {
-
-                            return { label: item.label, value: item.label, id: item.id, deptoId: item.deptoId };
-                        }));
-                    }
-                });
-            },
-        });
-
-        $("#ApellidoBuscar").autocomplete({
-            minLength: 4,
-            select: function(event, ui) {
-                $("#Apellido").val(ui.item.apellido);
-                $("#Nombre").val(ui.item.nombre);
-                $("#UserName").val(ui.item.usuario);
-                $("#Email").val(ui.item.usuario + "@@mpba.gov.ar");
-            },
-            source: function(request, response) {
-                $.ajax({
-                    url: '@Url.Action("BuscarUsuariosMPBAPorApellido")',
-                    type: "GET",
-                    dataType: "json",
-                    autoFocus: true,
-
-
-                    data: { apellido: $("#ApellidoBuscar").val() },
-
-                    success: function(data) {
-
-                        response($.map(data, function(item) {
-                            $("#ApellidoBuscar").data('apellido', item.apellido);
-                            $("#ApellidoBuscar").data('nombre', item.nombre);
-                            $("#ApellidoBuscar").data('usuario', item.usuario);
-                            return { label: item.apellido + ', ' + item.nombre, apellido: item.apellido, nombre: item.nombre, usuario: item.usuario };
-                        }));
-                    }
-                });
-            },
-        });
-
-
-        var urlBuscarUsuario = '@Url.Action("BuscarUsuarioMPBA")?u=';
-
-        //GUARDAR DATOS Usuario
-        function onGuardarBegin() {
-            loader("Guardando, espere un momento...");
         }
+        if ($("#PuntoGestion_Id").val().trim() === "") {
+            this.value = "";
+        };
 
-        function onGuardarComplete() {
-            $.unblockUI();
-        }
+    });
 
-        function onGuardarSuccess(data) {
-            if (data == "") {
-                //alertify.success("Alta exitosa");
+    //$("#Departamento_Id").change(function() {
+    //    $("lblPuntoGestion").html("Punto Gestion - Depto: " + $(this).val());
+    //});
 
-                var url = '@Url.Action("Index", "Account")?depto=' + @depto;
-                var msg = "<i class='Exito'>Carga Exitosa</i>";
-                var validando = $("#Validando").val();
-                if (validando == "True") {
-                    msg = msg + "<br/>A la brevedad se le enviará un email a la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC.";
-                    url = '@Url.Action("Login","Account", routeValues: null)/loginLink';
+    $("#PuntoGestion_Descripcion").autocomplete({
+        minLength: 3,
+        source: function(request, response) {
+            $.ajax({
+                url: '@Url.Action("BuscarPuntoGestion")',
+                type: "GET",
+                dataType: "json",
+                autoFocus: true,
+
+
+                data: { term: request.term, depto: $("#Departamento_Id").val() },
+
+                success: function(data) {
+                    $("#PuntoGestion_Id").val("");
+                    response($.map(data, function(item) {
+
+                        return { label: item.label, value: item.label, id: item.id, deptoId: item.deptoId };
+                    }));
                 }
-                //alertify.success("Carga Exitosa");
-                alertify.alert("Exito", msg).set({
-                    onclose: function() {
-                        showPageLoadingSpinner();
-                        location.href = url;
+            });
+        },
+    });
 
+    $("#ApellidoBuscar").autocomplete({
+        minLength: 4,
+        select: function(event, ui) {
+            $("#Apellido").val(ui.item.apellido);
+            $("#Nombre").val(ui.item.nombre);
+            $("#UserName").val(ui.item.usuario);
+            $("#Email").val(ui.item.usuario + "@@mpba.gov.ar");
+        },
+        source: function(request, response) {
+            $.ajax({
+                url: '@Url.Action("BuscarUsuariosMPBAPorApellido")',
+                type: "GET",
+                dataType: "json",
+                autoFocus: true,
+
+
+                data: { apellido: $("#ApellidoBuscar").val() },
+
+                success: function(data) {
+
+                    response($.map(data, function(item) {
+                        $("#ApellidoBuscar").data('apellido', item.apellido);
+                        $("#ApellidoBuscar").data('nombre', item.nombre);
+                        $("#ApellidoBuscar").data('usuario', item.usuario);
+                        return { label: item.apellido + ', ' + item.nombre, apellido: item.apellido, nombre: item.nombre, usuario: item.usuario };
+                    }));
+                }
+            });
+        },
+    });
+
+
+    var urlBuscarUsuario = '@Url.Action("BuscarUsuarioMPBA")?u=';
+
+    //GUARDAR DATOS Usuario
+    function onGuardarBegin() {
+        loader("Guardando, espere un momento...");
+    }
+
+    function onGuardarComplete() {
+        $.unblockUI();
+    }
+
+    function onGuardarSuccess(data) {
+        if (data == "") {
+            //alertify.success("Alta exitosa");
+
+            var url = '@Url.Action("Index", "Account")?depto=' + @depto;
+            var msg = "<i class='Exito'>Carga Exitosa</i>";
+            var email=@Html.Raw(Json.Encode(Model.Email));
+                var esNuevo = $("#id").val() === "";
+                var cambioMail = (email != $("#Email").val());
+            if (esNuevo===true || cambioMail===true) {
+                msg = msg + "<br/>A la brevedad recibirá un email en la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC.";
+            }
+            var validando = $("#Validando").val();
+            if (validando == "True") {
+
+                url = '@Url.Action("Login", "Account", routeValues: null)/loginLink';
+
+            } else {
+                if (esNuevo===true || cambioMail===true) {
+                    msg = msg + "<br/>Nota: confirmacion de email y cuanta desactivadas hasta que usuario confirme el mail de validacion.";
+                }
+            }
+            //alertify.success("Carga Exitosa");
+            alertify.alert("Exito", msg).set({
+                onclose: function() {
+                    showPageLoadingSpinner();
+                    location.href = url;
+
+                }
+            });
+
+
+        } else {
+            alertify.error("Error: " + data);
+
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+        }
+    }
+
+
+    $(document).ready(function() {
+
+        $('[title]').tooltip();
+        $("#navFooter").hide();
+        $("#SubCodBarra").mask("9999");
+        $("#EnviarToken").click(function() {
+            $.ajax({
+                url: '@Url.Action("ReenviarToken", "Account")?uid=@Model.id&e=@Model.Email',
+                type: "GET",
+                autoFocus: true,
+                beforeSend: function() {
+                    //  $("#EnviarToken").addClass("disabled");
+                    loader("Reenviando Token...");
+                },
+                complete: function() {
+                    //$("#EnviarToken").removeClass("disabled");
+                    $.unblockUI();
+                },
+                success: function(data) {
+                    if (data == "") {
+                        alertify.success("Token enviado correctamente");
+                        $("#activo").attr("checked", false);
+                        $("#cartelTokenEnviado").removeClass("hidden");
+                    } else {
+                        alertify.error(data, 0);
                     }
-                });
+                }
+            });
+        });
+
+        function ArmarUsuario() {
+            var apellido = $("#Apellido").val().replace(/ |'/g, '');
+            var nombres = $("#Nombre").val();
+            var matches = nombres.match(/\b(\w)/g);
+            if (matches != null) {
+                var acronym = matches.join('');
+
+                $("#UserName").val(acronym.toLowerCase() + apellido.toLowerCase());
+            } else
+                $("#UserName").val(apellido.toLowerCase());
+        }
+
+        $("#UserName").change(function() {
+            if ($("#UsuarioMPBA").val() == "True")
+                $("#Email").val($(this).val() + '@@MPBA.gov.ar');
+        });
+
+        $("#Apellido").keyup(function() {
+            var texto = $(this).val();
+            $(this).val(texto.replace("'", " "));
+            ArmarUsuario();
+        });
+
+        $("#Nombre").keyup(function() {
+            ArmarUsuario();
+        });
+
+
+        $("#UsuarioMPBA").change(function() {
+
+            $("#colDependencia").toggle("slide", "up");
+            $("#colPuntoGestion").toggle("slide", "up");
+            $("#colDepartamento").toggle("slide", "up");
+            $("#ApellidoBuscar").toggle("slide", "up");
+            $("#NombreBuscar").toggle("slide", "up");
+            $("#colJerarquia").toggle("slide", "up");
+            $("#btnBuscarUsuariosApellido").toggle("slide", "up");
+            if (this.checked) {
+                $("#Buscadores").show();
+                $("#Email").prop("readonly", "readonly");
+                $("#colDependencia").hide().effect("fold", "up");
+                $("#Email").val($("#UserName").val() + "@@mpba.gov.ar");
+                $("#Nombre").val("");
+                $("#Apellido").val("");
+                $("#UserName").val("");
+                DeshabilitarControles();
 
 
             } else {
-                alertify.error("Error: " + data);
 
-                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+                $("#Buscadores").hide();
+                $("#Email").prop("readonly", "");
+                $("#colDependencia").show().effect("slide", "up");
+                HabilitarControles();
 
             }
-        }
+        });
+    });
+
+    function DeshabilitarControles() {
+        $("#Apellido").attr("readonly", "readonly");
+        $("#UserName").attr("readonly", "readonly");
+        $("#Nombre").attr("readonly", "readonly");
+        //$("#Departamento_Id").attr("readonly", "readonly");
+        ////$("#PuntoGestion_Descripcion").attr("readonly", "readonly");
+        $("#Email").attr("readonly", "readonly");
+        // $("#DocumentoNumero").attr("readonly", "readonly");
+        //$("#Sexo_Id").attr("readonly", "readonly");
+        //$("#GrupoUsuario_id").attr("readonly", "readonly");
+        //$("#SubCodBarra").attr("readonly", "readonly");
+        //$("#Jerarquia_Id").attr("readonly", "readonly");
+        $("#btnBuscarUsuarioMPBA").show();
+
+    }
+
+    function HabilitarControles() {
+        $("#Apellido").removeAttr("readonly");
+        //$("#UserName").removeAttr("readonly");
+        $("#Nombre").removeAttr("readonly");
+        //$("#Departamento_Id").removeAttr("readonly");
+        //$("#PuntoGestion_Descripcion").removeAttr("readonly");
+        $("#Email").removeAttr("readonly");
+        // $("#DocumentoNumero").removeAttr("readonly");
+        //$("#Sexo_Id").removeAttr("readonly");
+        //$("#GrupoUsuario_id").removeAttr("readonly");
+        //$("#SubCodBarra").removeAttr("readonly");
+        //$("#Jerarquia_Id").removeAttr("readonly");
+        $("#btnBuscarUsuarioMPBA").hide();
+    }
 
 
-        $(document).ready(function() {
+    $(function() {
 
-            $('[title]').tooltip();
-            $("#navFooter").hide();
-            $("#SubCodBarra").mask("9999");
-            $("#EnviarToken").click(function() {
+
+        $('#NombreBuscar').keydown(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                $("#btnBuscarUsuarioMPBA").click();
+            }
+        });
+        $('#ApellidoBuscar').keydown(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                $("#btnBuscarUsuariosApellido").click();
+            }
+        });
+
+        $("#btnBuscarUsuarioMPBA").click(function() {
+            if ($("#NombreBuscar").valid() == true) {
+                var nombreusuario = $("#NombreBuscar").val();
+                var url = urlBuscarUsuario + nombreusuario + '&r=' + new Date().getTime();
+                $("#divUsuarioMPBAEncontrado").empty();
+                $("#divUsuarioMPBAEncontrado").hide();
                 $.ajax({
-                    url: '@Url.Action("ReenviarToken", "Account")?uid=@Model.id&e=@Model.Email',
-                    type: "GET",
-                    autoFocus: true,
+                    url: url,
+                    success: function(data) {
+                        var json = data;
+                        if (data.HuboError == true) {
+                            alertify.alert("Error", data.ErrorMessage);
+                        } else {
+                            //if (data.DatosSimp.length == 0 || data.DatosSimp[0].Imputados.length == 0) {
+                            //    alertify.alert("No hubo resultados");
+                            //    return;
+                            //}
+                            var apellido = data.Apellido;
+                            var nombre = data.Nombre;
+                            var usuario = $("#NombreBuscar").val();
+                            $("#Apellido").val(apellido);
+                            $("#UserName").val(usuario);
+                            $("#Nombre").val(nombre);
+                            $("#Email").val(usuario + "@@mpba.gov.ar");
+                            //$("#divUsuarioMPBAEncontrado").append("Usuario MPBA:");
+
+                            //$("#divUsuarioMPBAEncontrado").append('<ul><a id="usuarioMPBA" href="#" onclick="LlenarControlesSimp(usuarioMPBA)" data-apellido="' + data.Apellido + '" data-nombre="' + data.Nombre + '">' + data.Apellido + ', ' + data.Nombre + '</a></ul>').show();
+                        }
+
+                    },
                     beforeSend: function() {
-                        $("#EnviarToken").addClass("disabled");
+                        //loader("Buscando datos de la IPP...");
+                        $("#NombreBuscar").addClass("loadinggif");
                     },
                     complete: function() {
-                        $("#EnviarToken").removeClass("disabled");
+                        //$.unblockUI();
+                        $("#NombreBuscar").removeClass("loadinggif");
                     },
-                    success: function(data) {
-                        if (data == "") {
-                            alertify.success("Token enviado correctamente");
-                            $("#activo").attr("checked", false);
-                            $("#cartelTokenEnviado").removeClass("hidden");
-                        } else {
-                            alertify.error(data, 0);
-                        }
-                    }
+                    dataType: "json"
                 });
-            });
 
-            function ArmarUsuario() {
-                var apellido = $("#Apellido").val().replace(/ |'/g, '');
-                var nombres = $("#Nombre").val();
-                var matches = nombres.match(/\b(\w)/g);
-                if (matches != null) {
-                    var acronym = matches.join('');
-
-                    $("#UserName").val(acronym.toLowerCase() + apellido.toLowerCase());
-                } else
-                    $("#UserName").val(apellido.toLowerCase());
+            } else {
+                $("#NombreBuscar").data("validator");
             }
-
-            $("#UserName").change(function() {
-                if ($("#UsuarioMPBA").val() == "True")
-                    $("#Email").val($(this).val() + '@@MPBA.gov.ar');
-            });
-
-            $("#Apellido").keyup(function() {
-                var texto = $(this).val();
-                $(this).val(texto.replace("'", " "));
-                ArmarUsuario();
-            });
-
-            $("#Nombre").keyup(function() {
-                ArmarUsuario();
-            });
-
-
-            $("#UsuarioMPBA").change(function() {
-
-                $("#colDependencia").toggle("slide", "up");
-                $("#colPuntoGestion").toggle("slide", "up");
-                $("#colDepartamento").toggle("slide", "up");
-                $("#ApellidoBuscar").toggle("slide", "up");
-                $("#NombreBuscar").toggle("slide", "up");
-                $("#colJerarquia").toggle("slide", "up");
-                $("#btnBuscarUsuariosApellido").toggle("slide", "up");
-                if (this.checked) {
-                    $("#Buscadores").show();
-                    $("#Email").prop("readonly", "readonly");
-                    $("#colDependencia").hide().effect("fold", "up");
-                    $("#Email").val($("#UserName").val() + "@@mpba.gov.ar");
-                    $("#Nombre").val("");
-                    $("#Apellido").val("");
-                    $("#UserName").val("");
-                    DeshabilitarControles();
-
-
-                } else {
-
-                    $("#Buscadores").hide();
-                    $("#Email").prop("readonly", "");
-                    $("#colDependencia").show().effect("slide", "up");
-                    HabilitarControles();
-
-                }
-            });
         });
-
-        function DeshabilitarControles() {
-            $("#Apellido").attr("readonly", "readonly");
-            $("#UserName").attr("readonly", "readonly");
-            $("#Nombre").attr("readonly", "readonly");
-            //$("#Departamento_Id").attr("readonly", "readonly");
-            ////$("#PuntoGestion_Descripcion").attr("readonly", "readonly");
-            $("#Email").attr("readonly", "readonly");
-            // $("#DocumentoNumero").attr("readonly", "readonly");
-            //$("#Sexo_Id").attr("readonly", "readonly");
-            //$("#GrupoUsuario_id").attr("readonly", "readonly");
-            //$("#SubCodBarra").attr("readonly", "readonly");
-            //$("#Jerarquia_Id").attr("readonly", "readonly");
-            $("#btnBuscarUsuarioMPBA").show();
-
-        }
-
-        function HabilitarControles() {
-            $("#Apellido").removeAttr("readonly");
-            //$("#UserName").removeAttr("readonly");
-            $("#Nombre").removeAttr("readonly");
-            //$("#Departamento_Id").removeAttr("readonly");
-            //$("#PuntoGestion_Descripcion").removeAttr("readonly");
-            $("#Email").removeAttr("readonly");
-            // $("#DocumentoNumero").removeAttr("readonly");
-            //$("#Sexo_Id").removeAttr("readonly");
-            //$("#GrupoUsuario_id").removeAttr("readonly");
-            //$("#SubCodBarra").removeAttr("readonly");
-            //$("#Jerarquia_Id").removeAttr("readonly");
-            $("#btnBuscarUsuarioMPBA").hide();
-        }
-
-
-        $(function() {
-
-
-            $('#NombreBuscar').keydown(function(e) {
-                if (e.keyCode == 13) {
-                    e.preventDefault();
-                    $("#btnBuscarUsuarioMPBA").click();
-                }
-            });
-            $('#ApellidoBuscar').keydown(function(e) {
-                if (e.keyCode == 13) {
-                    e.preventDefault();
-                    $("#btnBuscarUsuariosApellido").click();
-                }
-            });
-
-            $("#btnBuscarUsuarioMPBA").click(function() {
-                if ($("#NombreBuscar").valid() == true) {
-                    var nombreusuario = $("#NombreBuscar").val();
-                    var url = urlBuscarUsuario + nombreusuario + '&r=' + new Date().getTime();
-                    $("#divUsuarioMPBAEncontrado").empty();
-                    $("#divUsuarioMPBAEncontrado").hide();
-                    $.ajax({
-                        url: url,
-                        success: function(data) {
-                            var json = data;
-                            if (data.HuboError == true) {
-                                alertify.alert("Error", data.ErrorMessage);
-                            } else {
-                                //if (data.DatosSimp.length == 0 || data.DatosSimp[0].Imputados.length == 0) {
-                                //    alertify.alert("No hubo resultados");
-                                //    return;
-                                //}
-                                var apellido = data.Apellido;
-                                var nombre = data.Nombre;
-                                var usuario = $("#NombreBuscar").val();
-                                $("#Apellido").val(apellido);
-                                $("#UserName").val(usuario);
-                                $("#Nombre").val(nombre);
-                                $("#Email").val(usuario + "@@mpba.gov.ar");
-                                //$("#divUsuarioMPBAEncontrado").append("Usuario MPBA:");
-
-                                //$("#divUsuarioMPBAEncontrado").append('<ul><a id="usuarioMPBA" href="#" onclick="LlenarControlesSimp(usuarioMPBA)" data-apellido="' + data.Apellido + '" data-nombre="' + data.Nombre + '">' + data.Apellido + ', ' + data.Nombre + '</a></ul>').show();
-                            }
-
-                        },
-                        beforeSend: function() {
-                            //loader("Buscando datos de la IPP...");
-                            $("#NombreBuscar").addClass("loadinggif");
-                        },
-                        complete: function() {
-                            //$.unblockUI();
-                            $("#NombreBuscar").removeClass("loadinggif");
-                        },
-                        dataType: "json"
-                    });
-
-                } else {
-                    $("#NombreBuscar").data("validator");
-                }
-            });
-        });
+    });
 
     </script>
 }
