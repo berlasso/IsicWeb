@@ -365,7 +365,7 @@ namespace ISICWeb.Controllers
             if (result.Succeeded)
             {
                 ApplicationUser u = await UserManager.FindByIdAsync(userId);
-                u.activo = true;
+                //u.activo = true;
                 result = await UserManager.UpdateAsync(u);
                 if (result.Succeeded)
                 {
@@ -459,7 +459,7 @@ namespace ISICWeb.Controllers
                 if (result.Succeeded)
                 {
                     user.EmailConfirmed = true;
-                    user.activo = true;
+                    //user.activo = true;
                     await UserManager.UpdateAsync(user);
                     return RedirectToAction("ResetPasswordConfirmation", "Account");
                 }
@@ -968,7 +968,7 @@ namespace ISICWeb.Controllers
         public async Task<ActionResult> GuardarDatosUsuario(UsuarioViewModel model)
         {
             string errores = "";
-
+            bool cambioEmail = false;
             if (model.Sexo.Id == 0)
             {
                 ModelState.AddModelError("Sexo", "Debe indicar el sexo");
@@ -1044,6 +1044,8 @@ namespace ISICWeb.Controllers
                 }
                 else
                 {
+                    cambioEmail = (model.Email != usuario.Email);
+                    usuario.FechaModificacion = DateTime.Now;
                     ppj = _repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == usuario.idPersonalPoderJudicial);
                     if (ppj != null)
                     {
@@ -1080,8 +1082,10 @@ namespace ISICWeb.Controllers
 
                 IdentityResult result = null;
                 bool usuarioNuevo = model.id == null;
+                usuario.activo = model.activo;
                 if (usuarioNuevo)
                 {
+                    usuario.activo = true;
                     result = UserManager.Create(usuario);
                     //result = await UserManager.CreateAsync(usuario, _repository);
                 }
@@ -1095,7 +1099,7 @@ namespace ISICWeb.Controllers
                     //var userProp = TraerPropiedades(model.Email);
                     /////////////////////////////////////////////////
 
-                    if (usuarioNuevo)
+                    if (usuarioNuevo || (cambioEmail))
                     {
                         errores = await ReenviarToken(usuario.Id);
 
@@ -1114,9 +1118,20 @@ namespace ISICWeb.Controllers
                 else
                 {
                     AddErrors(result);
-                    _repository.UnitOfWork.RegisterDeleted(ppj);
-                    _repository.UnitOfWork.Commit();
-                    //  return Content("error");
+                    if (usuarioNuevo)
+                    {
+                        _repository.UnitOfWork.RegisterDeleted(ppj);
+                        try
+                        {
+                            _repository.UnitOfWork.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            ModelState.AddModelError("", e.Message);
+                            return PartialView("_SummaryErrorUsuario", model);
+                        }
+                        //  return Content("error");
+                    }
                 }
             }
 
@@ -1148,7 +1163,7 @@ namespace ISICWeb.Controllers
                 try
                 {
                     u.EmailConfirmed = false;
-                    u.activo = false;
+                    //u.activo = false;
                     errores = EnviarMail(u, callbackUrl);
                     IdentityResult result = await UserManager.UpdateAsync(u);
                     if (result == IdentityResult.Failed())
@@ -1440,6 +1455,13 @@ namespace ISICWeb.Controllers
         public ActionResult InfoRegistracion()
         {
             return View();
+        }
+
+        public async Task<ActionResult> InfoUsuario()
+        {
+            ApplicationUser u = await UserManager.FindByNameAsync(User.Identity.Name);
+            UsuarioViewModel uvm =await LlenarViewModelDesdeBase(u.Id);
+            return View(uvm);
         }
     }
 

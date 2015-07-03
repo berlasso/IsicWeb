@@ -7,8 +7,8 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @User.Identity.Name
-                @*@Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Manage", "Account", new {area = ""}, htmlAttributes: new {title = "Administrar"})*@
+                @*@User.Identity.Name*@
+                @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "InfoUsuario", "Account", new {area = ""}, htmlAttributes: new {title = "Administrar"})
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
         </ul>

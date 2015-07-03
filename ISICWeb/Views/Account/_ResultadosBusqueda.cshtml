@@ -81,14 +81,33 @@
                                     @Html.DisplayFor(modelitem => item.Email)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.activo)
+                            @{
+                            if (item.activo == true)
+                            {
+                                <label>SI</label>
+                            }
+                            else
+                            {
+                                <label>NO</label>
+                            }
+                                    }
                                 </td>
                                 <td>
                                     @{
                                         bool emailconfirmed = item.EmailConfirmed != null?item.EmailConfirmed.Value:false;
                                     }
                                     @*<input type="checkbox" value=@tokenenviado disabled="disabled"/>*@
-                                    @Html.CheckBox("tokenenv", emailconfirmed, new { disabled = "disabled" })
+                                    @*@Html.CheckBox("tokenenv", emailconfirmed, new { disabled = "disabled" })*@
+                                    @{
+                                        if (emailconfirmed == true)
+                                        {
+                                            <label>SI</label>
+                                        }
+                                        else
+                                        {
+                                            <label>NO</label>
+                                        }
+                                    }
 
 
                                 </td>
@@ -145,6 +164,7 @@
 
 
 <script>
+    
     var urlBorrarUsuario = '@Url.Action("BorrarUsuario","Account")/';
     $(function () {
         $('#tablaUsuarios').dataTable({
@@ -204,21 +224,25 @@
 
             alertify.confirm("Desacivar Usuario", "Seguro que desea desactivar?", function () {
 
-                var url = urlBorrarUsuario + encodeURI(id);
-                $.get(url, null, function (data) {
-                    if (data === "True") {
-                        //row.remove().draw();
-                        var cellActivo = table.cell(row, 7).node();
-                        $(cellActivo).children().removeAttr("checked");
-                        alertify.success("Usuario desactivado correctamente");
+                    var url = urlBorrarUsuario + encodeURI(id);
+                    $.get(url, null, function (data) {
+                        if (data === "True") {
+                            //row.remove().draw();
+                            var cellActivo = table.cell(row, 7).node();
+                            //$(cellActivo).children().removeAttr("checked");
+                            $(cellActivo).children().html("NO");
+                            var cellBotonDesactivar = table.cell(row, 9).node();
+                            $(cellBotonDesactivar).children().hide();
+                            
+                            alertify.success("Usuario desactivado correctamente");
 
 
-                    } else {
-                        alertify.error("Error al desactivar");
-                    }
-                });
+                        } else {
+                            alertify.error("Error al desactivar");
+                        }
+                    });
 
-            }, null)
+                }, null)
                 .set('labels', { cancel: 'Cancelar' })
                 .set('defaultFocus', 'cancel');
         });

@@ -14,6 +14,10 @@
         .ui-autocomplete-loading {
             background: url('../Content/Images/ajax-loader.gif') no-repeat right center !important;
         }
+
+        .mayusculas {
+            text-transform: capitalize;
+        }
     </style>
 }
 @using (Ajax.BeginForm("GuardarDatosUsuario", "Usuarios",
@@ -96,7 +100,7 @@
                             }
                             @*@Html.CheckBoxFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic;margin-left: 20px;", id = "UsuarioMPBA" })*@
                             @Html.HiddenFor(model => model.UsuarioMPBA);
-
+                       
 
 
                         }
@@ -104,7 +108,7 @@
                         {
 
                             @Html.Label(" Es Usuario de MPBA?", new { style = "font-size: large; font-style: italic" });
-                            @Html.CheckBoxFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic;margin-left: 20px;", id = "UsuarioMPBA" });
+                        @Html.CheckBoxFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic;margin-left: 20px;", id = "UsuarioMPBA" });
                         }
 
 
@@ -130,11 +134,9 @@
 
 
 
-
-
                 @{
     string mostrar = (!modificando && Model.Validando != null && Model.Validando != true) ? "block" : "none";
-    <div class="col-md-4" id="Buscadores" style="display:@mostrar">
+    <div class="col-md-4" id="Buscadores" style="display: @mostrar">
         <div class="form-group">
             <div class='input-group ' style="width: 100%">
                 @Html.TextBox("NombreBuscar", "", new { @class = "form-control input-focused", placeholder = "Buscar usuarios por Alias" })
@@ -165,33 +167,48 @@
 
             </div>
 
-            <div class="row tile">
-                <br />
-            </div>
+        <div class="row tile">
+            <br/>
+        </div>
+            @if (!Model.Validando)
+            {
+
+
+
+                if (modificando)
+                {
+                    <div class="row wow fadeInDown animated">
+                        @Html.LabelFor(model=>model.activo, new { style = "font-size: large; font-style: italic; color: yellow;" })
+                        @Html.CheckBoxFor(model => model.activo, new { style = "font-size: large; font-style: italic;margin-left: 20px;" })
+                    </div>
+                }
+            }
+
+
             <div class="row wow fadeInDown animated">
 
 
 
                 <div class="col-md-4">
                     @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label required" })
-                    @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control mayusculas" } })
                     @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-4">
                     @Html.Label("Nombres", htmlAttributes: new { @class = "control-label required" })
-                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control mayusculas" } })
                     @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
 
                 </div>
                 <div class="col-md-4">
                     @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label required" })
-                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @readonly="readonly" } })
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                 </div>
                 <div class="clearfix"></div>
-   
+
                 @{
-                  var usuarioMPBA = Model.UsuarioMPBA == true ? "none" : "block";
+    var usuarioMPBA = Model.UsuarioMPBA == true ? "none" : "block";
                 }
 
                 <div id="colDependencia" class="col-md-4 " style="display: @usuarioMPBA">
@@ -201,11 +218,11 @@
 
                 </div>
 
-                <div id="colDepartamento" class="col-md-4" >
+                <div id="colDepartamento" class="col-md-4">
                     @Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label required" })
                     @*@if (Model.UsuarioMPBA)
-                    {*@
-                        @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, "--Seleccionar--", new { @class = "form-control" })
+                        {*@
+                    @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, "--Seleccionar--", new { @class = "form-control" })
                     @*}*@
 
 
@@ -458,7 +475,7 @@
 
                 } else {
                     if (esNuevo===true || cambioMail===true) {
-                        msg = msg + "<br/>Nota: confirmacion de email y cuanta desactivadas hasta que usuario confirme el mail de validacion.";
+                        msg = msg + "<br/>Nota: confirmacion de email desactivada hasta que usuario confirme el mail de validacion.";
                     }
                 }
                 //alertify.success("Carga Exitosa");
@@ -499,10 +516,13 @@
                     type: "GET",
                     autoFocus: true,
                     beforeSend: function() {
-                        $("#EnviarToken").addClass("disabled");
+                        loader("Reenviando token...");
+
+                        //$("#EnviarToken").addClass("disabled");
                     },
                     complete: function() {
-                        $("#EnviarToken").removeClass("disabled");
+                        //$("#EnviarToken").removeClass("disabled");
+                        $.unblockUI();
                     },
                     success: function(data) {
                         if (data == "") {
@@ -581,7 +601,7 @@
             $("#Apellido").attr("readonly", "readonly");
             $("#UserName").attr("readonly", "readonly");
             $("#Nombre").attr("readonly", "readonly");
-            
+
             ////$("#PuntoGestion_Descripcion").attr("readonly", "readonly");
             $("#Email").attr("readonly", "readonly");
             // $("#DocumentoNumero").attr("readonly", "readonly");
@@ -597,7 +617,7 @@
             $("#Apellido").removeAttr("readonly");
             //$("#UserName").removeAttr("readonly");
             $("#Nombre").removeAttr("readonly");
-            
+
             //$("#PuntoGestion_Descripcion").removeAttr("readonly");
             $("#Email").removeAttr("readonly");
             // $("#DocumentoNumero").removeAttr("readonly");

@@ -1534,6 +1534,7 @@
     <Content Include="Views\Account\_ResultadosBusqueda.cshtml" />
     <Content Include="Views\Account\ConfirmarEmail.cshtml" />
     <Content Include="Views\Account\InfoRegistracion.cshtml" />
+    <Content Include="Views\Account\InfoUsuario.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />
