@@ -34,6 +34,7 @@
 
     @Html.HiddenFor(model => model.Validando)
     @Html.HiddenFor(model => model.UsuarioSicViejo)
+    @Html.HiddenFor(model => model.id)
     @*@Html.Hidden("UsuarioMPBA",Model.UsuarioMPBA.ToString())*@
     <div class=" center wow fadeInDown animated tile-light">
         <h3>
@@ -269,8 +270,8 @@
                 @if (!Model.Validando)
                 {
                     <div class="col-md-4 ">
-                        @Html.LabelFor(model => model.GrupoUsuario, htmlAttributes: new { @class = "control-label" })
-                        @Html.DropDownListFor(x => x.GrupoUsuario.id, Model.GrupoUsuarioList as SelectList, new { @class = "form-control" })
+                        @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(x => x.Role.Id, Model.RoleList as SelectList, new { @class = "form-control" })
                     </div>
                 }
 
@@ -298,7 +299,7 @@
             <div class="row wow fadeInDown animated">
                 <div class="col-md-12" id="divValidation">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.id)
+                    
 
                 </div>
             </div>
@@ -463,7 +464,8 @@
                 var url = '@Url.Action("Index", "Account")?depto=' + @depto;
                 var msg = "<i class='Exito'>Carga Exitosa</i>";
                 var email=@Html.Raw(Json.Encode(Model.Email));
-                var esNuevo = $("#id").val() === "";
+                var id = $("#id").val();
+                var esNuevo = (id=== "" || id===undefined);
                 var cambioMail = (email != $("#Email").val());
                 if (esNuevo===true || cambioMail===true) {
                     msg = msg + "<br/>A la brevedad recibirá un email en la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC.";
@@ -550,7 +552,7 @@
 
             $("#UserName").change(function() {
                 if ($("#UsuarioMPBA").val() == "True")
-                    $("#Email").val($(this).val() + '@@MPBA.gov.ar');
+                    $("#Email").val($(this).val() + '@@mpba.gov.ar');
             });
 
             $("#Apellido").keyup(function() {

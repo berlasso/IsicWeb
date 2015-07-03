@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Imputados";
-    var subCodBarra = "0200";// ((ClaimsIdentity)User.Identity).FindFirst("subCodBarra");
+    var subCodBarra =  ((ClaimsIdentity)User.Identity).FindFirst("subCodBarra");
 }
 
 @using System.Data.Entity.Core.Common.EntitySql
@@ -86,7 +86,7 @@
     <div class="col-md-2 col-sm-3 col-xs-4">
         @Html.ActionLink("Volver", "Index","Home", new { area = "" }, new { @class = "btn btn-lg btn-alt", title = "Volver" })
     </div>
-    @if (!subCodBarra.IsNullOrWhiteSpace())
+    @if (subCodBarra!=null)
     {
         <div class="col-md-3 col-sm-5 col-xs-2 text-center">
             @*@Html.ActionLink("Enviar", "EnviarDelitos", null, new { @class = "btn btn-lg btn-alt", title = "Enviar" })*@

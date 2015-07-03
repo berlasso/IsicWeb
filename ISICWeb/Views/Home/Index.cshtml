@@ -128,13 +128,13 @@
             </div>
         </div>
 
-    @*<a href='@Url.Action("Prueba", "Account", new {area = ""})' onclick=" showPageLoadingSpinner() " class="btn btn-lg">
-        Prueba</a>*@
+    <a href='@Url.Action("Prueba", "Account", new {area = ""})' onclick=" showPageLoadingSpinner() " class="btn btn-lg">
+        Prueba</a>
 </div>
 
 
 
-            @if (User.IsInRole("Admin"))
+            @if (User.IsInRole("Administrador"))
             {
                 <div class="tile-light" style="margin-bottom: 50px;">
                     

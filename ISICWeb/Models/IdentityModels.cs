@@ -28,7 +28,6 @@ namespace ISICWeb.Models
         public string UsuarioSicViejo { get; set; }
         public string idPersonalPoderJudicial { get; set; }
         public bool activo { get; set; }
-        public int? idGrupoUsuario { get; set; }
         public DateTime? FechaCreacion { get; set; }
         public string UsuarioCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
@@ -42,8 +41,8 @@ namespace ISICWeb.Models
         {
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            subCodBarra = subCodBarra ?? "";
-            idPuntoGestion = idPuntoGestion ?? "";
+
+            
             
             // Agregar reclamaciones de usuario personalizado aquí
             userIdentity.AddClaim(new Claim("idPuntoGestion", this.idPuntoGestion));
@@ -120,7 +119,7 @@ namespace ISICWeb.Models
 
                 var RoleManager = new RoleManager<IdentityRole>(new
                                          RoleStore<IdentityRole>(context));
-                string roleName = "Admin";
+                string roleName = "Administrador";
                 //Create Role Admin if it does not exist
                 if (!RoleManager.RoleExists(roleName))
                 {

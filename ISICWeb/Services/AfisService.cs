@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using ISIC.Entities;
 using ISICWeb.Areas.Afis.Models;
 using MPBA.DataAccess;
+using WebGrease.Css.Extensions;
 
 namespace ISICWeb.Services
 {
@@ -61,7 +62,12 @@ namespace ISICWeb.Services
             if (afis.Prontuario != null && afis.Prontuario.Id != model.Prontuario.Id)
             {
                 afis.Prontuario.baja = true;
+                
             }
+
+            IEnumerable<GNA> gnas = prontuario.DatosGNA;
+            gnas.ForEach(x => x.prontuario.Id);
+
             afis.Prontuario = prontuario;
             afis.NIF = model.NIF;
             afis.DNI = model.DNI;
@@ -95,6 +101,7 @@ namespace ISICWeb.Services
             if (imputado != null)
             {
                 imputado.Prontuario = prontuario;
+            
                 _repository.UnitOfWork.RegisterChanged(imputado);
                 try
                 {

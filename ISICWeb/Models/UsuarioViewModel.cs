@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ISIC.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 
 namespace ISICWeb.Models
@@ -36,8 +37,9 @@ namespace ISICWeb.Models
         public string UserName { get; set; }
         public bool activo { get; set; }
         public string Dependencia { get; set; }
-        public virtual GrupoUsuario GrupoUsuario { get; set; }
-        public SelectList GrupoUsuarioList { get; set; }
+        [Display(Name = "Rol")]
+        public virtual IdentityRole Role { get; set; }
+        public SelectList RoleList { get; set; }
         //public SelectList PuntoGestionList { get; set; }
         public SelectList DepartamentoList { get; set; }
         public SelectList SexoList { get; set; }

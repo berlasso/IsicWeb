@@ -216,13 +216,11 @@
             var urlMigraciones = '@Url.Action("BuscarFichasMigraciones", "AntecedentesMigraciones")?prontuariosic=' + prontuariosic;
             var urlGna = '@Url.Action("BuscarFichasGNA", "AntecedentesGna")?prontuariosic=' + prontuariosic;
                 $("#btnCargaIdgx").removeClass("disabled").prop("href", urlIdgx);
-                $("#btnCargaAfis").removeClass("disabled").prop("href", urlAfis);
                 $("#btnCargaGna").removeClass("disabled").prop("href", urlGna);
                 $("#btnCargaMig").removeClass("disabled").prop("href", urlMigraciones);
             } else {
 
                 $("#btnCargaIdgx").addClass("disabled");
-                $("#btnCargaAfis").addClass("disabled");
                 $("#btnCargaGna").addClass("disabled");
                 $("#btnCargaMig").addClass("disabled");
             }

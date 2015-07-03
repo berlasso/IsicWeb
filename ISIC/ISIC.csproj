@@ -138,7 +138,6 @@
     <Compile Include="Entities\ClaseTipoPersona.cs" />
     <Compile Include="Entities\ClaseUbicacionSeniaPart.cs" />
     <Compile Include="Entities\CotejoRenaper.cs" />
-    <Compile Include="Entities\GrupoUsuario.cs" />
     <Compile Include="Entities\IdgxProntuario.cs" />
     <Compile Include="Entities\ImputadoEstadoTramite.cs" />
     <Compile Include="Entities\JerarquiaPoderJudicial.cs" />
@@ -147,7 +146,6 @@
     <Compile Include="Entities\Prontuario.cs" />
     <Compile Include="Entities\PuntoGestion.cs" />
     <Compile Include="Entities\SICClaseEstatura.cs" />
-    <Compile Include="Entities\Usuarios.cs" />
     <Compile Include="Entities\VucClasifica.cs" />
     <Compile Include="Entities\VucClasificacion .cs" />
     <Compile Include="Entities\VucClasificaDactilar.cs" />
@@ -212,7 +210,6 @@
     <Compile Include="Persistence\Mappings\DepartamentoMapping.cs" />
     <Compile Include="Persistence\Mappings\DomicilioMapping.cs" />
     <Compile Include="Persistence\Mappings\GNAMapping.cs" />
-    <Compile Include="Persistence\Mappings\GrupoUsuariosMapping.cs" />
     <Compile Include="Persistence\Mappings\IPPMapping.cs" />
     <Compile Include="Persistence\Mappings\LocalidadMapping.cs" />
     <Compile Include="Persistence\Mappings\NNClaseModusOperandiMapping.cs" />
@@ -225,7 +222,6 @@
     <Compile Include="Persistence\Mappings\PuntoGestionMapping.cs" />
     <Compile Include="Persistence\Mappings\SeniaParticularMapping.cs" />
     <Compile Include="Persistence\Mappings\TatuajePersonaMapping.cs" />
-    <Compile Include="Persistence\Mappings\UsuariosMapping.cs" />
     <Compile Include="Services\CotejoRenaperService.cs" />
     <Compile Include="Services\BioDactilarService.cs" />
     <Compile Include="Services\MegaMatcherService.cs" />

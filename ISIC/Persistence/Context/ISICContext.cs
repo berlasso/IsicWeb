@@ -62,7 +62,6 @@ namespace ISIC.Persistence.Context
             modelBuilder.Configurations.Add(new PuntoGestionMapping());
             modelBuilder.Configurations.Add(new PersonalPoderJudicialMapping());
             modelBuilder.Configurations.Add(new ClaseCodBarraPuntoGestionMapping());
-            modelBuilder.Configurations.Add(new UsuariosMapping());
             modelBuilder.Configurations.Add(new AutorMapping());
             modelBuilder.Configurations.Add(new AFISMapping());
             modelBuilder.Configurations.Add(new GNAMapping());
@@ -127,8 +126,6 @@ namespace ISIC.Persistence.Context
         public virtual DbSet<PuntoGestion> PuntoGestion { get; set; }
         public virtual DbSet<ClasePuntoGestion> ClasePuntoGestion { get; set; }
         public virtual DbSet<PersonalPoderJudicial> PersonalPoderJudicial { get; set; }
-        public virtual DbSet<Usuarios> Usuarios { get; set; }
-        public virtual DbSet<GrupoUsuario> GrupoUsuario { get; set; }
         public virtual DbSet<ClaseCodBarraPuntoGestion> ClaseCodBarraPuntoGestion { get; set; }
         public virtual DbSet<ClaseCodigoRestriccionPoliciaFederal> ClaseCodigoRestriccionesPoliciaFederal { get; set; }
         public virtual DbSet<ClaseProntuarioPoliciaFederal> ClaseProntuariosPoliciaFederal { get; set; }
