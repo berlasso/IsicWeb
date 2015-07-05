@@ -149,6 +149,7 @@
 
         $(document).ready(function() {
             $('#tablaResultados').dataTable({
+                "order": [[ 1, "asc" ]],
                 "dom": '<"row"<"col-md-12"ipT>><"clear">rt<"bottom"><"clear">',
                 "tableTools": {
                     "aButtons": [],
@@ -168,11 +169,11 @@
 
                     //}
                 },
-                //"columnDefs": [
-                // {
-                //     "targets": 6,//idgx
-                //     "sortable": false
-                // },
+                "columnDefs": [
+                 {
+                     "targets": 0,
+                     "sortable": false
+                 },
                 // {
                 //     "targets": 7,//afis
                 //     "sortable": false
@@ -186,7 +187,7 @@
                 //      "targets": 9,//migraciones
                 //      "sortable": false
                 //  },
-                //],
+                ],
                 "language": {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",

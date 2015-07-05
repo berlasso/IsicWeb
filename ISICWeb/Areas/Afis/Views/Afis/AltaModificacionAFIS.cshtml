@@ -185,7 +185,7 @@
         }
 
         $(document).on("blur", "#NIF", function (e) {
-            $("#frmGuardarDatosAfis").valid();
+            
             if ($(this).val().substr(0, 2) == "01") {
                 $("#btnBuscarNif").click();
             } else {
@@ -196,7 +196,8 @@
                 $("#DNI").removeAttr("readonly");
                 $("#Clase").removeAttr("readonly");
                 $("#CTL").removeAttr("readonly");
-            }
+            };
+            $("#NIF").valid();
         });
 
         $(document).on("click", "#btnGuardar", function(e) {

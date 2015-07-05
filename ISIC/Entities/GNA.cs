@@ -15,11 +15,11 @@ namespace ISIC.Entities
         public virtual Prontuario Prontuario { get; set; }
         [Required(ErrorMessage = "El apellido es requerido")]
         [MinLength(2, ErrorMessage = "El apellido no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el apellido")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el apellido")]
         [MaxLength(100, ErrorMessage = "El apellido es demasiado largo")]
         public string Apellido { get; set; }
         [MinLength(2, ErrorMessage = "El nombre no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el nombre")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el nombre")]
         [MaxLength(100, ErrorMessage = "El nombre  es demasiado largo")]
         public string Nombre { get; set; }
         [Display(Name = "Tipo Doducmento")]
@@ -34,7 +34,7 @@ namespace ISIC.Entities
         public virtual ClaseSexo Sexo { get; set; }
         [Display(Name = "Apellido Madre")]
         [MinLength(2, ErrorMessage = "El apellido de la madre no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el apellido de la madre")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el apellido de la madre")]
         [MaxLength(100, ErrorMessage = "El apellido de la madre es demasiado largo")]
         public string ApellidoMadre { get; set; }
         public string Generado { get; set; }

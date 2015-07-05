@@ -44,11 +44,11 @@ namespace ISIC.Persistence.Context
             // CrearDatosJira(context);
 #if DEBUG
 
-            //if (!context.Database.CompatibleWithModel(false))
-            //{
-            //    context.Database.Delete();
-            //    context.Database.Create();
-            //}
+            if (!context.Database.CompatibleWithModel(false))
+            {
+                context.Database.Delete();
+                context.Database.Create();
+            }
 
             //CrearDatosDePrueba(context);
 

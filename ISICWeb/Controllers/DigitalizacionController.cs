@@ -15,6 +15,7 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Controllers
 {
+    [Audit]
     public class DigitalizacionController : Controller
     {
         private IJiraService jiraService;

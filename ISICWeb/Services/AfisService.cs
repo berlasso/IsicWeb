@@ -45,7 +45,8 @@ namespace ISICWeb.Services
         {
             string errores = "";
             string prontuariosic = model.Prontuario.ProntuarioNro;
-            Prontuario prontuario = _repository.Set<Prontuario>().SingleOrDefault(x => x.Id == model.Prontuario.Id);
+            Prontuario prontuarioAlta = _repository.Set<Prontuario>().SingleOrDefault(x => x.Id == model.Prontuario.Id);
+            Prontuario prontuarioBaja = _repository.Set<Prontuario>().SingleOrDefault(x => x.ProntuarioNro==model.NIF);
             AFIS afis = _repository.Set<AFIS>().SingleOrDefault(x => x.Id == model.Id);
             if (afis==null)
             {
@@ -53,22 +54,31 @@ namespace ISICWeb.Services
             }
 
             
-            if (prontuario == null)
+            if (prontuarioAlta == null)
             {
                 //prontuario = new Prontuario{ProntuarioNro = prontuariosic};
                 errores = "No se hallo prontuario asociado.";
                     return errores;
             }
-            if (afis.Prontuario != null && afis.Prontuario.Id != model.Prontuario.Id)
+            if (afis.Prontuario!=null && afis.Prontuario.Id != model.Prontuario.Id)
             {
-                afis.Prontuario.baja = true;
-                
+            
+                    afis.Prontuario.baja = true;
+               
             }
 
-            IEnumerable<GNA> gnas = prontuario.DatosGNA;
-            gnas.ForEach(x => x.prontuario.Id);
+            if (prontuarioBaja != null && prontuarioAlta!=prontuarioBaja)
+            {
+                prontuarioBaja.baja = true;
+                IEnumerable<GNA> gnas = prontuarioBaja.DatosGNA;
+                gnas.ForEach(x => x.Prontuario = prontuarioAlta);
+                IEnumerable<IdgxProntuario> idgx = prontuarioBaja.ProntuariosIdgx;
+                idgx.ForEach(x => x.Prontuario = prontuarioAlta);
+                IEnumerable<Migraciones> migracioneses = prontuarioBaja.DatosMigracioneses;
+                migracioneses.ForEach(x => x.Prontuario = prontuarioAlta);
+            }
 
-            afis.Prontuario = prontuario;
+            afis.Prontuario = prontuarioAlta;
             afis.NIF = model.NIF;
             afis.DNI = model.DNI;
           
@@ -100,7 +110,7 @@ namespace ISICWeb.Services
             Imputado imputado = _repository.Set<Imputado>().FirstOrDefault(x => x.CodigoDeBarras == model.NIF);
             if (imputado != null)
             {
-                imputado.Prontuario = prontuario;
+                imputado.Prontuario = prontuarioAlta;
             
                 _repository.UnitOfWork.RegisterChanged(imputado);
                 try

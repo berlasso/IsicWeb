@@ -12,6 +12,8 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Areas.Antecedentes.Controllers
 {
+    [Audit]
+    [Authorize(Roles = "Administrador, Antecedentes")]
     public class AntecedentesGnaController : Controller
     {
         IRepository _repository;
@@ -52,7 +54,6 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
            return borroBien;
        }
 
-
        [HttpPost]
        public ActionResult GuardarDatosGNA(GNAViewModel model)
        {
@@ -67,6 +68,8 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
                                          .SelectMany(x => x.Errors)
                                          .Select(x => x.ErrorMessage));
            }
+           
+           
 
            if (errores != "")
            {

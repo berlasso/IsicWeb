@@ -19,6 +19,8 @@ using DataTables.Mvc;
 
 namespace ISICWeb.Areas.PortalSIC.Controllers
 {
+    [Audit]
+    [Authorize(Roles = "Administrador, Portal")]
     public class BusquedaController : Controller
     {
         private readonly IRepository _repository;

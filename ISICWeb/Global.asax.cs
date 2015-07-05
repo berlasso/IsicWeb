@@ -24,4 +24,6 @@ namespace ISICWeb
             logger.Info("Aplicacion iniciada!!");
         }
     }
+
+
 }

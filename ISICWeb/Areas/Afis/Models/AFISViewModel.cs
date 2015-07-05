@@ -24,7 +24,7 @@ namespace ISICWeb.Areas.Afis.Models
         [MaxLength(100, ErrorMessage = "El apellido es demasiado largo")]
         public string Apellido { get; set; }
         [MinLength(2, ErrorMessage = "El nombre no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el nombre")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el nombre")]
         [MaxLength(100, ErrorMessage = "El nombre  es demasiado largo")]
         public string Nombre { get; set; }
         [RegularExpression("[0-9]+", ErrorMessage = "El documento sólo puede contener números")]

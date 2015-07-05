@@ -115,6 +115,7 @@
     <Compile Include="Entities\AFIS.cs" />
     <Compile Include="Entities\ClaseEstadoCivil.cs" />
     <Compile Include="Entities\ClaseExpedienteMigraciones.cs" />
+    <Compile Include="Entities\Audit.cs" />
     <Compile Include="Entities\GNA.cs" />
     <Compile Include="Entities\IdgxDatosPersona.cs" />
     <Compile Include="Entities\IdgxDetalle.cs" />

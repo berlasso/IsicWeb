@@ -17,6 +17,8 @@ using RestSharp;
 
 namespace ISICWeb.Areas.Otip.Controllers
 {
+    [Audit]
+    [Authorize(Roles = "Administrador, OTIP")]
     public class BuscadorSimpController : Controller
     {
         IRepository repository;

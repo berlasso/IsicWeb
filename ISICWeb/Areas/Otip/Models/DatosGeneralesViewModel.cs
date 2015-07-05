@@ -52,23 +52,23 @@ namespace ISICWeb.Areas.Otip.Models
 
         [Required(ErrorMessage = "El apellido es requerido")]
         [MinLength(2, ErrorMessage = "El apellido no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el apellido")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el apellido")]
         [MaxLength(100, ErrorMessage = "El apellido es demasiado largo")]
         public string Apellido { get; set; }
 
         [Required(ErrorMessage = "El nombre es requerido")]
         [MinLength(2, ErrorMessage = "El nombre no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el nombre")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el nombre")]
         [MaxLength(100, ErrorMessage = "El nombre  es demasiado largo")]
         public string Nombres { get; set; }
 
         [MinLength(3, ErrorMessage = "El apodo no puede tener menos de 3 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el apodo")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el apodo")]
         [MaxLength(100, ErrorMessage = "El apodo es demasiado largo")]
         public string Apodos { get; set; }
 
         [MinLength(3, ErrorMessage = "Los Otros Nombres no pueden tener menos de 3 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en otros nombres")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en otros nombres")]
         [MaxLength(100, ErrorMessage = "Otros nombres es demasiado largo")]
         [Display(Name = "Otros Nombres")]
         public string OtrosNombres { get; set; }
@@ -76,7 +76,7 @@ namespace ISICWeb.Areas.Otip.Models
         [RegularExpression("1|2", ErrorMessage = "Debe especificar el sexo")]
         public string Sexo { get; set; }
 
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ.']+$", ErrorMessage = "Error de tipeo en el nombre del fiscal")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ.']+$", ErrorMessage = "Error de tipeo en el nombre del fiscal")]
         [MinLength(4, ErrorMessage = "El nombre del fiscal no puede tener menos de 4 letras")]
         [MaxLength(100, ErrorMessage = "El nombre del fiscal es demasiado largo")]
         public string Fiscal { get; set; }
@@ -105,7 +105,7 @@ namespace ISICWeb.Areas.Otip.Models
 
         [Display(Name = "Cónyuge")]
         [MinLength(4, ErrorMessage = "El cónyuge no puede tener menos de 4 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el cónyuge")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el cónyuge")]
         public string Conyuge { get; set; }
 
         [Display(Name = "Teléfono")]
@@ -113,12 +113,12 @@ namespace ISICWeb.Areas.Otip.Models
         public string Telefono { get; set; }
 
         [MinLength(3, ErrorMessage = "La madre no puede tener menos de 3 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en la madre")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en la madre")]
         [MaxLength(100, ErrorMessage = "El nombre de la madre es demasiado largo")]
         public string Madre { get; set; }
 
         [MinLength(3, ErrorMessage = "El padre no puede tener menos de 3 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el padre")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el padre")]
         [MaxLength(100, ErrorMessage = "El nombre del padre es demasiado largo")]
         public string Padre { get; set; }
 
@@ -149,14 +149,14 @@ namespace ISICWeb.Areas.Otip.Models
 
         [MinLength(3, ErrorMessage = "La profesión no puede tener menos de 3 letras")]
         [MaxLength(50, ErrorMessage = "La profesión es demasiado larga")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en la profesión")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en la profesión")]
         [Display(Name = "Profesión")]
         public string Profesion { get; set; }
 
         //[MinLength(4, ErrorMessage = "El  modus operandi no puede tener menos de 4 letras")]
         //[MaxLength(150, ErrorMessage = "El modus operandi es demasiado largo")]
         [Display(Name = "Modus Operandi")]
-        //[RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el modus operandi")]
+        //[RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el modus operandi")]
         public string ModusOperandi { get; set; }
 
         [MaxLength(50, ErrorMessage = "La UFI es demasiado larga")]

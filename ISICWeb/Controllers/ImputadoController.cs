@@ -20,6 +20,7 @@ using ISIC.Utils;
 
 namespace ISICWeb.Controllers
 {
+    [Audit]
     [Authorize]
     public class ImputadoController : Controller
     {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Linq.Expressions;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Security;
 using ISIC.Entities;
 using ISIC.Persistence.Context;
 using Microsoft.AspNet.Identity;
@@ -26,12 +28,14 @@ using Owin;
 using ISICWeb.Models;
 using MPBA.DataAccess;
 using MPBA.Security.Ldap;
+using WebGrease.Css.Extensions;
 using UsuarioViewModel = ISICWeb.Models.UsuarioViewModel;
 
 
 namespace ISICWeb.Controllers
 {
-    //[Authorize]
+    [Audit]
+    [Authorize(Roles = "Administrador, Usuarios")]
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -57,6 +61,7 @@ namespace ISICWeb.Controllers
 
         }
 
+        
         public ActionResult Index(string depto = "")
         {
             //var Usuarios = _repository.Set<ISIC.Entities.Usuarios>().ToList();
@@ -122,6 +127,7 @@ namespace ISICWeb.Controllers
                 {
                     if (user.UsuarioMPBA == true)
                     {
+                        
                         LoginDomain loginmpba=new LoginDomain();
                         try
                         {
@@ -132,6 +138,11 @@ namespace ISICWeb.Controllers
                                 return View(model);
                             }
                         }
+                        //catch (PrincipalServerDownException exception)
+                        //{
+                        //    ModelState.AddModelError("", "Error en la conexion al servidor");
+                        //    return View(model);
+                        //}
                         catch
                         {
                             ModelState.AddModelError("", "Error en la conexion a MPBA");
@@ -177,7 +188,7 @@ namespace ISICWeb.Controllers
             {
                 UsuarioMPBA = true,
                 //GrupoUsuarioList = new SelectList(_repository.Set<GrupoUsuario>().ToList(), "id", "Descripcion"),
-                RoleList = new SelectList( RoleManager.Roles.ToList().OrderBy(x=>x.Name), "Id", "Name"),
+                RoleList = new SelectList(RoleManager.Roles.OrderBy("Name"), "Name", "Name"),
                 JerarquiaList = new SelectList(_repository.Set<JerarquiaPoderJudicial>().ToList().OrderBy(x => x.Descripcion), "id", "Descripcion"),
                 SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "Descripcion"),
                 DepartamentoList = new SelectList(_repository.Set<Departamento>().ToList().Where(x=>x.Id!=0), "Id", "DepartamentoNombre"), //todos menos item [todos]
@@ -230,8 +241,11 @@ namespace ISICWeb.Controllers
             if (usuario != null && usuario.Id!=null)
             {
                 rolename=UserManager.GetRoles(usuario.Id).FirstOrDefault() ?? "Operador";
+                //UserManager.GetRoles(usuario.Id).ForEach(x=>uvm.Roles.Add(RoleManager.FindByName(x)));
+                uvm.Roles = UserManager.GetRoles(usuario.Id);
             }
-            uvm.Role = RoleManager.FindByName(rolename);
+            //uvm.Roles = RoleManager.FindByName(rolename);
+           
             return uvm;
         }
 
@@ -1095,7 +1109,7 @@ namespace ISICWeb.Controllers
                 }
                 if (result.Succeeded)
                 {
-                    if (model.Role == null)
+                    if (model.Roles == null)
                     {
                         try
                         {
@@ -1111,7 +1125,21 @@ namespace ISICWeb.Controllers
                     {
                         try
                         {
-                            result=await UserManager.AddToRoleAsync(usuario.Id, RoleManager.FindById(model.Role.Id).Name);
+                            var rolesForUser = await UserManager.GetRolesAsync(usuario.Id);
+
+                            if (rolesForUser.Count() > 0)
+                            {
+                                foreach (var item in rolesForUser.ToList())
+                                {
+                                    // item should be the name of the role
+                                     result = await UserManager.RemoveFromRoleAsync(usuario.Id, item);
+                                }
+                            }
+                            foreach (var rol in model.Roles)
+                            {
+                                result = await UserManager.AddToRoleAsync(usuario.Id, rol);
+                            }
+                            //result=await UserManager.AddToRoleAsync(usuario.Id, RoleManager.FindById(model.Roles.First().Id).Name);
                         }
                         catch (Exception e)
                         {
@@ -1331,7 +1359,8 @@ namespace ISICWeb.Controllers
 
         public async Task<RedirectToRouteResult> Prueba()
         {
-            RoleManager.Create(new IdentityRole {Name = "Indeterminado"});
+            RoleManager.Create(new IdentityRole {Name = "Portal"});
+            //UserManager.AddToRole("a85b0cb7-d8dd-43cf-be15-b7f08f1df92a", "Operador");
             return RedirectToAction("Index", "Home");
         }
 
@@ -1480,6 +1509,7 @@ namespace ISICWeb.Controllers
         {
             ApplicationUser u = await UserManager.FindByNameAsync(User.Identity.Name);
             UsuarioViewModel uvm =await LlenarViewModelDesdeBase(u.Id);
+            
             return View(uvm);
         }
     }

@@ -1,4 +1,5 @@
-﻿@model ISICWeb.Models.UsuarioViewModel
+﻿@using Microsoft.Practices.ObjectBuilder2
+@model ISICWeb.Models.UsuarioViewModel
 @{
     ViewBag.Title = "INFORMACION DEL USUARIO";
 }
@@ -65,11 +66,23 @@
                         <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
                             <div class="col-md-6">
                                 @Html.LabelFor(model => model.Sexo)
-                                @Html.TextBoxFor(model => model.Sexo.descripcion, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.TextBoxFor(model => model.Sexo.descripcion, new {@class = "form-control", @readonly = "readonly"})
                             </div>
                             <div class="col-md-6">
                                 @Html.LabelFor(model => model.SubCodBarra)
-                                @Html.TextBoxFor(model => model.SubCodBarra, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.TextBoxFor(model => model.SubCodBarra, new {@class = "form-control", @readonly = "readonly"})
+                            </div>
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.Roles)
+                                @{
+                                    var csv = string.Join("\n ", Model.Roles.ToArray());
+                                }
+                                @Html.TextArea("Roles",csv, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-6">
+                             
                             </div>
                         </div>
                     </div>
@@ -89,5 +102,8 @@
 </div>
 @section footer
 {
-    @Html.ActionLink("Volver", "Index", "Home", new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
-}
+    @*@Html.ActionLink("Volver", "Index", "Home", new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })*@
+<a class="btn btn-lg btn-alt volver" href='#' onclick=' window.history.go(-1); return false; ' title=" volver" type="button">
+    Volver
+</a>
+    }

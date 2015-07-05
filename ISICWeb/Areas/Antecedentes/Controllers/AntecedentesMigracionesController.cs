@@ -11,8 +11,11 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Areas.Antecedentes.Controllers
 {
+    [Audit]
+    [Authorize(Roles = "Administrador, Antecedentes")]
     public class AntecedentesMigracionesController : Controller
     {
+        
             IRepository _repository;
         private MigracionesService _migracionesService;
 

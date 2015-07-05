@@ -17,6 +17,7 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Controllers
 {
+    [Audit]
     public class CotejoManualController : Controller
     {
 

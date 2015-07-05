@@ -14,6 +14,7 @@ using MPBA.Jira.Model;
 
 namespace ISICWeb.Controllers
 {
+    [Audit]
     [Authorize]
     public class ClasificacionController : Controller
     {

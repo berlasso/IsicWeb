@@ -270,8 +270,9 @@
                 @if (!Model.Validando)
                 {
                     <div class="col-md-4 ">
-                        @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label" })
-                        @Html.DropDownListFor(x => x.Role.Id, Model.RoleList as SelectList, new { @class = "form-control" })
+                        @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label" })
+                        @*@Html.DropDownListFor(x => x.Role.Id, Model.RoleList as SelectList, new { @class = "form-control" })*@
+                        @Html.ListBoxFor(x => x.Roles, Model.RoleList as SelectList, new { @class = "form-control" })
                     </div>
                 }
 

@@ -6,6 +6,7 @@ using MvcFileUploader.Models;
 
 namespace ISICWeb.Controllers
 {
+    [Audit]
      public class MvcUploaderTestController : Controller
     {
         //

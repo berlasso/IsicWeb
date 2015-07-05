@@ -45,8 +45,8 @@ namespace ISICWeb.Models
             
             
             // Agregar reclamaciones de usuario personalizado aquí
-            userIdentity.AddClaim(new Claim("idPuntoGestion", this.idPuntoGestion));
-            userIdentity.AddClaim(new Claim("subCodBarra", this.subCodBarra));
+            userIdentity.AddClaim(new Claim("idPuntoGestion", this.idPuntoGestion??""));
+            userIdentity.AddClaim(new Claim("subCodBarra", this.subCodBarra ?? ""));
             
 
             return userIdentity;
@@ -98,13 +98,13 @@ namespace ISICWeb.Models
             //    ctx.Database.Initialize(true);
             //}
 
-            //if (!CheckIfTableUsersExists(context))
-            //{
-            //    // create all model tables
-            //    var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
-            //    context.Database.ExecuteSqlCommand(dbCreationScript);
-            //}
-            //CreateUserPrueba(context);
+            if (!CheckIfTableUsersExists(context))
+            {
+                // create all model tables
+                var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
+                context.Database.ExecuteSqlCommand(dbCreationScript);
+            }
+            CreateUserPrueba(context);
         }
 
         public void CreateUserPrueba(ApplicationDbContext context)
@@ -132,7 +132,7 @@ namespace ISICWeb.Models
                 user.EmailConfirmed = true;
                 user.activo = true;
                 //user.PasswordHash = Crypto.HashPassword("pa$$w0rd");
-                user.UserName = "prueba@mpba.gov.ar";
+                user.UserName = "prueba";
                 var adminresult = UserManager.Create(user, "pa$$w0rd");
 
                 //Add User Admin to Role Admin

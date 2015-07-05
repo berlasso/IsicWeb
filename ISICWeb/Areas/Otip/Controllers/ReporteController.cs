@@ -15,6 +15,8 @@ using Image = System.Drawing.Image;
 
 namespace ISICWeb.Areas.Otip.Controllers
 {
+    [Audit]
+    [Authorize(Roles = "Administrador, OTIP")]
     public class ReporteController : Controller
     {
         IRepository repository;

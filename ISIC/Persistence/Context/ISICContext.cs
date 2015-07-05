@@ -137,6 +137,7 @@ namespace ISIC.Persistence.Context
         public virtual DbSet<Prontuario> Prontuario { get; set; }
         public virtual DbSet<Migraciones> Migraciones { get; set; }
         public virtual DbSet<ClaseExpedienteMigraciones> ClaseExpedienteMigraciones { get; set; }
+        public virtual DbSet<Audit> Audit { get; set; }
 
     }
 }

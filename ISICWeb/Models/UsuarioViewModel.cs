@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -23,12 +24,12 @@ namespace ISICWeb.Models
         public string DocumentoNumero { get; set; }
         [Required(ErrorMessage = "El nombre es requerido")]
         [MinLength(2, ErrorMessage = "El nombre no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error en el {0}")]
         [MaxLength(100, ErrorMessage = "El nombre  es demasiado largo")]
         public string Nombre { get; set; }
         [Required(ErrorMessage = "El apellido es requerido")]
         [MinLength(2, ErrorMessage = "El apellido no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error en el {0}")]
         [MaxLength(100, ErrorMessage = "El apellido es demasiado largo")]
         public string Apellido { get; set; }
         [Required]
@@ -37,8 +38,7 @@ namespace ISICWeb.Models
         public string UserName { get; set; }
         public bool activo { get; set; }
         public string Dependencia { get; set; }
-        [Display(Name = "Rol")]
-        public virtual IdentityRole Role { get; set; }
+        public virtual IList<string> Roles { get; set; }
         public SelectList RoleList { get; set; }
         //public SelectList PuntoGestionList { get; set; }
         public SelectList DepartamentoList { get; set; }

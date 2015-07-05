@@ -20,7 +20,8 @@ using Session = Glimpse.AspNet.Tab.Session;
 
 namespace ISICWeb.Areas.Otip.Controllers
 {
-    [Authorize]
+    [Audit]
+    [Authorize(Roles = "Administrador, OTIP")]
     public class ImputadoOtipController : Controller
     {
         

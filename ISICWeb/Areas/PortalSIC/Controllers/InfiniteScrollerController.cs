@@ -15,7 +15,8 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Areas.PortalSIC.Controllers
 {
-    
+    [Audit]
+    [Authorize(Roles = "Administrador, Portal")]
     public class InfiniteScrollerController : Controller
     {
         private IRepository repository;

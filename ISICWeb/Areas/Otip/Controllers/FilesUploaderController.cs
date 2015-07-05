@@ -19,7 +19,8 @@ using MvcFileUploader.Models;
 
 namespace ISICWeb.Areas.Otip.Controllers
 {
-
+    [Audit]
+    [Authorize(Roles = "Administrador, OTIP")]
     public class FilesUploaderController : Controller
     {
 

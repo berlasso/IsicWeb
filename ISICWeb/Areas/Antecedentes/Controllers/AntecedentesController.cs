@@ -15,6 +15,8 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Areas.Antecedentes.Controllers
 {
+    [Audit]
+    [Authorize(Roles = "Administrador, Antecedentes")]
     public class AntecedentesController : Controller
     {
         IRepository _repository;
@@ -45,7 +47,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
             var imputados = ctx.Imputado.Where(querystring).OrderBy(x => x.CodigoDeBarras).Take(100);
             var resultados = from imp in imputados
-                from p in ctx.Prontuario.Where(p => p.ProntuarioNro == imp.Prontuario.ProntuarioNro).DefaultIfEmpty()
+                from p in ctx.Prontuario.Where(p => p.ProntuarioNro == imp.Prontuario.ProntuarioNro && imp.Prontuario.baja!=false).DefaultIfEmpty()
                 select new ImputadosAntecedentesViewModel
                 {
                     Id = imp.Id,

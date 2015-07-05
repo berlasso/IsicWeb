@@ -21,11 +21,11 @@ namespace ISICWeb.Areas.Antecedentes.Models
         //[DataType(DataType.Date)]
         public DateTime? Fechainicio { get; set; }
         [MinLength(2, ErrorMessage = "El {0} no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el {0}")]
         [MaxLength(100, ErrorMessage = "El {0} es demasiado largo")]
         public string Tema { get; set; }
         [MinLength(2, ErrorMessage = "El {0} no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el {0}")]
         [MaxLength(100, ErrorMessage = "El {0} es demasiado largo")]
         public string Titular { get; set; }
         [RegularExpression(RegexFecha, ErrorMessage = "El formato de {0} es incorrecto")]
@@ -33,7 +33,7 @@ namespace ISICWeb.Areas.Antecedentes.Models
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FecNacim { get; set; }
         [MinLength(2, ErrorMessage = "El {0} no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el {0}")]
         [MaxLength(100, ErrorMessage = "El {0} es demasiado largo")]
         public virtual Pais Nacionalidad { get; set; }
         [Display(Name = "Nro. Documento")]
@@ -55,7 +55,7 @@ namespace ISICWeb.Areas.Antecedentes.Models
         public string Organismo { get; set; }
         [Display(Name = "Profesión")]
         [MinLength(2, ErrorMessage = "El {0} no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el {0}")]
         [MaxLength(100, ErrorMessage = "El {0} es demasiado largo")]
         public string Profesion { get; set; }
         [Display(Name = "Reside Desde")]
@@ -124,27 +124,27 @@ namespace ISICWeb.Areas.Antecedentes.Models
         public DateTime? FechaIngresoSistema { get; set; }
         [Display(Name = "Religión")]
         [MinLength(2, ErrorMessage = "El {0} no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el {0}")]
         [MaxLength(100, ErrorMessage = "El {0} es demasiado largo")]
         public string Religion { get; set; }
         [Display(Name = "Policía")]
         public string Policia { get; set; }
         [Display(Name = "Familiar Radicado")]
         [MinLength(2, ErrorMessage = "El {0} no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el {0}")]
         [MaxLength(100, ErrorMessage = "El {0} es demasiado largo")]
         public string FamiliarRadicado { get; set; }
         [Display(Name = "Enf. Familiar")]
         public string EnferFamiliar { get; set; }
         [Display(Name = "Nombre Padre")]
         [MinLength(2, ErrorMessage = "El {0} no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el {0}")]
         [MaxLength(100, ErrorMessage = "El {0} es demasiado largo")]
         public string NombrePadre { get; set; }
         [Display(Name = "Nombre Madre")]
         public string NombreMadre { get; set; }
         [MinLength(2, ErrorMessage = "El {0} no puede tener menos de 2 letras")]
-        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚ']+$", ErrorMessage = "Error de tipeo en el {0}")]
+        [RegularExpression("^[A-Za-z áéíóúüÜÁÉÍÓÚñÑ']+$", ErrorMessage = "Error de tipeo en el {0}")]
         [MaxLength(100, ErrorMessage = "El {0} es demasiado largo")]
         [Display(Name = "Tipo Solicitud")]
         public string TipoSolicitud { get; set; }

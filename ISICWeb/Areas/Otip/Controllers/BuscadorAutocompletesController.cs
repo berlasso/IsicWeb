@@ -8,6 +8,8 @@ using MPBA.DataAccess;
 using ISICWeb.Areas.Otip.Models;
 namespace ISICWeb.Areas.Otip.Controllers
 {
+    [Audit]
+    [Authorize(Roles = "Administrador, OTIP")]
     public class BuscadorAutocompletesController : Controller
     {
         IRepository repository;

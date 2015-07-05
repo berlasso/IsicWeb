@@ -15,6 +15,8 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Areas.Afis.Controllers
 {
+    [Audit]
+    [Authorize(Roles = "Administrador, AFIS")]
     public class AfisController : Controller
     {
         IRepository _repository;

@@ -196,6 +196,7 @@ namespace ISICWeb.Areas.PortalSIC.Services
                     //    && ((fechaDelitoDesde == null || fechaDelitoHasta == null) || (i.Delito.DescripcionTemporal.FechaDesde != null && (i.Delito.DescripcionTemporal.FechaDesde >= fechaDelitoDesde && i.Delito.DescripcionTemporal.FechaDesde <= fechaDelitoHasta)))
 
                 }
+                whereString += "Prontuario.baja!=true";
                 if (whereString.EndsWith("&&"))
                     whereString = whereString.Remove(whereString.Length - 2, 2);
 

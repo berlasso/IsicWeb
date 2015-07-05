@@ -14,6 +14,7 @@ using RestSharp;
 
 namespace ISICWeb.Controllers
 {
+    [Audit]
     [Authorize]
     public class HomeController : Controller
     {
@@ -22,7 +23,6 @@ namespace ISICWeb.Controllers
         {
             this.repository = repository;
         }
-
 
 
         public ActionResult Index()

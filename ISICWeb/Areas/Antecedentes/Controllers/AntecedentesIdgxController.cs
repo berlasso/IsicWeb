@@ -10,8 +10,11 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Areas.Antecedentes.Controllers
 {
+    [Audit]
+    [Authorize(Roles = "Administrador, Antecedentes")]
     public class AntecedentesIdgxController : Controller
     {
+        
         IRepository _repository;
         private IdgxService _idgxService;
 

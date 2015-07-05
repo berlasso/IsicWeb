@@ -2531,9 +2531,16 @@ ul.nav-stacked li a {
 /*******************/
 
 .required:after {
-     content:" *"!important;
-      color: #c52d2f!important;
-    /*background-color: red !important;*/
+     /*content:" *"!important;
+     color:  #ee7d8f !important;
+    font-size: medium;*/
+    margin-left: 5px;
+    font: normal normal normal 10px/1 FontAwesome;
+        color:  #f00 !important;
+    content: "\f005 ";
+    
+    
+ 
 } 
 
 /*Cartel de Espera*/
