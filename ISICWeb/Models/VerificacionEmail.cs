@@ -19,5 +19,6 @@ namespace ISICWeb.Models
         public string NombreUsuario { get; set; }
         public bool? UsuarioMPBA { get; set; }
         public string Link { get; set; }
+        public string Bcc { get; set; }
     }
 }

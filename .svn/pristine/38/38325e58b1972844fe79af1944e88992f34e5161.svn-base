@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ISIC Web</title>
+
+    <script src="~/Scripts/lodash.js"></script>
+
+
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/datatable")
+    @Styles.Render("~/Content/jquery-ui")
+    @Styles.Render("~/Content/prettyPhoto")
+    @Styles.Render("~/Content/alertifycss")
+    @Styles.Render("~/Content/boostrap")
+    @Styles.Render("~/Content/varioscss")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datatable")
+    @Scripts.Render("~/bundles/fabric")
+    @Scripts.Render("~/bundles/prettyPhoto")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/alertifyjs")
+    @Scripts.Render("~/bundles/variosjs")
+
+    @RenderSection("Head", required: false)
+    
+    <script type="text/javascript">
+    //override defaults
+    alertify.defaults.theme.ok = "btn";
+    alertify.defaults.theme.cancel = "btn";
+    </script>
+
+</head>
+<body data-spy="scroll" data-target="#menuLateral" id="fondo">
+    <div id="ajaxLoaderDiv" class="body-content-loading-overlay" style="display: none">
+        <div class="body-content-loading-spinner">
+        </div>
+    </div>
+
+    <div class=" navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+                @Html.ActionLink("ISIC", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Secciones <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("OTIP", "Index", "ImputadoOtip", new { area = "Otip" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("Portal SIC", "Index", "Busqueda", new { area = "PortalSIC" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("Huellas Dactilares", "Index", "Digitalizacion", new { area = "" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("Huellas Digitales", "VisualizaDecaDigital", "Digitalizacion", new { area = "" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("Clasificación", "Index", "Clasificacion", new { area = "" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("Tareas", "IndexPorTareas", "Imputado", new { area = "" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("RENAPER", "CheckRenaper", "Imputado", new { area = "" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("Cotejo Manual", "Index", "CotejoManual", new { area = "" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("Antecedentes", "Index", "Antecedentes", new { area = "Antecedentes" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("AFIS", "Index", "Afis", new { area = "Afis" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                            <li>@Html.ActionLink("Usuarios", "Index", "Account", new { area = "" }, new { onclick = "showPageLoadingSpinner()" })</li>
+                        </ul>
+                    </li>
+                    @*<li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, null)</li>*@
+
+                </ul>
+                
+                 
+                 
+                 
+                
+
+                                @Html.Partial("_LoginPartial")
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>@Html.ActionLink("Contacto", "Contact", "Home", new {area = ""}, null)</li>
+                                  
+                                </ul>
+                                @RenderSection("MenuArriba", required: false)
+
+                </div>
+            </div>
+    </div>
+
+
+    <div class="container-fluid">
+
+        <div id="contenido" class=" body-content">
+
+            @RenderBody()
+        </div>
+
+        <div class="cartelEspera" id="cartelLoader">
+            <span style="padding-left: 5px !important; margin-left: 10px !important;"></span>
+        </div>
+
+        @*<hr/>*@
+        <div class="row">
+            <div class="col-md-12">
+                <footer>
+                    @*<p>&copy; @DateTime.Now.Year - ISIC</p>*@
+                </footer>
+            </div>
+        </div>
+    </div>
+
+
+    <nav id="navFooter" class="navbar navbar-default navbar-fixed-bottom tile-dark">
+        <div class="container">
+            <div class="row">
+                @RenderSection("footer", required: false)
+            </div>
+
+        </div>
+    </nav>
+
+@RenderSection("scripts", required: false)
+
+</body>
+</html>
+
+<script type="text/javascript">
+    function showPageLoadingSpinner() {
+        $('#ajaxLoaderDiv').show();
+
+    }
+
+    function hidePageLoadingSpinner(t) {
+        var tiempo = 20000;
+        if (t != null)
+            tiempo = t;
+        setTimeout(function () {
+            $('#ajaxLoaderDiv').hide();
+        }, tiempo);
+    }
+    var urlMapperBody3 = '@Url.Content("~/Areas/Otip/Content/Images/body3.png")';//para mapeo de cuerpo en fileuploader
+    var urlMapperBody2 = '@Url.Content("~/Areas/Otip/Content/Images/body2.png")';//para mapeo de cuerpo en fileuploader
+</script>

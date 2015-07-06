@@ -47,13 +47,15 @@ $(document).ready(function () {
 $(function () {
     $('.tabla').dataTable({
         //"dom": 'TRfrtsp<"row"<"col-md-12"l>>i',
-        "dom": '<"row"<"col-md-5"TR><"col-md-1"><"col-md-6"p>>ts<"row"<"col-md-6"l><"col-md-6"p>>i',
+        //"dom": '<"row"<"col-md-5"TR><"col-md-1"><"col-md-6"p>>ts<"row"<"col-md-6"l><"col-md-6"p>>i',
+        "dom": '<"row"<"col-md-12"ip>><"clear">rt<"bottom"><"clear">',
         serverSide: true,
         "processing": true,
-    "ajax": window.urlTablaImputados,
-        "order": [[1, "asc"]],//codbarras
+        "ajax": window.urlTablaImputados,
+        "order": [[2, "asc"]], //codbarras
         "columns": [
-                    { "data": "ThumbUrl" },
+                    { "data": null },
+                    {"data": "ThumbUrl"},
                     { "data": "CodigoDeBarras" },
                     { "data": "Apellido" },
                     { "data": "Nombre" },
@@ -61,6 +63,13 @@ $(function () {
                     { "data": "Id" }
         ],
         "columnDefs": [
+            {
+                "orderable": false,
+                "searchable": false,
+                "data": null,
+                //"defaultContent": "Editar",
+                "targets": 0 //Ver
+            },
         {
             "render": function (data, type, row) {
                 if (data !== "")
@@ -71,21 +80,18 @@ $(function () {
             },
             "orderable": false,
             "searchable": false,
-            "targets": 0 //ThumbUrl
+            "targets": 1 //ThumbUrl
         },
         {
             "render": function (data, type, row) {
-
-                
-
-                return '<a href="' + urlVerImputado+  '/' + row.Id + '" title="Ver Imputado" onclick=" showPageLoadingSpinner() ">' + data + '<span class="flaticon-magnifying27"></span></a>';
+                return '<a href="' + urlVerImputado+  '/' + row.Id + '" title="Ver Imputado" onclick=" showPageLoadingSpinner() " class="btn btn-alt">Ver</a>';
             },
-            "targets": 1, //codigo de barras
+            "targets": 0, //ver
         },
 
      
        {
-           "targets": 5,//id
+           "targets": 6,//id
            "visible": false,
            "searchable": false
        }
@@ -114,34 +120,34 @@ $(function () {
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
         },
-        "tableTools": {
-            "sSwfPath": "/Content/swf/copy_csv_xls_pdf.swf",
-            "aButtons": [
-                {
-                    "sExtends": "copy",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' },
-                    "mColumns": "visible",
-                    "sButtonText": "Copiar"
-                },
-                {
-                    "sExtends": "xls",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' },
-                    "mColumns": "visible",
+        //"tableTools": {
+        //    "sSwfPath": "/Content/swf/copy_csv_xls_pdf.swf",
+        //    "aButtons": [
+        //        {
+        //            "sExtends": "copy",
+        //            "oSelectorOpts": { filter: 'applied', order: 'current' },
+        //            "mColumns": "visible",
+        //            "sButtonText": "Copiar"
+        //        },
+        //        {
+        //            "sExtends": "xls",
+        //            "oSelectorOpts": { filter: 'applied', order: 'current' },
+        //            "mColumns": "visible",
 
-                },
-                {
-                    "sExtends": "pdf",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' },
-                    "mColumns": "visible",
-                    "sPdfOrientation": "landscape"
-                },
-                {
-                    "sExtends": "print",
-                    "sButtonText": "Imprimir",
-                    "sInfo": "<h2 style='color: white;'>Vista de Impresión</h2><p>Utilice la funcion de impresion del navegador para imprimir la tabla. Presione ESCAPE cuando haya terminado</p>"
-                }
-            ]
-        }
+        //        },
+        //        {
+        //            "sExtends": "pdf",
+        //            "oSelectorOpts": { filter: 'applied', order: 'current' },
+        //            "mColumns": "visible",
+        //            "sPdfOrientation": "landscape"
+        //        },
+        //        {
+        //            "sExtends": "print",
+        //            "sButtonText": "Imprimir",
+        //            "sInfo": "<h2 style='color: white;'>Vista de Impresión</h2><p>Utilice la funcion de impresion del navegador para imprimir la tabla. Presione ESCAPE cuando haya terminado</p>"
+        //        }
+        //    ]
+        //}
     });
    
 
