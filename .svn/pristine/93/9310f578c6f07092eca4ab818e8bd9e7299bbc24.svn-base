@@ -1,0 +1,117 @@
+﻿@using ISICWeb.Models
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Iniciar sesión";
+}
+
+<div class="center wow fadeInDown animated tile-light">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+
+
+<div class="row wow fadeInDown animated ">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default tile wow fadeInDown animated" style="margin: 60px 0 80px 0">
+            <div class="panel-heading">
+
+                <h4>Indique su usuario y contraseña para iniciar la sesión.</h4>
+
+            </div>
+            <div class="panel-body">
+                <section id="loginForm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-3">
+                                @Html.LabelFor(m => m.Email)
+                            </div>
+                            <div class="col-xs-9 col-md-5 ">
+                                @Html.TextBoxFor(m => m.Email, new { @Value = "prueba@mpba.gov.ar", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <br />
+                        </div>
+
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-3">
+                                @Html.LabelFor(m => m.Password)
+                            </div>
+                            <div class="col-xs-9 col-md-5">
+                                @Html.PasswordFor(m => m.Password, new { @Value = "pa$$w0rd", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-12">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-9 text-center col-md-5">
+                                <input type="submit" value="Iniciar sesión" class="btn btn-lg" />
+                            </div>
+
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-3">
+                                <p>
+                                    @Html.ActionLink("Registrarse como usuario nuevo", "Register1", null, new { @class = "btn btn-alt btn-sm" })
+                                </p>
+                                @* Habilitar tras habilitar la confirmación de la cuenta para la funcionalidad de restablecimiento de la contraseña
+                                <p>
+                                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                                </p>*@
+
+                            </div>
+                            <div class="col-xs-9 col-md-5">
+
+                            </div>
+                            @*<div class="col-xs-4">
+                            </div>*@
+                        </div>
+
+
+                    }
+                </section>
+
+            </div>
+            <div class="panel-footer">
+                <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                    <div class="col-xs-12">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+            </div>
+            <div class="alert alert-warning alert-icon   tile-dark wow fadeInDown animated">
+                IMPORTANTE: Si used era usuario activo de la version anterior del sitio del SIC, deberá completar algunos pasos previos. Para comenzar haga click <a href=@Url.Action("ValidarLoginSicViejo") style="font-weight: bolder;">AQUI</a>
+                <i class="icon flaticon-caution2">
+
+                </i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
+
+
+
+@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

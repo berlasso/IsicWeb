@@ -1,0 +1,374 @@
+﻿@model  ISIC.Entities.Imputado
+
+
+
+@{
+    ViewBag.Title = "Proceso de Digitalización del Imputado ";
+}
+@section Head
+{
+    <style>
+        #fondo {
+            /*background-image: none;*/
+            /*color: black;*/
+        }
+        .upper-canvas:hover {
+            cursor: url(@Url.Content("/Content/magnify.cur")), -moz-zoom-in !important;
+        }
+        canvas {
+            background-color: white !important;
+        }
+      
+    </style>
+}
+
+<div class="container-detalle">
+
+
+    <div class="row">
+        <div class="col-md-12 wow fadeInDown animated tile-light">
+            <h4>
+                Decadactilar del Imputado <span>Cod.Barra: @Model.CodigoDeBarras , Imputado: @Model.Persona.Apellido , @Model.Persona.Nombre</span>
+                <button type="button" id="imprimeDeca" class="btn" style="margin-left: 2%">Imprime DecaDactilar</button>
+            </h4>
+
+        </div>
+
+
+        <div id="decadactilarPanelOrg" style="float: left;" title="">
+
+            <canvas id="co" width="1200" height="500" style="float: left; margin-top: 2%; margin-left: 2% !important; border: 1px solid #000000;"></canvas>
+        </div>
+       
+
+
+        @{var indice = 0;}
+        <div id="dedosImagenes" style="margin-top: 0px; height: 400px; display: none">
+            @foreach (var dedos in Model.BioManoDerecha)
+            {
+                var nombreDedo = dedos.Dedo.ToString() + "MD" + Model.CodigoDeBarras;
+
+                switch (dedos.EstadoDedo)
+                {
+
+                    case (ISIC.Enums.ClaseEstadoDedo) 1:
+                    {
+                        var base64 = Convert.ToBase64String(dedos.imagen);
+                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                        <img src="@imgSrc" height="400" width="400" id="@nombreDedo"/>
+                        break;
+                    }
+                    case (ISIC.Enums.ClaseEstadoDedo) 2:
+                    {
+// Lastimado
+                        <img src="~/Images/dedoLastimado.png" id=@nombreDedo height="300"/>
+                        break;
+                    }
+                    case (ISIC.Enums.ClaseEstadoDedo) 3:
+                    {
+// faltante
+                        <img src="~/Images/dedoFaltante.png" id=@nombreDedo height="300"/>
+                        break;
+                    }
+                    case (ISIC.Enums.ClaseEstadoDedo) 4:
+                    {
+// Huella No Apta
+                        <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedo height="300"/>
+                        break;
+                    }
+
+
+
+                }
+                indice++;
+            }
+
+            @foreach (var dedos in Model.BioManoIzquierda)
+            {
+                var nombreDedoI = dedos.Dedo.ToString() + "MI" + Model.CodigoDeBarras.ToString();
+
+                switch (dedos.EstadoDedo)
+                {
+
+                    case (ISIC.Enums.ClaseEstadoDedo) 1:
+                    {
+                        var base64 = Convert.ToBase64String(dedos.imagen);
+                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                        <img src="@imgSrc" id="@nombreDedoI" height="400" width="400"/>
+                        break;
+                    }
+                    case (ISIC.Enums.ClaseEstadoDedo) 2:
+                    {
+// Lastimado
+                        <img src="~/Images/dedoLastimado.png" id=@nombreDedoI height="300"/>
+                        break;
+                    }
+                    case (ISIC.Enums.ClaseEstadoDedo) 3:
+                    {
+// faltante}
+                        <img src="~/Images/dedoFaltante.png" id=@nombreDedoI height="300"/>
+                        break;
+                    }
+                    case (ISIC.Enums.ClaseEstadoDedo) 4:
+                    {
+// Huella No Apta}
+                        <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedoI height="300"/>
+                        break;
+                    }
+
+
+
+                }
+                indice++;
+            }
+
+        </div>
+
+    </div>
+
+
+    </div>
+
+    <script src="~/Scripts/jquery-ui-1.11.2.js"></script>
+    <script src="~/Areas/PortalSIC/Scripts/printThis.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+
+        });
+        $("#co").attr("id", "@Model.CodigoDeBarras");
+        var nombreInd = "Indiv".concat("@Model.CodigoDeBarras");
+        $("#cIndiv").attr("id", nombreInd);
+        var canvasDeca = new fabric.Canvas('@Model.CodigoDeBarras');
+        canvasDeca.hoverCursor = "url(/Content/magnify.cur),default";
+        var canvasIndiv = new fabric.Canvas(nombreInd);
+        canvasDeca.backgroundColor = "white";
+        canvasDeca.renderOnAddition = true;
+        canvasIndiv.renderOnAddition = true;
+
+
+        var imgDedos = new Array(10);
+        var nombreDedos = new Array(5);
+        nombreDedos = ["Pulgar", "Indice", "Medio", "Anular", "Meñique"]
+        var j = 0;
+        var desplaza = 40;
+        // ANCHO Y ALTO DE LAS IMAGENES?
+        var nombreD = "PulgarMD".concat("@Model.CodigoDeBarras");
+        var imgPulgar = document.getElementById(nombreD);
+        var linea = new fabric.Line([0, 210, $("#@Model.CodigoDeBarras").attr('width'), 210], {
+            strokeWidth: 1,
+            id: "otros",
+            stroke: 'blue'
+        });
+
+        canvasDeca.add(linea);
+        canvasDeca.item(0).bringToFront();
+
+        var textoDerecha = new fabric.Text('MANO DERECHA', {
+            fontFamily: 'Arial',
+            id: "letra",
+            fontSize: 20,
+            hasBorders: true,
+            angle: -90,
+            left: 0,
+            top: 180,
+            lockRotation: true,
+            lockMovementX: true,
+            lockMovementY: true,
+            lockScalingX: true,
+            lockScalingY: true,
+            lockUniScaling: true
+        });
+        canvasDeca.add(textoDerecha);
+        var textoDerecha = new fabric.Text('MANO IZQUIERDA', {
+            fontFamily: 'Arial',
+            fontSize: 20,
+            id: "letra",
+            hasBorders: true,
+            angle: -90,
+            left: 0,
+            top: 390,
+            lockRotation: true,
+            lockMovementX: true,
+            lockMovementY: true,
+            lockScalingX: true,
+            lockScalingY: true,
+            lockUniScaling: true
+        });
+        canvasDeca.add(textoDerecha);
+
+
+        for (var j = 0; j < 5; j++) {
+
+            var textoDedo = new fabric.Text(nombreDedos[j].toUpperCase(), {
+                fontFamily: 'Arial',
+                fontSize: 20,
+                id: "letra",
+                hasBorders: false,
+                left: j + desplaza + 30,
+                top: 0,
+                textAlign: 'center',
+                lockRotation: true,
+                lockMovementX: true,
+                lockMovementY: true,
+                lockScalingX: true,
+                lockScalingY: true,
+                lockUniScaling: true
+            });
+            canvasDeca.add(textoDedo);
+
+
+            var aux = nombreDedos[j] + "MD"
+            aux = aux.concat("@Model.CodigoDeBarras");
+
+            var imgen = document.getElementById(aux);
+            var nombreIDO = nombreDedos[j] + "MD"
+
+            imgInstance = new fabric.Image(imgen, {
+                left: j + desplaza,
+                id: nombreDedos[j] + "MD",
+                top: 10,
+                angle: 0,
+                opacity: 1,
+                hasBorders: true,
+                borderColor: 'black',
+                scaleX: 220 / imgen.width,
+                scaleY: 230 / imgen.height,
+                lockRotation: true,
+                lockMovementX: true,
+                lockMovementY: true,
+                lockScalingX: true,
+                lockScalingY: true,
+                lockUniScaling: true
+
+            });
+
+            canvasDeca.add(imgInstance);
+            var total = canvasDeca.item.length;
+            canvasDeca.sendToBack(imgInstance);
+            desplaza += 220;
+
+
+        }
+        desplaza = 50;
+
+        for (var j = 0; j < 5; j++) {
+            var aux = nombreDedos[j] + "MI"
+            aux = aux.concat("@Model.CodigoDeBarras");
+            var imgen = document.getElementById(aux);
+
+            imgInstance = new fabric.Image(imgen, {
+                left: j + desplaza,
+                top: 225,
+                id: nombreDedos[j] + "MI",
+                angle: 0,
+                opacity: 1,
+                hasBorders: true,
+                borderColor: 'black',
+                scaleX: 220 / imgen.width,
+                scaleY: 230 / imgen.height,
+                lockRotation: true,
+                lockMovementX: true,
+                lockMovementY: true,
+                lockScalingX: true,
+                lockScalingY: true,
+                lockUniScaling: true
+            });
+           
+            canvasDeca.add(imgInstance);
+         
+            desplaza += 220;
+
+
+        }
+
+        var objetoSeleccionado = null;
+        canvasDeca.item(0).bringToFront();
+        canvasDeca.hoverCursor = 'url(@Url.Content("~/Content/magnify.cur")),default';
+        canvasDeca.on('object:selected', function (e) {
+            // Ir a comparar el dedo
+            var objeto = e.target;
+            var nombreObjeto = objeto.id;
+            nombreObjeto = nombreObjeto.substring(0, nombreObjeto.length - 2);
+            var imageDeca = document.createElement('img');
+            imageDeca.src = e.target._originalElement.src;
+            imageDeca.style.width = 'auto';
+            imageDeca.style.height = '800px';
+            alertify.alert(nombreObjeto, imageDeca).set({ 'pinnable': true, 'modal': false, 'resizable': true });
+        });
+
+
+        canvasDeca.on('mouse:over', function (e) {
+            canvasIndiv.clear().renderAll();
+            var objeto = e.target;
+            if (e.target.id == "otros" || e.target.id == "letra")
+                return;
+            objetoSeleccionado = fabric.util.object.clone(objeto);
+            canvasDeca.item(0).bringToFront();
+
+
+            objetoSeleccionado.scale(1.5);
+            objetoSeleccionado.left = 0;
+            objetoSeleccionado.top = 0;
+            objetoSeleccionado.width = 400;
+            objetoSeleccionado.height = 400;
+
+            canvasIndiv.add(objetoSeleccionado);
+          
+
+            canvasIndiv.renderAll();
+        });
+
+
+        /*  canvasDeca.on('mouse:out', function (e) {
+              canvasIndiv.clear().renderAll();
+          });
+
+                */
+        // nombre= PulgarMD
+
+
+        var imagenDECA = canvasDeca.toDataURL("image/png");
+        // $("#Izquierda"+i).attr("src", btoa(image));
+
+        //  imagenDECA = imagenDECA.replace('data:image/png;base64,', '');
+        $("#ImgDecaDactilar").val(imagenDECA);
+
+
+        function inicializaDedo(imagenDedo, nombre, estado) {
+            var a = 0;
+            imgInstance = new fabric.Image(imagenDedo, {
+                left: 0,
+                top: 0,
+                angle: 0,
+                opacity: 1
+            });
+            canvasDeca.add(imgInstance);
+       
+        }
+
+
+        $('#imprimeDeca').click(function () {
+            
+            //$("#ImgDecaDactilar").show();
+
+            //$("#ImgDecaDactilar").printElement()
+            //$("#ImgDecaDactilar").hide();
+            $(".container-detalle").printThis({
+
+            });
+        });
+
+
+
+
+
+
+
+
+
+
+    </script>

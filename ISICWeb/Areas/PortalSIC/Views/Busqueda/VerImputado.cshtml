@@ -17,6 +17,9 @@
         Html.RenderPartial("_DatosGeneralesImputado", Model);
         Html.RenderPartial("_DatosSomaticosImputado", Model);
         Html.RenderPartial("_ImagenesImputado", Model);
+        //Html.RenderPartial("_Antecedentes", Model);
+        //Html.RenderPartial("_Afis", Model);
+        Html.RenderAction("Afis");
     }
 </div>
 @section footer

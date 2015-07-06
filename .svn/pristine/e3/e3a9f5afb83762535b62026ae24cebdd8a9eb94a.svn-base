@@ -1,0 +1,553 @@
+﻿@model  ISICWeb.Areas.Otip.Models.DatosGeneralesViewModel
+@{
+    bool esSoloDetalle = Model.EsSoloDetalle;
+
+}
+@{
+
+    ViewBag.Title = "Carga";
+    //Layout = null;
+
+    <link href="~/Content/selectize.bootstrap3.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="~\Scripts/selectize.js"></script>
+    <script type="text/javascript" src="~\Scripts/jquery.maskedinput.min.js"></script>
+    <script type="text/javascript" src="~\Scripts/site.js"></script>
+}
+
+@section Head
+{
+    <style>
+        .selectize-dropdown,
+        .selectize-dropdown.form-control {
+            height: auto;
+            padding: 0;
+            margin: 2px 0 0 0;
+            z-index: -1;
+            top: 0!important;
+            position: relative;
+            background: #ffffff;
+             border: 1px solid rgba(255, 255, 255, 0.3)!important;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        }
+
+        .selectize-input {
+            background: rgba(0, 0, 0, 0.05) !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.3)!important;
+        }
+
+        .selectize-input > input {
+            color: white !important;
+        }
+    </style>
+}
+
+@section MenuArriba
+{
+
+    @*<div class="search">*@
+    <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control " id="txtBuscarCodBarras" placeholder="Código de Barras">
+                <span class="input-group-addon btn btn-alt " id="btnBuscarCodBarrasMenu">
+                    <span class="flaticon-zoom22"></span>
+                </span>
+            </div>
+        </div>
+    </form>
+    @*</div>*@
+
+
+    @*<div class="search">
+            <form class="navbar-form navbar-right" role="search">
+                <input class="search-form form-control" type="text" placeholder="Código de Barras" autocomplete="off" id="txtBuscarCodBarras">
+                <a href="#" id="btnBuscarCodBarrasMenu">
+                    <i class="fa fa-search"></i>
+                </a>
+            </form>
+        </div>*@
+
+
+
+}
+
+<div class="container-detalle">
+
+    <div class="center wow fadeInDown animated tile-light">
+        <h1>Carga de Imputado</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-3 hidden-xs " id="menuLateral">
+            <nav class=" navbar-lateral " data-spy="affix" style="top: 60px" data-offset-top="200" >
+                
+                @*<div class="collapse navbar-collapse" id="navbarCollapse">*@
+                <div class="parrent pull-left" id="navbarCollapse">
+                    @*<ul class="nav nav-pills nav-stacked">*@
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li class="active">
+                            <a href="#DatosGenerales">Datos Generales</a>
+                        </li>
+
+                        <li>
+                            <a href="#DomicilioImputado">Domicilio del Imputado</a>
+                        </li>
+
+                        @*<li>
+                        <a href="#DomicilioDelito">Domicilio del Delito</a>
+                    </li>*@
+
+                        <li>
+                            <a href="#DatosSomaticos">Datos Somáticos</a>
+                        </li>
+
+                        <li>
+                            <a href="#Imagenes">Imágenes</a>
+
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+        <div class="col-md-10 col-sm-9" role="main">
+
+            @using (Ajax.BeginForm("AltaModificacion", "ImputadoOtip",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "summaryerror",
+                    HttpMethod = "Post",
+                    OnBegin = "onGuardarBegin",
+                    OnComplete = "onGuardarComplete",
+                    OnSuccess = "onGuardarSuccess"
+                },
+                new { id = "frmDetalleOtip" }))
+            {
+                @Html.HiddenFor(m => m.Id)
+                @Html.Hidden("hidSubCodBarra", (object)ViewBag.SubCodBarra)
+                {
+                    Html.RenderPartial("_DatosGeneralesImputado");
+                    ViewBag.EsSoloDetalle = Model.EsSoloDetalle;
+                    Html.RenderPartial("_DatosSomaticos");
+                    Html.RenderPartial("_ImagenesImputado");
+
+                }
+
+
+
+                <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                        </div>
+                    </div>
+
+                </nav>
+
+
+                <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <i id="summaryerror">
+                                @Html.Partial("SummaryError")
+
+                            </i>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-2 col-sm-3 col-xs-4">
+
+
+
+                            <a class="btn btn-lg btn-alt " href='@Url.Action("Index", "ImputadoOtip")' onclick=' showPageLoadingSpinner() ' title=" volver" type="button" id="btnVolverDetalle">
+                                Volver
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-md-offset-3 col-sm-9 col-xs-8">
+                            <div class="row ">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <a tabindex="0" white-space nowrap class="btn btn-alt btn-lg" data-placement="auto top" data-container="body" data-toggle="popover" title="Cómo desea el reporte?" data-trigger="focus" data-html="true" data-content="<div class='list-group'><a id='rptSinHuellas' href='#Botones' class='list-group-item' onclick='GenerarReporte(@Model.Id,true)'><b>SIN</b> las secciones para huellas dactilares y palmares</a><a id='rptConHuellas' class='list-group-item' onclick='GenerarReporte(@Model.Id,false)' href='#Botones'><b>CON</b> las secciones para huellar dactilares y palmares</a></div>">
+                                        @*<span class="glyphicon glyphicon-print">*@
+                                        Reporte
+                                        @*</span>*@
+                                    </a>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    @if (!esSoloDetalle)
+                                    {
+                                        <button id="btnGuardar" type="submit" class="btn btn-alt btn-lg" title="Guardar">
+                                            Guardar
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </nav>
+
+            }
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@section scripts
+{
+
+
+    @*<script type="text/javascript" src="~/Scripts/jquery-ui-1.10.4.js"></script>*@
+    @*<script type="text/javascript" src="~/Scripts/selectize.js"></script>
+        <link rel="stylesheet" type="text/css" href="~/Content/selectize.bootstrap3.css" />*@
+    <script>
+
+
+        var urlAutocompleteModusOperandi = '@Url.Action("BuscaModusOperandi", "BuscadorAutocompletes")?mo=';
+        var urlAutocompletePartido = '@Url.Action("BuscaPartido", "BuscadorAutocompletes")?partido=';
+        var urlAutocompleteLocalidad = '@Url.Action("BuscaLocalidad", "BuscadorAutocompletes")?localidad=';
+        var urlAutocompleteDependenciaPolicial = '@Url.Action("BuscaComisaria", "BuscadorAutocompletes")?comisaria=';
+        var urlGenerarReporte = '@Url.Action("GenerarReporte", "Reporte")?id=';
+        var urlBajarReporte = '@Url.Action("BajarReporte", "Reporte")?rptPath=';
+
+        var urlBuscarIppSimp = '@Url.Action("BuscarIppSimpPrueba", "BuscadorSimp")?IPP=';
+        var urlBuscarCodBarras = '@Url.Action("BuscarDelito", "ImputadoOtip")?codBarras=';
+        var urlBuscarCodBarrasAutogenerado = '@Url.Action("TraerCodigoBarasAutogenerado", "ImputadoOtip")';
+        var urlAltaModificacion = '@Url.Action("AltaModificacion", "ImputadoOtip")?id=';
+        var urlBuscarIdImputado = '@Url.Action("BuscarIdImputado", "ImputadoOtip")?codBarras=';
+
+        @*var urlVolver = '@Url.Action("Index", "ImputadoOtip", new {Area = "Otip"})';*@
+
+
+
+        $('.selectize-partido').selectize({
+            valueField: 'value',
+            labelField: 'name',
+            searchField: 'search',
+            selectOnTab: true,
+            delimiter: ',',
+            maxItems: "1",
+            closeAfterSelect: true,
+            create: false,
+            persist: false,
+            hideSelected: true,
+            loadingClass: 'loading',
+            onChange: function(value) {
+                var id = this.$input[0].id;
+                var hiddenControl = '#hidId' + id;
+                var valor = $("#elegido" + id).data("autocomplete");
+                if (valor == null) {
+                    valor = "0"
+                };
+                $(hiddenControl).val(valor);
+            },
+            render: {
+                item: function(data) {
+                    var nombre = this.$input[0].id;
+                    var id = $('#hidId' + nombre).val();
+                    var datavalue = "";
+                    if (!isNaN(parseFloat(data.value)))
+                        datavalue = data.value;
+                    else
+                        datavalue = id;
+                    return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '">' + data.name + '</div>';
+                }
+            },
+            load: function(query, callback) {
+                if (query.length < 3)
+                    return callback();
+                else {
+                    var autocompletePartidoUrl = $("#autocompletePartidoUrl").val();
+                    $.ajax({
+                        url: urlAutocompletePartido + encodeURIComponent(query),
+                        type: 'GET',
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res.partidosEncontrados);
+                        }
+                    });
+                }
+            }
+
+        });
+
+        var xhr;
+        $deppol = $('#DependenciaPolicial').selectize({
+            valueField: 'value',
+            labelField: 'name',
+            selectOnTab: true,
+            maxItems: "1",
+            searchField: ['search'],
+            closeAfterSelect: true,
+            onChange: function (value) {
+                $("#hidIdDependenciaPolicial").val(value);
+            }
+        });
+        if ($deppol[0]) {
+            deppol = $deppol[0].selectize;
+          //  deppol.disable();
+        }
+
+        $('.selectize-localidadPol').selectize({
+            valueField: 'value',
+            labelField: 'localidad',
+            searchField: 'search',
+            delimiter: ',',
+            selectOnTab: true,
+            maxItems: "1",
+            closeAfterSelect: true,
+            create: false,
+
+            persist: false,
+            loadingClass: 'loadinggif',
+            hideSelected: true,
+            onChange: function(value) {
+                var id = this.$input[0].id;
+
+                var hiddenControl = '#hidId' + id;
+                var valor = $("#elegido" + id).data("autocomplete");
+                var valorIdProvincia = $("#elegido" + id).data("idprovincia");
+                var valorIdPartido = $("#elegido" + id).data("idpartido");
+                var valorIdLocalidad = value;
+                var valorLocalidad = $("#elegido" + id).data("localidad");
+                if (valor == null) {
+                    valor = "0";
+                }
+                $(hiddenControl).val(valorIdLocalidad);
+                if (id)
+                    id = id.replace('Localidad', '');
+                if (!isNaN(parseFloat(valorIdProvincia))) {
+                    $('#Provincia' + id).val(valorIdProvincia);
+                    if (id.toLowerCase() == "nacimiento") {
+                        $("#PaisNacimiento option").filter(function() {
+                            return this.text == "Argentina";
+                        }).attr('selected', true);
+                    }
+
+                    if (!value.length || typeof deppol == 'undefined') return;
+                    deppol.disable();
+                    deppol.clearOptions();
+                    deppol.load(function(callback) {
+                        xhr && xhr.abort();
+                        xhr = $.ajax({
+                            type: 'GET',
+                            url: urlAutocompleteDependenciaPolicial + "&loc=" + $('#hidIdLocalidadPolicial').val(),
+                            success: function (results) {
+                                if (results.dpEncontrados.length > 0) {
+                                    deppol.enable();
+                                    deppol.open();
+                                    callback(results.dpEncontrados);
+                                }
+                                
+                                else {
+                                    deppol.disable();
+                                }
+                                    
+                                    
+                                
+                            },
+                            error: function() {
+                                callback();
+                            }
+                        });
+                    });
+                };
+                if (!isNaN(parseFloat(valorIdLocalidad))) {
+                    $('#Partido' + id).attr("data-autocomplete", valorIdLocalidad);
+                    $('#elegidoPartido' + id).html(valorLocalidad);
+                    $('#hidIdPartido' + id).val(valorIdPartido);
+                }
+            },
+            render: {
+                item: function(data) {
+                    var nombre = this.$input[0].id;
+                    var id = $('#hidId' + nombre).val();
+                    var datavalue = "";
+                    if (!isNaN(parseFloat(data.value)))
+                        datavalue = data.value;
+                    else
+                        datavalue = id;
+                    return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '" data-idprovincia="' + data.idProvincia + '" data-idpartido="' + data.idPartido + '" data-partido="' + data.partido + '" data-localidad="' + data.localidad + '">' + data.localidad + '</div>';
+                },
+                option: function(item, escape) {
+                    return item.provincia ? '<div><span>' + escape(item.localidad) + '</span><br/><span class="caption">' + escape(item.partido) + ', ' + escape(item.provincia) + '</span></div>' : '';
+                }
+            },
+            load: function(query, callback) {
+                if (query.length < 3)
+                    return callback();
+                else {
+
+
+                    $.ajax({
+                        url: urlAutocompleteLocalidad + encodeURIComponent(query),
+                        type: 'GET',
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res.localidadesEncontradas);
+                        }
+                    });
+                }
+            }
+        });
+
+
+        $('.selectize-localidad').selectize({
+            valueField: 'value',
+            labelField: 'localidad',
+            searchField: 'search',
+            selectOnTab: true,
+            delimiter: ',',
+            maxItems: "1",
+            closeAfterSelect: true,
+            create: false,
+
+            persist: false,
+            loadingClass: 'loadinggif',
+            hideSelected: true,
+            onChange: function(value) {
+                var id = this.$input[0].id;
+                var hiddenControl = '#hidId' + id;
+                var valor = $("#elegido" + id).data("autocomplete");
+                var valorIdProvincia = $("#elegido" + id).data("idprovincia");
+                var valorIdPartido = $("#elegido" + id).data("idpartido");
+                var valorPartido = $("#elegido" + id).data("partido");
+                if (valor == null) {
+                    valor = "0";
+                }
+                $(hiddenControl).val(valor);
+                if (id)
+                    id = id.replace('Localidad', '');
+                if (!isNaN(parseFloat(valorIdProvincia))) {
+                    $('#Provincia' + id).val(valorIdProvincia);
+                    if (id.toLowerCase() == "nacimiento") {
+                        $("#PaisNacimiento option").filter(function() {
+                            return this.text == "Argentina";
+                        }).attr('selected', true);
+                    }
+                }
+                if (!isNaN(parseFloat(valorIdPartido))) {
+                    $('#Partido' + id).attr("data-autocomplete", valorIdPartido);
+                    $('#elegidoPartido' + id).html(valorPartido);
+                    $('#hidIdPartido' + id).val(valorIdPartido);
+                }
+            },
+            render: {
+                item: function(data) {
+                    var nombre = this.$input[0].id;
+                    var id = $('#hidId' + nombre).val();
+                    var datavalue = "";
+                    if (!isNaN(parseFloat(data.value)))
+                        datavalue = data.value;
+                    else
+                        datavalue = id;
+                    return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '" data-idprovincia="' + data.idProvincia + '" data-idpartido="' + data.idPartido + '" data-partido="' + data.partido + '" data-localidad="' + data.localidad + '">' + data.localidad + '</div>';
+                },
+                option: function(item, escape) {
+                    return item.provincia ? '<div><span>' + escape(item.localidad) + '</span><br/><span class="caption">' + escape(item.partido) + ', ' + escape(item.provincia) + '</span></div>' : '';
+                    //return 'german';
+                }
+            },
+            load: function(query, callback) {
+                if (query.length < 3)
+                    return callback();
+                else {
+
+
+                    $.ajax({
+                        url: urlAutocompleteLocalidad + encodeURIComponent(query),
+                        type: 'GET',
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res.localidadesEncontradas);
+                        }
+                    });
+                }
+            }
+        });
+
+
+        $('#ModusOperandi').selectize({
+            valueField: 'value',
+            labelField: 'name',
+            searchField: 'search',
+            delimiter: ',',
+            maxItems: "1",
+            closeAfterSelect: true,
+            selectOnTab: true,
+            create: false,
+            persist: false,
+            hideSelected: true,
+            loadingClass: 'loading',
+            onChange: function(value) {
+                var id = this.$input[0].id;
+                var hiddenControl = '#hidId' + id;
+                var valor = $("#elegido" + id).data("autocomplete");
+                if (valor == null) {
+                    valor = "0"
+                };
+                $(hiddenControl).val(valor);
+            },
+            render: {
+                item: function(data) {
+                    var nombre = this.$input[0].id;
+                    var id = $('#hidId' + nombre).val();
+                    var datavalue = "";
+                    if (!isNaN(parseFloat(data.value)))
+                        datavalue = data.value;
+                    else
+                        datavalue = id;
+                    return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '">' + data.name + '</div>';
+                }
+            },
+
+            load: function(query, callback) {
+                if (query.length < 3)
+                    return callback();
+                else {
+                    $.ajax({
+                        url: urlAutocompleteModusOperandi + encodeURIComponent(query),
+                        type: 'GET',
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            callback(res.moEncontrados);
+                        }
+                    });
+                }
+
+
+            }
+        });
+
+
+
+
+        $(document).ready(function() {
+            ControlarComisaria();
+            $("#navFooter").hide();
+        });
+    </script>
+}
+
+
+

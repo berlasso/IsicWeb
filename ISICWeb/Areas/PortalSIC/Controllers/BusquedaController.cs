@@ -16,6 +16,7 @@ using MPBA.DataAccess;
 using System.Linq.Dynamic;
 using System.Security.Claims;
 using DataTables.Mvc;
+using ISICWeb.Areas.Afis.Models;
 
 namespace ISICWeb.Areas.PortalSIC.Controllers
 {
@@ -129,7 +130,7 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
             ISICContext context = (ISICContext)_repository.UnitOfWork.Context;     
             var paged = (from i in imputados
                              from a in context.Archivo.Where(a => a.Imputado.Id == i.Id && a.TipoArchivo.Id == 1).Take(1).DefaultIfEmpty()
-                             select new {ThumbUrl=a==null?"":a.ThumbUrl.Replace("~","")??"", i.CodigoDeBarras, i.Persona.Apellido, i.Persona.Nombre, i.Persona.DocumentoNumero, i.Id });
+                             select new {Ver="",ThumbUrl=a==null?"":a.ThumbUrl.Replace("~","")??"", i.CodigoDeBarras, i.Persona.Apellido, i.Persona.Nombre, i.Persona.DocumentoNumero, i.Id });
             //.Select(x=>new {ThumbUrl="", CodigoDeBarras=x.CodigoDeBarras, Apellido=x.Persona.Apellido, Nombre=x.Persona.Nombre, DocumentoNumero=x.Persona.DocumentoNumero,Id=x.Id});;
             
 
@@ -166,6 +167,15 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
 
         }
 
+        [ChildActionOnly]
+        public ActionResult Afis()
+        {
+            AFISViewModel model = new AFISViewModel
+            {
+                Apellido = "PROBANDO"
+            };
+            return View("_Afis", model);
+        }
     }
 }
     
