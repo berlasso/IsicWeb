@@ -17,9 +17,27 @@
         Html.RenderPartial("_DatosGeneralesImputado", Model);
         Html.RenderPartial("_DatosSomaticosImputado", Model);
         Html.RenderPartial("_ImagenesImputado", Model);
-        //Html.RenderPartial("_Antecedentes", Model);
-        //Html.RenderPartial("_Afis", Model);
-        Html.RenderAction("Afis");
+        if (Model.Prontuario.DatosGNA != null)
+        {
+            Html.RenderPartial("_AntecedentesGna", Model.Prontuario);
+        }
+        
+        if (Model.Prontuario.DatosMigracioneses != null)
+        {
+            Html.RenderPartial("_AntecedentesMigraciones", Model.Prontuario);    
+        }
+        if (Model.Prontuario.ProntuariosIdgx != null)
+        {
+            Html.RenderPartial("_AntecedentesIdgx", Model.Prontuario);
+        }
+        if (Model.Prontuario.DatosAFIS != null)
+        {
+            Html.RenderPartial("_Afis", Model.Prontuario);
+        }
+        
+        
+        
+
     }
 </div>
 @section footer

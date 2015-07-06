@@ -1,0 +1,115 @@
+﻿@model ISIC.Entities.Prontuario
+
+<div class="tile tile  wow fadeInDown animated" style="margin-bottom: 80px;">
+
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <h4>
+                Listado de prontuarios en IDGx
+            </h4>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+
+                @if (Model != null && Model.ProntuariosIdgx != null)
+                {
+                    foreach (var item in Model.ProntuariosIdgx.Where(x => x.Baja != true))
+                    {
+                        <div class="row tile-light">
+                            <div class="col-md-4">
+                                @if (item.tipoprontuario != null)
+                                {
+                                    <h5>Prontuario Nro.: @item.Prontuario.ProntuarioNro</h5>
+
+                                    @*@Html.LabelFor(x => item.tipoprontuario.descripcion)
+                                        @Html.DisplayFor(modelItem => item.tipoprontuario.descripcion, new {@class="form-control"})*@
+
+                                }
+
+
+                            </div>
+                            <div class="col-md-4">
+                                <h5>ProntuarioPF: @item.ProntuarioPF</h5>
+                                @*@Html.LabelFor(x => item.ProntuarioPF)
+                                    @Html.DisplayFor(modelItem => item.ProntuarioPF)*@
+                            </div>
+                            <div class="col-md-4">
+                                @if (item.Prontuario != null)
+                                {
+                                    <h5>Descripcion: @item.tipoprontuario.descripcion</h5>
+                                    @*@Html.LabelFor(x => item.Prontuario.ProntuarioNro)
+                                        @Html.DisplayFor(modelItem => item.Prontuario.ProntuarioNro)*@
+                                }
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            @foreach (var item2 in item.DatosPersona)
+                            {
+                                <h6 class="tile">Datos Personales IDGX</h6>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(x => item2.Nombre)
+                                        @Html.DisplayFor(x => item2.Nombre)
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(x => item2.Apellido)
+                                        @Html.DisplayFor(x => item2.Apellido)
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(x => item2.DocumentoNumero)
+                                        @Html.DisplayFor(x => item2.DocumentoNumero)
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(x => item2.FechaNacimiento)
+                                        @Html.DisplayFor(x => item2.FechaNacimiento)
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h6 class="tile">Delitos IDGX</h6>
+                                    @foreach (var item3 in item2.Delitos)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                @Html.LabelFor(y => item3.causatipo)
+                                                @Html.DisplayFor(y => item3.causatipo)
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.LabelFor(y => item3.nrocausa)
+                                                @Html.DisplayFor(y => item3.nrocausa)
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.LabelFor(y => item3.solicitante)
+                                                @Html.DisplayFor(y => item3.solicitante)
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.LabelFor(y => item3.secretaria)
+                                                @Html.DisplayFor(y => item3.secretaria)
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>

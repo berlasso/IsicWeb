@@ -167,15 +167,7 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
 
         }
 
-        [ChildActionOnly]
-        public ActionResult Afis()
-        {
-            AFISViewModel model = new AFISViewModel
-            {
-                Apellido = "PROBANDO"
-            };
-            return View("_Afis", model);
-        }
+    
     }
 }
     
