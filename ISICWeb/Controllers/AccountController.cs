@@ -159,8 +159,11 @@ namespace ISICWeb.Controllers
                     {
                         await SignInAsync(user, model.RememberMe);
 
-                        await UserManager.UpdateAsync(user);
-
+                        if (user.Roles.Count == 1 && RoleManager.FindById(user.Roles.First().RoleId).Name=="Portal")
+                        {
+                            returnUrl = Url.Action("Index", "Busqueda", new {area = "PortalSIC"});
+                        }
+                        
 
                         return RedirectToLocal(returnUrl);
                     }
@@ -1011,6 +1014,11 @@ namespace ISICWeb.Controllers
                 ModelState.AddModelError("", "Debe indicar el Departamento");
             }
 
+            if (model.Roles == null || model.Roles.Count==0)
+            {
+                ModelState.AddModelError("", "Debe indicar al menos un Rol");
+            }
+
             if (model.UsuarioMPBA == false)
             {
                 model.Departamento = _repository.Set<Departamento>().SingleOrDefault(x => x.Id == 22);//fuera mpba
@@ -1368,8 +1376,8 @@ namespace ISICWeb.Controllers
         public async Task<RedirectToRouteResult> Prueba()
         {
             //RoleManager.Create(new IdentityRole {Name = "Portal"});
-            //UserManager.AddToRole("a85b0cb7-d8dd-43cf-be15-b7f08f1df92a", "Operador");
-            string aa = UserManager.GenerateUserToken("prueba", "abfb0899-ac4d-4dd4-a8d9-91a059d657b8");
+            UserManager.AddToRole("a85b0cb7-d8dd-43cf-be15-b7f08f1df92a", "Administrador");
+            //string aa = UserManager.GenerateUserToken("prueba", "abfb0899-ac4d-4dd4-a8d9-91a059d657b8");
             return RedirectToAction("Index", "Home");
         }
 

@@ -45,7 +45,7 @@ $(document).ready(function () {
 
 
 $(function () {
-    $('.tabla').dataTable({
+    $('#tablaPortal').dataTable({
         //"dom": 'TRfrtsp<"row"<"col-md-12"l>>i',
         //"dom": '<"row"<"col-md-5"TR><"col-md-1"><"col-md-6"p>>ts<"row"<"col-md-6"l><"col-md-6"p>>i',
         "dom": '<"row"<"col-md-12"ip>><"clear">rt<"bottom"><"clear">',
@@ -151,7 +151,7 @@ $(function () {
     });
    
 
-    $('.tabla').on('processing.dt', function(e, settings, processing) {
+    $('tablaPortal').on('processing.dt', function (e, settings, processing) {
         if (processing) {
 
                         showPageLoadingSpinner();
@@ -159,6 +159,8 @@ $(function () {
                         hidePageLoadingSpinner(1);
                     }
     }).dataTable();
+
+  
 
    
 });

@@ -47,6 +47,7 @@ namespace ISICWeb.Services
                 DatosGeneralesViewModel datosImputado = new DatosGeneralesViewModel
                 {
                     Id = imputado.Id,
+                    Prontuario = imputado.Prontuario,
                     CodBarras = imputado.CodigoDeBarras,
                     FechaCarga = imputado.FechaCreacionI.ToString("dd/MM/yyyy"),
                     Apellido = persona.Apellido,

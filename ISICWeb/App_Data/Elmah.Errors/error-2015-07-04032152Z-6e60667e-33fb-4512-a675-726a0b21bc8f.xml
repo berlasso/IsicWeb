@@ -1,0 +1,168 @@
+﻿<error errorId="6e60667e-33fb-4512-a675-726a0b21bc8f" application="/LM/W3SVC/28/ROOT" host="GERMAN-PC" type="System.NullReferenceException" message="Object reference not set to an instance of an object." source="ISICWeb" detail="System.NullReferenceException: Object reference not set to an instance of an object.&#xD;&#xA;   at ISICWeb.Controllers.AccountController.&lt;&gt;c__DisplayClass14.&lt;LlenarViewModelDesdeBase&gt;b__f(String x) in c:\Proyectos\IsicWeb2\ISICWeb\Controllers\AccountController.cs:line 234&#xD;&#xA;   at WebGrease.Css.Extensions.ListExtensions.ForEach[T](IEnumerable`1 list, Action`1 action)&#xD;&#xA;   at ISICWeb.Controllers.AccountController.&lt;LlenarViewModelDesdeBase&gt;d__18.MoveNext() in c:\Proyectos\IsicWeb2\ISICWeb\Controllers\AccountController.cs:line 234&#xD;&#xA;--- End of stack trace from previous location where exception was thrown ---&#xD;&#xA;   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)&#xD;&#xA;   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)&#xD;&#xA;   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()&#xD;&#xA;   at ISICWeb.Controllers.AccountController.&lt;AltaModificacionUsuario&gt;d__8d.MoveNext() in c:\Proyectos\IsicWeb2\ISICWeb\Controllers\AccountController.cs:line 959&#xD;&#xA;--- End of stack trace from previous location where exception was thrown ---&#xD;&#xA;   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)&#xD;&#xA;   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)&#xD;&#xA;   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()&#xD;&#xA;   at System.Threading.Tasks.TaskHelpersExtensions.ThrowIfFaulted(Task task)&#xD;&#xA;   at System.Web.Mvc.Async.TaskAsyncActionDescriptor.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass37.&lt;BeginInvokeAsynchronousActionMethod&gt;b__36(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3f()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;&gt;c__DisplayClass48.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__41()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass33.&lt;BeginInvokeActionMethodWithFilters&gt;b__32(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;&gt;c__DisplayClass2b.&lt;BeginInvokeAction&gt;b__1c()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecute&gt;b__15(IAsyncResult asyncResult, Controller controller)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.OnAsyncHandlerCompletion(IAsyncResult ar)" user="prueba" time="2015-07-04T03:21:52.4513429Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, sdch&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.8&#xD;&#xA;HTTP_COOKIE:__RequestVerificationToken=96Nr-f-XBiNBEy6L95Wj-a2lB1LxX17LKN9bZfYObLIoF3BhRPmM6hqL7RPGWPykqXefidQAfF59rnnUxwLR18Aa5INY5E5GzeoE8VLdRYo1; ASP.NET_SessionId=ytptqqajrjnfnlpcq4jwxuyt; .AspNet.ApplicationCookie=g0yVvGz007dG-TApmKvWQ-v3Io-UoZSp7taukEGIsohFx-3En-YlxF0Bt3U66XsFQO952vHzPf21xZWGs1-t8H2R8x-8VyCA542KjSPt6VUf99SSkMmEcG1Vli-QO2G7WXrWc5BpqIda2y70GQfAr7H3dZ4FiA0pw8ZLu5AOtVBQbxlWFk8PN9YRRmqOlc5gAjZ-RG6F16pMGW5D6RR3SZtkUvBlwPR6XiUK8M6e-0Lc34VrPsFGUKXJf4uNJUuIn4uI9N7vqOo1_ZGZNvMLD7pgBsn8VFRbjaLv_qblOFi6V-s_41XcZgwPZ1nztF1rH3s0N216rvAPL0prUsvlZa40x1x41eCRYmKg8KLAU7mf-_YHlYtVFCU8X4p4QHrcmUixIfZVsj9OsuPB9rwSVYHXSmn2GOPU8ZgrNCRmFGWrWYh-XX7ia1eegW2nn-EPeTpQDb-O-fJ-Cs2xHvWmmSxSj83xLKzYM-PWtxK4m2vDpL34MwOmhNxscbp-tQp8YnHpWmyx-_dIsZiI5ZrOG5dZQf6Wgvfx7F9WS67VGrBxYBV7omxmXBd46XS65nUK&#xD;&#xA;HTTP_HOST:localhost:22443&#xD;&#xA;HTTP_REFERER:http://localhost:22443/Account&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&#xD;&#xA;Accept-Encoding: gzip, deflate, sdch&#xD;&#xA;Accept-Language: en-US,en;q=0.8&#xD;&#xA;Cookie: __RequestVerificationToken=96Nr-f-XBiNBEy6L95Wj-a2lB1LxX17LKN9bZfYObLIoF3BhRPmM6hqL7RPGWPykqXefidQAfF59rnnUxwLR18Aa5INY5E5GzeoE8VLdRYo1; ASP.NET_SessionId=ytptqqajrjnfnlpcq4jwxuyt; .AspNet.ApplicationCookie=g0yVvGz007dG-TApmKvWQ-v3Io-UoZSp7taukEGIsohFx-3En-YlxF0Bt3U66XsFQO952vHzPf21xZWGs1-t8H2R8x-8VyCA542KjSPt6VUf99SSkMmEcG1Vli-QO2G7WXrWc5BpqIda2y70GQfAr7H3dZ4FiA0pw8ZLu5AOtVBQbxlWFk8PN9YRRmqOlc5gAjZ-RG6F16pMGW5D6RR3SZtkUvBlwPR6XiUK8M6e-0Lc34VrPsFGUKXJf4uNJUuIn4uI9N7vqOo1_ZGZNvMLD7pgBsn8VFRbjaLv_qblOFi6V-s_41XcZgwPZ1nztF1rH3s0N216rvAPL0prUsvlZa40x1x41eCRYmKg8KLAU7mf-_YHlYtVFCU8X4p4QHrcmUixIfZVsj9OsuPB9rwSVYHXSmn2GOPU8ZgrNCRmFGWrWYh-XX7ia1eegW2nn-EPeTpQDb-O-fJ-Cs2xHvWmmSxSj83xLKzYM-PWtxK4m2vDpL34MwOmhNxscbp-tQp8YnHpWmyx-_dIsZiI5ZrOG5dZQf6Wgvfx7F9WS67VGrBxYBV7omxmXBd46XS65nUK&#xD;&#xA;Host: localhost:22443&#xD;&#xA;Referer: http://localhost:22443/Account&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/28/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Proyectos\IsicWeb2\ISICWeb\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="ApplicationCookie" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="prueba" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="prueba" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="28" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/28" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/Account/AltaModificacionUsuario/a85b0cb7-d8dd-43cf-be15-b7f08f1df92a" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Proyectos\IsicWeb2\ISICWeb\Account\AltaModificacionUsuario\a85b0cb7-d8dd-43cf-be15-b7f08f1df92a" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="63655" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/Account/AltaModificacionUsuario/a85b0cb7-d8dd-43cf-be15-b7f08f1df92a" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="22443" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/Account/AltaModificacionUsuario/a85b0cb7-d8dd-43cf-be15-b7f08f1df92a" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, sdch" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.8" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="__RequestVerificationToken=96Nr-f-XBiNBEy6L95Wj-a2lB1LxX17LKN9bZfYObLIoF3BhRPmM6hqL7RPGWPykqXefidQAfF59rnnUxwLR18Aa5INY5E5GzeoE8VLdRYo1; ASP.NET_SessionId=ytptqqajrjnfnlpcq4jwxuyt; .AspNet.ApplicationCookie=g0yVvGz007dG-TApmKvWQ-v3Io-UoZSp7taukEGIsohFx-3En-YlxF0Bt3U66XsFQO952vHzPf21xZWGs1-t8H2R8x-8VyCA542KjSPt6VUf99SSkMmEcG1Vli-QO2G7WXrWc5BpqIda2y70GQfAr7H3dZ4FiA0pw8ZLu5AOtVBQbxlWFk8PN9YRRmqOlc5gAjZ-RG6F16pMGW5D6RR3SZtkUvBlwPR6XiUK8M6e-0Lc34VrPsFGUKXJf4uNJUuIn4uI9N7vqOo1_ZGZNvMLD7pgBsn8VFRbjaLv_qblOFi6V-s_41XcZgwPZ1nztF1rH3s0N216rvAPL0prUsvlZa40x1x41eCRYmKg8KLAU7mf-_YHlYtVFCU8X4p4QHrcmUixIfZVsj9OsuPB9rwSVYHXSmn2GOPU8ZgrNCRmFGWrWYh-XX7ia1eegW2nn-EPeTpQDb-O-fJ-Cs2xHvWmmSxSj83xLKzYM-PWtxK4m2vDpL34MwOmhNxscbp-tQp8YnHpWmyx-_dIsZiI5ZrOG5dZQf6Wgvfx7F9WS67VGrBxYBV7omxmXBd46XS65nUK" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:22443" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:22443/Account" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="__RequestVerificationToken">
+      <value string="96Nr-f-XBiNBEy6L95Wj-a2lB1LxX17LKN9bZfYObLIoF3BhRPmM6hqL7RPGWPykqXefidQAfF59rnnUxwLR18Aa5INY5E5GzeoE8VLdRYo1" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="ytptqqajrjnfnlpcq4jwxuyt" />
+    </item>
+    <item name=".AspNet.ApplicationCookie">
+      <value string="g0yVvGz007dG-TApmKvWQ-v3Io-UoZSp7taukEGIsohFx-3En-YlxF0Bt3U66XsFQO952vHzPf21xZWGs1-t8H2R8x-8VyCA542KjSPt6VUf99SSkMmEcG1Vli-QO2G7WXrWc5BpqIda2y70GQfAr7H3dZ4FiA0pw8ZLu5AOtVBQbxlWFk8PN9YRRmqOlc5gAjZ-RG6F16pMGW5D6RR3SZtkUvBlwPR6XiUK8M6e-0Lc34VrPsFGUKXJf4uNJUuIn4uI9N7vqOo1_ZGZNvMLD7pgBsn8VFRbjaLv_qblOFi6V-s_41XcZgwPZ1nztF1rH3s0N216rvAPL0prUsvlZa40x1x41eCRYmKg8KLAU7mf-_YHlYtVFCU8X4p4QHrcmUixIfZVsj9OsuPB9rwSVYHXSmn2GOPU8ZgrNCRmFGWrWYh-XX7ia1eegW2nn-EPeTpQDb-O-fJ-Cs2xHvWmmSxSj83xLKzYM-PWtxK4m2vDpL34MwOmhNxscbp-tQp8YnHpWmyx-_dIsZiI5ZrOG5dZQf6Wgvfx7F9WS67VGrBxYBV7omxmXBd46XS65nUK" />
+    </item>
+  </cookies>
+</error>

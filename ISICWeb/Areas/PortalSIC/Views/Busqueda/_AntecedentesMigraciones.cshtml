@@ -5,7 +5,7 @@
     <div class="panel panel-default ">
         <div class="panel-heading">
             <h4>
-                Listado de fichas de AFIS
+                Listado de fichas de Migraciones
             </h4>
         </div>
     </div>
@@ -13,51 +13,60 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
-                <table id="tablaAFIS" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
+                <table id="tablaMigraciones" class=" table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+
                             <th>
-                                NIF
+                                TIPO
                             </th>
                             <th>
-                                Apellido
+                                TITULAR
                             </th>
                             <th>
-                                Nombre
+                                TEMA
                             </th>
                             <th>
-                                Documento Nro.
+                                DOCUMENTO
                             </th>
+
                             <th>
-                                Clase
+                                EXPEDIENTE
                             </th>
+
+                            <th>
+                                CARATULA
+                            </th>
+
 
 
                         </tr>
 
                     </thead>
                     <tbody>
-                        @if (Model != null && Model.DatosAFIS != null)
+                        @if (Model != null && Model.DatosMigracioneses != null)
                         {
-                            foreach (var item in Model.DatosAFIS.Where(x => x.Baja != true))
+                            foreach (var item in Model.DatosMigracioneses.Where(x => x.Baja != true))
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.NIF)
+                                        @Html.DisplayFor(modelItem => item.TipoRestriccion)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Apellido)
+                                        @Html.DisplayFor(modelItem => item.Titular)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                        @Html.DisplayFor(modelItem => item.Tema)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.DNI)
+                                        @Html.DisplayFor(modelItem => item.DocumentoNumero)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Clase)
+                                        @Html.DisplayFor(modelItem => item.NroExpediente)
                                     </td>
-
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Caratula)
+                                    </td>
 
                                 </tr>
                             }

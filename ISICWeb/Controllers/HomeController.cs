@@ -15,7 +15,7 @@ using RestSharp;
 namespace ISICWeb.Controllers
 {
     [Audit]
-    [Authorize]
+    [Authorize(Roles = "Administrador,OTIP, Usuarios, AFIS, Antecedentes")]
     public class HomeController : Controller
     {
         private IRepository repository;

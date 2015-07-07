@@ -1,11 +1,12 @@
 ﻿@model ISIC.Entities.Prontuario
 
+
 <div class="tile tile  wow fadeInDown animated" style="margin-bottom: 80px;">
 
     <div class="panel panel-default ">
         <div class="panel-heading">
             <h4>
-                Listado de fichas de AFIS
+                Listado de fichas de GNA
             </h4>
         </div>
     </div>
@@ -13,12 +14,9 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
-                <table id="tablaAFIS" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
+                <table class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th>
-                                NIF
-                            </th>
                             <th>
                                 Apellido
                             </th>
@@ -29,22 +27,17 @@
                                 Documento Nro.
                             </th>
                             <th>
-                                Clase
+                                Caratula
                             </th>
 
-
                         </tr>
-
                     </thead>
                     <tbody>
-                        @if (Model != null && Model.DatosAFIS != null)
+                        @if (Model != null && Model.DatosGNA != null)
                         {
-                            foreach (var item in Model.DatosAFIS.Where(x => x.Baja != true))
+                            foreach (var item in Model.DatosGNA.Where(x => x.Baja != true))
                             {
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.NIF)
-                                    </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Apellido)
                                     </td>
@@ -52,12 +45,11 @@
                                         @Html.DisplayFor(modelItem => item.Nombre)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.DNI)
+                                        @Html.DisplayFor(modelItem => item.DocumentoNumero)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Clase)
+                                        @Html.DisplayFor(modelItem => item.Caratula)
                                     </td>
-
 
                                 </tr>
                             }

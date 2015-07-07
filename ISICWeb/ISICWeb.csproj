@@ -1376,6 +1376,9 @@
     <Content Include="Areas\Antecedentes\Views\Antecedentes\Index.cshtml" />
     <Content Include="Areas\Antecedentes\Views\Antecedentes\ResultadoBusqueda.cshtml" />
     <Content Include="Areas\PortalSIC\Views\Busqueda\_Afis.cshtml" />
+    <Content Include="Areas\PortalSIC\Views\Busqueda\_AntecedentesGna.cshtml" />
+    <Content Include="Areas\PortalSIC\Views\Busqueda\_AntecedentesMigraciones.cshtml" />
+    <Content Include="Areas\PortalSIC\Views\Busqueda\_AntecedentesIdgx.cshtml" />
     <None Include="NLog.xsd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

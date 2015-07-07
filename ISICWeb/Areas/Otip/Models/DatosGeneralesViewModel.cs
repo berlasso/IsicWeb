@@ -262,7 +262,7 @@ namespace ISICWeb.Areas.Otip.Models
         [Display(Name = "Provincia")]
         public string ProvinciaDelito { get; set; }
 
-
+        public virtual Prontuario Prontuario { get; set; }
 
         //DATOS SOMATICOS
 
