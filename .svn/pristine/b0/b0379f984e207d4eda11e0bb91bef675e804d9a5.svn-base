@@ -1,0 +1,699 @@
+﻿@model ISICWeb.Models.UsuarioViewModel
+@{
+    string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index", "Home");
+}
+@{
+    bool modificando = !string.IsNullOrEmpty(Model.id);
+    string display = Model.UsuarioMPBA ? "block" : "none";
+    string depto = Model.Departamento != null ? Model.Departamento.Id.ToString() : "0";
+}
+
+@section Head
+{
+    <style>
+        .ui-autocomplete-loading {
+            background: url('../Content/Images/ajax-loader.gif') no-repeat right center !important;
+        }
+
+        .mayusculas {
+            text-transform: capitalize;
+        }
+    </style>
+}
+@using (Ajax.BeginForm("GuardarDatosUsuario", "Usuarios",
+  new AjaxOptions
+                {
+                    UpdateTargetId = "divValidation",
+                    HttpMethod = "Post",
+                    OnBegin = "onGuardarBegin",
+                    OnComplete = "onGuardarComplete",
+                    OnSuccess = "onGuardarSuccess"
+                },
+                new { id = "frmGuardarDatosUsuario" }))
+{    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Validando)
+    @Html.HiddenFor(model => model.UsuarioSicViejo)
+    @Html.HiddenFor(model => model.id)
+    @*@Html.Hidden("UsuarioMPBA",Model.UsuarioMPBA.ToString())*@
+    <div class=" center wow fadeInDown animated tile-light">
+        <h3>
+            Carga datos del Usuario
+        </h3>
+    </div>
+
+
+    <div class="panel panel-default tile wow fadeInDown animated" style="margin-bottom: 80px;">
+        <div class="panel-heading">
+            @if (modificando)
+            {
+                <h2>
+                    <b style="color: red">Modificación</b> del Usuario
+
+                </h2>
+                {
+                    string displayCartelToken = @Model.EmailConfirmed.HasValue && @Model.EmailConfirmed == false ? "" : "hidden";
+
+
+                    <small>
+                        @Html.Label("Token Enviado sin confirmar", new { @id = "cartelTokenEnviado", style = "color:yellowgreen", @class = @displayCartelToken })
+
+                    </small>
+                }
+
+
+                <a href="#" id="EnviarToken" class="btn btn-alt btn-sm" title="Reenvia el token al mail indicado, desactivando la cuenta hasta que sea confirmada por el usuario. Usuario MPBA: email confirmacion. Usuario NO MPBA: email con cambio de clave.">Reenviar Token a @Model.Email</a>
+            }
+            else
+            {
+                if (Model.Validando)
+                {
+                    <h2>VALIDACION: PASO FINAL</h2>
+                }
+                <h4>Cargando Nuevo Usuario</h4>
+
+
+            }
+            <h5></h5>
+
+        </div>
+
+
+
+        <div class="panel-body">
+
+            <div class="row wow fadeInDown animated">
+                <div class="col-md-4">
+                    @if (!Model.Validando)
+                    {
+
+
+
+                        if (modificando)
+                        {
+                            if (Model.UsuarioMPBA == true)
+                            {
+                                @Html.Label("Es Usuario de MPBA", new { style = "font-size: large; font-style: italic" });
+                            }
+                            else
+                            {
+                                @Html.Label("No Es Usuario de MPBA", new { style = "font-size: large; font-style: italic" });
+                            }
+                            @*@Html.CheckBoxFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic;margin-left: 20px;", id = "UsuarioMPBA" })*@
+                            @Html.HiddenFor(model => model.UsuarioMPBA);
+                       
+
+
+                        }
+                        else
+                        {
+
+                            @Html.Label(" Es Usuario de MPBA?", new { style = "font-size: large; font-style: italic" });
+                        @Html.CheckBoxFor(model => model.UsuarioMPBA, new { style = "font-size: large; font-style: italic;margin-left: 20px;", id = "UsuarioMPBA" });
+                        }
+
+
+
+                    }
+                    else
+                    {
+
+                        @Html.HiddenFor(model => model.UsuarioMPBA)
+                    }
+                </div>
+                <div class="col-md-4">
+
+
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+
+            <div class="row wow fadeInDown animated">
+
+
+
+
+
+                @{
+    string mostrar = (!modificando && Model.Validando != null && Model.Validando != true) ? "block" : "none";
+    <div class="col-md-4" id="Buscadores" style="display: @mostrar">
+        <div class="form-group">
+            <div class='input-group ' style="width: 100%">
+                @Html.TextBox("NombreBuscar", "", new { @class = "form-control input-focused", placeholder = "Buscar usuarios por Alias" })
+                <span class="input-group-addon btn btn-alt" id="btnBuscarUsuarioMPBA" title="Consultar usuario en MPBA">
+                    <span class="flaticon-zoom22"></span>
+                </span>
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class='input-group ' style="width: 100%">
+                @Html.TextBox("ApellidoBuscar", "", new { @class = "form-control input-focused", placeholder = "Buscar usuarios por Apellido " })
+                @*<span class="input-group-addon btn btn-alt" id="btnBuscarUsuariosApellido" title="Consultar usuario en MPBA por apellido">
+                        <span class="flaticon-zoom22"></span>
+                    </span>*@
+            </div>
+
+        </div>
+    </div>
+                }
+
+
+                <div class="alert alert-info" id="divUsuarioMPBAEncontrado" style="display: none" role="alert"></div>
+
+
+
+
+
+            </div>
+
+        <div class="row tile">
+            <br/>
+        </div>
+            @if (!Model.Validando)
+            {
+
+
+
+                if (modificando)
+                {
+                    <div class="row wow fadeInDown animated">
+                        @Html.LabelFor(model=>model.activo, new { style = "font-size: large; font-style: italic; color: yellow;" })
+                        @Html.CheckBoxFor(model => model.activo, new { style = "font-size: large; font-style: italic;margin-left: 20px;" })
+                    </div>
+                }
+            }
+
+
+            <div class="row wow fadeInDown animated">
+
+
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control mayusculas" } })
+                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4">
+                    @Html.Label("Nombres", htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control mayusculas" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+                <div class="clearfix"></div>
+
+                @{
+    var usuarioMPBA = Model.UsuarioMPBA == true ? "none" : "block";
+                }
+
+                <div id="colDependencia" class="col-md-4 " style="display: @usuarioMPBA">
+                    @Html.Label("Dependencia y Cargo", htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.Dependencia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Dependencia, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div id="colDepartamento" class="col-md-4">
+                    @Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label required" })
+                    @*@if (Model.UsuarioMPBA)
+                        {*@
+                    @Html.DropDownListFor(x => x.Departamento.Id, Model.DepartamentoList as SelectList, "--Seleccionar--", new { @class = "form-control" })
+                    @*}*@
+
+
+
+                </div>
+                <div id="colPuntoGestion" class="col-md-4" style="display: @display ">
+                    @Html.HiddenFor(model => model.PuntoGestion.Id)
+
+                    @Html.Label("Punto Gestión", new { Id = "lblPuntoGestion", @class = "required" })
+
+                    @Html.EditorFor(model => model.PuntoGestion.Descripcion, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Seleccione Depto. para filtrar" } })
+                    @Html.ValidationMessageFor(model => model.PuntoGestion.Descripcion, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label required" })
+                    @if (Model.UsuarioMPBA)
+                    {
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    }
+                    else
+                    {
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    }
+
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                </div>
+
+
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.DocumentoNumero, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.DocumentoNumero, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DocumentoNumero, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label required" })
+                    @Html.DropDownListFor(x => x.Sexo.Id, Model.SexoList as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Sexo, "", new { @class = "text-danger" })
+
+                </div>
+
+                @if (!Model.Validando)
+                {
+                    <div class="col-md-4 ">
+                        @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label" })
+                        @*@Html.DropDownListFor(x => x.Role.Id, Model.RoleList as SelectList, new { @class = "form-control" })*@
+                        @Html.ListBoxFor(x => x.Roles, Model.RoleList as SelectList, new { @class = "form-control" })
+                    </div>
+                }
+
+
+
+                @if (!Model.Validando)
+                {
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.SubCodBarra, htmlAttributes: new { @class = "control-label " })
+                        @Html.EditorFor(model => model.SubCodBarra, new { htmlAttributes = new { @class = "form-control", Title = "Para carga de OTIPs: por ej.: en 011701000001A seria 1701" } })
+                        @Html.ValidationMessageFor(model => model.SubCodBarra, "", new { @class = "text-danger" })
+                    </div>
+                }
+
+                @{ string mostrarJerarquia = Model.UsuarioMPBA == true ? "block" : "none"; }
+                <div class="col-md-4 " id="colJerarquia" style="display: @mostrarJerarquia">
+                    @Html.LabelFor(model => model.Jerarquia, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(x => x.Jerarquia.Id, Model.JerarquiaList as SelectList, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+
+
+            <div class="row wow fadeInDown animated">
+                <div class="col-md-12" id="divValidation">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+        <div class="row">
+            <div class="  col-sm-3 col-xs-3">
+                @if (!Model.Validando)
+                {
+
+                    @Html.ActionLink("Volver", "Index", new { depto = @depto }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+
+
+                }
+
+
+
+
+            </div>
+            <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-8">
+                <div class="row ">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <input type="submit" value="Guardar" class="btn btn-alt btn-lg" />
+                        @*@if (!Model.Validando)
+                            {
+                                @Html.Label("Enviar Email de confirmación")
+                                @Html.CheckBox("EnviarMail", true)
+                            }*@
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </nav>
+}
+
+@section scripts
+{
+    <script>
+        function LlenarControlesSimp(control) {
+            $("#Apellido").val(control.dataset.apellido);
+            $("#Nombre").val(control.dataset.nombre);
+
+        }
+
+        $(document).ready(function() {
+            if ('@Model.UsuarioMPBA' == 'True') {
+                DeshabilitarControles();
+
+
+                //    $("#Departamento_Id").val("");//fuera mpba
+                //} else {
+                //    $("#Departamento_Id").val(22);//fuera mpba
+            } else {
+                $("#colDepartamento").hide();
+            }
+
+            if ($("#Departamento_Id").val() === "") {
+                $("#Departamento_Id").css({ "color": "red" }, { "font-weight": "bold" });
+            };
+        });
+        $("#Departamento_Id").change(function() {
+            $("#PuntoGestion_Id").val("");
+            $("#PuntoGestion_Descripcion").val("");
+            $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
+        });
+        $('#PuntoGestion_Descripcion').bind('autocompleteselect', function(event, ui) {
+            $("#PuntoGestion_Id").val(ui.item.id);
+            $("#Departamento_Id").val(ui.item.deptoId);
+            $("#lblPuntoGestion").html("Punto Gestión: " + $("#Departamento_Id option:selected").text());
+        });
+
+
+        $("#PuntoGestion_Descripcion").on("autocompletechange", function(event, ui) {
+            if (this.value.trim() === '') {
+                $("#PuntoGestion_Id").val("");
+            }
+            if ($("#PuntoGestion_Id").val().trim() === "") {
+                this.value = "";
+            };
+
+        });
+
+        //$("#Departamento_Id").change(function() {
+        //    $("lblPuntoGestion").html("Punto Gestion - Depto: " + $(this).val());
+        //});
+
+        $("#PuntoGestion_Descripcion").autocomplete({
+            minLength: 3,
+            source: function(request, response) {
+                $.ajax({
+                    url: '@Url.Action("BuscarPuntoGestion")',
+                    type: "GET",
+                    dataType: "json",
+                    autoFocus: true,
+
+
+                    data: { term: request.term, depto: $("#Departamento_Id").val() },
+
+                    success: function(data) {
+                        $("#PuntoGestion_Id").val("");
+                        response($.map(data, function(item) {
+
+                            return { label: item.label, value: item.label, id: item.id, deptoId: item.deptoId };
+                        }));
+                    }
+                });
+            },
+        });
+
+        $("#ApellidoBuscar").autocomplete({
+            minLength: 4,
+            select: function(event, ui) {
+                $("#Apellido").val(ui.item.apellido);
+                $("#Nombre").val(ui.item.nombre);
+                $("#UserName").val(ui.item.usuario);
+                $("#Email").val(ui.item.usuario + "@@mpba.gov.ar");
+            },
+            source: function(request, response) {
+                $.ajax({
+                    url: '@Url.Action("BuscarUsuariosMPBAPorApellido")',
+                    type: "GET",
+                    dataType: "json",
+                    autoFocus: true,
+
+
+                    data: { apellido: $("#ApellidoBuscar").val() },
+
+                    success: function(data) {
+
+                        response($.map(data, function(item) {
+                            $("#ApellidoBuscar").data('apellido', item.apellido);
+                            $("#ApellidoBuscar").data('nombre', item.nombre);
+                            $("#ApellidoBuscar").data('usuario', item.usuario);
+                            return { label: item.apellido + ', ' + item.nombre, apellido: item.apellido, nombre: item.nombre, usuario: item.usuario };
+                        }));
+                    }
+                });
+            },
+        });
+
+
+        var urlBuscarUsuario = '@Url.Action("BuscarUsuarioMPBA")?u=';
+
+        //GUARDAR DATOS Usuario
+        function onGuardarBegin() {
+            loader("Guardando, espere un momento...");
+        }
+
+        function onGuardarComplete() {
+            $.unblockUI();
+        }
+
+        function onGuardarSuccess(data) {
+            if (data == "") {
+                var url = '@Url.Action("Index", "Account")?depto=' + @depto;
+                var msg = "<i class='Exito'>Carga Exitosa</i>";
+                var email=@Html.Raw(Json.Encode(Model.Email));
+                var id = $("#id").val();
+                var esNuevo = (id=== "" || id===undefined);
+                var cambioMail = (email != $("#Email").val());
+                if (esNuevo===true || cambioMail===true) {
+                    msg = msg + "<br/>A la brevedad recibirá un email en la direccion indicada, en el cual se le pedira que confirme la registración. A partir de ese momento podrá utilizar la página del SIC.";
+                }
+                var validando = $("#Validando").val();
+                if (validando == "True") {
+
+                    url = '@Url.Action("Login", "Account", routeValues: null)/loginLink';
+
+                } else {
+                    if (esNuevo===true || cambioMail===true) {
+                        msg = msg + "<br/>Nota: confirmacion de email desactivada hasta que usuario confirme el mail de validacion.";
+                    }
+                }
+                //alertify.success("Carga Exitosa");
+                alertify.alert("Exito", msg).set({
+                    onclose: function() {
+                        showPageLoadingSpinner();
+                        location.href = url;
+
+                    }
+                });
+
+
+
+            } else {
+                alertify.error("Error: " + data);
+
+                $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+            }
+        }
+
+        $("#Departamento_Id").change(function() {
+            if ($(this).val() === "") {
+                $(this).css({ "color": "red" }, { "font-weight": "bold" });
+            } else {
+                $(this).css("color", "white");
+            }
+        });
+
+        $(document).ready(function() {
+
+            $('[title]').tooltip();
+            $("#navFooter").hide();
+            $("#SubCodBarra").mask("9999");
+            $("#EnviarToken").click(function() {
+                $.ajax({
+                    url: '@Url.Action("ReenviarToken", "Account")?uid=@Model.id&e=@Model.Email',
+                    type: "GET",
+                    autoFocus: true,
+                    beforeSend: function() {
+                        loader("Reenviando token...");
+
+                        //$("#EnviarToken").addClass("disabled");
+                    },
+                    complete: function() {
+                        //$("#EnviarToken").removeClass("disabled");
+                        $.unblockUI();
+                    },
+                    success: function(data) {
+                        if (data == "") {
+                            alertify.success("Token enviado correctamente");
+                            $("#activo").attr("checked", false);
+                            $("#cartelTokenEnviado").removeClass("hidden");
+                        } else {
+                            alertify.error(data, 0);
+                        }
+                    }
+                });
+            });
+
+            function ArmarUsuario() {
+                var apellido = $("#Apellido").val().replace(/ |'/g, '');
+                var nombres = $("#Nombre").val();
+                var matches = nombres.match(/\b(\w)/g);
+                if (matches != null) {
+                    var acronym = matches.join('');
+
+                    $("#UserName").val(acronym.toLowerCase() + apellido.toLowerCase());
+                } else
+                    $("#UserName").val(apellido.toLowerCase());
+            }
+
+            $("#UserName").change(function() {
+                if ($("#UsuarioMPBA").val() == "True")
+                    $("#Email").val($(this).val() + '@@mpba.gov.ar');
+            });
+
+            $("#Apellido").keyup(function() {
+                var texto = $(this).val();
+                $(this).val(texto.replace("'", " "));
+                ArmarUsuario();
+            });
+
+            $("#Nombre").keyup(function() {
+                ArmarUsuario();
+            });
+
+
+            $("#UsuarioMPBA").change(function() {
+
+                $("#colDependencia").toggle("slide", "up");
+                $("#colPuntoGestion").toggle("slide", "up");
+                $("#colDepartamento").toggle("slide", "up");
+                $("#ApellidoBuscar").toggle("slide", "up");
+                $("#NombreBuscar").toggle("slide", "up");
+                $("#colJerarquia").toggle("slide", "up");
+                $("#btnBuscarUsuariosApellido").toggle("slide", "up");
+                if (this.checked) {
+                    //$("#Departamento_Id").removeAttr("disabled");
+                    $("#Buscadores").show();
+                    $("#Email").prop("readonly", "readonly");
+                    $("#colDependencia").hide().effect("fold", "up");
+                    $("#Email").val($("#UserName").val() + "@@mpba.gov.ar");
+                    $("#Nombre").val("");
+                    $("#Apellido").val("");
+                    $("#UserName").val("");
+                    DeshabilitarControles();
+
+
+                } else {
+                    //$("#Departamento_Id").attr("disabled", "disabled");
+                    $("#Departamento_Id").val("22").css({ "color": "white" }, { "font-weight": "bold" });; //fuera mpba
+                    $("#Buscadores").hide();
+                    $("#Email").prop("readonly", "");
+                    $("#colDependencia").show().effect("slide", "up");
+                    HabilitarControles();
+
+                }
+            });
+        });
+
+        function DeshabilitarControles() {
+            $("#Apellido").attr("readonly", "readonly");
+            $("#UserName").attr("readonly", "readonly");
+            $("#Nombre").attr("readonly", "readonly");
+
+            ////$("#PuntoGestion_Descripcion").attr("readonly", "readonly");
+            $("#Email").attr("readonly", "readonly");
+            // $("#DocumentoNumero").attr("readonly", "readonly");
+            //$("#Sexo_Id").attr("readonly", "readonly");
+            //$("#GrupoUsuario_id").attr("readonly", "readonly");
+            //$("#SubCodBarra").attr("readonly", "readonly");
+            //$("#Jerarquia_Id").attr("readonly", "readonly");
+            $("#btnBuscarUsuarioMPBA").show();
+
+        }
+
+        function HabilitarControles() {
+            $("#Apellido").removeAttr("readonly");
+            //$("#UserName").removeAttr("readonly");
+            $("#Nombre").removeAttr("readonly");
+
+            //$("#PuntoGestion_Descripcion").removeAttr("readonly");
+            $("#Email").removeAttr("readonly");
+            // $("#DocumentoNumero").removeAttr("readonly");
+            //$("#Sexo_Id").removeAttr("readonly");
+            //$("#GrupoUsuario_id").removeAttr("readonly");
+            //$("#SubCodBarra").removeAttr("readonly");
+            //$("#Jerarquia_Id").removeAttr("readonly");
+            $("#btnBuscarUsuarioMPBA").hide();
+        }
+
+
+        $(function() {
+
+
+            $('#NombreBuscar').keydown(function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    $("#btnBuscarUsuarioMPBA").click();
+                }
+            });
+            $('#ApellidoBuscar').keydown(function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    $("#btnBuscarUsuariosApellido").click();
+                }
+            });
+
+            $("#btnBuscarUsuarioMPBA").click(function() {
+                if ($("#NombreBuscar").valid() == true) {
+                    var nombreusuario = $("#NombreBuscar").val();
+                    var url = urlBuscarUsuario + nombreusuario + '&r=' + new Date().getTime();
+                    $("#divUsuarioMPBAEncontrado").empty();
+                    $("#divUsuarioMPBAEncontrado").hide();
+                    $.ajax({
+                        url: url,
+                        success: function(data) {
+                            var json = data;
+                            if (data.HuboError == true) {
+                                alertify.alert("Error", data.ErrorMessage);
+                            } else {
+                                //if (data.DatosSimp.length == 0 || data.DatosSimp[0].Imputados.length == 0) {
+                                //    alertify.alert("No hubo resultados");
+                                //    return;
+                                //}
+                                var apellido = data.Apellido;
+                                var nombre = data.Nombre;
+                                var usuario = $("#NombreBuscar").val();
+                                $("#Apellido").val(apellido);
+                                $("#UserName").val(usuario);
+                                $("#Nombre").val(nombre);
+                                $("#Email").val(usuario + "@@mpba.gov.ar");
+                                //$("#divUsuarioMPBAEncontrado").append("Usuario MPBA:");
+
+                                //$("#divUsuarioMPBAEncontrado").append('<ul><a id="usuarioMPBA" href="#" onclick="LlenarControlesSimp(usuarioMPBA)" data-apellido="' + data.Apellido + '" data-nombre="' + data.Nombre + '">' + data.Apellido + ', ' + data.Nombre + '</a></ul>').show();
+                            }
+
+                        },
+                        beforeSend: function() {
+                            //loader("Buscando datos de la IPP...");
+                            $("#NombreBuscar").addClass("loadinggif");
+                        },
+                        complete: function() {
+                            //$.unblockUI();
+                            $("#NombreBuscar").removeClass("loadinggif");
+                        },
+                        dataType: "json"
+                    });
+
+                } else {
+                    $("#NombreBuscar").data("validator");
+                }
+            });
+        });
+
+    </script>
+}

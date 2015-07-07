@@ -1,0 +1,224 @@
+﻿ @model IEnumerable<MPBA.SIAC.Web.Models.PBFotosDatosPersonales>
+ @{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
+
+@{
+    ViewBag.Title = "FotosPersonasCarousel";
+}
+
+
+<style type="text/css">
+ 
+#wrapper {
+	background-color: #fff;
+border: 1px solid #ccc;
+position: relative;
+width: 90%;
+
+height: 91%;
+padding: 25px;
+margin: auto;
+margin-top:-130px;
+	
+}
+
+
+.caroufredsel_wrapper {
+	border-radius: 90px;
+}
+#carousel img {
+	width: 700px;
+	height: 500px;
+	margin: 0 5px;
+	display: block;
+	float: left;
+}
+
+.hidden
+{
+    display:inline-block !important;}
+
+#prev, #next {
+	background: url(../App_Images/carouselcontrol.png ) no-repeat 0 0;
+	text-indent: -999px;
+	display: inline-block;
+	overflow: hidden;
+	width: 15px;
+	height: 21px;
+	position:absolute;
+	top: 7px;
+}
+#prev {
+	background-position: 0 0;
+	right: 93%;
+}
+#prev:hover {
+		right: 92%;
+}			
+#next {
+	background-position: -18px 0;
+	left:100%;
+}
+#next:hover {
+	right: 102%;
+}				
+#pager {
+text-align: center;
+margin: 0 auto;
+padding-top: 20px;
+padding-left: 0;
+margin-left: -7%;
+width: 99%;
+position:relative;
+
+}
+	
+.pagerIE
+{   position:relative !important; 
+   text-indent: -999px;
+	display: inline-block !important;
+	padding: 0px;
+	margin:0px;
+	left:112%;
+	top: 7px; 
+    z-index:0;  }
+    
+ .prevIE
+ {left:30%;}   
+     
+ .previETP
+   {left:-36% !important;
+     }
+  .nextIETP
+   {left:96% !important;
+     }
+     
+ .pagerEs
+   {left:-43% !important;
+     }
+     
+     
+#pager a {
+	background: url(../App_Images/carouselcontrol.png) no-repeat -2px -32px;
+	text-decoration: none;
+	text-indent: -999px;
+	display: inline-block;
+	overflow: hidden;
+	width: 8px;
+	height: 8px;
+	margin: 0 5px 0 0;
+}
+#pager a.selected {
+	background: url(../App_Images/carouselcontrol.png) no-repeat -12px -32px;
+	text-decoration: underline;				
+}
+
+
+ 
+ </style>
+ 
+
+<script type="text/javascript">
+    function mensaje() {
+
+        $('#para1').remove();
+        $('#detalle').append('<p id="para1" style="font-family: Arial;font-size: 1.1em;color: #268bd2;text-align:center" > Click con el mouse en la Foto, desplegará el Apellido y Nro de Causa </p>');
+        $('#detalle').fadeIn();
+
+    };
+    $(function () {
+        /*  eL parrafo para1 y detalle tienen que existir en el padre */
+        $('#espera').hide();
+        if (navigator.appName == 'Microsoft Internet Explorer') {
+            //if (window.location.protocol != "https:") {
+
+                         
+                $('#prev').addClass("prevIETP");
+                $('#next').addClass("nextIETP");
+             
+              
+           // }
+        
+             //    else {
+           //     $('#prev').addClass("prevIE");
+           //     $('#pager').addClass("pagerIE");
+          //           }
+        }
+
+        $('#prev').removeClass("hidden");
+        $('#carousel img').click(function (e) {
+            var titulo = $(this).attr('title');
+            $('#para1').remove();
+            $('#detalle').append('<p id="para1" style="font-family: Arial;font-size: 1.3em;font-weight: bold;color: #268bd2;" > ' + "  " + titulo + ' </p>');
+            $('#detalle').fadeIn();
+
+            /* alert("La Imagen correseponde a: => " + titulo);*/
+
+        });
+        $('#carousel').carouFredSel({
+            width: 800,
+            items: 3,
+            scroll: 1,
+            auto: {
+                duration: 1250,
+                timeoutDuration: 2500,
+                onBefore: mensaje()
+            },
+            prev: '#prev',
+            next: '#next',
+            pagination: '#pager'
+        });
+
+    });
+</script>
+
+
+  <div id="detalle" style="float:middle;">
+   </div>
+                     
+ @if (Model.Count<MPBA.SIAC.Web.Models.PBFotosDatosPersonales>() == 0)
+  {
+      <br />
+      <br />
+  <p style="text-align:center;font-family: Arial;background: rgba(197, 204, 211, 0.98); color: #1571d7;font-size:1.5em; font-weight: bold; position: relative;margin: 0px;padding: 0px;left: 97%" >
+             
+            
+           No hay Fotos ingresadas de las personas seleccionadas.
+             </p>
+ }
+  @if (Model.Count<MPBA.SIAC.Web.Models.PBFotosDatosPersonales>() > 0)
+  {                   
+<div id="wrapper">
+	<div id="carousel">
+ 
+   @foreach (var persel in Model)
+     {
+         for (var i = 0; i < persel.pbFotos.Count; i++)
+       
+             {
+                 
+             var apeynom  =  persel.Nombre == null && persel.Apellido != null ? persel.Apellido.Trim() : (persel.Nombre == null && persel.Apellido == null ? " Desconocido ":  persel.Apellido.Trim() + ',' + persel.Nombre.Trim());
+             apeynom = apeynom + " Nro IPP: " + persel.Ipp;
+             var indiceFoto =  persel.pbFotos[i].id;
+            
+                    
+              
+        /*         <img id="foto" title ="@apeynom" class="centeredImage" src="@persel.fotosString[i]"  alt="Foto de @apeynom"  width:"700px"; height:"500px;"   />*/
+                   /*      <img id="foto" title ="@apeynom" class="centeredImage" src=  "/App_Images/medidores.png"  alt="Foto de @apeynom"  width:"700px"; height:"500px;"   />*/
+                   
+             <img class="centeredImage"  title ="@apeynom" id="foto" src='@Url.Action("GetImageById", "PBFotos", new { indice = indiceFoto })' alt="Foto"  width="500px" height="300px" />
+        
+         
+ 
+             }
+     }
+	</div>
+	<a id="prev" style="display:inline-block !important" href="#"></a>
+	<a id="next" style="display:inline-block !important" href="#"></a>  
+
+	<div id="pager" style="display:inline-block !important"> 
+   
+    </div>
+</div>
+
+  }

@@ -1,0 +1,120 @@
+﻿
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+
+    <head>
+        <meta charset="utf-8" /> 
+        <meta http-equiv="Cache-control" content="no-cache">
+        <meta http-equiv="Expires" content="-1">       
+        <!--<title style="color:#006699;background:">SIAC-Sistema de Investigación y Análisis Criminal </title>-->
+
+            
+        
+      
+        @Styles.Render("~/App_Themes/Theme1/styles.css")
+        @Styles.Render("~/App_Themes/CC/Menu.CC.css") 
+         @Styles.Render("~/Styles/jquery-ui-styles.css") 
+        @Styles.Render("~/Styles/dataTable-jui.css")
+      
+         @Styles.Render("~/Styles/TableTools.css") 
+ 
+           @Scripts.Render("~/Scripts/bundles/jquery-1.10.0.js") 
+          
+       @Scripts.Render("~/Scripts/bundles/jquery.unobtrusive-ajax.js") 
+        
+          
+          @Scripts.Render("~/Scripts/bundles/jquery-ui-1.10.0.js") 
+
+          @Scripts.Render("~/Scripts/bundles/grid.locale-es.js") 
+     
+        
+         
+           @Scripts.Render("~/Scripts/bundles/jquery.easing.1.3.js")
+           
+         @Scripts.Render("~/Scripts/bundles/jquery.carouFredSel.js")
+        @Scripts.Render("~/Scripts/bundles/jquery.validate.js") 
+        @Scripts.Render("~/Scripts/bundles/jquery.validate.unobtrusive.js") 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         @Scripts.Render("~/Scripts/bundles/DatePickerReady.js") 
+       
+         @Scripts.Render("~/Scripts/bundles/jquery.infinitecarousel3.js") 
+      
+         @Scripts.Render("~/Scripts/jqia2.support.js")
+      
+         @Scripts.Render("~/Scripts/bundles/dataTable-1.9.4.js")
+         @Scripts.Render("~/Scripts/bundles/TableTools-2.1.5.min.js") 
+          @Scripts.Render("~/Scripts/bundles/FixedHeader.min.js") 
+    
+         
+
+
+       
+                  
+       
+        @Scripts.Render("~/Scripts/Scripts.js") 
+    
+         
+        @RenderSection("scripts", required: false)
+
+   
+    
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper" >
+                
+                <div class="float-right">
+              
+                </div>
+            </div>
+        </header>
+      
+        <div id="body" >
+              
+            <section>
+                @RenderBody()
+            </section>
+        </div>
+       @*   <footer>
+          <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year -SIAC</p>
+                </div>
+            </div>
+        </footer>)*@
+
+       @* @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)*@
+    </body>
+</html>

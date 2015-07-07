@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="" title="" description="" >
+    <siteMapNode url="~/AutoresIgnorados/CargaVictimas.aspx" title="Carga Victimas"  description="Carga Victimas" />
+    <siteMapNode url="" title="Carga Victimas"  description="Carga Victimas" >
+      <siteMapNode url="~/AutoresIgnorados/CargaModusOperandi.aspx" title="Modus Operandi"  description="Carga Modus Operandi" />
+      <siteMapNode url="" title="Modus Operandi"  description="Carga Modus Operandi" >
+
+        <siteMapNode url="~/AutoresIgnorados/CargaAutores.aspx" title="Autores"  description="Carga Autores" />
+        <siteMapNode url="" title="Autores"  description="Carga Autores">
+          <siteMapNode url="~/AutoresIgnorados/CargaBienesSustraidos.aspx" title="Bienes Sustraidos"  description="Carga Bienes Sustraidos" />
+          <siteMapNode url="" title="Bienes Sustraidos"  description="Carga Bienes Sustraidos">
+            <siteMapNode url="~/AutoresIgnorados/CargaPrueba.aspx" title="Pruebas"  description="Carga Pruebas" />
+            <siteMapNode url="" title="Pruebas"  description="Carga Pruebas">
+            </siteMapNode>
+        </siteMapNode>
+            
+          </siteMapNode>
+
+          
+            
+            </siteMapNode>
+          </siteMapNode>
+        </siteMapNode>
+   
+      
+    
+    </siteMap>

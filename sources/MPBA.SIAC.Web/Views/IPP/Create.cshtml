@@ -1,0 +1,32 @@
+﻿@model SIACGral.Models.IPP
+
+@{
+    ViewBag.Title = "Alta de IPP";
+}
+
+<h2>Crear IPP</h2>
+@{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>IPP</legend>
+        @Html.Partial("IPPHeader") 
+        <div id="IPPDetalle"></div>
+        @*<div id="ippDetalle">
+            @Html.Partial("IPPDetail") 
+        </div>*@
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

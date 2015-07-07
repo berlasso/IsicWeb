@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "DATOS DE CONTACTO";
+}
+
+<div class="center wow fadeInDown animated tile-light">
+    <h1>@ViewBag.Title</h1>
+</div>
+<div class="row wow fadeInDown animated">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+
+
+        <div class="panel panel-default tile wow fadeInDown animated" style="margin: 60px 0 80px 0">
+            <div class="panel-heading">
+
+
+
+                <h4>Ante cualquier duda o inconveniente, contactarse con:</h4>
+
+            </div>
+            <div class="panel-body">
+
+                <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                    <p>
+                    <address>
+                        Sistema de Investigaciones Criminalísticas<br/>
+                        Calle 7 entre 56 y 57<br/>
+                        La Plata, 1900<br/>
+                        <abbr title="Phone">Teléfono:</abbr>
+                        (0221)412-1227
+                    </address>
+
+                    <address>
+                        <strong>Soporte:</strong> <a href="mailto:isic@mpba.gov.ar">isic@mpba.gov.ar</a><br/>
+                    </address>
+                        </p>
+                </div>
+                <div class="panel-footer">
+                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                        <div class="col-xs-12">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3"></div>
+
+    </div>
+</div>
+
+    @section footer
+{
+        @Html.ActionLink("Volver", "Index", "Home", new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+    }

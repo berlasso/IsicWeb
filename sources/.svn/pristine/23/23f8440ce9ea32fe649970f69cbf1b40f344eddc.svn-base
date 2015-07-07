@@ -1,0 +1,131 @@
+﻿@model MPBA.SIAC.Web.Models.Autores
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Autores</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idDelito, "Delito")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idDelito", String.Empty)
+            @Html.ValidationMessageFor(model => model.idDelito)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idCausa)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idCausa)
+            @Html.ValidationMessageFor(model => model.idCausa)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nro)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nro)
+            @Html.ValidationMessageFor(model => model.Nro)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idClaseEdadAproximada, "NNClaseEdadAproximada")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idClaseEdadAproximada", String.Empty)
+            @Html.ValidationMessageFor(model => model.idClaseEdadAproximada)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idClaseSexo, "NNClaseSexo")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idClaseSexo", String.Empty)
+            @Html.ValidationMessageFor(model => model.idClaseSexo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idClaseRostro, "NNClaseRostro")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idClaseRostro", String.Empty)
+            @Html.ValidationMessageFor(model => model.idClaseRostro)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CubiertoCon)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CubiertoCon)
+            @Html.ValidationMessageFor(model => model.CubiertoCon)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OtraCaracteristica)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OtraCaracteristica)
+            @Html.ValidationMessageFor(model => model.OtraCaracteristica)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Baja)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Baja)
+            @Html.ValidationMessageFor(model => model.Baja)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idUsuarioUltimaModificacion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idUsuarioUltimaModificacion)
+            @Html.ValidationMessageFor(model => model.idUsuarioUltimaModificacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaUltimaModificacion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FechaUltimaModificacion)
+            @Html.ValidationMessageFor(model => model.FechaUltimaModificacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idImputadoSimp)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idImputadoSimp)
+            @Html.ValidationMessageFor(model => model.idImputadoSimp)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idPersona)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idPersona)
+            @Html.ValidationMessageFor(model => model.idPersona)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

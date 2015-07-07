@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SIACGral.Models.SeniasParticulares>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idPersona)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idSeniaParticular)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idUbicacionSeniaParticular)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idTablaDestino)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idAutor)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idPersona)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.idSeniaParticular)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.idUbicacionSeniaParticular)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.idTablaDestino)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.idAutor)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

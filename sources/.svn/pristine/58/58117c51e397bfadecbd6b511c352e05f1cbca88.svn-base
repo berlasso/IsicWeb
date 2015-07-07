@@ -1,0 +1,161 @@
+﻿ @model IEnumerable<MPBA.SIAC.Web.Models.PBFotosDatosPersonales>
+ @{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
+
+@{
+    ViewBag.Title = "FotosPersonasCarousel";
+}
+<style type="text/css">
+
+ #wrapper {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	
+	width: 950px;
+	height: 600px;
+	padding: 10px;
+	margin: 1px 0px 5px -75px;
+	
+	left: 40%;
+	top: 90%;
+}
+.caroufredsel_wrapper {
+	border-radius: 90px;
+}
+#carousel img {
+	width: 700px;
+	height: 500px;
+	margin: 0 5px;
+	display: block;
+	float: left;
+}
+
+#prev, #next {
+/*	background: url(../App_Images/carouselcontrol.png ) no-repeat 0 0;
+	text-indent: -999px;*/
+	display: block;
+	overflow: hidden;
+	position:relative;
+	width: 32px;
+	height:32px;
+	top:3px;
+	
+}
+#prev {left
+		padding-left:30px;
+	
+
+}
+#prev:hover {
+	padding-left: 30px;
+}			
+#next {
+	
+    padding-right: 20px;
+	
+}
+#next:hover {
+	  padding-right: 20px;
+}				
+#pager {
+	text-align: center;
+	margin: 0 auto;
+	padding-top: 20px;
+	padding-left: 20px;
+	width: 850px;
+	
+}
+#pager a {
+	background: url(../App_Images/carouselcontrol.png) no-repeat -2px -32px;
+	text-decoration: none;
+	text-indent: -999px;
+	display: inline-block;
+	overflow: hidden;
+	width: 8px;
+	height: 8px;
+	margin: 0 5px 0 0;
+}
+#pager a.selected {
+	background: url(../App_Images/carouselcontrol.png) no-repeat -12px -32px;
+	text-decoration: underline;				
+}
+</style>
+<script type="text/javascript">
+    function mensaje() {
+
+        $('#para1').remove();
+        $('#detalle').append('<p id="para1" style="font-family: Arial;font-size: 1.1em;color: #268bd2;text-align:center" > Click con el mouse en la Foto, desplegará el Apellido y Nro de Causa </p> ');
+       
+        $('#detalle').fadeIn();
+
+    };
+    $(function () {
+        /*  eL parrafo para1 y detalle tienen que existir en el padre */
+        $('#espera').hide();
+        $('#carousel img').click(function (e) {
+            var titulo = $(this).attr('title');
+            $('#para1').remove();
+            $('#detalle').append('<p id="para1" style="font-family: Arial;font-size: 1.3em;font-weight: bold;color: #268bd2;" > ' + "  " + titulo + ' </p>');
+            $('#detalle').fadeIn();
+
+            /* alert("La Imagen correseponde a: => " + titulo);*/
+
+        });
+        $('#carousel').carouFredSel({
+            width: 800,
+            items: 3,
+            scroll: 1,
+            auto: {
+                duration: 500,
+                timeoutDuration: 200,
+                onBefore: mensaje()
+            },
+            prev: '#prev',
+
+            next: '#next',
+            pagination: '#pager'
+        });
+
+    });
+</script>
+  <div id="detalle" style="float:middle;">
+  
+   </div>
+                     
+                   
+<div id="wrapper">
+ 
+	<div id="carousel">
+             
+		   @foreach (var persel in Model)
+     {
+         for (var i = 0; i < persel.pbFotos.Count; i++)
+       
+             {
+                 
+             var apeynom  =  persel.Nombre == null && persel.Apellido != null ? persel.Apellido.Trim() : (persel.Nombre == null && persel.Apellido == null ? " Desconocido ":  persel.Apellido.Trim() + ',' + persel.Nombre.Trim());
+             apeynom = apeynom + " Nro IPP: " + persel.Ipp;
+             var indiceFoto =  persel.pbFotos[i].id;
+
+
+
+             /*      <img id="foto" title ="@apeynom" class="centeredImage" src="@persel.fotosString[i]"  alt="Foto de @apeynom"  width:"700px"; height:"500px;"   />
+                       <img id="foto" title ="@apeynom" class="centeredImage" src=  "/App_Images/medidores.png"  alt="Foto de @apeynom"  width:"700px"; height:"500px;"   />*/
+                   
+          <img class="centeredImage"  title ="@apeynom" id="foto" src='@Url.Action("GetImageById", "PBFotos", new { indice = indiceFoto })' alt="Foto"  width="700px" height="500px" />
+        
+         
+ 
+             }
+     }
+	</div>
+	<a id="prev" href="#"></a>
+	<a id="next" href="#"></a>  
+	<div id="pager"></div>
+    
+	
+
+
+   
+</div>
+

@@ -1,0 +1,732 @@
+﻿
+.LabelLogin {
+	font-family: Arial;
+	font-size: 11px;
+	font-weight: bold;
+	color: #ffffff;
+    text-align: left;
+    margin-top: 0px;
+}
+.ContenidoLogin {
+	font-family: Arial;
+	font-size: 11px;
+	color: #334752;
+    text-align: left;
+    margin-top: 0px;  
+}
+/*STYLES MASTERPAGE - SE COLOCA TODO ACA PARA Q NO DEPENDAN DE LA UBICACION DE LA PAGINA*/    
+.masterpageBody {
+    /*background-image: url('../../App_Images/fdo_estirar.gif'); */
+    background-repeat:repeat-x; 
+    background-position:left bottom; 
+    margin-left:0; 
+    margin-top:0; 
+    margin:0;
+    vertical-align:middle; 
+    /*background-color: White;*/
+
+}
+.InfoUsuario
+{
+vertical-align: top; 
+text-align: right; 
+margin-bottom: 0px;
+font-weight:bold;
+Color:#13507d;     
+font-family: Arial;
+font-size: 11px;
+}
+.logout
+{
+    background-image:url('../../App_Images/ico_cerrar.gif');
+    background-repeat:no-repeat;
+    background-position:50% top;
+    width:19px;
+}
+Body
+{
+    font: 11px , Arial;
+    color: black;
+    padding-right: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    background-image: url('../../App_Images/fondo_estirar.gif'); 
+    background-repeat:repeat-x; 
+    background-position:center bottom;
+}
+
+
+.ButtonNext
+{
+    background-image: url('../../App_Images/arrow_right.png');
+    background-repeat:no-repeat;
+    background-position: center;
+}
+
+.CeldaBold
+{
+    font-weight: bolder;
+    font-size:medium;
+}
+
+.InputLogin
+{
+    text-transform:lowercase;
+    vertical-align:middle;
+    text-align:left;
+}
+
+Input
+{
+    text-transform:capitalize;
+    vertical-align:middle;
+    text-align:left;
+}
+
+Legend
+{
+    color: Blue;
+    font-size: smaller;
+}
+
+a
+ {
+  	color: white;
+  	}
+
+.MaskedEditError
+{
+    background-color: #FF9999;
+}
+
+.ModalHeader
+{
+    padding-top:0px;
+    margin-top:0px;
+    background-color: #125080;
+    cursor: move;
+    color: White;
+    font-size:small;
+    margin-bottom:2px;
+    
+    
+}
+
+.FondoModal
+{
+    /*background-color: #E8F5FF;*/
+     background-color: #d4e8f7;
+    border-style: solid;
+    border-width: medium;
+    margin-top: 0px;
+}
+
+Input[disabled]
+{
+    background-color: Silver;
+}
+
+.FondoOscuro
+{
+   background-color: Gray;
+   opacity:0.60;
+   filter:alpha(opacity = 60);
+}
+
+
+#tabla { background-color: #EEEEEE; width: 800px; padding: 0; margin: 0; 
+}
+
+.Titulos {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	color: #006381;
+	padding: 6px 6px 6px 12px;
+	background-color: Gray;
+}
+
+.TituloLogin {
+	font-family: Arial;
+	font-size: 10px;
+    font-weight: bold;		
+	color: #334752;
+	padding: 6px 6px 6px 12px;
+	text-align: center;
+	text-transform:uppercase;
+	text-decoration:underline;
+		margin-left: 0px;
+		margin-top: 2px;
+}
+
+.SubTituloLogin {
+	font-family: Arial;
+	font-size: 11px;
+    font-weight: bold;	
+	color: #ffffff;
+	padding: 6px 6px 6px 12px;
+	text-align: left;
+}
+
+.LinkLogin {
+	font-family: Arial;
+	font-size: 11px;
+	color: #334752;
+	text-align: left;
+}
+
+.Texto {
+	font-family: Arial;
+	font-size: 11px;
+	color: #000000;
+	padding: 6px 6px 6px 12px;
+	text-align:left;
+}
+.TextoAlt {
+	font-family: Arial;
+	font-size: 11px;
+	color: #002244;
+	padding: 6px 6px 6px 12px;
+}
+.TextoLogin {
+	font-family: Arial;
+	font-size: 11px;
+	color: #000000;
+	text-align:left;
+}
+
+.Contenido {
+	font-family: Arial;
+	font-size: 10px;
+	text-align: left;
+	color: #444e4e;
+}
+
+.ContenidoComboSearch {
+	font-family: Arial;
+	font-size: 11px;
+	color: #334752;
+    margin-top: 0px;    
+    text-transform:capitalize;  
+    text-align:left;  
+    padding: 0px;
+	font-weight: normal;
+		margin-left: 4px;
+}
+
+.ContenidoLogin {
+	font-family: Arial;
+	font-size: 11px;
+	color: #334752;
+    text-align: left;
+    margin-top: 0px;  
+}
+
+.cldiv {
+	font-family: Arial;
+	font-size: 11px;
+	color: #334752;
+    margin-top: 0px;    
+    text-transform:capitalize;  
+    text-align:left;  
+    padding-left: 3px;
+	font-weight: normal;    
+}
+
+.cldivTxb {
+	font-family: Arial;
+	font-size: 11px;
+	color: #334752;
+    margin-top: 0px;    
+    text-transform:capitalize;  
+    text-align:left;  
+    padding-left: 4px;
+	font-weight: normal;      
+}
+
+.TituloContenido {
+	font-family: Arial;
+	font-size: 14px;
+	text-align: left;
+	color: #444e4e;	
+	font-weight: bold;
+}
+
+.TableTop
+{
+border-top:solid 5px #2f4f4f;
+border-left-width:0px;
+border-right-width:0px;
+border-bottom-width:0px;
+}
+
+.Box {
+	font-family: Arial;
+	font-size: 11px;
+	color: #000000;
+	padding: 6px 6px 6px 12px;
+	border: 1px dashed #999999;
+}
+.Menu {
+	font-family: Arial;
+	font-size: 11px;
+	font-weight: bold;
+	color: #ffeeee;
+	padding: 3px 3px 3px 3px;
+    text-align: left;
+}
+
+.LabelLogin {
+	font-family: Arial;
+	font-size: 11px;
+	font-weight: bold;
+	color: #565656;
+    text-align: left;
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.Label {
+	font-family: Arial;
+	font-size: 11px;
+	color: #006381;
+	font-weight: bold;
+    text-align: left;
+    margin-top: 0px;
+}
+
+
+
+
+.LabelSearchTitulo {
+	font-family: Arial;
+	font-size: 14px;
+	color: #006381;
+	font-weight: bold;
+    text-align: left;
+    margin-top: 3px;
+}
+
+.LabelSearch {
+	font-family: Arial;
+	font-size: 11px;
+	color: #006381;
+    text-align: left;
+    margin-top: 0px;
+    vertical-align: top;
+	font-weight: normal;  
+}
+
+.Links
+{
+	font-family: Arial;
+	font-size: 12px;
+	color: #006381;
+	padding: 3px 3px 3px 3px;
+  text-decoration: none;
+  font-weight: bold;
+
+}
+
+.Link_Interior
+{
+	font-family: Arial;
+	font-size: 12px;
+	color: #006381;
+	padding: 3px 3px 3px 3px;
+    font-weight: bold;
+
+
+}
+
+
+td
+{
+    /*vertical-align:bottom;*/
+    /*text-align: center;*/
+    	font-family: Arial;
+    		font-size:  11px;    
+
+}
+
+td_search
+{
+    text-align: left;
+    	font-family: Arial;
+    		font-size: 12px;
+    		width: 400px;
+
+
+}
+
+th
+{
+    text-align: left;
+    font-family: Arial;
+    font-size: 11px;
+    /*font-weight: bold;*/
+}
+
+.linkbutton
+{
+    color: Blue;
+}
+  
+select
+{
+	font-family: Arial;
+	font-size: 11px;
+	    margin-left: 0px;
+}
+
+.Grid  
+{
+    /*border:  solid 1px #FFFFFF;*/
+    /*border-color:Black;
+    border-width:thick;*/
+    text-align:center; 
+    vertical-align:top; 
+    padding:6px 6px 6px 12px; 
+    margin-top: 0px;
+    
+}
+
+.Grid td
+{    
+margin: 1px 1px 1px 1px;
+padding: 1px 1px 1px 1px;
+text-align: left;
+}
+.Grid Caption
+{
+    font-family: Arial;
+    font-size: 11px;
+    font-weight:bold;
+    color:#125080;
+    text-align:center;
+}
+
+.GridHeader
+{
+/*border:  solid thin black;     */
+background-color: #125080;/*#0E7A66;*/
+font-family: Arial;
+font-size: 11px;
+color:white;
+padding: 6px 6px 6px 12px;
+text-decoration: none;
+/*font-weight: bold; */
+}
+
+.GridHeader a
+{
+    color: White;
+}
+.GridItem
+{
+/*border-right: solid thin black; 
+border-left: solid thin black;
+border:  solid thin black;     */
+text-align:center;
+font-size:11px;
+font-family: Arial;
+color: #334752;
+text-transform:capitalize;  
+font-weight: normal;    
+/*background-color: #d4e8f7;*/
+background-color: #edf8ff;
+}
+
+
+
+.GridAltItem
+{
+/*border: solid thin black;     
+border-right: solid thin black; 
+border-left: solid thin black;*/
+background-color: #dee4e4;
+text-align:left;
+font-size:11px;
+font-family: Arial;
+color: #334752;
+text-transform:capitalize;  
+font-weight: normal;  
+}
+
+.InfoUsuario
+{
+vertical-align: top; 
+text-align: right; 
+margin-bottom: 0px;
+font-weight:bold;
+Color:#13507d;     
+font-family: Arial;
+font-size: 11px;
+}
+
+.lineatop
+{
+    border-top: black thin solid;
+    }
+
+
+.CeldaTblCitas
+{
+    border-right: black thin solid; 
+    border-left: black thin solid;
+    }
+
+.MenuItem {
+	font-family: Arial;
+	font-size: 11px;
+	font-weight: bold;
+	color: #90b8b7;
+	padding: 3px 3px 3px 3px;
+}
+
+.MenuItemHover {
+	font-family: Arial;
+	font-size: 11px;
+	font-weight: bold;
+	color: #ffe664;
+	padding: 3px 3px 3px 3px;
+}
+
+.MenuItemOper {
+    border-collapse:collapse;
+    border-bottom-color: #000000;
+}
+
+.vacio
+{
+    padding:0; border-spacing:0; border-left-style:none}
+    
+.ButtonClass
+{
+background-image:url('../../App_Css/salir_off.gif');
+background-repeat:no-repeat;
+}
+.ButtonClass:hover
+{
+background-image:url('../../App_Css/salir_on.gif');
+background-repeat:no-repeat;
+cursor:hand;
+}    
+
+input.All
+{
+    border-right: white 0px solid; 
+    border-top: white 0px solid; 
+    border-left: white 0px solid; 
+    border-bottom: white 0px solid;
+	font-family: "Verdana";
+	font-size: 11px;
+	color: #334752;
+    margin-top: 0px;    
+    text-align:left;  
+    padding: 0px;	
+}
+
+
+0px;	
+}
+
+
+input.button
+{
+    border: #334752 1px solid; 
+	font-family: "Verdana";
+	font-size: 11px;
+	color: #ffffff;
+    margin: 2px;    
+    text-transform:capitalize;  
+    text-align:center;  
+    padding: 0px;	
+    background-color: #006381;
+}
+  
+
+input
+{
+	font-family: Arial;
+	font-size: 11px;
+	color: #334752;
+    text-align:center;  
+    padding: 0px;
+    font-weight: 700;
+    margin-left: 0px;
+}
+
+
+.TextoError {
+	font-family: Arial;
+	font-size: 10px;
+	font-weight: normal;
+	color: red;
+	text-transform:capitalize;  
+
+}
+
+         
+/*STYLES MASTERPAGE - SE COLOCA TODO ACA PARA Q NO DEPENDAN DE LA UBICACION DE LA PAGINA*/    
+.masterpageBody {
+    background-image: url('../../App_Images/fdo_estirar.gif'); 
+    background-repeat:no-repeat; 
+    background-position:left bottom; 
+    margin-left:0; 
+    margin-top:0; 
+    margin:0;
+    vertical-align:middle; 
+    /*background-color: White;*/
+
+}
+
+.logout
+{
+    background-image:url('../../App_Images/ico_cerrar.gif');
+    background-repeat:no-repeat;
+    background-position:50% top;
+    width:19px;
+}
+
+.logout:hover
+{
+    background-image:url('../../App_Images/ico_cerrar.gif');
+    background-repeat:no-repeat;
+    background-position:50% top;
+    cursor:hand;
+    width:19px;
+}
+
+.masterPageHeaderLeft
+{
+    background-image: url('../../App_Images/estirar_vert_izq.gif'); 
+    background-repeat: repeat-y; 
+    background-position: right top;
+    width: 17px;
+}
+
+.masterPageHeaderMiddle
+{
+    background-position: left top; 
+    background-image: url('../../App_Images/AutoresIgnoradosBanner.jpg');
+    text-align: right; 
+    background-repeat: repeat-x; 
+    /*border-bottom:solid 2px #d7d7d7;*/ /*#FFFFFF*/
+    height:120px;
+    padding-right:5px;
+    /*position: fixed;*/
+    
+}
+
+.masterPageHeaderRight
+{
+    width: 10px; 
+    background-image: url('../../App_Images/estirar_vert_der.gif'); 
+    background-repeat: repeat-y; 
+    background-position: left top;
+}
+
+
+.masterPageFooterLogo
+{
+    height:43px; width: 98%; 
+    background-image: url('../../App_Images/pie_logo_proc.gif'); 
+    background-repeat:no-repeat; 
+    background-position:right bottom; 
+    background-color: #ffffff; 
+    border-top:solid 1px #d7d7d7; 
+    border-left:solid 4 #d7d7d7; 
+    border-right:solid 4 #d7d7d7; 
+    border-bottom: 0px;
+}
+
+   .overlay {
+        position: fixed;
+        z-index: 99;
+        top: 0px;
+        left: 0px;
+        background-color: #FFFFFF;
+        width: 100%;
+        height: 100%;
+        filter: Alpha(Opacity=70);
+        opacity: 0.70;
+        -moz-opacity: 0.70;
+    }
+    * html .overlay {
+        position: absolute;
+        height: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
+        width: expression(document.body.scrollWidth > document.body.offsetWidth ? document.body.scrollWidth : document.body.offsetWidth + 'px');
+    }
+    .loader {
+        z-index: 100;
+        position: absolute;
+        width: 120px;
+        margin-left: -60px;
+        top: 50%;
+        left: 50%;
+    }
+    * html .loader {
+        position: absolute;
+        margin-top: expression((document.body.scrollHeight / 4) + (0 - parseInt(this.offsetParent.clientHeight / 2) + (document.documentElement && document.documentElement.scrollTop || document.body.scrollTop)) + 'px');
+    }
+    .HeaderMaster
+{
+    background:  #e6f6fa url('../../App_Images/cortes/header.png') no-repeat left top ;
+    /*  background:  #e6f6fa url('../../App_Images/cortes/fondo_interior.jpg') no-repeat left top ;*/
+    height: 130px;
+    text-align: right;     
+    padding-right: 10px;    
+}
+.LabelPanel
+{
+    color:#13507d;
+
+}
+.FondoAutoresIgnorados
+{
+    background-color:#dee4e4;
+}
+dt {
+color: #268bd2;
+font-weight: bold;
+cursor: pointer;
+margin: 0 0 1em 0;
+}
+dt:hover {
+color: #2aa198;
+}
+dl {
+list-style-type: disc;
+
+}
+.tituloPreguntas
+{
+    font-family: Arial;
+    font-size: 22px;
+    font-weight: bold;
+    color: #111B30;
+    padding: 12px 6px 6px 12px;
+    background-color:rgb(216, 218, 223);
+    width:91%;
+}
+
+.FondoModalPopup
+{
+    background-color: #666699;
+   
+}
+
+.HeaderModalPopup
+{
+    min-width:200px;
+    min-height:150px;
+    background:white;
+}
+#Mapa
+{
+    margin-left: 0px;
+	margin-right: 0px ;
+    }
+
+

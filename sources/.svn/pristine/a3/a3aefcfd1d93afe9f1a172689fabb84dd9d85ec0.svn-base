@@ -1,0 +1,83 @@
+﻿@model IEnumerable<SIACGral.Models.SeniasParticulares>
+
+@{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
+
+<br />
+
+<div id="SeniasTable" style="width: 60%; margin: auto;">
+PERSONA id=  @ViewBag.idPersona 
+
+    <table id="jqTable" class="scroll"></table>
+        <div id="jqTablePager" />
+
+  </div>     
+  
+<script type="text/javascript">
+    // the url to make the Ajax calls
+    var jqDataUrl = "/SeniasParticulares/Update?persona=@ViewBag.idPersona";
+    $(document).ready(function () {
+
+        var updateDialog = {
+            url: jqDataUrl
+        , closeAfterAdd: true
+        , closeAfterEdit: true
+          , modal: true
+        , width: "400"
+        };
+ 
+
+        // Set up the jquery grid
+
+        $.jgrid.nav.addtext = "Agrega";
+        $.jgrid.nav.edittext = "Edita";
+        $.jgrid.nav.deltext = "Borra";
+        $.jgrid.edit.addCaption = "Agrega Seña";
+        $.jgrid.edit.editCaption = "Edita Seña";
+        $.jgrid.del.caption = "Borra Seña";
+        $.jgrid.del.msg = "Borra la Seña seleccionada?";
+
+        $("#jqTable").jqGrid({
+            // Ajax related configurations
+         //   url: '<%=Url.Action("SeniasList","~/SeniasParticulares") %>',
+            url: "/SeniasParticulares/SeniasList?persona=@ViewBag.idPersona",
+            datatype: "json",
+            mtype: "POST",
+
+            // Specify the column names
+            colNames: ["id", "SeniaParticular", "UbicacionSeniaParticular", "Descripcion"],
+
+            // Configure the columns
+            colModel: [
+            { name: "id", index: "id", width: 40, align: "left", key: true,editable:false },
+            { name: "idSeniaParticular", index: "idSeniaParticular", width: 100, align: "left", editable:true },
+            { name: "idUbicacionSeniaParticular", index: "idUbicacionSeniaParticular", width: 200, align: "left", editable: true },
+            { name: "descripcion", index: "descripcion", width: 200, align: "left", editable: true}],
+            // Grid total width and height
+            width: 550,
+            height: 80  ,
+
+            // Paging
+            toppager: true,
+            pager: $("#jqTablePager"),
+            rowNum: 5,
+            rowList: [5, 10, 20],
+            viewrecords: true, // Specify if "total number of records" is displayed
+            imgpath: '/Content/themes/base/images',
+            // Default sorting
+            sortname: "idSeniaParticular",
+            sortorder: "asc",
+            autowidth: true,
+            ondblClickRow: function (rowid, iRow, iCol, e) {
+                $("#jqTable").editGridRow(rowid, prmGridDialog);
+                },
+            // Grid caption
+            caption: "Señas Particulares"
+        }).navGrid("#jqTablePager",
+            { refresh: true, add: true, edit: true, del: true },
+            updateDialog,// parámetros para la modificación
+            updateDialog,// Alta
+            updateDialog // Parametros para la eliminacion              
+         );
+    });
+</script>

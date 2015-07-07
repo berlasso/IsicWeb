@@ -1,0 +1,106 @@
+﻿@model MPBA.SIAC.Web.Models.Autores
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Autores</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Delito.idCausa)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Delito.idCausa)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idCausa)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idCausa)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Nro)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Nro)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NNClaseEdadAproximada.descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NNClaseEdadAproximada.descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NNClaseSexo.descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NNClaseSexo.descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NNClaseRostro.descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NNClaseRostro.descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CubiertoCon)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CubiertoCon)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.OtraCaracteristica)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OtraCaracteristica)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Baja)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Baja)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idUsuarioUltimaModificacion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idUsuarioUltimaModificacion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaUltimaModificacion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FechaUltimaModificacion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idImputadoSimp)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idImputadoSimp)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idPersona)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idPersona)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

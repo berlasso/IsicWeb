@@ -1,0 +1,41 @@
+﻿    @model SIACGral.Models.Persona  
+    <table class="tabla_Form_Input">
+        <tr>     
+          <td class="editor-label">
+               @Html.LabelFor(model => model.idNacionalidad, "Pais")
+          </td>
+           <td class="editor-field-shorts">
+                @Html.DropDownList("idNacionalidad", String.Empty)
+                @Html.ValidationMessageFor(model => model.idNacionalidad)
+            </td>
+
+              
+          <td class="editor-label">
+               @Html.LabelFor(model => model.idProvincia, "Provincia")
+          </td>
+           <td class="editor-field-shorts"">
+                
+            </td>
+
+            
+          <td class="editor-label">
+               @Html.LabelFor(model => model.Partido, "Partido")
+          </td>
+           <td class="editor-field">
+                @Html.DropDownList("parti", String.Empty)
+                @Html.ValidationMessageFor(model => model.Partido)
+            </td>
+
+            
+          <td class="editor-label">
+               @Html.LabelFor(model => model.Localidad, "Localidad")
+          </td>
+           <td class="editor-field">
+                @Html.DropDownList("localidad", String.Empty)
+                @Html.ValidationMessageFor(model => model.Localidad)
+            </td>
+
+            </tr>
+         
+          </table>
+             

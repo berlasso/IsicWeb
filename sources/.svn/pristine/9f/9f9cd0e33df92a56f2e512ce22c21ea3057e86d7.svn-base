@@ -1,0 +1,49 @@
+﻿@model IEnumerable<SIACGral.Models.SeniasParticulares>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<div id="SeniasParticularesTable" style="width: 580px; margin: auto;"></div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        //Prepare jtable plugin
+        $('#SeniasParticularesTable').jtable({
+            title: 'Señas Particulares',
+            actions: {
+                listAction: '/SeniasParticulares/SeniasParticularesList',
+                deleteAction: '/SeniasParticulares/DeleteSeniaParticular',
+                updateAction: '/SeniasParticulares/UpdateSeniaParticular',
+                createAction: '/SeniasParticulares/CreateSeniaParticular'
+            },
+            fields: {
+            idPersona:{
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                       },
+            idSeniaParticular: { 
+            title: 'Tipo de Seña',
+                    create: true,
+                    edit: true,
+                    list: true ,
+                    width: '25%',
+                    options: { 'S': 'Senia 1', 'F': 'Senia 2' }},
+       idUbicacionSeniaParticular :
+                       {width: '15%',
+                    options: { 'M': 'Male', 'F': 'Female' }}
+
+        });
+
+        //Load person list from server
+        $('#SeniasParticularesTable').jtable('load');
+    });
+
+</script>

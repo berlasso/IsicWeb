@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="C:\SIACPublish" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="bin/ConfigurationCL.dll" publishTime="10/09/2012 09:44:30" />
+    <file relUrl="bin/MPBA.SIAC.BusinessEntities.pdb" publishTime="10/02/2013 12:49:49" />
+    <file relUrl="web.config" publishTime="12/05/2013 12:46:42" />
+    <file relUrl="bin/MPBA.SIAC.Bll.dll" publishTime="10/29/2012 09:20:19" />
+    <file relUrl="bin/MPBA.SIAC.Bll.pdb" publishTime="12/05/2013 12:46:40" />
+    <file relUrl="bin/MPBA.SIAC.Dal.dll" publishTime="12/05/2013 12:46:40" />
+    <file relUrl="bin/MPBA.SIAC.BusinessEntities.dll" publishTime="10/02/2013 12:49:49" />
+    <file relUrl="bin/MPBA.SIAC.Dal.pdb" publishTime="12/05/2013 12:46:40" />
+  </publishProfile>
+</publishData>

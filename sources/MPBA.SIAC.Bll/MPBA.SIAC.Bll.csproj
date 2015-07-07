@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{856EA9AB-467E-4C39-A8F7-39CDD7784FA7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MPBA.SIAC.Bll</RootNamespace>
+    <AssemblyName>MPBA.SIAC.Bll</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoresIgnorados\AutoresManager.cs" />
+    <Compile Include="AutoresIgnorados\BienesSustraidosAnimalManager.cs" />
+    <Compile Include="AutoresIgnorados\BienesSustraidosManager.cs" />
+    <Compile Include="AutoresIgnorados\BienesSustraidosOtroManager.cs" />
+    <Compile Include="AutoresIgnorados\BienSustraidoArmaManager.cs" />
+    <Compile Include="AutoresIgnorados\BienSustraidoChequeManager.cs" />
+    <Compile Include="AutoresIgnorados\BienSustraidoDineroManager.cs" />
+    <Compile Include="AutoresIgnorados\BienSustraidoTelefonoManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesCejaDimensionManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesCejaFormaManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesColorCabelloManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesFormaBocaManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesFormaCaraManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesFormaLabioinfManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesFormaLabioSupManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesFormaMentonManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesFormaNarizManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesFormaOrejaManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesRobustezManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesTipoCabelloManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRoboDelitosSexualesTipoCalvicieManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRobosDelitosSexualesColorOjosManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRobosDelitosSexualesColorPielManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRobosDelitosSexualesComisariasManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRobosDelitosSexualesEstaturaManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRobosDelitosSexualesLocalidadesManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRobosDelitosSexualesManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRobosDelitosSexualesSeniasManager.cs" />
+    <Compile Include="AutoresIgnorados\BusquedaRobosDelitosSexualesTatuajesManager.cs" />
+    <Compile Include="AutoresIgnorados\DelitosCantXDependenciaXFechaManager.cs" />
+    <Compile Include="AutoresIgnorados\LugaresDeTrasladoDeVictimasManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseAgresionManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseArmaManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseBienSustraidoManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseBooleanManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseCantAutorReconocidosManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseCantidadAutoresManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseCondicionVictimaManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseDiametroArmaFuegoManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseEdadAproximadaManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseEstadoInformeRastroManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseFechaManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseGanadoManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseHoraManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseLugarManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseModoArriboHuidaManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseModusOperandiManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseMomentoDiaManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseMonedaManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseRastroManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseRostroManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseRubroManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseSexoManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseSubtipoArmaManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseTipoArmaFuegoManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseTipoAutorManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseTipoDelitoManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseVidrioVehiculoManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseVinculoVehiculoManager.cs" />
+    <Compile Include="AutoresIgnorados\NNClaseZonaCuerpoLesionadaManager.cs" />
+    <Compile Include="AutoresIgnorados\RastrosManager.cs" />
+    <Compile Include="AutoresIgnorados\VehiculosManager.cs" />
+    <Compile Include="ClasePersonaManager.cs" />
+    <Compile Include="ClasePuntoGestionManager.cs" />
+    <Compile Include="ClaseSeniaParticularManager.cs" />
+    <Compile Include="ClaseTatuajeManager.cs" />
+    <Compile Include="ClaseTipoDNIManager.cs" />
+    <Compile Include="ClaseTipoPersonaManager.cs" />
+    <Compile Include="ClaseUbicacionSeniaPartManager.cs" />
+    <Compile Include="ColorVehiculoManager.cs" />
+    <Compile Include="ComisariaManager.cs" />
+    <Compile Include="AutoresIgnorados\DelitosManager.cs" />
+    <Compile Include="DepartamentoManager.cs" />
+    <Compile Include="LocalidadManager.cs" />
+    <Compile Include="LoginDomain.cs" />
+    <Compile Include="MarcaVehiculoManager.cs" />
+    <Compile Include="ModeloVehiculoManager.cs" />
+    <Compile Include="PartidoManager.cs" />
+    <Compile Include="PermisoUsuarioManager.cs" />
+    <Compile Include="PersonalPoderJudicialManager.cs" />
+    <Compile Include="PersonaManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaAspectoCabelloManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaCalvicieManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaColorCabelloManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaColorOjosManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaColorPielManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaColorTenidoManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaGrupoSanguineoManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaLongitudCabelloManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaRostroManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaSeniasParticularesManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedasFavoritasManager.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaTatuajesManager.cs" />
+    <Compile Include="AutoresIgnorados\DelitosCantXDeptoXFechaManager.cs" />
+    <Compile Include="PersonasBuscadas\ClaseBajaBusquedaPersonasManager.cs" />
+    <Compile Include="PersonasBuscadas\MailsAsociadosPersonasBuscadasManager.cs" />
+    <Compile Include="PersonasBuscadas\PersDesapCantXDependenciaXFechaManager.cs" />
+    <Compile Include="PersonasBuscadas\PersHalladaCantXDependenciaXFechaManager.cs" />
+    <Compile Include="PersonasBuscadas\PersHalladaCantXDeptoXFechaManager.cs" />
+    <Compile Include="PersonasBuscadas\DientesManager.cs" />
+    <Compile Include="PersonasBuscadas\PathFotosManager.cs" />
+    <Compile Include="PersonasBuscadas\PBCausaExtranaJurisdiccionManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseAspectoCabelloManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseBooleanManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseCalvicieManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseColorCabelloManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseColorDePielManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseColorOjosManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseFotoManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseGrupoSanguineoManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseLongitudCabelloManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseMotivoHallazgoManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseOrganismoIntervinienteManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseRostroManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseSexoManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseTablaDestinoManager.cs" />
+    <Compile Include="PersonasBuscadas\PBClaseTipoJurisdiccionCausaManager.cs" />
+    <Compile Include="PersonasBuscadas\PBFotosManager.cs" />
+    <Compile Include="PersonasBuscadas\PBParametrosGeneralesManager.cs" />
+    <Compile Include="PersonasBuscadas\PersDesapCantXDeptoXFechaManager.cs" />
+    <Compile Include="PersonasBuscadas\PersonasDesaparecidasManager.cs" />
+    <Compile Include="PersonasBuscadas\PersonasEncontradasManager.cs" />
+    <Compile Include="PersonasBuscadas\PersonasHalladasManager.cs" />
+    <Compile Include="PreguntasFrecuentesManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyComparer.cs" />
+    <Compile Include="ProvinciaManager.cs" />
+    <Compile Include="PuntoGestionManager.cs" />
+    <Compile Include="SeniasParticularesManager.cs" />
+    <Compile Include="SICClaseCejasDimensionManager.cs" />
+    <Compile Include="SICClaseCejasTipoManager.cs" />
+    <Compile Include="SICClaseColorCabelloManager.cs" />
+    <Compile Include="SICClaseColorOjosManager.cs" />
+    <Compile Include="SICClaseColorPielManager.cs" />
+    <Compile Include="SICClaseEdadManager.cs" />
+    <Compile Include="SICClaseEstaturaManager.cs" />
+    <Compile Include="SICClaseFormaBocaManager.cs" />
+    <Compile Include="SICClaseFormaCaraManager.cs" />
+    <Compile Include="SICClaseFormaLabioInferiorManager.cs" />
+    <Compile Include="SICClaseFormaLabioSuperiorManager.cs" />
+    <Compile Include="SICClaseFormaMentonManager.cs" />
+    <Compile Include="SICClaseFormaNarizManager.cs" />
+    <Compile Include="SICClaseFormaOrejaManager.cs" />
+    <Compile Include="SICClaseRobustezManager.cs" />
+    <Compile Include="SICClaseTipoCabelloManager.cs" />
+    <Compile Include="SICClaseTipoCalvicieManager.cs" />
+    <Compile Include="TatuajesPersonaManager.cs" />
+    <Compile Include="UsuariosAutorizadoManager.cs" />
+    <Compile Include="UsuariosManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\Debug\" />
+    <Folder Include="obj\Release\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MPBA.SIAC.BusinessEntities\MPBA.SIAC.BusinessEntities.csproj">
+      <Project>{30F8F8E1-A5BB-43E0-9D72-22F609F167C9}</Project>
+      <Name>MPBA.SIAC.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MPBA.SIAC.Dal\MPBA.SIAC.Dal.csproj">
+      <Project>{FEC81B14-AA40-4FEA-BFEE-6FA3650CCC00}</Project>
+      <Name>MPBA.SIAC.Dal</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\ConfigurationCL.dll" />
+    <Content Include="bin\MPBA.SIAC.Bll.dll" />
+    <Content Include="bin\MPBA.SIAC.Bll.pdb" />
+    <Content Include="bin\MPBA.SIAC.BusinessEntities.dll" />
+    <Content Include="bin\MPBA.SIAC.BusinessEntities.pdb" />
+    <Content Include="bin\MPBA.SIAC.Dal.dll" />
+    <Content Include="bin\MPBA.SIAC.Dal.pdb" />
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56819</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

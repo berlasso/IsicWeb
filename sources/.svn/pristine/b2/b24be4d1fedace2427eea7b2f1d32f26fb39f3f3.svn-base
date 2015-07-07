@@ -1,0 +1,288 @@
+﻿@model MPBA.SIAC.Web.Models.Persona
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Persona</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Nombre)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Nombre)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Apellido)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Apellido)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Apodo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Apodo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idTipoDNI)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idTipoDNI)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DocumentoNumero)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DocumentoNumero)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Sexo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Sexo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Direccion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Direccion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Telefono)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Telefono)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EMail)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EMail)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaNacimiento)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FechaNacimiento)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Localidad)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Localidad)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Partido)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Partido)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Provincia.Provincia1)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Provincia.Provincia1)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Usuarios.idPersonalPoderJudicial)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Usuarios.idPersonalPoderJudicial)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.colegio)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.colegio)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Tomo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Tomo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Folio)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Folio)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaAlta)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FechaAlta)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PersonalPoderJudicial)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PersonalPoderJudicial)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.activo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.activo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Muerto)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Muerto)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseEstadoCivil.descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseEstadoCivil.descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.profesion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.profesion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.LugarNacimiento)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LugarNacimiento)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Pais.Pais1)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Pais.Pais1)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Padre)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Padre)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Madre)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Madre)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ProfesionPadre)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ProfesionPadre)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ProfesionMadre)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ProfesionMadre)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Conyuge)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Conyuge)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NumeroIRNR)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NumeroIRNR)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NumeroIDAPMS)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NumeroIDAPMS)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DefensorParticular)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DefensorParticular)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Edad)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Edad)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseEstadoCivil1.descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseEstadoCivil1.descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseEstadoCivil2.descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseEstadoCivil2.descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idTipoPersona)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idTipoPersona)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseEstudiosCursados.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseEstudiosCursados.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseSexo.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseSexo.Descripcion)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

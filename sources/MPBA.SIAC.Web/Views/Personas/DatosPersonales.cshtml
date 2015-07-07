@@ -1,0 +1,139 @@
+﻿@model SIACGral.Models.Persona
+
+<fieldset>
+     <table class="tabla_Form_Input" >
+          <tr>
+                  <td class="editor-label"> 
+                        @Html.LabelFor(model => model.idTipoDNI)
+                    </td>
+                    <td class="editor-field"> 
+                        @Html.DropDownList("idTipoDoc", String.Empty)
+                        @Html.ValidationMessageFor(model => model.idTipoDNI)
+                     </td>   
+                      <td class="editor-label"> 
+                            @Html.LabelFor(model => model.DocumentoNumero)
+                    </td>
+                        <td class="editor-field"> 
+                             @Html.EditorFor(model => model.DocumentoNumero)
+                            @Html.ValidationMessageFor(model => model.DocumentoNumero)
+                      </td>  
+                        <td class="editor-label">
+                            @Html.LabelFor(model => model.Apellido)
+                        </td>
+                        <td class="editor-field"> 
+                            @Html.EditorFor(model => model.Apellido)
+                            @Html.ValidationMessageFor(model => model.Apellido)
+                        </td>
+
+                       <td class="editor-label">    
+                           @Html.LabelFor(model => model.Nombre)
+                       </td>
+                        <td class="editor-field"> 
+                            @Html.EditorFor(model => model.Nombre)
+                            @Html.ValidationMessageFor(model => model.Nombre)
+                         </td>
+                         </tr>
+                         <tr>
+                           <td class="editor-label">
+                            @Html.LabelFor(model => model.idSexo)
+                        </td>
+                        <td class="editor-field">
+                            @Html.DropDownList("idSexo", String.Empty)
+                            @Html.ValidationMessageFor(model => model.idSexo)
+                        </td>
+                
+                        <td class="editor-label">
+                            @Html.LabelFor(model => model.Apodo)
+                        </td>
+                        <td class="editor-field">
+                            @Html.EditorFor(model => model.Apodo)
+                            @Html.ValidationMessageFor(model => model.Apodo)
+                        </td>
+                         <td class="editor-label">
+                            @Html.LabelFor(model => model.idEstadoCivil)
+                        </td>
+                        <td class="editor-field">
+                            @Html.DropDownList("idEstadoCivil", String.Empty)
+                            @Html.ValidationMessageFor(model => model.idEstadoCivil)
+                        </td>
+                   
+                 </tr>
+                 </table>
+                    
+
+                      @Html.Partial("Lugar_Partido_Provincia_Local")
+                    
+              <table class="tabla_Form_Input" >
+                  <tr>
+                        <td class="editor-label">
+                            @Html.LabelFor(model => model.Direccion)
+                        </td>
+                        <td class="editor-field">
+                            @Html.EditorFor(model => model.Direccion)
+                            @Html.ValidationMessageFor(model => model.Direccion)
+
+                        </td>
+                      
+     
+               
+                <td class="editor-label">
+                    @Html.LabelFor(model => model.Telefono)
+                </td>
+                <td class="editor-field">
+                    @Html.EditorFor(model => model.Telefono)
+                    @Html.ValidationMessageFor(model => model.Telefono)
+                </td>
+             
+           
+            <td class="editor-label">
+                @Html.LabelFor(model => model.EMail)
+            </td>
+            <td class="editor-field">
+                @Html.EditorFor(model => model.EMail)
+                @Html.ValidationMessageFor(model => model.EMail)
+            </td>
+
+              <td class="editor-label">
+                        @Html.LabelFor(model => model.LugarNacimiento)
+                </td>
+               <td class="editor-field">
+                        @Html.EditorFor(model => model.LugarNacimiento)
+                        @Html.ValidationMessageFor(model => model.LugarNacimiento)
+                  </td>
+            </tr>
+           <tr>
+                <td class="editor-label">
+                    @Html.LabelFor(model => model.FechaNacimiento)
+                </td>
+                <td class="ui-datefield">
+                    @Html.EditorFor(model => model.FechaNacimiento)
+                    @Html.ValidationMessageFor(model => model.FechaNacimiento)
+                </td>
+                     
+                <td class="editor-label">
+                    @Html.LabelFor(model => model.Edad)
+                </td>
+                <td class="editor-field">
+                    @Html.EditorFor(model => model.Edad)
+                    @Html.ValidationMessageFor(model => model.Edad)
+                </td>
+         
+
+     
+       </tr> 
+     
+             <tr>
+            <td class="editor-label">
+                 @Html.LabelFor(model => model.Muerto)
+             </td>
+            <td class="editor-field">
+                 @Html.EditorFor(model => model.Muerto)
+                @Html.ValidationMessageFor(model => model.Muerto)
+            </td>
+
+       
+       </tr>
+       
+        </table>
+ </fieldset>    
+    

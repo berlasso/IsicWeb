@@ -1,0 +1,1478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B23BAE33-D35E-4EE2-A934-8182CC3D72FF}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MPBA.SIAC.Web</RootNamespace>
+    <AssemblyName>MPBA.SIAC.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <ExcludeApp_Data>false</ExcludeApp_Data>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>
+    </Win32Resource>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=3.0.30930.28736, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime, Version=3.3.1.7705, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="ConfigurationCL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ConfigurationCL.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Contrib.Mvc">
+      <HintPath>..\packages\Elmah.Contrib.Mvc.1.0\lib\net40\Elmah.Contrib.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="GMaps, Version=4.1.0.6, Culture=neutral, PublicKeyToken=564d55b144e7aa5a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\GMaps.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Archivos de programa\Microsoft Visual Studio 10.0\ReportViewer\Microsoft.ReportViewer.WebForms.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=1.0.3.3, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="Telerik.Web.UI, Version=2008.3.1125.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Images\ARMAS.png" />
+    <Content Include="App_Images\arrebatar.png" />
+    <Content Include="App_Images\auto.png" />
+    <Content Include="App_Images\banco.png" />
+    <Content Include="App_Images\bicileta.png" />
+    <Content Include="App_Images\boqueterosAmarillo.png" />
+    <Content Include="App_Images\CABLES.png" />
+    <Content Include="App_Images\carouselcontrol.png" />
+    <Content Include="App_Images\clouds_amarilla.PNG" />
+    <Content Include="App_Images\COMERCIO.png" />
+    <Content Include="App_Images\CUATRERISMO.png" />
+    <Content Include="App_Images\entradera2.jpg" />
+    <Content Include="App_Images\fdo_estirar.png" />
+    <Content Include="App_Images\googleMarker.png" />
+    <Content Include="App_Images\hurto.png" />
+    <Content Include="App_Images\left.png" />
+    <Content Include="App_Images\luces.png" />
+    <Content Include="App_Images\mechera.png" />
+    <Content Include="App_Images\MEDIDORES.png" />
+    <Content Include="App_Images\miscellaneous_sprite.png" />
+    <Content Include="App_Images\money.png" />
+    <Content Include="App_Images\moto.png" />
+    <Content Include="App_Images\neumaticos.png" />
+    <Content Include="App_Images\personas.png" />
+    <Content Include="App_Images\piratasAsfalto.png" />
+    <Content Include="App_Images\right.png" />
+    <Content Include="App_Images\robo.png" />
+    <Content Include="App_Images\robosAncianos.png" />
+    <Content Include="App_Images\SECUESTRO.png" />
+    <Content Include="App_Images\wait.gif" />
+    <Content Include="App_Themes\Theme1\jquery.qtip.css" />
+    <Content Include="App_Themes\Theme1\styles_accordion.css" />
+    <Content Include="App_UserControl\mail.html" />
+    <Content Include="App_UserControl\MsgBox.ascx" />
+    <Content Include="AutoresIgnorados\Baja.aspx" />
+    <Content Include="bin\AjaxControlToolkit.dll" />
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\Common.Logging.dll" />
+    <Content Include="bin\ConfigurationCL.dll" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.xml" />
+    <Content Include="bin\GMaps.dll" />
+    <Content Include="bin\log4net.dll" />
+    <Content Include="bin\Microsoft.ReportViewer.WebForms.dll" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Microsoft.Web.WebPages.OAuth.dll" />
+    <Content Include="bin\Microsoft.Web.WebPages.OAuth.xml" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Newtonsoft.Json.xml" />
+    <Content Include="bin\Quartz.dll" />
+    <Content Include="bin\System.Net.Http.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.xml" />
+    <Content Include="bin\System.Net.Http.WebRequest.dll" />
+    <Content Include="bin\System.Net.Http.WebRequest.xml" />
+    <Content Include="bin\System.Net.Http.xml" />
+    <Content Include="bin\System.Web.Abstractions.dll" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Http.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.xml" />
+    <Content Include="bin\System.Web.Http.xml" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Mvc.xml" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.Razor.xml" />
+    <Content Include="bin\System.Web.Routing.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.xml" />
+    <Content Include="bin\Telerik.Web.UI.dll" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="bin\WebMatrix.Data.dll" />
+    <Content Include="bin\WebMatrix.Data.xml" />
+    <Content Include="bin\WebMatrix.WebData.dll" />
+    <Content Include="bin\WebMatrix.WebData.xml" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\add.png" />
+    <Content Include="Images\animated-overlay.gif" />
+    <Content Include="Images\arrow-sprite.png" />
+    <Content Include="Images\bg-thead.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\close.png" />
+    <Content Include="Images\clouds_amarilla.PNG" />
+    <Content Include="Images\column-asc.png" />
+    <Content Include="Images\column-desc.png" />
+    <Content Include="Images\column-sortable.png" />
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\edit.png" />
+    <Content Include="Images\fondo_interior.jpg" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\interior_imgcentral.png" />
+    <Content Include="Images\left.png" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\miscellaneous_sprite.png" />
+    <Content Include="Images\right.png" />
+    <Content Include="Images\transparent_bg.png" />
+    <Content Include="Images\transparent_top_bottom.png" />
+    <Content Include="Images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="LoginSIAC.aspx" />
+    <Content Include="MasterPage.Master" />
+    <Content Include="Models\ModelSIAC.edmx.sql" />
+    <Content Include="PersonasBuscadas\BusquedaDesaparecida.aspx" />
+    <Content Include="PersonasBuscadas\BusquedaDesaparecidaBaja.aspx" />
+    <Content Include="PersonasBuscadas\BusquedaGenerica.aspx" />
+    <Content Include="PersonasBuscadas\BusquedaHallada.aspx" />
+    <Content Include="PersonasBuscadas\BusquedaHalladaBaja.aspx" />
+    <Content Include="PersonasBuscadas\BusquedasActivas.aspx" />
+    <Content Include="PersonasBuscadas\frmMailConfig.aspx" />
+    <Content Include="PersonasBuscadas\FullSizeImage.aspx" />
+    <Content Include="PersonasBuscadas\ImagenFoto.aspx" />
+    <Content Include="PersonasBuscadas\MailTest.aspx" />
+    <Content Include="PersonasBuscadas\NavegadorPersonas.aspx" />
+    <Content Include="PersonasBuscadas\ReportDesaparecidosActivos.aspx" />
+    <Content Include="PersonasBuscadas\ReporteFormD.aspx" />
+    <Content Include="PersonasBuscadas\ReporteFormH.aspx" />
+    <Content Include="PlanillaParaDescargar.aspx" />
+    <Content Include="PreguntasFrecuentes.aspx" />
+    <Content Include="ReportEstadisticasDelitos.aspx" />
+    <Content Include="ReportEstadisticasCargas.aspx" />
+    <Content Include="EstadDelitosSexualesXFecha.aspx" />
+    <Content Include="EstadRobosHurtosXFecha.aspx" />
+    <Content Include="EstadPersHalladaXFecha.aspx" />
+    <Content Include="EstadisticasSeleccion.aspx" />
+    <Content Include="EstadPersDesapXFecha.aspx" />
+    <Content Include="Scripts\bundles\carouselSeteo.js" />
+    <Content Include="Scripts\bundles\dataTable-1.9.4.js" />
+    <Content Include="Scripts\bundles\FixedHeader.min.js" />
+    <Content Include="Scripts\bundles\jquery-migrate-1.2.1.min.js" />
+    <Content Include="Scripts\bundles\jquery.carouFredSel.js" />
+    <Content Include="Scripts\bundles\jquery.easing.1.3.js" />
+    <Content Include="Scripts\bundles\DatePickerReady.js" />
+    <Content Include="Scripts\bundles\grid.locale-es.js" />
+    <Content Include="Scripts\bundles\jquery-1.10.0.js" />
+    <Content Include="Scripts\bundles\jquery-ui-1.10.0.js" />
+    <Content Include="Scripts\bundles\jquery.infinitecarousel3.js" />
+    <Content Include="Scripts\bundles\jquery.jqGrid.min.js" />
+    <Content Include="Scripts\bundles\jquery.jtable.es.js" />
+    <Content Include="Scripts\bundles\jquery.jtable.js" />
+    <Content Include="Scripts\bundles\jquery.tools.min.js" />
+    <Content Include="Scripts\bundles\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\bundles\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\bundles\jquery.validate.js" />
+    <Content Include="Scripts\bundles\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\bundles\modernizr-2.5.3.js" />
+    <Content Include="Scripts\bundles\TableTools-2.1.5.min.js" />
+    <Content Include="Scripts\jqia2.support.js" />
+    <Content Include="Scripts\jquery.qtip.js" />
+    <Content Include="Scripts\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\knockout-2.1.0.js" />
+    <Content Include="Scripts\scripts.js" />
+    <Content Include="Scripts\ScriptsInicio.js" />
+    <Content Include="Styles\dataTable-jui.css" />
+    <Content Include="Styles\jquery-ui-styles.css" />
+    <Content Include="Styles\swf\copy_csv_xls.swf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\swf\copy_csv_xls_pdf.swf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\TableTools.css" />
+    <Content Include="System.Net.Http.WebRequest.dll" />
+    <Content Include="textoMail.txt" />
+    <Content Include="App_Images\caja.gif" />
+    <Content Include="App_Images\calendar.png" />
+    <Content Include="App_Images\cartelAutores.png" />
+    <Content Include="App_Images\cartelAutoresConocidos.png" />
+    <Content Include="App_Images\cartelBSConocidos.png" />
+    <Content Include="App_Images\cartelBsSust.png" />
+    <Content Include="App_Images\cartelMO.png" />
+    <Content Include="App_Images\cartelMOConocidos.png" />
+    <Content Include="App_Images\cartelPruebas.png" />
+    <Content Include="App_Images\cartelVictimas.png" />
+    <Content Include="App_Images\cartelVictimasConocidos.png" />
+    <Content Include="App_Images\Cortes\boton.png" />
+    <Content Include="App_Images\Cortes\header.png" />
+    <Content Include="App_Images\Cortes\interior_imgcentral.png" />
+    <Content Include="App_Images\Cortes\log_caja.png" />
+    <Content Include="App_Images\Cortes\log_combo.png" />
+    <Content Include="App_Images\Cortes\log_ingresar.png" />
+    <Content Include="App_Images\exito.png" />
+    <Content Include="App_Images\ico_cerrar.gif" />
+    <Content Include="App_Images\ingresar on.png" />
+    <Content Include="App_Images\ingresar.png" />
+    <Content Include="App_Images\ingresar_off.gif" />
+    <Content Include="App_Images\ingresar_on.gif" />
+    <Content Include="App_Images\loader.gif" />
+    <Content Include="App_Images\magnify.png" />
+    <Content Include="App_Images\SinFoto.GIF" />
+    <Content Include="App_Themes\CC\Menu.CC.css" />
+    <Content Include="App_Themes\CC\Menu\groupImage.gif" />
+    <Content Include="App_Themes\CC\Menu\tab_menu_of.png" />
+    <Content Include="App_Themes\CC\Menu\tab_menu_on.png" />
+    <Content Include="App_Themes\Theme1\styles.css" />
+    <Content Include="AutoresIgnorados\BusquedaAutores.aspx" />
+    <Content Include="AutoresIgnorados\BusquedaPruebasPendientes.aspx" />
+    <Content Include="AutoresIgnorados\CargaAutores.aspx" />
+    <Content Include="AutoresIgnorados\CargaBienesSustraidos.aspx" />
+    <Content Include="AutoresIgnorados\CargaDetalleAutores.aspx" />
+    <Content Include="AutoresIgnorados\CargaModusOperandi.aspx" />
+    <Content Include="AutoresIgnorados\CargaPrueba.aspx" />
+    <Content Include="AutoresIgnorados\CargaVictimas.aspx" />
+    <Content Include="AutoresIgnorados\BusquedaSic.aspx" />
+    <Content Include="EditUsuarioAutorizado.aspx" />
+    <Content Include="Home.aspx" />
+    <Content Include="LoginSIAC - En Mantenimiento.aspx" />
+    <Content Include="Manuales.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Usuarios.aspx" />
+    <Content Include="Views\Autores\BusquedaAutoresCoincidentes.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\favicon.ico" />
+    <Content Include="Views\Home\Index.aspx" />
+    <Content Include="VisualizaMapa.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Audita.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DelitosAutoresAnalisisGeneral_Result.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MetaDataClass\Columnas.cs" />
+    <Compile Include="App_UserControl\MsgBox.ascx.cs">
+      <DependentUpon>MsgBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_UserControl\MsgBox.ascx.designer.cs">
+      <DependentUpon>MsgBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\Baja.aspx.cs">
+      <DependentUpon>Baja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\Baja.aspx.designer.cs">
+      <DependentUpon>Baja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\BusquedaAutores.aspx.cs">
+      <DependentUpon>BusquedaAutores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\BusquedaAutores.aspx.designer.cs">
+      <DependentUpon>BusquedaAutores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\BusquedaPruebasPendientes.aspx.cs">
+      <DependentUpon>BusquedaPruebasPendientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\BusquedaPruebasPendientes.aspx.designer.cs">
+      <DependentUpon>BusquedaPruebasPendientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaAutores.aspx.cs">
+      <DependentUpon>CargaAutores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaAutores.aspx.designer.cs">
+      <DependentUpon>CargaAutores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaBienesSustraidos.aspx.cs">
+      <DependentUpon>CargaBienesSustraidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaBienesSustraidos.aspx.designer.cs">
+      <DependentUpon>CargaBienesSustraidos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaDetalleAutores.aspx.cs">
+      <DependentUpon>CargaDetalleAutores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaModusOperandi.aspx.cs">
+      <DependentUpon>CargaModusOperandi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaModusOperandi.aspx.designer.cs">
+      <DependentUpon>CargaModusOperandi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaPrueba.aspx.cs">
+      <DependentUpon>CargaPrueba.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaPrueba.aspx.designer.cs">
+      <DependentUpon>CargaPrueba.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaVictimas.aspx.cs">
+      <DependentUpon>CargaVictimas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\CargaVictimas.aspx.designer.cs">
+      <DependentUpon>CargaVictimas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\BusquedaSic.aspx.cs">
+      <DependentUpon>BusquedaSic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoresIgnorados\BusquedaSic.aspx.designer.cs">
+      <DependentUpon>BusquedaSic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoresIgnorados\FuncionesComunes.cs" />
+    <Compile Include="AutoresIgnorados\FuncionesGenerales.cs" />
+    <Compile Include="Controllers\AutoresController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IPPController.cs" />
+    <Compile Include="Controllers\PBFotosController.cs" />
+    <Compile Include="Controllers\PersonasController.cs" />
+    <Compile Include="Controllers\SeniasParticularesController.cs" />
+    <Compile Include="Models\MetaDataClass\Audita.cs" />
+    <Compile Include="Filters\AuditaAtributos.cs" />
+    <Compile Include="FuncionesGenerales.cs" />
+    <Compile Include="LoginSIAC.aspx.cs">
+      <DependentUpon>LoginSIAC.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dsEstadisticasDeCargas.cs">
+      <DependentUpon>dsEstadisticasDeCargas.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LoginSIAC.aspx.designer.cs">
+      <DependentUpon>LoginSIAC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPage.Master.cs">
+      <DependentUpon>MasterPage.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPage.Master.designer.cs">
+      <DependentUpon>MasterPage.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Autores.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BienesSustraido.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BienesSustraidosAnimal.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BienesSustraidosOtro.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BienSustraidoArma.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BienSustraidoCheque.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BienSustraidoDinero.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BienSustraidoTelefono.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Busqueda.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaAspectoCabello.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaCalvicie.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaColorCabello.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaColorOjo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaColorPiel.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaColorTenido.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaGrupoSanguineo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaLongitudCabello.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaPrincipal.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaRobosDelitosSexuale.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaRobosDelitosSexualesComisaria.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaRobosDelitosSexualesLocalidade.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaRobosDelitosSexualesSenia.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaRobosDelitosSexualesTatuaje.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaRostro.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaSeniasParticulare.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedasFavorita.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaTatuaje.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaseBajaBusquedaPersona.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaseEstadoCivil.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaseEstudiosCursados.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaseMenu.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClasePersona.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClasePuntoGestion.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaseSeniaParticular.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaseSexo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaseTatuaje.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaseTipoPersona.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaseUbicacionSeniaPart.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ColorVehiculo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comisaria.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Delito.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Departamento.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Diente.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GoogleMarker.cs" />
+    <Compile Include="Models\GrupoUsuario.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HtmlModelBindingHelperExtensions.cs" />
+    <Compile Include="Models\IPP.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JerarquiaPoderJudicial.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Localidad.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LugaresDeTrasladoDeVictima.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MailsAsociadosPersonasBuscada.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MarcaVehiculo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MarkerRepository.cs" />
+    <Compile Include="Models\Menu.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomByteArrayModelBinder.cs" />
+    <Compile Include="Models\MetaDataClass\IPP.cs" />
+    <Compile Include="Models\MetaDataClass\PBFotosDatosPersonales.cs" />
+    <Compile Include="Models\MetaDataClass\Persona.cs" />
+    <Compile Include="Models\MetaDataClass\SeniasParticulares.cs" />
+    <Compile Include="Models\MetadataTypesRegister.cs" />
+    <Compile Include="Models\ModeloDeClases.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModeloDeClases.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModeloDeClases.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModeloVehiculo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelSIAC.Designer.cs">
+      <DependentUpon>ModelSIAC.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Models\NNClaseAgresion.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseArma.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseBienSustraido.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseBoolean.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseCantAutorReconocido.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseCantidadAutore.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseCondicionVictima.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseDiametroArmaFuego.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseEdadAproximada.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseEstadoInformeRastro.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseFecha.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseGanado.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseHora.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseLugar.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseModoArriboHuida.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseModusOperandi.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseMomentoDia.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseMoneda.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseRastro.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseRostro.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseRubro.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseSexo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseSubtipoArma.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseTipoArmaFuego.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseTipoAutor.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseTipoDelito.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseVidrioVehiculo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseVinculoVehiculo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NNClaseZonaCuerpoLesionada.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Paises.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Partido.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBCausaExtranaJurisdiccion.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseAspectoCabello.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseBoolean.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseCalvicie.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseColor.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseColorCabello.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseColorDePiel.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseColorOjos.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseFoto.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseGrupoSanguineo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseLongitudCabello.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseMotivoHallazgo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseOrganismoInterviniente.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseRostro.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseSexo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseTablaDestino.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBClaseTipoJurisdiccionCausa.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PBFotos.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PermisoGrupo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PermisoUsuario.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Persona.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonaIPP.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonalPoderJudicial.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonasDesaparecidas.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonasHalladas.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonaTipo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PreguntasFrecuentes.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Provincia.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PuntoGestion.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rastro.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Recurso.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SeniasParticulares.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseCejasDimension.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseCejasTipo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseColorCabello.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseColorOjos.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseColorPiel.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseEdad.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseEstatura.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseFormaBoca.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseFormaCara.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseFormaLabioInferior.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseFormaLabioSuperior.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseFormaMenton.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseFormaNariz.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseFormaOreja.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseRobustez.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseTipoCabello.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SICClaseTipoCalvicie.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TatuajesPersonas.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TPClaseTipoDNI.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuario.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vehiculo.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VersionDescriptora.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VinculoMenuBusquedaPrincipal.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VinculoMenuRecurso.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WebAppAdoNetAppender.cs" />
+    <Compile Include="Models\xBusquedaRobosDelitosSexuale.cs">
+      <DependentUpon>ModeloDeClases.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BuscarCoincidenciasJob.cs" />
+    <Compile Include="PersonasBuscadas\BusquedaDesaparecida.aspx.cs">
+      <DependentUpon>BusquedaDesaparecida.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedaDesaparecida.aspx.designer.cs">
+      <DependentUpon>BusquedaDesaparecida.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedaDesaparecidaBaja.aspx.cs">
+      <DependentUpon>BusquedaDesaparecidaBaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedaDesaparecidaBaja.aspx.designer.cs">
+      <DependentUpon>BusquedaDesaparecidaBaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedaGenerica.aspx.cs">
+      <DependentUpon>BusquedaGenerica.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedaGenerica.aspx.designer.cs">
+      <DependentUpon>BusquedaGenerica.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedaHallada.aspx.cs">
+      <DependentUpon>BusquedaHallada.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedaHallada.aspx.designer.cs">
+      <DependentUpon>BusquedaHallada.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedaHalladaBaja.aspx.cs">
+      <DependentUpon>BusquedaHalladaBaja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedaHalladaBaja.aspx.designer.cs">
+      <DependentUpon>BusquedaHalladaBaja.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedasActivas.aspx.cs">
+      <DependentUpon>BusquedasActivas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\BusquedasActivas.aspx.designer.cs">
+      <DependentUpon>BusquedasActivas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\dsDesaparecidasActivas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsDesaparecidasActivas.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\frmMailConfig.aspx.cs">
+      <DependentUpon>frmMailConfig.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\frmMailConfig.aspx.designer.cs">
+      <DependentUpon>frmMailConfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\FullSizeImage.aspx.cs">
+      <DependentUpon>FullSizeImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\FullSizeImage.aspx.designer.cs">
+      <DependentUpon>FullSizeImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\FuncionesGrales.cs" />
+    <Compile Include="PersonasBuscadas\ImageHandler1.ashx.cs">
+      <DependentUpon>ImageHandler1.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\ImagenFoto.aspx.cs">
+      <DependentUpon>ImagenFoto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\ImagenFoto.aspx.designer.cs">
+      <DependentUpon>ImagenFoto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\MailJob.cs" />
+    <Compile Include="PersonasBuscadas\MailTest.aspx.cs">
+      <DependentUpon>MailTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\MailTest.aspx.designer.cs">
+      <DependentUpon>MailTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\NavegadorPersonas.aspx.cs">
+      <DependentUpon>NavegadorPersonas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\NavegadorPersonas.aspx.designer.cs">
+      <DependentUpon>NavegadorPersonas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\PersonasBuscadasDataSet.cs">
+      <DependentUpon>PersonasBuscadasDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\PersonasBuscadasDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonasBuscadasDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\ReportDesaparecidosActivos.aspx.cs">
+      <DependentUpon>ReportDesaparecidosActivos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\ReportDesaparecidosActivos.aspx.designer.cs">
+      <DependentUpon>ReportDesaparecidosActivos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\ReporteFormD.aspx.cs">
+      <DependentUpon>ReporteFormD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\ReporteFormD.aspx.designer.cs">
+      <DependentUpon>ReporteFormD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PersonasBuscadas\ReporteFormH.aspx.cs">
+      <DependentUpon>ReporteFormH.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PersonasBuscadas\ReporteFormH.aspx.designer.cs">
+      <DependentUpon>ReporteFormH.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PlanillaParaDescargar.aspx.cs">
+      <DependentUpon>PlanillaParaDescargar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PlanillaParaDescargar.aspx.designer.cs">
+      <DependentUpon>PlanillaParaDescargar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PreguntasFrecuentes.aspx.cs">
+      <DependentUpon>PreguntasFrecuentes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PreguntasFrecuentes.aspx.designer.cs">
+      <DependentUpon>PreguntasFrecuentes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportEstadisticasDelitos.aspx.cs">
+      <DependentUpon>ReportEstadisticasDelitos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportEstadisticasDelitos.aspx.designer.cs">
+      <DependentUpon>ReportEstadisticasDelitos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dsEstadisticasDeCargas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEstadisticasDeCargas.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsEstadisticasDelitos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsEstadisticasDelitos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportEstadisticasCargas.aspx.cs">
+      <DependentUpon>ReportEstadisticasCargas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportEstadisticasCargas.aspx.designer.cs">
+      <DependentUpon>ReportEstadisticasCargas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EstadDelitosSexualesXFecha.aspx.cs">
+      <DependentUpon>EstadDelitosSexualesXFecha.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EstadDelitosSexualesXFecha.aspx.designer.cs">
+      <DependentUpon>EstadDelitosSexualesXFecha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EstadRobosHurtosXFecha.aspx.cs">
+      <DependentUpon>EstadRobosHurtosXFecha.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EstadRobosHurtosXFecha.aspx.designer.cs">
+      <DependentUpon>EstadRobosHurtosXFecha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EstadPersHalladaXFecha.aspx.cs">
+      <DependentUpon>EstadPersHalladaXFecha.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EstadPersHalladaXFecha.aspx.designer.cs">
+      <DependentUpon>EstadPersHalladaXFecha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditUsuarioAutorizado.aspx.cs">
+      <DependentUpon>EditUsuarioAutorizado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditUsuarioAutorizado.aspx.designer.cs">
+      <DependentUpon>EditUsuarioAutorizado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EstadisticasSeleccion.aspx.cs">
+      <DependentUpon>EstadisticasSeleccion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EstadisticasSeleccion.aspx.designer.cs">
+      <DependentUpon>EstadisticasSeleccion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EstadPersDesapXFecha.aspx.cs">
+      <DependentUpon>EstadPersDesapXFecha.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EstadPersDesapXFecha.aspx.designer.cs">
+      <DependentUpon>EstadPersDesapXFecha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginSIAC - En Mantenimiento.aspx.cs">
+      <DependentUpon>LoginSIAC - En Mantenimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginSIAC - En Mantenimiento.aspx.designer.cs">
+      <DependentUpon>LoginSIAC - En Mantenimiento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manuales.aspx.cs">
+      <DependentUpon>Manuales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manuales.aspx.designer.cs">
+      <DependentUpon>Manuales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MailJob.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="QueryStringModule.cs" />
+    <Compile Include="Usuarios.aspx.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios.aspx.designer.cs">
+      <DependentUpon>Usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VisualizaMapa.aspx.cs">
+      <DependentUpon>VisualizaMapa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VisualizaMapa.aspx.designer.cs">
+      <DependentUpon>VisualizaMapa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\WebServiceIPP\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\WebServiceSIC\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Scripts\trirand\i18n\" />
+    <Folder Include="Styles\NewFolder1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MPBA.SIAC.Bll\MPBA.SIAC.Bll.csproj">
+      <Project>{856EA9AB-467E-4C39-A8F7-39CDD7784FA7}</Project>
+      <Name>MPBA.SIAC.Bll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MPBA.SIAC.BusinessEntities\MPBA.SIAC.BusinessEntities.csproj">
+      <Project>{30F8F8E1-A5BB-43E0-9D72-22F609F167C9}</Project>
+      <Name>MPBA.SIAC.BusinessEntities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://sistemas.mpba.gov.ar/NN/WebServiceMesaVirtualNN.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WebServiceIPP\</RelPath>
+      <UpdateFromURL>https://sistemas.mpba.gov.ar/NN/WebServiceMesaVirtualNN.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>MPBA_SIAC_Web_WebServiceIPP_WebServiceMesaVirtualNN</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://www.sic.mpba.gov.ar/cons1/webservice.php%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WebServiceSIC\</RelPath>
+      <UpdateFromURL>http://www.sic.mpba.gov.ar/cons1/webservice.php%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>MPBA_SIAC_Web_WebServiceSIC_Services</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\Theme1\GridView.skin" />
+    <None Include="PersonasBuscadas\dsDesaparecidasActivas.xsc">
+      <DependentUpon>dsDesaparecidasActivas.xsd</DependentUpon>
+    </None>
+    <None Include="PersonasBuscadas\dsDesaparecidasActivas.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsDesaparecidasActivas.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="PersonasBuscadas\dsDesaparecidasActivas.xss">
+      <DependentUpon>dsDesaparecidasActivas.xsd</DependentUpon>
+    </None>
+    <None Include="Web References\WebServiceIPP\WebServiceMesaVirtualNN.disco">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.sitemap" />
+    <None Include="dsEstadisticasDeCargas.xsc">
+      <DependentUpon>dsEstadisticasDeCargas.xsd</DependentUpon>
+    </None>
+    <None Include="dsEstadisticasDeCargas.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEstadisticasDeCargas.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsEstadisticasDeCargas.xss">
+      <DependentUpon>dsEstadisticasDeCargas.xsd</DependentUpon>
+    </None>
+    <None Include="dsEstadisticasDelitos.xsc">
+      <DependentUpon>dsEstadisticasDelitos.xsd</DependentUpon>
+    </None>
+    <None Include="dsEstadisticasDelitos.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsEstadisticasDelitos.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsEstadisticasDelitos.xss">
+      <DependentUpon>dsEstadisticasDelitos.xsd</DependentUpon>
+    </None>
+    <None Include="Manuales\Manual de Usuario SIAC.pdf" />
+    <None Include="Models\ModeloDeClases.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModeloDeClases.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Models\ModeloDeClases.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModeloDeClases.cs</LastGenOutput>
+    </None>
+    <Content Include="PersonasBuscadas\ImageHandler1.ashx" />
+    <None Include="PersonasBuscadas\PersonasBuscadasDataSet.xsc">
+      <DependentUpon>PersonasBuscadasDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="PersonasBuscadas\PersonasBuscadasDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PersonasBuscadasDataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="PersonasBuscadas\PersonasBuscadasDataSet.xss">
+      <DependentUpon>PersonasBuscadasDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\MenuPersona.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\IPP\Create.cshtml" />
+    <Content Include="Views\IPP\Delete.cshtml" />
+    <Content Include="Views\IPP\Details.cshtml" />
+    <Content Include="Views\IPP\Edit.cshtml" />
+    <Content Include="Views\IPP\Index.cshtml" />
+    <Content Include="Views\IPP\IPPDetail.cshtml" />
+    <Content Include="Views\IPP\IPPHeader.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\SeniasParticularesDetail.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\PBFotos\NavegadorFotosPersonas.cshtml" />
+    <Content Include="Views\PBFotos\NavegadorFotosPersonasFiltro.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Autores\Index.cshtml" />
+    <Content Include="Views\Autores\Details.cshtml" />
+    <Content Include="Views\Autores\Create.cshtml" />
+    <Content Include="Views\Autores\Edit.cshtml" />
+    <Content Include="Views\Autores\Delete.cshtml" />
+    <Content Include="Views\PBFotos\NavegadorFotosTabPersonas.cshtml" />
+    <Content Include="Views\PBFotos\FotoPersonalWebForm.cshtml" />
+    <Content Include="Views\Shared\Mensaje.cshtml" />
+    <None Include="Web References\WebServiceIPP\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WebServiceIPP\WebServiceMesaVirtualNN.wsdl">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\WebServiceSIC\MyResultadoObject.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\WebServiceSIC\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WebServiceSIC\webservice.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Estadisticas\rptEstadPersonasHalladasCargadasTodosDeptos.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptEstadPersonasDesapCargadasTodosDeptos.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptEstadDelitosCargadosTodosDeptos.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptEstadPersonasHalladasCargadasTotalDepto.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptEstadPersonasDesapCargadasTotalDepto.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptEstadDelitosCargadosTotalDepto.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptEstadDelitosxModusOperandi.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptEstadPersonasHalladasCargadas.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptEstadPersonasDesapCargadas.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptEstadDelitosCargados.rdlc" />
+    <EmbeddedResource Include="Estadisticas\rptListadoIppsXFecha.rdlc" />
+    <EmbeddedResource Include="PersonasBuscadas\rptPersonaDesapSinExJur.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PersonasBuscadas\rptDesaparecidas.rdlc" />
+    <EmbeddedResource Include="PersonasBuscadas\rptDesaparecidasActivas.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PersonasBuscadas\rptHalladas.rdlc" />
+    <EmbeddedResource Include="PersonasBuscadas\rptPersonaDesapConExJur.rdlc" />
+    <EmbeddedResource Include="PersonasBuscadas\rptPersonaHalladaConExJur.rdlc" />
+    <EmbeddedResource Include="PersonasBuscadas\rptPersonaHalladaSinExJur.rdlc" />
+    <EmbeddedResource Include="PersonasBuscadas\rptSubSeniasFotos.rdlc" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\ModelSIAC.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelSIAC.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>5519</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

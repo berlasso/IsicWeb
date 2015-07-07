@@ -1,0 +1,39 @@
+﻿@using ISIC.Entities
+@model ISICWeb.Areas.Afis.Models.AFISViewModel
+
+
+<section id="Afis">
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
+            <h2>Datos Afis</h2>
+        </div>
+        <div class="panel-body">
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Apellido)
+                    @Html.DisplayFor(m => m.Apellido, new { @class = "form-control" })
+                </div>
+                <div class="col-xs-4">
+                </div>
+                <div class="col-xs-4">
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.NIF)
+                    @Html.DisplayFor(m => m.NIF, new { @class = "form-control" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.DNI)
+                    @Html.DisplayFor(m => m.DNI, new { @class = "form-control" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Clase)
+                    @Html.DisplayFor(m => m.Clase, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

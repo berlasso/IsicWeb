@@ -1,0 +1,278 @@
+﻿ @model MPBA.SIAC.Web.Models.PBFotos
+ 
+
+
+@{
+    ViewBag.Title = "Fotos de Personas Desaparecidas y Halladas";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#espera').hide();
+        
+
+        $('#btn').click(function (e) {
+            $('#espera').show();
+        });
+    });  
+
+
+        function apeynom()
+        { var titulo = $('img').attr('title');
+            $('#para1').remove();
+            $('#detalle').append('<p id="para1" style="font-family: Arial;font-size: 1.3em;font-weight: bold;color: #268bd2;" > ' + "  " + titulo + ' </p>');
+            $('#detalle').fadeIn();
+
+        };
+
+
+        
+       
+ function carro()
+       {
+           $('#espera').hide();
+
+              $('#carousel').carouFredSel({
+            width: 800,
+            items: 3,
+            scroll: 1,
+            auto: {
+                duration: 1250,
+                timeoutDuration: 2500,
+                onBefore: mensaje()
+            },
+            prev: '#prev',
+                           
+            next: '#next',
+            pagination: '#pager'
+             });
+
+   }
+</script>
+
+<style type="text/css">
+   
+  
+    
+ .editor-label
+{display:block;
+ float:left;
+   }   
+   .editor-field
+{display:block;
+ float:left;
+ padding-top:5px;
+   }   
+   
+.tipo_foto
+{display:block;
+ float:right;
+ margin-right:50%;
+  padding-top:8px;
+ 
+    }
+    input
+    {
+        padding:2px;}
+  
+    a
+    {
+        color:blue;}
+    #fotosCarousel
+    {position: absolute;
+     left:40px;
+      top:300px;
+        }
+    
+    .boton
+    {padding: 5px;
+        }
+        .tituloFotos
+    {
+        font-family: Arial;
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #268bd2;
+        -webkit-margin-start: 30px;
+-webkit-margin-end: 58px;
+-webkit-padding-before: 0.35em;
+-webkit-padding-start: 0.75em;
+-webkit-padding-end: 0.75em;
+-webkit-padding-after: 0.625em;
+border: 2px groove threedface;
+border-image-source: initial;
+border-image-slice: initial;
+border-image-width: initial;
+border-image-outset: initial;
+border-image-repeat: initial;
+min-width: -webkit-min-content;
+      
+}
+</style>
+
+
+
+<div style="display: block; visibility: visible; position: static; text-align: center;  height: 100%">
+       <table style="text-align: center; height: 100%; width: 100%; border: solid 4 #d7d7d7; border-collapse: collapse;
+            width: 1004px;">
+            <tr>
+            <td>
+            <table class="HeaderMaster"style="text-align: center; border: solid 4 #d7d7d7; border-collapse: collapse;
+            width: 1023px;">
+            <tr>
+                <td  valign="top" align="center" >
+                 <div CssClass="InfoUsuario" ID="LBLInfoUsuario" runat="server" >
+                   @{     String  miusuario =Session["miUsuario"].ToString().Trim();
+                          var xUsuario = MPBA.ConfigurationCL.BusinessLogic.UsuariosManager.GetItem(miusuario, true);
+                           MPBA.SIAC.BusinessEntities.PersonalPoderJudicial ppj =  MPBA.SIAC.Bll.PersonalPoderJudicialManager.GetItem(xUsuario.IdPersonalPoderJudicial);
+                           MPBA.SIAC.BusinessEntities.Persona per = MPBA.SIAC.Bll.PersonaManager.GetItem(ppj.idPersona);
+                            MPBA.SIAC.BusinessEntities.PuntoGestion pg =  MPBA.SIAC.Bll.PuntoGestionManager.GetItem(ppj.idPuntoGestion);
+                            Session["idGrupo"] = xUsuario.IdGrupoUsuario;
+                           
+
+                            Session["miUfi"] = ppj.idPuntoGestion;
+                            var usuarioAp = per.Apellido + ", " + per.Nombre + " - " + pg.Descripcion + " - " + MPBA.SIAC.Bll.DepartamentoManager.GetItem(pg.idDepartamento).departamento;
+                            }
+                          
+                         <div class="InfoUsuario">
+                         @usuarioAp
+                         <a id="ctl00_HyperLink1" title="Salir"   class="logout" href="../LoginSIAC.aspx" style="display:inline-block;height:19px;width:19px;float:right; padding-right:60px">
+                         </a>
+                         </div>
+                 </div>
+                        
+                  
+                   
+                    
+                    
+                </td>
+            </tr>
+            
+            </table>
+            </td>
+            </tr>
+            <tr align="center">
+                <td  align="center" style="height: 900px;width: 993px;position:relative;  background-image: url('../App_Images/Cortes/fondo_interior.jpg'); background-repeat:no-repeat; background-position:center center;" valign ="top">
+
+                <h1 class= "tituloFotos">Visualiza Fotos de Personas</h1>
+<div id="mvcpartial" style="text-aLIGN:left;text-aLIGN: left;margin: auto;width: 95%;height: 86%"  class="FondoAutoresIgnorados">
+     
+                @using (Ajax.BeginForm("NavegadorFotosPersonas", new AjaxOptions
+                {
+                    UpdateTargetId = "fotosCarousel",
+                   InsertionMode = InsertionMode.Replace,
+                   OnSuccess = "carro", 
+                    HttpMethod = "POST"
+      }))
+      {
+                @Html.ValidationSummary(true)
+                
+                <fieldset style="padding-top:10px">
+        
+              
+                    <div class="editor-field" style="font-weight:bold" >
+                        @Html.LabelFor(model => model.idTablaDestino, "Fotos correspondientes a: ")
+                    </div>
+                   <div class="editor-field">
+                        @Html.DropDownList("idTablaDestino", String.Empty)
+                        @Html.ValidationMessageFor(model => model.idTablaDestino)
+                        
+
+                    </div>
+
+                    <div class="editor-field" style="padding-left:15px">       
+                      <span style="padding-right:8px;font-weight:bold">Sexo:</span>
+                       Femenino
+                       @Html.RadioButton("sexo","Femenino",false) 
+                          Masculino
+                       @Html.RadioButton("sexo","Masculino",false)
+                           Todos
+                       @Html.RadioButton("sexo","Todos",true)
+                       
+                    </div>
+   
+                     @*  <div class="tipo_foto">
+                        @Html.LabelFor(model => model.idTipoFoto, "Tipo de Foto")
+                        @Html.DropDownList("idTipoFoto", String.Empty)
+                        @Html.ValidationMessageFor(model => model.idTipoFoto)
+
+                        <%=Html.LabelFor(m => m.DebitAccounts, new { @class="className"})%>
+                    </div>*@
+                    <br />
+                    
+                    <div  style="padding-left:15%;padding-top:3%" >
+                     <input type="submit" id="btn" class="boton" value="Visualiza Fotos" />
+                     <input type="button" class="boton" value="Regresa al Menú Principal" onclick="window.location.href='../Home.aspx' " />
+                        <div id="detalle" style="float:right;">
+                        </div>
+                        
+                     </div> 
+                       
+                   
+                </fieldset>
+}
+ 
+</div> 
+ 
+ <div id="fotosCarousel">
+        <div id="espera" style="width:80px; margin:auto;position:relative;padding-left:25%; display:none;text-align:center;font-family: Arial; left: 97%">
+           <img alt="Esperar" src="~/App_Images/wait.gif" />
+         </div>
+ </div>
+
+  
+    </div>
+        <div id="ctl00_pnlConfigMail" class="FondoModal" style="width:400px;display:none;">
+	
+    
+</div>
+                  <input type="hidden" name="ctl00$hfGestionAccesoSic" id="ctl00_hfGestionAccesoSic" />
+        
+          <div id="ctl00_pnlSalir" class="FondoModal" style="width:210px;display:none;">
+	
+        <div>
+            <div id="divHeaderSalir" class="ModalHeader">
+                Salir</div>
+            <div style="position: relative; overflow: auto;" align="center">
+                <table>
+                    <tr>
+                        <td>
+                            <div id="ctl00_upSalir">
+		
+                                    <br />
+                             <span id="ctl00_lblMensajeSalir" style="font-size:Small;">Esta seguro que desea salir de este módulo?</span>
+                                    <br />
+                                
+	</div>
+                        </td>
+                    </tr>
+                  
+                 
+                </table>
+            </div>
+            <div style="padding-top: 10px; position: relative;">
+            
+              
+                <input type="submit" name="ctl00$btnOkSalir" value="Sí" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$btnOkSalir&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="ctl00_btnOkSalir" style="width:60px;" />
+                    <input type="submit" name="ctl00$btnCancelarSalir" value="No" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$btnCancelarSalir&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="ctl00_btnCancelarSalir" style="width:60px;" />
+            </div>
+        </div>
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

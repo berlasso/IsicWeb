@@ -1,0 +1,471 @@
+﻿
+<%@ Master  Language="C#" AutoEventWireup="True" CodeBehind="MasterPage.Master.cs" Inherits="MPBA.SIAC.Web.MasterPage" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+
+<head runat="server">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>SIAC-Sistema de Investigación y Análisis Criminal</title>
+    <!-- Evitar cache -->
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Last-Modified" content="0" />
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <!-- Fin Evitar cache -->
+
+    <link id="styleMenu" href='<%# ResolveUrl("~/App_Themes/CC/Menu.CC.css")%>' rel="stylesheet" type ="text/css" />
+    <%--<link id="stylesheet" href="App_Themes/Theme1/styles.css"  rel="stylesheet" type="text/css"  />--%>
+
+   
+     <link href="~/App_Themes/Theme1/jquery.qtip.css" rel="stylesheet" type="text/css" />
+    
+      <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/bundles/jquery-1.10.0.js")%>'> </script>
+      <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/bundles/jquery-ui-1.10.0.js")%>'> </script>
+   <script type="text/javascript" src='<%#ResolveUrl("~/Scripts/bundles/jquery.unobtrusive-ajax.js")%>'></script>
+    <script type="text/javascript" src= '<%#ResolveUrl("~/Scripts/bundles/carouselSeteo.js")%>'></script>
+     <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/bundles/jquery.easing.1.3.js")%>'></script>
+   <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/bundles/jquery.tools.min.js")%>'></script>
+      <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/bundles/jquery-migrate-1.2.1.min.js")%>'></script>  
+
+       
+    
+       
+
+   
+           <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/bundles/jquery.validate.js")%>'> </script>
+         
+      
+        
+         <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/bundles/jquery.validate.unobtrusive.js")%>'></script>
+         
+         
+          <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/jqia2.support.js")%>'></script>
+         
+         
+
+        <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/bundles/jquery.carouFredSel.js")%>' ></script>
+                  
+        <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/bundles/jquery.infinitecarousel3.js")%>' ></script>
+    
+                 
+           
+ 
+    <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/jquery.qtip.js")%>' > </script>
+    
+      <script type="text/javascript" src='<%# ResolveUrl("~/Scripts/scripts.js")%>' "></script>  
+    <script type="text/javascript" language="javascript">
+        
+         /*Permite detectar otros exploradores y  cuando IE corre con Vista de Compatibilidad
+           function ComprobarBrowser() {
+               if (document.documentMode) {
+                   if (document.documentMode < 8) {
+                       alert("Atención: Este sitio se visualizará mejor con Internet Explorer 8.0 (o superior),o bien utilice Google Chrome");
+                       return;
+                   }
+                 //  alert("Hola esta es una versión de Internet Explorer sin vista de compatibilidad");
+
+               } else {
+                   //alert("Esto no es Internet Explorer.");
+               }
+           }*/
+    </script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    
+    </asp:ContentPlaceHolder>
+
+    <style type="text/css">
+        .style1
+        {
+            height: 105px;
+        }
+        .style22
+        {
+            width: 993px;
+        }
+        .style33
+        {
+            height: 500px;
+            width: 993px;
+        }
+        .style44
+        {
+            height: 100px;
+            width: 993px;
+        }
+    </style>
+
+</head>
+
+<body class="masterpageBody">
+ 
+
+<script language="javascript" type="text/javascript">
+    //reloadScripts('scripts.js', 1); 
+  </script>
+
+ <script language="javascript" type="text/javascript">
+        var sessionTimeoutWarning ='<%= System.Configuration.ConfigurationSettings.AppSettings["SessionWarning"].ToString()%>';
+        var sessionTimeout = "<%= Session.Timeout %>";
+        var timeOnPageLoad = new Date();
+ 
+        //For warning
+        setTimeout('SessionWarning()', parseInt(sessionTimeoutWarning) * 60 * 1000);
+        //To redirect to the welcome page
+        setTimeout('RedirectToWelcomePage()',parseInt(sessionTimeout) * 60 * 1000);
+
+        //Session Warning
+        function SessionWarning() {
+            //minutes left for expiry
+            var minutesForExpiry =  (parseInt(sessionTimeout) - 
+				parseInt(sessionTimeoutWarning));
+            var message = "La sesion va a expirar en " + minutesForExpiry + 
+			" mins! Por favor, guarde lo que esta haciendo.";
+            alert(message);
+            var currentTime = new Date();
+            //time for expiry
+            var timeForExpiry = timeOnPageLoad.setMinutes(timeOnPageLoad.getMinutes() 
+				+ parseInt(sessionTimeout)); 
+
+            //Current time is greater than the expiry time
+            if(Date.parse(currentTime) > timeForExpiry)
+            {
+                alert("La sesion termino. Se volvera a la pantalla inicial.");
+                window.location = "../Home.aspx";
+            }
+        }
+
+        //Session timeout
+        function RedirectToWelcomePage(){
+            alert("La sesion ha finalizado. Se volvera a la pantalla inicial.");
+            window.location = "../LoginSIAC.aspx";
+        }
+  </script>	
+    <form id="form1" runat="server" style="vertical-align: middle; text-align: center;
+    height: 100%; width: 100%; top: 1px; left: 1px;">
+
+  
+    <div style="display: block; visibility: visible; position: static; text-align: center;
+        height: 100%">
+        <table style="text-align: center; height: 100%; width: 100%; border: solid 4 #d7d7d7; border-collapse: collapse;
+            width: 1004px;">
+            <tr>
+            <td class="style22">
+            <table class="HeaderMaster"style="text-align: center; border: solid 4 #d7d7d7; border-collapse: collapse;
+            width: 1004px;">
+            <tr>
+                <td  valign="top" align="right" >
+                
+                  <asp:Label ID="LBLInfoUsuario" runat="server" Text="Aca va info del tipo Usuario de la Sesion y demas"
+                        CssClass="InfoUsuario"></asp:Label>
+                        &nbsp;
+                    <asp:HyperLink ID="HyperLink1" runat="server" Height="19px" Width="19px" CssClass="logout" NavigateUrl="~/loginSIAC.aspx"></asp:HyperLink>
+                    
+                    
+                </td>
+            </tr>
+            <tr >
+                   <td class="style1">
+                   
+                     <telerik:RadScriptManager ID="RadScriptManager1" Runat="server" 
+                                EnableScriptGlobalization="True">
+                    </telerik:RadScriptManager>
+                    <asp:XmlDataSource ID="XmlDataSource1" runat="server" EnableCaching="False" EnableViewState="False"></asp:XmlDataSource>   
+                    <asp:UpdatePanel runat="server" ID="upMenu">
+                    <ContentTemplate>
+                    <telerik:RadMenu ID="RadMenu2"  
+                                            Runat="server"                                            
+                                            DataNavigateUrlField="URL"  
+                                            DataSourceID="XmlDataSource1" 
+                                            DataTextField="Descripcion" 
+                                            DataValueField="id" 
+                                            ExpandDelay="0" 
+                                            MaxDataBindDepth="8"                                          
+                                            CssClass="RadMenu_CC"
+                                            skin="Office2007" 
+                                            EnableEmbeddedSkins="False" 
+                                            style="margin-top:74px; margin-left:22px;" 
+                                            OnItemClick="RadMenu2_ItemClick" 
+                                            onitemdatabound = "RadMenu2_ItemDataBound" 
+                            AutoScrollMinimumHeight="10" AutoScrollMinimumWidth="10" 
+                            EnableAutoScroll="True" EnableScreenBoundaryDetection="False" 
+                                         
+                                             >
+
+                                        <CollapseAnimation Type="OutQuint" Duration="200">
+                                        </CollapseAnimation>                       
+                    </telerik:RadMenu>   
+                   <asp:UpdateProgress runat="server" ID="upWaiting" DisplayAfter="100">
+                <ProgressTemplate>
+                    <asp:Panel ID="pnlWaitingOverlay" CssClass="" runat="server">
+                        <asp:Panel ID="pnlWaiting" CssClass="" runat="server">
+                            <asp:Image ID="imgWaiting" runat="server" ImageUrl="~/App_Images/loader.gif" 
+                                Height="27px" Width="27px" />
+                        </asp:Panel>
+                    </asp:Panel>
+                </ProgressTemplate>
+            </asp:UpdateProgress>
+                   </ContentTemplate>
+                   </asp:UpdatePanel>
+                </td>
+            
+                <td align="center" valign="bottom" class="style1">
+                  <asp:UpdatePanel ID="upCartelLogSic" runat="server">
+                            <ContentTemplate>
+                <asp:Panel ID="pnlLoginSic" runat="server" Width="120px" Visible="False">
+               
+                            <br />
+                          
+                             <asp:Label ID="lblLoggeadoSic" runat="server" Text="Desloggeado del SIC" 
+                            ForeColor="Red" Width="140px" Visible="False"></asp:Label>
+                            <asp:LinkButton ID="btnLoginSic" runat="server" Text="Login SIC" 
+                                onclick="btnLoginSic_Click"></asp:LinkButton>
+                            
+                             
+                             
+                            </asp:Panel>
+                            </ContentTemplate>
+                            </asp:UpdatePanel>
+                <asp:Button ID="btnConfigMailPB" runat="server" Text="Configurar Mail" 
+                        Visible="false" onclick="btnConfigMailPB_Click" />
+                <asp:HiddenField ID="hfConfigMailPB" runat="server" />
+                       <asp:ModalPopupExtender ID="hfConfigMailPB_ModalPopupExtender" runat="server" 
+                                 DynamicServicePath="" Enabled="True" TargetControlID="hfConfigMailPB" 
+                                 BackgroundCssClass="FondoOscuro" Drag="True" DropShadow="True" PopupControlID="pnlConfigMail" 
+                                 PopupDragHandleControlID="divHeaderConfigMail" 
+                        CancelControlID="btnCancelarConfigMail">
+                             </asp:ModalPopupExtender>
+                               <asp:HiddenField ID="hfSalir" runat="server" />
+                       <asp:ModalPopupExtender ID="hfSalir_ModalPopupExtender" runat="server" 
+                                 DynamicServicePath="" Enabled="True" TargetControlID="hfSalir" 
+                                 BackgroundCssClass="FondoOscuro" Drag="True" DropShadow="True" PopupControlID="pnlSalir" 
+                                 PopupDragHandleControlID="divHeaderSalir" 
+                        CancelControlID="btnCancelarSalir">
+                             </asp:ModalPopupExtender>
+                </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            <tr align="center">
+                <td id="fondoPagina" align="center" 
+                    style="background-image: url('../App_Images/Cortes/fondo_interior.jpg'); background-repeat:no-repeat; background-position:center center;" 
+                    valign ="top" class="style33">
+                <asp:ContentPlaceHolder ID="Main" runat="server"  >
+        
+                </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+            <tr align="center">
+            <td align="right" 
+                    style="background-repeat:no-repeat; background-position:center center;" 
+                    valign ="top" class="style44">
+            <asp:ContentPlaceHolder ID="Footer" runat="server">
+             
+            </asp:ContentPlaceHolder>
+            </td>
+            </tr>
+        </table>
+    </div>
+        <asp:Panel ID="pnlConfigMail" runat="server" CssClass="FondoModal" 
+        Width="400px">
+        <div>
+            <div id="divHeaderConfigMail" class="ModalHeader">
+                Configuración del Email</div>
+            <div style="position: relative; overflow: auto;" align="center">
+                <table>
+                    <tr>
+                        <td>
+                            <asp:UpdatePanel runat="server" ID="upConfigMail" >
+                                <ContentTemplate>
+                                    <br />
+                             <asp:Label ID="lblMail" runat="server" Text="Direccion de Mail:"></asp:Label>
+                             <asp:TextBox ID="txtConfigMail" runat="server" Width="150px"></asp:TextBox>
+                             <asp:RegularExpressionValidator ID="regexMailValido" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="txtConfigMail" ErrorMessage="Email inválido"></asp:RegularExpressionValidator>
+                                    <br />
+                                    <asp:CheckBox runat="server" ID="chkMandarMail" Checked="true" 
+                                        Text="Recibir mails" AutoPostBack="True" 
+                                        oncheckedchanged="chkMandarMail_CheckedChanged" />
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </td>
+                    </tr>
+                  
+                 
+                </table>
+            </div>
+            <div style="padding-top: 10px; position: relative;">
+            
+              <asp:Button ID="btnCancelarConfigMail" runat="server" Text="Cancelar" 
+                    Width="60px" />
+                <asp:Button ID="btnOkConfigMail" runat="server" Text="OK" Width="60px" 
+                    onclick="btnOkConfigMail_Click" />
+            </div>
+        </div>
+    </asp:Panel>
+        <asp:Panel ID="pnlAccesoSic" runat="server" CssClass="FondoModal" Width="300px" 
+            DefaultButton="btnOkAccesoSic">
+            <div>
+                <div id="divHeaderAccesoSic" class="ModalHeader">
+                    Acceso al S.I.C.</div>
+                <div style="position: relative; overflow: auto;">
+                    <asp:UpdatePanel runat="server" ID="upCartelAlert">
+                        <ContentTemplate>
+                          
+                            <br />
+                            <table width="100%">
+                                <tr>
+                                    <td colspan="2">
+                                        <asp:Label ID="lblMensajeSic" runat="server" Text="Ingrese los datos para acceso al S.I.C."
+                                            Font-Size="Small" Font-Underline="True"></asp:Label>
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">
+                                        <asp:Label ID="lblUsuarioSic" runat="server" Text="Usuario" Font-Size="Medium"></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox  ID="txtUsuarioSic" runat="server" Width="100px" 
+                                            CssClass="InputLogin"></asp:TextBox>
+                            
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td>
+                                    &nbsp;</td></tr>
+                                <tr>
+                                    <td align="left">
+                                        <asp:Label ID="lblClaveSic" runat="server" Text="Clave" Font-Size="Medium"></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="txtClaveSic" runat="server" Width="100px" 
+                                            CssClass="InputLogin" TextMode="Password"></asp:TextBox>
+                                            <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td colspan="2" align="center">
+                                <asp:Label runat="server" ID="lblClaveIncorrectaSic" 
+                                Text="Usuario y/o clave incorrecta/s"  ForeColor="Red" 
+                                Visible="False"></asp:Label>
+                                </td>
+                                </tr>
+                               
+                            </table>
+                            <br />
+                            <asp:Button ID="btnOkAccesoSic" runat="server" Text="OK" Width="50px"
+                                OnClick="btnOkAccesoSic_Click" />
+                                
+                                                <asp:UpdateProgress runat="server" ID="upWaitingLoginSic" DisplayAfter="100">
+                            <ProgressTemplate>
+                                <asp:Panel ID="pnlWaitingOverlayLoginSic" CssClass="" runat="server">
+                                    <asp:Panel ID="pnlWaitingLoginSic" CssClass="" runat="server">
+                                        <asp:Image ID="imgWaitingLoginSic" runat="server" 
+                                            ImageUrl="~/App_Images/loader.gif" Height="27px" Width="27px" />
+                                    </asp:Panel>
+                                </asp:Panel>
+                            </ProgressTemplate>
+                        </asp:UpdateProgress>
+                        </ContentTemplate>
+                        <%--<Triggers>
+                            <asp:PostBackTrigger ControlID="btnCancelarAccesoSic" />
+                        </Triggers>--%>
+                    </asp:UpdatePanel>
+                </div>
+                <div style="padding-top: 10px; position: relative;">
+                    <asp:Button ID="btnCancelarAccesoSic" runat="server" Text="X" Width="50px" UseSubmitBehavior="False"
+                        OnClick="btnCancelarAccesoSic_Click" />
+                    <asp:HiddenField ID="hfAccesoSic" runat="server" />
+                </div>
+            </div>
+        </asp:Panel>
+            <asp:HiddenField ID="hfGestionAccesoSic" runat="server" />
+        <asp:ModalPopupExtender ID="hfGestionAccesoSic_ModalPopupExtender" runat="server"
+            BackgroundCssClass="FondoOscuro" DropShadow="True" 
+        DynamicServicePath="" Enabled="True"
+            PopupControlID="pnlAccesoSic" TargetControlID="hfGestionAccesoSic" CancelControlID="btnCancelarAccesoSic"
+            OkControlID="hfAccesoSic" Drag="True" 
+        PopupDragHandleControlID="DivHeaderAccesoSic">
+        </asp:ModalPopupExtender>
+          <asp:Panel ID="pnlSalir" runat="server" CssClass="FondoModal" 
+        Width="210px">
+        <div>
+            <div id="divHeaderSalir" class="ModalHeader">
+                Salir</div>
+            <div style="position: relative; overflow: auto;" align="center">
+                <table>
+                    <tr>
+                        <td>
+                            <asp:UpdatePanel runat="server" ID="upSalir" >
+                                <ContentTemplate>
+                                    <br />
+                             <asp:Label ID="lblMensajeSalir" runat="server" Text="Esta seguro que desea salir de este módulo?" 
+                                        Font-Size="Small"></asp:Label>
+                                    <br />
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </td>
+                    </tr>
+                  
+                 
+                </table>
+            </div>
+            <div style="padding-top: 10px; position: relative;">
+            
+              
+                <asp:Button ID="btnOkSalir" runat="server" Text="Sí" Width="60px" 
+                    onclick="btnOkSalir_Click" />
+                    <asp:Button ID="btnCancelarSalir" runat="server" Text="No" 
+                    Width="60px" />
+            </div>
+        </div>
+    </asp:Panel>
+
+                     <asp:Panel ID="pnlServerSicOcupado" runat="server" CssClass="FondoModal" 
+        Width="193px">
+        <div>
+            <div id="divHeaderServerSicOcupado" class="ModalHeader">
+                Servidor Ocupado</div>
+            <div style="position: relative; overflow: auto;" align="center">
+                <table>
+                    <tr>
+                        <td>
+                            <asp:UpdatePanel runat="server" ID="upServerSicOcupado" >
+                                <ContentTemplate>
+                                    <br />
+                             <asp:Label ID="lblMensajeServerSicOcupado" runat="server" Text="El servidor esta ocupado, reintente en unos instantes." 
+                                        Font-Size="Small"></asp:Label>
+                                    <br />
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </td>
+                    </tr>
+                  
+                 
+                </table>
+            </div>
+            <div style="padding-top: 10px; position: relative;">
+            
+             
+                <asp:Button ID="btnOkServerSicOcupado" runat="server" Text="OK" Width="60px" onclick="btnOkServerSicOcupado_Click" 
+                    />
+            </div>
+        </div>
+    </asp:Panel>
+      <asp:HiddenField ID="hfServerSicOcupado" runat="server" />
+        <asp:ModalPopupExtender ID="hfServerSicOcupado_ModalPopupExtender" runat="server"
+            BackgroundCssClass="FondoOscuro" DropShadow="True" 
+        DynamicServicePath="" Enabled="True"
+            PopupControlID="pnlServerSicOcupado" TargetControlID="hfServerSicOcupado" Drag="True" 
+        PopupDragHandleControlID="DivHeaderServerSicOcupado">
+        </asp:ModalPopupExtender>
+    </form>
+</body>
+</html>

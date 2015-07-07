@@ -1,0 +1,77 @@
+﻿@model SIACGral.Models.SeniasParticulares
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>SeniasParticulares</legend>
+
+        @Html.HiddenFor(model => model.id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idPersona)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idPersona)
+            @Html.ValidationMessageFor(model => model.idPersona)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idSeniaParticular, "ClaseSeniaParticular")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idSeniaParticular", String.Empty)
+            @Html.ValidationMessageFor(model => model.idSeniaParticular)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idUbicacionSeniaParticular, "ClaseUbicacionSeniaPart")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idUbicacionSeniaParticular", String.Empty)
+            @Html.ValidationMessageFor(model => model.idUbicacionSeniaParticular)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idTablaDestino, "ClaseTipoPersona")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idTablaDestino", String.Empty)
+            @Html.ValidationMessageFor(model => model.idTablaDestino)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.descripcion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.descripcion)
+            @Html.ValidationMessageFor(model => model.descripcion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idAutor)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idAutor)
+            @Html.ValidationMessageFor(model => model.idAutor)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

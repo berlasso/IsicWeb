@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "REGISTRACION EL EL SIC";
+}
+
+<div class="center wow fadeInDown animated tile-light">
+    <h1>@ViewBag.Title</h1>
+</div>
+<div class="row wow fadeInDown animated">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+    
+
+                <div class="panel panel-default tile wow fadeInDown animated" style="margin: 60px 0 80px 0">
+                    <div class="panel-heading">
+                       
+                        
+                       
+                        <h4>Requisitos para el alta en el sitio del SIC</h4>
+
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <p>Para poder consultar los datos de imputados en la base del SIC deberá elevar un oficio dirigido al Coordinador del Sistema de Investigaciones Criminalísticas - Dr. Daniel Güimil -.
+                            </p>
+                            
+                            <p>Se deberá indicar: </p>
+                            <ul>
+                                <li>Nombres y Apellido del interesado</li>
+                                <li>Si es usuario de la red del Ministerio Público y en su caso, nombre de usuario respectivo</li>
+                                <li>Dirección de correo electrónico</li>
+                                <li>Dependencia en la que se desempeña</li>
+                                <li>Teléfono de contacto</li>
+                                <li>Cargo que ocupa</li>
+                            </ul>
+                            <p>Dicho oficio deberá estar firmado por el Fiscal General y podrá ser remitida por los siguientes medios:</p>
+                            <p>
+                                <ul>
+                                    <li>Fax al (0221) 412-1226</li>
+                                    <li>Por mail con escanejo adjunto a <a href="mailto:isic@mpba.gov.ar">isic@mpba.gov.ar</a></li>
+                                    <li>Correo tradicional al Edificio del Fuero Penal sito en calle 7 entre 56 y 57 -subsuelo- de La Plata</li>
+                                </ul>
+
+                            </p>
+                            <p>
+                                De ser autorizado el acceso al sitio, se remitira a la brevedad un correo electrónico a la dirección consignada. El mismo deberá ser confirmado por el interesado para poder ser validado el usuario en el sistema.
+                            </p>
+                        </div>
+                        
+
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-12">
+                                <p>Ante cualquier duda, comunicarse al Area Sistemas del SIC al teléfono (0221) 412-1227</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+         
+    </div>
+    <div class="col-md-3"></div>
+
+</div>
+@section footer
+{
+    @Html.ActionLink("Volver", "Login", "", new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+}

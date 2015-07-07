@@ -1,0 +1,193 @@
+﻿@model SIACGral.Models.IPP
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>IPP</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IPP1)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IPP1)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.numero)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.numero)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.caratula)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.caratula)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UFI)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UFI)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TitularUFI)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TitularUFI)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ResponsableUFI)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ResponsableUFI)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CambioRadicacion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CambioRadicacion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseIncompetencia.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseIncompetencia.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.fechaInicio)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.fechaInicio)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaIncompetencia)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FechaIncompetencia)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NuevaIPP)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NuevaIPP)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseEtapaIPP.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseEtapaIPP.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseFormaInicio.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseFormaInicio.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Referente)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Referente)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idReferente)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idReferente)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idEstadoIPP)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idEstadoIPP)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Baja)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Baja)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UsuarioUltimaModificacion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UsuarioUltimaModificacion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaUltimaModificacion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FechaUltimaModificacion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaCreacion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FechaCreacion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseIPP.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseIPP.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.InicioDenunciante)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.InicioDenunciante)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaEtapaIPP)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FechaEtapaIPP)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Archivo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Archivo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TipoArchivo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TipoArchivo)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

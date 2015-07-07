@@ -1,0 +1,220 @@
+/* RadMenu CC skin */
+
+.RadMenu_CC
+{
+	/*background: #d5d9de url(Menu/MenuBg.jpg);	*/
+	
+	background: url(Menu/tab_menu_of.png);
+	background-repeat:repeat-x;	
+	line-height: 25px;
+}
+
+.RadMenu_CC_Context
+{
+	background: none;
+	border-top: 1px solid #d2d8de;
+	padding: 0;
+}
+
+.RadMenu_CC a.rmLink,
+.RadMenu_CC .rmTemplate
+{
+	text-decoration:none;
+	/*color: #4a89af;*/
+	/*color: #13507d;*/
+	/*  font: bold 11px/23px Arial, sans-serif;*/
+	font:  11px/23px Arial, sans-serif;
+	text-align: center;
+	width: 130px;
+	height: 27px;
+}
+.RadMenu_CC a.rmLink
+{
+    width: 142px;
+    
+}
+a
+{
+    color: #13507d;
+}
+
+.RadMenu_CC .rmLink:hover,
+.RadMenu_CC .rmFocused,
+.RadMenu_CC .rmExpanded
+{
+	color: #ffffff;
+	background: #fefefe url(Menu/tab_menu_on.png) repeat-x;
+	/**background: #fefefe  repeat-x;*/
+}
+
+
+
+
+.RadMenu_CC .rmText
+{
+	padding: 0 0px;
+}
+
+.RadMenu_CC .rmGroup
+{
+	border: solid #4d696d;
+	border-width: 0 1px;
+	background: #f0f2f4;
+	width:auto;
+	text-align:left;
+}
+
+.RadMenu_CC .rmVertical .rmGroup
+{
+	border-top-width: 1px;
+}
+
+.RadMenu_CC .rmGroup .rmLink,
+.RadMenu_CC .rmGroup .rmTemplate
+{
+	border-style: solid;
+	border-width: 1px 0;
+	border-top-color: #f6f7f9;
+	border-bottom-color: #dde1e4;
+	width: auto;
+	text-align: left;
+	
+	min-width: 130px;
+	font-weight: normal;
+}
+
+.RadMenu_CC .rmGroup .rmText
+{
+	padding: 0 60px 0 3px;
+}
+
+
+
+.RadMenu_CC .rmGroup .rmLink:hover,
+.RadMenu_CC .rmGroup .rmFocused,
+.RadMenu_CC .rmGroup .rmExpanded
+{
+	background: #cdd5d6;
+	color: #4d696d;
+}
+
+.RadMenu_CC .rmLeftArrow,
+.RadMenu_CC .rmRightArrow,
+.RadMenu_CC .rmTopArrow,
+.RadMenu_CC .rmBottomArrow,
+.RadMenu_CC .rmLeftArrowDisabled,
+.RadMenu_CC .rmRightArrowDisabled,
+.RadMenu_CC .rmTopArrowDisabled,
+.RadMenu_CC .rmBottomArrowDisabled
+{
+	border-left: 1px solid #d2d8de;
+	background: #5a989e url(Menu/left.gif) center center no-repeat;
+	width:15px;
+	text-decoration:none;
+	text-indent:-3000px;
+	color:#92b5b9;
+	overflow:hidden;
+}
+
+.RadMenu_CC .rmTopArrow,
+.RadMenu_CC .rmTopArrowDisabled
+{
+	background-image:url(Menu/top.gif);
+	width:100%;
+}
+
+.RadMenu_CC .rmBottomArrow,
+.RadMenu_CC .rmBottomArrowDisabled
+{
+	background-image:url(Menu/bottom.gif);
+	width:100%;
+}
+
+.RadMenu_CC .rmRightArrow,
+.RadMenu_CC .rmLeftArrow
+{
+	height:100%;
+}
+
+.RadMenu_CC .rmRightArrow,
+.RadMenu_CC .rmRightArrowDisabled
+{
+	background-image: url(Menu/right.gif);
+}
+
+.RadMenu_CC .rmVertical .rmRegistroarator
+{
+	padding-top: 3px;
+	background: #f7f7f7 url(Menu/Registroarator.gif) no-repeat right;
+	font-size: 0;
+	border-top:0;
+	border-bottom:0;
+	line-height: 0;
+}
+
+.RadMenu_CC .rmExpandLeft,
+.RadMenu_CC .rmExpandRight
+{
+	background:transparent url(Menu/groupImage.gif) right center no-repeat;
+}
+
+.RadMenu_CC .rmLink:hover .rmExpandLeft,
+.RadMenu_CC .rmLink:hover .rmExpandRight,
+.RadMenu_CC .rmFocused .rmExpandLeft,
+.RadMenu_CC .rmFocused .rmExpandRight,
+.RadMenu_CC .rmExpanded .rmExpandLeft,
+.RadMenu_CC .rmExpanded .rmExpandRight
+{
+	background:transparent url(Menu/invertedGroupImage.gif) right center no-repeat;
+}
+
+.RadMenu_CC .rmLeftImage 
+{
+	margin: 3px 2px 0;
+}
+
+/*right-to-left support*/
+
+.RadMenu_CC_rtl,
+.RadMenu_CC_rtl *
+{
+    text-align:right !important;
+}
+
+.RadMenu_CC_rtl .rmGroup .rmText
+{
+	padding: 0 12px 0 60px;
+}
+
+.RadMenu_CC_rtl .rmExpandLeft,
+.RadMenu_CC_rtl .rmExpandRight
+{
+	background:transparent url(Menu/left.gif) left center no-repeat;
+}
+
+.RadMenu_CC_rtl .rmLink:hover .rmExpandLeft,
+.RadMenu_CC_rtl .rmLink:hover .rmExpandRight,
+.RadMenu_CC_rtl .rmFocused .rmExpandLeft,
+.RadMenu_CC_rtl .rmFocused .rmExpandRight,
+.RadMenu_CC_rtl .rmExpanded .rmExpandLeft,
+.RadMenu_CC_rtl .rmExpanded .rmExpandRight
+{
+	background:transparent url(Menu/invertedGroupImageRTL.gif) left center no-repeat;
+}
+
+.RadMenu_CC_rtl .rmGroup .rmLink:hover .rmExpandLeft,
+.RadMenu_CC_rtl .rmGroup .rmLink:hover .rmExpandRight,
+.RadMenu_CC_rtl .rmGroup .rmFocused .rmExpandLeft,
+.RadMenu_CC_rtl .rmGroup .rmFocused .rmExpandRight,
+.RadMenu_CC_rtl .rmGroup .rmExpanded .rmExpandLeft,
+.RadMenu_CC_rtl .rmGroup .rmExpanded .rmExpandRight
+{
+	background:transparent url(Menu/left.gif) left center no-repeat;
+}
+
+.RadMenu_CC a.rmDisabled,
+.RadMenu_CC .rmDisabled:hover
+{
+    background: none;
+    color: #ccc;
+}

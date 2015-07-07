@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SIACGral.Models.SeniasParticulares>
+
+<div id="SeniasParticularesTable" style="width: 580px; margin: auto;">
+@using MvcJqGrid
+
+     @{
+                MvcJqGrid.DataReaders.JsonReader jsonReader = new MvcJqGrid.DataReaders.JsonReader();
+                jsonReader.RepeatItems = false;
+                jsonReader.Id = "dataJson";
+            }
+            @(Html.Grid("GridSeniasParticulares")
+                .SetCaption("Señas Particulares")
+                .AddColumn(new Column("idSeniaParticular"))
+                .AddColumn(new Column("idUbicacionSeniaParticular"))
+                .AddColumn(new Column("descripcion"))
+                .SetUrl("/SeniasParticulares/GridSeniasParticulares")
+                .SetAutoEncode(true)
+                .SetDataType(MvcJqGrid.Enums.DataType.Json)
+                .SetAutoWidth(false)
+                .SetWidth(650)
+                .SetRowNum(10)
+                .SetJsonReader(jsonReader)
+                .SetLoadUi(MvcJqGrid.Enums.LoadUi.Block)
+                .SetRowList(new int[] { 10, 15, 20, 50 })
+                .SetViewRecords(true)
+                .SetGridView(true)
+                .SetEmptyRecords("No se encontraron señas registradas")
+                .SetShowAllSortIcons(true)
+                .SetShrinkToFit(true)               
+                .SetPager("pager"))
+
+
+    </div>

@@ -1,0 +1,56 @@
+﻿ @model MPBA.SIAC.Web.Models.PBFotos
+
+@{
+    ViewBag.Title = "Fotos de Personas Desaparecidas y Halladas";
+}
+<style type="text/css">
+    
+ .editor-label
+{display:block;
+ float:left;
+   }   
+   .editor-field
+{display:block;
+ float:left;
+   }   
+   
+.tipo_foto
+{display:block;
+ float:right;
+ margin-left:40px;
+ 
+    }
+</style>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        
+              
+        <div class="editor-field">
+            @Html.LabelFor(model => model.idTablaDestino, "Fotos correspondientes a:")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idTablaDestino", String.Empty)
+            @Html.ValidationMessageFor(model => model.idTablaDestino)
+        </div>
+
+   
+          <div class="tipo_foto">
+            @Html.LabelFor(model => model.idTipoFoto, "Tipo de Foto")
+            @Html.DropDownList("idTipoFoto", String.Empty)
+            @Html.ValidationMessageFor(model => model.idTipoFoto)
+        </div>
+        <br />
+        <p>
+@Html.ActionLink("Visualiza Fotos","NavegadorFotosPersonas","PBFotos",   new { tipoPersona = 3 }, null)           
+        </p>
+    </fieldset>
+}
+
+<div>
+
+ 
+</div>
+

@@ -1,0 +1,124 @@
+﻿@model IEnumerable<MPBA.SIAC.Web.Models.DelitosAutoresAnalisisGeneral_Result>
+@using MPBA.SIAC.Web.Models.MetaDataClass;
+ 
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var oTableAp;
+        oTableAp = $('#autoresAP').dataTable();
+        oTableAp.fnDestroy();
+
+
+
+        /*if (navigator.appName == 'Microsoft Internet Explorer') {
+        oTableAp = $('#autoresAP').dataTable();
+        oTableAp.fnDestroy();
+           
+        }*/
+        /*    else {
+        if (oTableAp != null) {
+        oTableAp.fnClearTable();
+        } */
+
+        oTableAp = $("#autoresAP").dataTable(
+           { "sDom": 'T<"clear">lfrtip',
+               "oTableTools": {
+                   "sSwfPath": "/Styles/swf/copy_csv_xls_pdf.swf"
+               },
+               "bJQueryUI": true,
+               "aaSorting": [[0, "desc"]],
+               "bPaginate": true,
+               "sPaginationType": "full_numbers",
+               "iDisplayLength": 25,
+               "sScrollY": "100%",
+               "sScrollX": "100%",
+               "bScrollCollapse": true,
+               "fnInitComplete": function () {
+                   this.fnAdjustColumnSizing(true);
+                   },
+               "oLanguage": {
+                   "sLengthMenu": "Despliega _MENU_ reg. por pagina",
+                   "sZeroRecords": "No hay registros",
+                   "sInfo": "Visualiza _START_ de _END_ sobre un total de _TOTAL_ registros ",
+                   "sInfoEmpty": "Visualiza 0 de 0 total 0 reg",
+                   "sInfoFiltered": "(filtro de _MAX_ reg)",
+                   "sSearch": "Filtra por",
+                   "sLoadingRecords": "Cargando…",
+                   "oPaginate": {
+                       "sFirst": "Primero",
+                       "sLast": "Último",
+                       "sNext": "Siguiente",
+                       "sPrevious": "Anterior"
+                   },
+                   "fnInfoCallback": null
+               }
+           }
+           );
+
+
+        oTableAp.fnAdjustColumnSizing(true);
+        $('#espera').hide();
+
+        document.getElementById("containerAp").style.visibility = 'visible';
+        
+       
+    });
+
+
+</script>
+  
+   <h3 id="H1" style="background-color:#186BA9 ;color:White;">Resultado de los primeros 600 Autores coincidentes. Click en el nombre de la columna para definir orden</h3>   
+  
+ @if (Model.Count<MPBA.SIAC.Web.Models.DelitosAutoresAnalisisGeneral_Result>() == 0)
+ {
+      <br />
+      <br />
+        <p style="text-align:center; margin-top:5px; padding:5px;font-family: Arial;background: rgba(197, 204, 211, 0.98); color: #1571d7;font-size:1.1em; font-weight: bold" >
+             
+            
+           No hay @ViewBag.titulo  con las condiciones especificadas.
+             </p>
+
+     
+ }
+ 
+
+ @if (Model.Count<MPBA.SIAC.Web.Models.DelitosAutoresAnalisisGeneral_Result>() > 0)
+ {
+     List<Columnas> datosGrilla = ViewBag.DatosGrilla as List<Columnas>;
+     
+ <div id="containerAp" style="visibility:hidden; overflow: auto">
+ <table id="autoresAP" class="grillaDatatable" style="border-collapse: separate;border-spacing: 3px;">
+     <thead>
+        <tr>
+          @foreach (Columnas fila in datosGrilla)
+       {
+               <th >
+                    @fila.nombreTitulo
+                </th>
+        }
+          
+       
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (var autor in Model)
+     {
+        <tr> 
+           @foreach (Columnas fila in datosGrilla)
+           {
+               string valor = Convert.ToString(@DataBinder.Eval(autor, Convert.ToString(fila.nombreCampo)));
+                  <td class=@fila.clase style="text-align:left;text-transform:capitalize;">
+              @Convert.ToString(valor) 
+              </td>
+           }
+
+           
+        </tr>
+     }
+    </tbody>
+</table>
+</div>
+
+ }
+ 

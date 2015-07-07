@@ -1,0 +1,66 @@
+﻿@model  MPBA.SIAC.Web.Models.Persona
+
+@{
+    ViewBag.Title = "Alta de una Nueva Persona";
+}
+
+<h2 class="tituloFormInput">Nuevo Registro</h2>
+@{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
+
+ <script type="text/javascript">
+      $(function () {   
+          $("#accordion").accordion({
+              collapsible: true
+          });
+      });
+  </script>
+ 
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true, "No pudo grabarse los datos exitosamente, reintente nuevamente")
+
+
+ <div id="accordion">
+  <h3>Datos Identificatorios</h3>
+  <div>
+     @Html.Partial("DatosPersonales")
+  </div>
+  <h3>Datos de Ubicación</h3>
+  <div>
+   
+  </div>
+  <h3>Parentezco</h3>
+  <div>
+
+     @Html.Partial("Padres") 
+  </div>
+  <h3>Señas Particulares</h3>
+  <div>
+    
+
+    @{ViewBag.idPersona = Model.id;}
+    @Html.Partial("SeniasParticularesDetail", Model.SeniasParticulares)
+      
+  
+  </div>
+  <p>
+        
+        @Html.ActionLink("Back to List", "Index")
+
+    </p>  
+</div>
+
+
+    <input type="submit" value="Create" />
+
+       
+     
+}    
+    
+   
+      
+  
+
+
+

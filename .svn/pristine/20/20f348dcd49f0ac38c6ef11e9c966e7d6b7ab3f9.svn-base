@@ -1,0 +1,109 @@
+﻿@using Microsoft.Practices.ObjectBuilder2
+@model ISICWeb.Models.UsuarioViewModel
+@{
+    ViewBag.Title = "INFORMACION DEL USUARIO";
+}
+
+<div class="center wow fadeInDown animated tile-light">
+    <h1>@ViewBag.Title</h1>
+</div>
+<div class="row wow fadeInDown animated">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+    
+
+                <div class="panel panel-default tile wow fadeInDown animated" style="margin: 60px 0 80px 0">
+                    <div class="panel-heading">
+                       
+                        
+                       
+                        <h4>Perfil del usuario @User.Identity.Name:</h4>
+
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.UserName)
+                                @Html.TextBoxFor(model => model.UserName, new {@class = "form-control", @readonly = "readonly"})
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.Email)
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.Apellido)
+                                @Html.TextBoxFor(model => model.Apellido, new {@class = "form-control", @readonly = "readonly"})
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.Nombre)
+                                @Html.TextBoxFor(model => model.Nombre, new {@class = "form-control", @readonly = "readonly"})
+                            </div>
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.Departamento)
+                                @Html.TextBoxFor(model => model.Departamento.DepartamentoNombre, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.Label("Dependencia Poder Judicial")
+                                @Html.TextBoxFor(model => model.PuntoGestion.Descripcion, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.Dependencia)
+                                @Html.TextBoxFor(model => model.Dependencia, new {@class = "form-control", @readonly = "readonly"})
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.DocumentoNumero)
+                                @Html.TextBoxFor(model => model.DocumentoNumero, new {@class = "form-control", @readonly = "readonly"})
+                            </div>
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.Sexo)
+                                @Html.TextBoxFor(model => model.Sexo.descripcion, new {@class = "form-control", @readonly = "readonly"})
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.SubCodBarra)
+                                @Html.TextBoxFor(model => model.SubCodBarra, new {@class = "form-control", @readonly = "readonly"})
+                            </div>
+                        </div>
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.Roles)
+                                @{
+                                    var csv = string.Join("\n ", Model.Roles.ToArray());
+                                }
+                                @Html.TextArea("Roles",csv, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-6">
+                             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                            <div class="col-xs-12">
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+         
+    </div>
+    <div class="col-md-3"></div>
+
+</div>
+@section footer
+{
+    @*@Html.ActionLink("Volver", "Index", "Home", new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })*@
+<a class="btn btn-lg btn-alt volver" href='#' onclick=' window.history.go(-1); return false; ' title=" volver" type="button">
+    Volver
+</a>
+    }

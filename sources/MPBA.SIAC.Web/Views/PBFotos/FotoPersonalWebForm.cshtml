@@ -1,0 +1,182 @@
+﻿  @model IEnumerable<MPBA.SIAC.Web.Models.PBFotosDatosPersonales>
+  <script type="text/javascript" src='@Url.Content("~/Scripts/bundles/carouselSeteo.js")'></script>
+   <link href='@Url.Content("~/App_Themes/Theme1/styles_accordion.css")' rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(function () {
+        $('#carousel').infiniteCarousel({
+            imagePath:  "@Url.Content("~/App_Images/")",   
+            transitionSpeed: 300,
+            displayTime: 6000,
+            internalThumbnails: false,
+            thumbnailType: 'buttons',
+            customClass: 'myCarousel',
+            progressRingColorOpacity: '0,0,0,.9',
+            progressRingBackgroundOn: false,
+            easeLeft: 'easeOutExpo',
+            easeRight: 'easeOutQuart',
+            inView: 1,
+            advance: 1,
+            autoPilot: false,
+            prevNextInternal: false,
+            autoHideCaptions: true
+        });
+    });
+
+
+ 
+</script>
+
+
+ <style>
+                
+    .apellido
+    { text-align:center;
+    margin-top:0px;
+    margin-bottom:0px;
+    padding:0px;
+     font-family: Arial;
+    background: rgba(197, 204, 211, 0.98);
+    color: #1571d7;
+    font-weight: bold;    
+    }
+    
+    .centeredImage
+    {
+    text-align:center;
+    margin-top:0px;
+    margin-bottom:0px;
+    padding:0px;
+    }
+    
+    
+  div.infiniteCarousel {
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	box-shadow: 0px 0px 8px #333;
+}  
+    
+
+    
+    
+    
+    
+    
+
+div.ic_myCarousel {
+	margin: 20px auto 0 auto;
+	-moz-box-shadow: 0px 0px 10px #333;
+	-webkit-box-shadow:  0px 0px 10px #333;
+	box-shadow:  0px 0px 10px #333;
+	clear:right;
+	background: #eee;
+}
+.ic_myCarousel .ic_button {
+	background: #999;
+	width: 10px;
+	height: 10px;
+	position: relative;
+	float: left;
+	margin-right: 6px;
+	border-radius: 10px;
+	margin-top: 0 4px 0 2px;
+	border: 1px solid #eee;
+}
+.ic_thumbnails {
+	display: inline-block;
+	font: bold 14px Arial, sans-serif;
+}
+
+/* keep this after the ic_button code for proper border coloring */		
+.ic_myCarousel2 .ic_active, .ic_myCarousel .ic_active, .ic_vidCarousel .ic_active  {
+	background: #fff;
+	border: 1px solid #faa;
+}
+.ic_myCarousel .ic_active  {
+	background: #fff;
+	border: 1px solid #faa;
+}
+
+.carousel div p {
+    color: #333333;
+    font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+    font-size: 18px;
+    text-shadow: 0 1px 1px #C9C9C9;
+}
+.options {
+	font-size: 16px;
+}
+
+.ic_caption 
+  { text-align:center;
+    margin-top:3px;
+    margin-bottom:1px;
+    padding:8px;
+    font-size: 1.50em;
+    
+     font-family: Arial;
+     
+    background: rgba(197, 204, 211, 0.98);
+    color: #1571d7;
+    font-weight: bold;    
+    }
+   .tituloPersona
+   { margin:0px 1px 1px 0;
+     float:middle;
+     font-family:Arial;
+     background:rgba(197, 204, 211, 0.98);
+     color:#1571d7;
+     font-weight:bold;
+       }
+</style>
+
+
+  @if (Model.Count<MPBA.SIAC.Web.Models.PBFotosDatosPersonales>() == 0)
+  {
+      <br />
+      <br />
+  <p style="text-align:center; margin-top:50px; padding:10px;font-family: Arial;background: rgba(197, 204, 211, 0.98); color: #1571d7;font-size:1.5em; font-weight: bold" >
+             
+            
+           No hay Fotos ingresadas en las fichas de las Personas resultantes de la Búsqueda.
+             </p>
+ }
+ 
+ @if (Model.Count<MPBA.SIAC.Web.Models.PBFotosDatosPersonales>() > 0)
+ {
+        <h3 class="tituloPersona">
+        Fotos pertenecientes a  @ViewBag.titulo
+        </h3>
+}
+
+<ul id="carousel"> 
+
+     @foreach (var persel in Model)
+     {
+        
+         for (var i = 0; i < persel.pbFotos.Count; i++)
+       
+             {
+                 var apeynom = persel.Apellido + ',' + persel.Nombre + "   NroIpp:" + persel.Ipp; 
+                 var indiceFoto =  persel.pbFotos[i].id;
+            <li>
+
+            <a class="thumb"  title="@apeynom" >
+
+             <img class="centeredImage" src="@Url.Action("GetImageById", "PBFotos", new { indice = indiceFoto })" alt="Foto"  width="700" height="538" />
+            </a>
+            <br />
+            <br />
+            <p style="text-align:center; margin-top:10px; margin-bottom:0px; padding:0px;font-family: Arial;background: rgba(197, 204, 211, 0.98); color: #1571d7;font-weight: bold" >
+             
+            <caption>
+             @apeynom  
+             </caption>            
+            </p>
+            
+        </li>
+             }}
+
+</ul>
+
+
+

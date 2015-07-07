@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MPBA.SIAC.Web.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MPBA_SIAC_Web_WebServiceSIC_Services" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://sic-site.mpba.gov.ar/cons1/webservice.php</Value>
+    </Setting>
+    <Setting Name="MPBA_SIAC_Web_WebServiceIPP_WebServiceMesaVirtualNN" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://sistemas.mpba.gov.ar/NN/WebServiceMesaVirtualNN.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

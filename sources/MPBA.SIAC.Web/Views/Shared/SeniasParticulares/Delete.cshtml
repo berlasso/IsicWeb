@@ -1,0 +1,60 @@
+﻿@model SIACGral.Models.SeniasParticulares
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>SeniasParticulares</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idPersona)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idPersona)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseSeniaParticular.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseSeniaParticular.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseUbicacionSeniaPart.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseUbicacionSeniaPart.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseTipoPersona.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseTipoPersona.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idAutor)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idAutor)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

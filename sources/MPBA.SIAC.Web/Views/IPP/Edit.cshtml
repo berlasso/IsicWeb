@@ -1,0 +1,229 @@
+﻿@model SIACGral.Models.IPP
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>IPP</legend>
+
+        @Html.HiddenFor(model => model.id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IPP1)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IPP1)
+            @Html.ValidationMessageFor(model => model.IPP1)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.numero)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.numero)
+            @Html.ValidationMessageFor(model => model.numero)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.caratula)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.caratula)
+            @Html.ValidationMessageFor(model => model.caratula)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UFI)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UFI)
+            @Html.ValidationMessageFor(model => model.UFI)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TitularUFI)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TitularUFI)
+            @Html.ValidationMessageFor(model => model.TitularUFI)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ResponsableUFI)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ResponsableUFI)
+            @Html.ValidationMessageFor(model => model.ResponsableUFI)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CambioRadicacion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CambioRadicacion)
+            @Html.ValidationMessageFor(model => model.CambioRadicacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idIncompetencia, "ClaseIncompetencia")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idIncompetencia", String.Empty)
+            @Html.ValidationMessageFor(model => model.idIncompetencia)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.fechaInicio)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.fechaInicio)
+            @Html.ValidationMessageFor(model => model.fechaInicio)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaIncompetencia)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FechaIncompetencia)
+            @Html.ValidationMessageFor(model => model.FechaIncompetencia)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NuevaIPP)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NuevaIPP)
+            @Html.ValidationMessageFor(model => model.NuevaIPP)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idEtapaIPP, "ClaseEtapaIPP")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idEtapaIPP", String.Empty)
+            @Html.ValidationMessageFor(model => model.idEtapaIPP)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idFormaInicio, "ClaseFormaInicio")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idFormaInicio", String.Empty)
+            @Html.ValidationMessageFor(model => model.idFormaInicio)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Referente)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Referente)
+            @Html.ValidationMessageFor(model => model.Referente)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idReferente)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idReferente)
+            @Html.ValidationMessageFor(model => model.idReferente)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idEstadoIPP)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idEstadoIPP)
+            @Html.ValidationMessageFor(model => model.idEstadoIPP)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Baja)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Baja)
+            @Html.ValidationMessageFor(model => model.Baja)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UsuarioUltimaModificacion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UsuarioUltimaModificacion)
+            @Html.ValidationMessageFor(model => model.UsuarioUltimaModificacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaUltimaModificacion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FechaUltimaModificacion)
+            @Html.ValidationMessageFor(model => model.FechaUltimaModificacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaCreacion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FechaCreacion)
+            @Html.ValidationMessageFor(model => model.FechaCreacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TipoIPP, "ClaseIPP")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("TipoIPP", String.Empty)
+            @Html.ValidationMessageFor(model => model.TipoIPP)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.InicioDenunciante)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.InicioDenunciante)
+            @Html.ValidationMessageFor(model => model.InicioDenunciante)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FechaEtapaIPP)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FechaEtapaIPP)
+            @Html.ValidationMessageFor(model => model.FechaEtapaIPP)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Archivo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Archivo)
+            @Html.ValidationMessageFor(model => model.Archivo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TipoArchivo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TipoArchivo)
+            @Html.ValidationMessageFor(model => model.TipoArchivo)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

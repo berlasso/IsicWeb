@@ -1,0 +1,47 @@
+﻿@model SIACGral.Models.IPP
+
+<fieldset>
+   <table class="tabla_Form_Input" width="100%" >
+        <tr  align="center" >
+        <td class="editor-label-IPP" width="33%" >
+            @Html.LabelFor(model => model.IPP1)
+        </td>
+        <td class="editor-field-IPP" width="33%">
+            @Html.EditorFor(model => model.IPP1)
+            @Html.ValidationMessageFor(model => model.IPP1)
+        </td>
+        <td width="33%">
+        <form method="post" id="enviarIPP"
+            action="@Url.Action("IPPDetail","IPPController")">
+            <input type="submit" value="Buscar SIMP" />
+        </form>
+@*        @Html.ActionLink("IPPSIMP", "IPPDetail", "IPPController", new { id = "ippSIMPLink" })
+*@       @* <form method="post" id="commentForm" action="@Url.Action("IPPDetail")"> 
+            <input type="submit" value="IPPDetail" />
+        </form>*@
+        @*<script type="text/javascript">
+            $(document).ready(function () {
+                $('#ippSIMPLink').click(function (event) {
+                    event.preventDefault();
+                    var url = $(this).attr('href');
+                    $('#IPPDetalle').load(url);
+                });
+            });
+           
+        </script>*@
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#enviarIPP').submit(function (event) {
+                    event.preventDefault();
+                        var data = $(this).serialize();
+                        var url = $(this).attr('action');
+                        $.post(url, data, function (response) {
+                            $('#IppDetalle').append(response);
+                        });
+                    });
+                });
+            </script>
+        </td>
+        </tr>
+        </table>
+</fieldset>

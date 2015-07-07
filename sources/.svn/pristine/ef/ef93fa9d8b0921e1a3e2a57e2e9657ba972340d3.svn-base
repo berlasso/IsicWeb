@@ -1,0 +1,57 @@
+﻿@model SIACGral.Models.SeniasParticulares
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>SeniasParticulares</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idPersona)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idPersona)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseSeniaParticular.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseSeniaParticular.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseUbicacionSeniaPart.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseUbicacionSeniaPart.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClaseTipoPersona.Descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClaseTipoPersona.Descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.descripcion)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.idAutor)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.idAutor)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

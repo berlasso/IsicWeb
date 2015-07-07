@@ -1,0 +1,34 @@
+﻿@model IEnumerable<SIACGral.Models.SeniasParticulares>
+
+<div id="SeniasParticularesTable" style="tabla_Form_Input" width=580px; margin: auto;">
+@using MvcJqGrid
+
+     @{
+                MvcJqGrid.DataReaders.JsonReader jsonReader = new MvcJqGrid.DataReaders.JsonReader();
+                jsonReader.RepeatItems = false;
+                jsonReader.Id = "dataJson";
+            }
+            @(Html.Grid("GridSeniasParticulares")
+                .AddColumn(new Column("ClaseSeniaParticular"))
+                .AddColumn(new Column("idUbicacionSeniaParticular"))
+                .AddColumn(new Column("descripcion"))
+                .SetUrl("/SeniasParticulares/GridSeniasParticulares")
+                .SetAutoEncode(true)
+                .SetDataType(MvcJqGrid.Enums.DataType.Json)
+                .SetAutoWidth(true)
+                .SetRowNum(10)
+                .SetViewRecords(true)
+                .AddColumn(new Column("Editar/Borrar").SetSearch(false).SetCustomFormatter("buttonize").SetWidth(60).SetAlign(MvcJqGrid.Enums.Align.Right))
+                
+           /*     .SetJsonReader(jsonReader)
+                .SetLoadUi(MvcJqGrid.Enums.LoadUi.Block)
+                .SetRowList(new int[] { 10, 15, 20, 50 })
+                .SetViewRecords(false)
+                .SetGridView(true)
+                .SetEmptyRecords("No se encontraron señas registradas")
+                .SetShrinkToFit(true) 
+            * */
+           )
+
+
+    </div>

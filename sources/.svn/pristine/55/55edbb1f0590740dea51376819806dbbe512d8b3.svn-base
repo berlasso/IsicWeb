@@ -1,0 +1,240 @@
+﻿@model IEnumerable<MPBA.SIAC.Web.Models.Persona>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apodo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idTipoDNI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DocumentoNumero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sexo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Localidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Partido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Provincia.Provincia1)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.colegio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tomo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Folio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaAlta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersonalPoderJudicial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.activo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Muerto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClaseEstadoCivil.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.profesion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LugarNacimiento)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.Padre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Madre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfesionPadre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfesionMadre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Conyuge)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeroIRNR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeroIDAPMS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DefensorParticular)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edad)
+        </th>
+    
+        <th>
+            @Html.DisplayNameFor(model => model.ClaseEstudiosCursados.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClaseSexo.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apodo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.idTipoDNI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocumentoNumero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sexo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaNacimiento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Localidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Partido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Provincia.Provincia1)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.colegio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tomo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Folio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaAlta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersonalPoderJudicial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.activo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Muerto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClaseEstadoCivil.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.profesion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LugarNacimiento)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Padre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Madre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProfesionPadre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProfesionMadre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Conyuge)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumeroIRNR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumeroIDAPMS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DefensorParticular)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Edad)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.idTipoPersona)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClaseEstudiosCursados.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClaseSexo.Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

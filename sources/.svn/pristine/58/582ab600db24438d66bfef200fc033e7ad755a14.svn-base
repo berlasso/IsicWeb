@@ -1,0 +1,95 @@
+﻿   @model SIACGral.Models.Persona
+   
+    <fieldset>
+        <legend>Datos sobre los Padres</legend>
+  
+      <table class="tabla_Form_Input" >
+          <tr>
+                    <td class="editor-label">
+                        @Html.LabelFor(model => model.Padre)
+                    </td>
+                    <td class="editor-field">
+                        @Html.EditorFor(model => model.Padre)
+                        @Html.ValidationMessageFor(model => model.Padre)
+                    </td>
+       </tr>  
+       <tr>
+                <td class="editor-label">
+                    @Html.LabelFor(model => model.Madre)
+                </td>
+                <td class="editor-field">
+                    @Html.EditorFor(model => model.Madre)
+                    @Html.ValidationMessageFor(model => model.Madre)
+                </td>
+
+                <td class="editor-label">
+                    @Html.LabelFor(model => model.ProfesionPadre)
+                </td>
+                <td class="editor-field">
+                    @Html.EditorFor(model => model.ProfesionPadre)
+                    @Html.ValidationMessageFor(model => model.ProfesionPadre)
+                </td>
+
+                <td class="editor-label">
+                    @Html.LabelFor(model => model.ProfesionMadre)
+                </td>
+                <td class="editor-field">
+                    @Html.EditorFor(model => model.ProfesionMadre)
+                    @Html.ValidationMessageFor(model => model.ProfesionMadre)
+                </td>
+
+                <td class="editor-label">
+                    @Html.LabelFor(model => model.Conyuge)
+                </td>
+                <td class="editor-field">
+                    @Html.EditorFor(model => model.Conyuge)
+                    @Html.ValidationMessageFor(model => model.Conyuge)
+                </td>
+
+     
+
+            <td class="editor-label">
+                @Html.LabelFor(model => model.Edad)
+            </td>
+            <td class="editor-field">
+                @Html.EditorFor(model => model.Edad)
+                @Html.ValidationMessageFor(model => model.Edad)
+            </td>
+       
+        <tr>
+       
+        </tr>
+     
+       <tr>
+       <td class="editor-label">
+            @Html.LabelFor(model => model.IdEstadoCivilMaterno, "ClaseEstadoCivil1")
+        </td>
+        <td class="editor-field">
+            @Html.DropDownList("IdEstadoCivilMaterno", String.Empty)
+            @Html.ValidationMessageFor(model => model.IdEstadoCivilMaterno)
+        </td>
+
+        <td class="editor-label">
+            @Html.LabelFor(model => model.IdEstadoCivilPaterno, "ClaseEstadoCivil2")
+        </td>
+        <td class="editor-field">
+            @Html.DropDownList("IdEstadoCivilPaterno", String.Empty)
+            @Html.ValidationMessageFor(model => model.IdEstadoCivilPaterno)
+        </td>
+
+      
+
+        <td class="editor-label">
+            @Html.LabelFor(model => model.EstudiosCursados, "ClaseEstudiosCursados")
+        </td>
+        <td class="editor-field">
+            @Html.DropDownList("EstudiosCursados", String.Empty)
+            @Html.ValidationMessageFor(model => model.EstudiosCursados)
+        </td>
+
+       </tr> 
+       
+        </table>
+     
+    </fieldset>
+ 
