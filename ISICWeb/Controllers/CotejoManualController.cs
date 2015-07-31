@@ -103,17 +103,17 @@ namespace ISICWeb.Controllers
 
         /*Child View*/
 
-         public ActionResult VisualizaImputadosPorProntuario(string CodProntuario, int Id, string imputadoAComparar)
+         public ActionResult VisualizaImputadosPorProntuario(string CodProntuario, int Id, string codbarra)
          {
 
                        
             
-             List<ImputadosSimilaresViewModel> ImpSimilares = imputadoService.ScorePorProntuario(CodProntuario,imputadoAComparar);
+             List<ImputadosSimilaresViewModel> ImpSimilares = imputadoService.ScorePorProntuario(CodProntuario,codbarra);
 
              ViewBag.IdEstrella = Id;
-             ViewBag.DirectorioFoto =FuncionesGrales.DirectorioImagenes(imputadoAComparar,false,FuncionesGrales.TipoImagen.Rostro, 1);
+             ViewBag.DirectorioFoto =FuncionesGrales.DirectorioImagenes(codbarra,false,FuncionesGrales.TipoImagen.Rostro, 1);
              ViewBag.CodigoProntuario= CodProntuario;
-             ViewBag.CodigoBarrasImpNuevo = imputadoAComparar;
+             ViewBag.CodigoBarrasImpNuevo = codbarra;
              return View(ImpSimilares);
 
 
@@ -129,14 +129,15 @@ namespace ISICWeb.Controllers
                  ModelState.AddModelError("CodigoBarra", "Código de barras incorrecto");
                  return View("Index");
              }
-             Imputado imputadoBuscado = null;
-             List<ImputadosSimilaresViewModel> ImpSimilares = imputadoService.BusquedaSimilaresDatosPersonales(CodigoBarra, ref imputadoBuscado);
+            Imputado imputadoBuscado = repository.Set<Imputado>().FirstOrDefault(x => x.CodigoDeBarras == CodigoBarra && x.Persona.Sexo != null);
+            if (imputadoBuscado == null)
+            {
+                ModelState.AddModelError("CodigoBarra", "No se hallaron resultados");
+                return View("Index");
+            }
+            List<ImputadosSimilaresViewModel> ImpSimilares = imputadoService.BusquedaSimilaresDatosPersonales(imputadoBuscado);
 
-              if (imputadoBuscado == null)
-              {
-                    ModelState.AddModelError("CodigoBarra", "No se hallaron resultados");
-                 return View("Index");
-              }
+            
               ViewBag.CodigoBarra = CodigoBarra;
                   /*la diferencia de 6 con la longitud la rellena con ceros a izquierda*/
                   ViewBag.Apellido = imputadoBuscado.Persona.Apellido;
@@ -148,7 +149,7 @@ namespace ISICWeb.Controllers
                   ViewBag.DocumentoNro = imputadoBuscado.Persona.DocumentoNumero;
 
                 
-                  ViewBag.NombreArchivo = FuncionesGrales.DirectorioImagenes(CodigoBarra, false,
+                  ViewBag.NombreArchivo = FuncionesGrales.DirectorioImagenes(CodigoBarra, true,
                       FuncionesGrales.TipoImagen.Rostro, 1);
                   if (ImpSimilares.Count() == 0)
                   {

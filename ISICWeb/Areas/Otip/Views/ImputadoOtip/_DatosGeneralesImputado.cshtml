@@ -4,224 +4,239 @@
 
 <section id="DatosGenerales">
 
-    <div class="panel panel-default tile wow fadeInDown animated">
-        <div class="panel-heading">
-            @*<div class="left wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">*@
-            <h2>Datos Generales</h2>
-            @if (Model.ObservacionesMigracion != null)
-            {
-                <i data-toggle="tooltip" data-placement="top" title="@Model.ObservacionesMigracion">*</i>
-            }
-        </div>
-        <div class="panel-body">
-            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+<div class="panel panel-default tile wow fadeInDown animated">
+<div class="panel-heading">
+    @*<div class="left wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">*@
+    <h2>Datos Generales</h2>
+    @if (Model.ObservacionesMigracion != null)
+    {
+        <i data-toggle="tooltip" data-placement="top" title="@Model.ObservacionesMigracion">*</i>
+    }
+</div>
+<div class="panel-body">
+<div class="row" style="margin-bottom: 10px;">
+    <small><i class="fa fa-star" style="color: red"></i><span style="padding: 5px; font-style: italic;"> = Campos obligatorios</span> </small>
+</div>
 
-                <div class="col-xs-4">
-                    @Html.LabelFor(model => model.CodBarras, new { @class = "required" })
-                    <div class="form-group">
-                        <div class='input-group '>
-                            @Html.EditorFor(m => m.CodBarras, !esSoloDetalle && Model.Id == 0 ? new {htmlAttributes = new {@class = "form-control required", data_val_codexistente = "Codigo de barras existente en la base del SIC"}} : new {htmlAttributes = new {@class = "form-control", @readonly = (esSoloDetalle) ? "readonly" : "false"}} as object)
-                            <span class="input-group-addon btn btn-alt " data-toggle="tooltip" title="Autogenerar" id="btnGenerarCodBarras">
+
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.CodBarras, new {@class = "required"})
+        <div class="form-group">
+            <div class='input-group '>
+                @Html.EditorFor(m => m.CodBarras, !esSoloDetalle && Model.Id == 0 ? new {htmlAttributes = new {@class = "form-control required", data_val_codexistente = "Codigo de barras existente en la base del SIC"}} : new {htmlAttributes = new {@class = "form-control", @readonly = (esSoloDetalle) ? "readonly" : "false"}} as object)
+                <span class="input-group-addon btn btn-alt " data-toggle="tooltip" title="Autogenerar" id="btnGenerarCodBarras">
                                 <span class="flaticon-arrows51"></span>
                             </span>
-                        </div>
-                    </div>
+            </div>
+        </div>
 
-                            @Html.ValidationMessageFor(m => m.CodBarras)
-                            <span id="codBarrasExistenteError" class="field-validation-error" style="display: none">Codigo existente</span>
-                        </div>
-                        <div class="col-xs-4">
-                        </div>
-                        <div class="col-xs-4">
-                        </div>
-                    </div>
-                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.IPP)
-                            <div class="form-group">
-                                <div class='input-group '>
-                                    @Html.EditorFor(m => m.IPP, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                                    <span class="input-group-addon btn btn-alt" id="btnBuscarIpp">
+        @Html.ValidationMessageFor(m => m.CodBarras)
+        <span id="codBarrasExistenteError" class="field-validation-error" style="display: none">Codigo existente</span>
+    </div>
+    <div class="col-xs-4">
+    </div>
+    <div class="col-xs-4">
+    </div>
+</div>
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.IPP)
+        <div class="form-group">
+            <div class='input-group '>
+                @Html.EditorFor(m => m.IPP, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+                <span class="input-group-addon btn btn-alt" id="btnBuscarIpp">
                                         <span class="flaticon-zoom22"></span>
                                     </span>
-                                </div>
-                            </div>
+            </div>
+        </div>
 
 
-                            <div class="alert alert-info" id="divIppEncontrado" role="alert"></div>
-                            @Html.ValidationMessageFor(m => m.IPP)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Apellido, new { @class = "required" })
-                            @Html.EditorFor(m => m.Apellido, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Apellido)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Nombres, new { @class = "required" })
-                            @Html.EditorFor(m => m.Nombres, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Nombres)
-                        </div>
-                    </div>
-                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Apodos)
-                            @Html.EditorFor(m => m.Apodos, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Apodos)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.OtrosNombres)
-                            @Html.EditorFor(m => m.OtrosNombres, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.OtrosNombres)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.FechaNacimiento, new { @class = "required" })
-
-                            @*<div class="form-group">
-                    <div class='input-group date '>*@
-                            @Html.EditorFor(m => m.FechaNacimiento, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control datepicker ", @placeholder = "dd/mm/aaaa", data_val_isdatebefore = "La fecha de nacimiento debe ser anterior a la del delito", data_val_isdatebefore_allowequaldates = "True", data_val_isdatebefore_propertytested = "FechaDelito" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @*<span class="input-group-addon btn btn-alt">
-                        <span class="flaticon-calendar48"></span>
-                    </span>*@
-                            @*</div>
-                    </div>*@
-
-                            @Html.ValidationMessageFor(m => m.FechaNacimiento)
-
-                        </div>
-                    </div>
-
-
-
-                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                        <div class="col-xs-8">
-                            @Html.LabelFor(model => model.Delito, new { @class = "required" })
-                            @Html.EditorFor(m => m.Delito, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Delito)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.FechaDelito, new { @class = "required" })
-                            @*<div class="form-group">
-                    <div class='input-group date '>*@
-                            @Html.EditorFor(m => m.FechaDelito, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control datepicker ", @placeholder = "dd/mm/aaaa" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @*<span class="input-group-addon btn btn-alt">
-                        <span class="flaticon-calendar48"></span>
-                    </span>*@
-                            @*</div>
-                    </div>*@
-
-
-
-
-                            @Html.ValidationMessageFor(m => m.FechaDelito)
-                        </div>
-                    </div>
-                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Conyuge)
-                            @Html.EditorFor(m => m.Conyuge, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Conyuge)
-                        </div>
-                        <div class="col-xs-4">
-                            
-                            @Html.LabelFor(model => model.EstadoCivil)
-                            @Html.DropDownListFor(m => m.EstadoCivil, Model.EstadoCivilList, !esSoloDetalle ? new {@class = "form-control"} : new {@class = "form-control", @readonly = "readonly"} as object)
-
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Telefono)
-                            @Html.EditorFor(m => m.Telefono, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Telefono)
-                        </div>
-                    </div>
-                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Madre)
-                            @Html.EditorFor(m => m.Madre, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Madre)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Padre)
-                            @Html.EditorFor(m => m.Padre, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Padre)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Sexo, new { @class = "required" })
-                            @Html.DropDownListFor(m => m.Sexo, Model.SexoList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
-                            @Html.ValidationMessageFor(m => m.Sexo)
-                        </div>
-                    </div>
-                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.LocalidadNacimiento)
-                            @Html.TextBox("LocalidadNacimiento", Model.LocalidadNacimiento, !esSoloDetalle ? new { @class = "form-control selectize-localidad" } : new { @class = "form-control", @readonly = "readonly" } as object)
-                            @Html.HiddenFor(x => x.hidIdLocalidadNacimiento)
-                            @Html.ValidationMessageFor(m => m.LocalidadNacimiento)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.ProvinciaNacimiento)
-                            @Html.DropDownListFor(m => m.ProvinciaNacimiento, Model.ProvinciaList, "Desconocida", !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
-                            @Html.ValidationMessageFor(m => m.ProvinciaNacimiento)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.PaisNacimiento)
-                            @Html.DropDownListFor(m => m.PaisNacimiento, Model.PaisList, "Desconocido", !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
-                            @Html.ValidationMessageFor(m => m.PaisNacimiento)
-                        </div>
-                    </div>
-                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Fiscal)
-                            @Html.EditorFor(m => m.Fiscal, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Fiscal)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Instruccion)
-                            @Html.DropDownListFor(m => m.Instruccion, Model.InstruccionList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.Profesion)
-                            @Html.EditorFor(m => m.Profesion, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.Profesion)
-                        </div>
-                    </div>
-                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.ModusOperandi)
-                            @Html.TextBoxFor(m => m.ModusOperandi, !esSoloDetalle ? new { @class = "form-control " } : new { @class = "form-control", @readonly = "readonly" } as object)
-                            @Html.HiddenFor(m => m.hidIdModusOperandi)
-                            @Html.ValidationMessageFor(m => m.ModusOperandi)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.FiscaliaGeneral)
-                            @*@Html.EditorFor(m => m.FiscaliaGeneral, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)*@
-                            @Html.DropDownListFor(m => m.FiscaliaGeneral, Model.FiscaliaGeneralList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
-                            @Html.ValidationMessageFor(m => m.FiscaliaGeneral)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.UFI)
-                            @Html.EditorFor(m => m.UFI, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.UFI)
-                        </div>
-                    </div>
-                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.TipoDocumento)
-                            @Html.DropDownListFor(m => m.TipoDocumento, Model.TipoDocumentoList, !esSoloDetalle ? new { @class = "form-control" } : new { @class = "form-control", @readonly = "readonly" } as object)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.NumeroDocumento)
-                            @Html.EditorFor(m => m.NumeroDocumento, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.NumeroDocumento)
-                        </div>
-                        <div class="col-xs-4">
-                            @Html.LabelFor(model => model.JuzgadoGarantias)
-                            @Html.EditorFor(m => m.JuzgadoGarantias, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)
-                            @Html.ValidationMessageFor(m => m.JuzgadoGarantias)
-                        </div>
-
-                    </div>
-                </div>
+        <div class="alert alert-info" id="divIppEncontrado" onclick="$(this).hide();" role="alert"></div>
+        @Html.ValidationMessageFor(m => m.IPP)
     </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Apellido, new {@class = "required"})
+        @Html.EditorFor(m => m.Apellido, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Apellido)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Nombres, new {@class = "required"})
+        @Html.EditorFor(m => m.Nombres, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Nombres)
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4"></div>
+    <div class="col-xs-8" id="colApellido"></div>
+</div>
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Apodos)
+        @Html.EditorFor(m => m.Apodos, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Apodos)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.OtrosNombres)
+        @Html.EditorFor(m => m.OtrosNombres, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.OtrosNombres)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.FechaNacimiento, new {@class = "required"})
+
+        @*<div class="form-group">
+                    <div class='input-group date '>*@
+        @Html.EditorFor(m => m.FechaNacimiento, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control datepicker ", @placeholder = "dd/mm/aaaa", data_val_isdatebefore = "La fecha de nacimiento debe ser anterior a la del delito", data_val_isdatebefore_allowequaldates = "True", data_val_isdatebefore_propertytested = "FechaDelito"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @*<span class="input-group-addon btn btn-alt">
+                        <span class="flaticon-calendar48"></span>
+                    </span>*@
+        @*</div>
+                    </div>*@
+
+        @Html.ValidationMessageFor(m => m.FechaNacimiento)
+
+    </div>
+</div>
+
+
+
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="col-xs-8">
+        @Html.LabelFor(model => model.Delito, new {@class = "required"})
+        @Html.EditorFor(m => m.Delito, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Delito)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.FechaDelito, new {@class = "required"})
+        @*<div class="form-group">
+                    <div class='input-group date '>*@
+        @Html.EditorFor(m => m.FechaDelito, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control datepicker ", @placeholder = "dd/mm/aaaa"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @*<span class="input-group-addon btn btn-alt">
+                        <span class="flaticon-calendar48"></span>
+                    </span>*@
+        @*</div>
+                    </div>*@
+
+
+
+
+        @Html.ValidationMessageFor(m => m.FechaDelito)
+    </div>
+</div>
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Conyuge)
+        @Html.EditorFor(m => m.Conyuge, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Conyuge)
+    </div>
+    <div class="col-xs-4">
+
+        @Html.LabelFor(model => model.EstadoCivil)
+        @Html.DropDownListFor(m => m.EstadoCivil, Model.EstadoCivilList, !esSoloDetalle ? new {@class = "form-control"} : new {@class = "form-control", @readonly = "readonly"} as object)
+
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Telefono)
+        @Html.EditorFor(m => m.Telefono, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Telefono)
+    </div>
+</div>
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Madre)
+        @Html.EditorFor(m => m.Madre, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Madre)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Padre)
+        @Html.EditorFor(m => m.Padre, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Padre)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Sexo, new {@class = "required"})
+        @Html.DropDownListFor(m => m.Sexo, Model.SexoList, !esSoloDetalle ? new {@class = "form-control"} : new {@class = "form-control", @readonly = "readonly"} as object)
+        @Html.ValidationMessageFor(m => m.Sexo)
+    </div>
+</div>
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.LocalidadNacimiento)
+        @Html.TextBox("LocalidadNacimiento", Model.LocalidadNacimiento, !esSoloDetalle ? new {@class = "form-control selectize-localidad"} : new {@class = "form-control", @readonly = "readonly"} as object)
+        @Html.HiddenFor(x => x.hidIdLocalidadNacimiento)
+        @Html.ValidationMessageFor(m => m.LocalidadNacimiento)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.ProvinciaNacimiento)
+        @Html.DropDownListFor(m => m.ProvinciaNacimiento, Model.ProvinciaList, "Desconocida", !esSoloDetalle ? new {@class = "form-control"} : new {@class = "form-control", @readonly = "readonly"} as object)
+        @Html.ValidationMessageFor(m => m.ProvinciaNacimiento)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.PaisNacimiento)
+        @Html.DropDownListFor(m => m.PaisNacimiento, Model.PaisList, "Desconocido", !esSoloDetalle ? new {@class = "form-control"} : new {@class = "form-control", @readonly = "readonly"} as object)
+        @Html.ValidationMessageFor(m => m.PaisNacimiento)
+    </div>
+</div>
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Fiscal)
+        @Html.EditorFor(m => m.Fiscal, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Fiscal)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Instruccion)
+        @Html.DropDownListFor(m => m.Instruccion, Model.InstruccionList, !esSoloDetalle ? new {@class = "form-control"} : new {@class = "form-control", @readonly = "readonly"} as object)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.Profesion)
+        @Html.EditorFor(m => m.Profesion, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.Profesion)
+    </div>
+</div>
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.ModusOperandi)
+        @Html.TextBoxFor(m => m.ModusOperandi, !esSoloDetalle ? new {@class = "form-control "} : new {@class = "form-control", @readonly = "readonly"} as object)
+        @Html.HiddenFor(m => m.hidIdModusOperandi)
+        @Html.ValidationMessageFor(m => m.ModusOperandi)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.FiscaliaGeneral)
+        @*@Html.EditorFor(m => m.FiscaliaGeneral, !esSoloDetalle ? new { htmlAttributes = new { @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } } as object)*@
+        @Html.DropDownListFor(m => m.FiscaliaGeneral, Model.FiscaliaGeneralList, !esSoloDetalle ? new {@class = "form-control"} : new {@class = "form-control", @readonly = "readonly"} as object)
+        @Html.ValidationMessageFor(m => m.FiscaliaGeneral)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.UFI)
+        @Html.EditorFor(m => m.UFI, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.UFI)
+    </div>
+</div>
+<div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.TipoDocumento)
+        @Html.DropDownListFor(m => m.TipoDocumento, Model.TipoDocumentoList, !esSoloDetalle ? new {@class = "form-control"} : new {@class = "form-control", @readonly = "readonly"} as object)
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.NumeroDocumento)
+        @Html.EditorFor(m => m.NumeroDocumento, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.NumeroDocumento)
+
+    </div>
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.JuzgadoGarantias)
+        @Html.EditorFor(m => m.JuzgadoGarantias, !esSoloDetalle ? new {htmlAttributes = new {@class = "form-control"}} : new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}} as object)
+        @Html.ValidationMessageFor(m => m.JuzgadoGarantias)
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-xs-4"></div>
+    <div class="col-xs-8" id="colDocumento"></div>
+</div>
+
+</div>
+</div>
 
 </section>
 

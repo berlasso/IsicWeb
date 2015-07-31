@@ -420,61 +420,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\codbarras.png" />
-    <Content Include="Content\DataTables\css\dataTables.autoFill.css" />
-    <Content Include="Content\DataTables\css\dataTables.autoFill.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.bootstrap.css" />
-    <Content Include="Content\DataTables\css\dataTables.colReorder.css" />
-    <Content Include="Content\DataTables\css\dataTables.colReorder.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.colVis.css" />
-    <Content Include="Content\DataTables\css\dataTables.colvis.jqueryui.css" />
-    <Content Include="Content\DataTables\css\dataTables.colVis.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.fixedColumns.css" />
-    <Content Include="Content\DataTables\css\dataTables.fixedColumns.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.fixedHeader.css" />
-    <Content Include="Content\DataTables\css\dataTables.fixedHeader.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.foundation.css" />
-    <Content Include="Content\DataTables\css\dataTables.jqueryui.css" />
-    <Content Include="Content\DataTables\css\dataTables.keyTable.css" />
-    <Content Include="Content\DataTables\css\dataTables.keyTable.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.responsive.css" />
-    <Content Include="Content\DataTables\css\dataTables.scroller.css" />
-    <Content Include="Content\DataTables\css\dataTables.scroller.min.css" />
-    <Content Include="Content\DataTables\css\dataTables.tableTools.css" />
-    <Content Include="Content\DataTables\css\dataTables.tableTools.min.css" />
-    <Content Include="Content\DataTables\css\jquery.dataTables.css" />
-    <Content Include="Content\DataTables\css\jquery.dataTables.min.css" />
-    <Content Include="Content\DataTables\css\jquery.dataTables_themeroller.css" />
-    <Content Include="Content\DataTables\images\background.png" />
-    <Content Include="Content\DataTables\images\back_disabled.png" />
-    <Content Include="Content\DataTables\images\back_enabled.png" />
-    <Content Include="Content\DataTables\images\back_enabled_hover.png" />
-    <Content Include="Content\DataTables\images\collection.png" />
-    <Content Include="Content\DataTables\images\collection_hover.png" />
-    <Content Include="Content\DataTables\images\copy.png" />
-    <Content Include="Content\DataTables\images\copy_hover.png" />
-    <Content Include="Content\DataTables\images\csv.png" />
-    <Content Include="Content\DataTables\images\csv_hover.png" />
-    <Content Include="Content\DataTables\images\details_close.png" />
-    <Content Include="Content\DataTables\images\details_open.png" />
-    <Content Include="Content\DataTables\images\filler.png" />
-    <Content Include="Content\DataTables\images\forward_disabled.png" />
-    <Content Include="Content\DataTables\images\forward_enabled.png" />
-    <Content Include="Content\DataTables\images\forward_enabled_hover.png" />
-    <Content Include="Content\DataTables\images\insert.png" />
-    <Content Include="Content\DataTables\images\loading-background.png" />
-    <Content Include="Content\DataTables\images\pdf.png" />
-    <Content Include="Content\DataTables\images\pdf_hover.png" />
-    <Content Include="Content\DataTables\images\print.png" />
-    <Content Include="Content\DataTables\images\print_hover.png" />
-    <Content Include="Content\DataTables\images\sort_asc.png" />
-    <Content Include="Content\DataTables\images\sort_asc_disabled.png" />
-    <Content Include="Content\DataTables\images\sort_both.png" />
-    <Content Include="Content\DataTables\images\sort_desc.png" />
-    <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
-    <Content Include="Content\DataTables\images\xls.png" />
-    <Content Include="Content\DataTables\images\xls_hover.png" />
-    <Content Include="Content\DataTables\swf\copy_csv_xls.swf" />
-    <Content Include="Content\DataTables\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\filename.png" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -1292,8 +1237,6 @@
     <Content Include="Content\bootstrap\utilities.less" />
     <Content Include="Content\bootstrap\variables.less" />
     <Content Include="Content\bootstrap\wells.less" />
-    <Content Include="Content\DataTables\css\dataTables.jqueryui.scss" />
-    <Content Include="Content\DataTables\css\dataTables.responsive.scss" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -1537,6 +1480,7 @@
     <Content Include="Views\Account\ConfirmarEmail.cshtml" />
     <Content Include="Views\Account\InfoRegistracion.cshtml" />
     <Content Include="Views\Account\InfoUsuario.cshtml" />
+    <Content Include="Views\Shared\_Unauthorized.cshtml" />
     <None Include="Web References\simpWs\WebServiceMesaVirtualNN.wsdl" />
     <Content Include="Views\Digitalizacion\DigitalizaHuella.cshtml" />
     <Content Include="Views\Digitalizacion\Recorte.cshtml" />
@@ -1683,11 +1627,12 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>22443</DevelopmentServerPort>
+          <DevelopmentServerPort>59573</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:22443/</IISUrl>
+          <IISUrl>
+          </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -16,7 +16,7 @@ using MPBA.DataAccess;
 namespace ISICWeb.Areas.Antecedentes.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, Antecedentes")]
+    [Autorizar(Roles = "Administrador, Antecedentes")]
     public class AntecedentesController : Controller
     {
         IRepository _repository;

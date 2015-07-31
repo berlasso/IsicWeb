@@ -38,6 +38,6 @@ namespace ISIC.Entities
         public virtual IdgxProntuario IdgxProntuario { get; set; }
          public virtual ClaseTipoDNI TipoDNI { get; set; }
          public virtual ICollection<IdgxDetalle> Delitos { get; set; }
-
+         public DateTime FechaInforme { get; set; }
     }
 }

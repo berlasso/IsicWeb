@@ -16,15 +16,15 @@ using MPBA.DataAccess;
 namespace ISICWeb.Areas.PortalSIC.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, Portal")]
+    [Autorizar(Roles = "Administrador, Portal")]
     public class InfiniteScrollerController : Controller
     {
         private IRepository repository;
-        private BusquedaService _busquedaService;
+        private IBusquedaService _busquedaService;
         private const int CantPorPag = 30;
         private const int MaxImputados = 1000;
 
-        public InfiniteScrollerController(IRepository repository, BusquedaService busquedaService)
+        public InfiniteScrollerController(IRepository repository, IBusquedaService busquedaService)
         {
             this.repository = repository;
             _busquedaService = busquedaService;
@@ -32,7 +32,7 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
 
         public ActionResult MostrarFotosSeleccionadas(string fotos)
         {
-            IEnumerable<string> fotosElegidas= fotos.Split(',');
+            IEnumerable<string> fotosElegidas = fotos.Split(',');
 
             return View(fotosElegidas);
         }
@@ -40,61 +40,30 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
         // GET: Home
         public ActionResult GenerarScroller(int? pag)
         {
+              BusquedaViewModel model = (BusquedaViewModel)Session["model"];
+            if (model == null)
+            {
+                return RedirectToAction("Index","Busqueda");
+            }
             if (pag == null)
                 pag = 1;
-
             ViewBag.cantPorPag = CantPorPag;
-       
-            //var archivos= repository.Set<Archivo>().ToList();
-            //System.IO.DirectoryInfo di = new DirectoryInfo(Server.MapPath("~/Areas/PortalSIC/Fotos"));
-
-            //var files1 = di.GetFiles();
-            //    .Where(x => x.Extension.ToLower() == ".jpg")
-            //    .Select((v, i) => new Row { value = v.Name, index = i }).Skip((CantPorPag - 1) * Convert.ToInt32(pag)).Take(CantPorPag);
-            //ViewBag.CantidadTotal= repository.Set<Archivo>().Count();
-            //ImportarFotosATabla(files1);
-            BusquedaViewModel model = (BusquedaViewModel)Session["model"];
+          
             ISICContext ctx = (ISICContext)repository.UnitOfWork.Context;
             string querystring = "";
-            var imputados = _busquedaService.BuscarImputados(model,MaxImputados,out querystring);
-
-            //var files = (from i in imputados
-            //             join a in ctx.Archivos.ToList()
-            //                 on i.Id equals a.Imputado.Id
-            //             where a.TipoArchivo.Id == 1 //solo fotos de rostros;
-            //             select a);
-
-
-
-
-            IEnumerable<Archivo> files = imputados.Join(ctx.Archivo.ToList(), i => i.Id, a => a.Imputado.Id, (i, a) => a).Where(a => a.TipoArchivo.Id == 1);
-           
-           
+            var imputados = _busquedaService.BuscarImputados(model, MaxImputados, out querystring);
+            IEnumerable<Archivo> files = imputados.SelectMany(x => x.Archivos).Where(n => n.TipoArchivo.Id == 1).OrderBy(f => f.Url).Skip((CantPorPag) * (Convert.ToInt32(pag) - 1)).Take(CantPorPag).ToList();
             if (pag == 1)
             {
-                
-                
-                ViewBag.CantidadTotal = files.Count();
                 ViewBag.CantidadMaxima = MaxImputados;
             }
-            else
+
+            if (files.Any())
             {
-                
+                ViewBag.pagina = pag++;
+
+                return View(files);
             }
-            //if (cant > 0)
-            //{
-                
-                files = files.OrderBy(f => f.Url).Take(MaxImputados).Skip((CantPorPag)*(Convert.ToInt32(pag) - 1)).Take(CantPorPag);
-
-                if (files.Any())
-                {
-                    ViewBag.pagina = pag++;
-
-                    return View(files);
-                }
-            //}
-
-
             return View(files);
         }
 
@@ -110,7 +79,7 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
                     Tamano = file.Length.ToString(),
                     TipoArchivo = repository.Set<ClaseTipoArchivo>().First(x => x.Id == 1),
                     Uploader = "German",
-                    Imputado = repository.Set<Imputado>().First(i=>i.Id==1),
+                    Imputado = repository.Set<Imputado>().First(i => i.Id == 1),
                     Url = string.Format("~/Areas/PortalSIC/Fotos/{0}", file.Name)
                 };
                 repository.UnitOfWork.RegisterNew(archivo);

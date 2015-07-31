@@ -4,9 +4,9 @@
 
     <div class="panel panel-default ">
         <div class="panel-heading">
-            <h4>
+            <h3>
                 Listado de fichas de AFIS
-            </h4>
+            </h3>
         </div>
     </div>
 
@@ -31,7 +31,9 @@
                             <th>
                                 Clase
                             </th>
-
+                            <th>
+                                Fecha Informe
+                            </th>
 
                         </tr>
 
@@ -57,7 +59,12 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Clase)
                                     </td>
-
+                                    <td>
+                                        @{
+                                string fecha = item.FechaInforme.ToString("dd/MM/yyyy");
+                                        }
+                                        @fecha
+                                    </td>
 
                                 </tr>
                             }

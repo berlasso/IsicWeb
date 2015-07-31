@@ -8,10 +8,12 @@ using MPBA.DataAccess;
 using ISICWeb.Areas.Otip.Models;
 using System.Linq.Dynamic;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 using ISIC.Persistence.Context;
 using ISIC.Services;
 using ISICWeb.Models;
+using ISICWeb.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MPBA.Jira.Model;
@@ -21,13 +23,14 @@ using Session = Glimpse.AspNet.Tab.Session;
 namespace ISICWeb.Areas.Otip.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, OTIP")]
+    [Autorizar(Roles = "Administrador, OTIP")]
     public class ImputadoOtipController : Controller
     {
         
         
         IRepository repository;
-        private ImputadoService ImputadoSrv;
+        private IImputadoExtraService _imputadoExtraService;
+        private IImputadoService _imputadoService;
         private IJiraService _jiraService;
         /// <summary>
 
@@ -45,11 +48,12 @@ namespace ISICWeb.Areas.Otip.Controllers
 
         protected UserManager<ApplicationUser> UserManager { get; set; }
 
-        public ImputadoOtipController(IRepository repository, ImputadoService service, IJiraService jiraService)
+        public ImputadoOtipController(IRepository repository, IImputadoExtraService imputadoExtraService, IJiraService jiraService, IImputadoService imputadoService)
         {
             this.repository = repository;
             _jiraService = jiraService;
-            ImputadoSrv = service;
+            _imputadoExtraService = imputadoExtraService;
+            _imputadoService = imputadoService;
         }
 
         #region GETS
@@ -61,7 +65,7 @@ namespace ISICWeb.Areas.Otip.Controllers
             return View();
         }
 
-        public ActionResult DetallePorCodBarra(string cb, bool pe = false)
+        public ActionResult DetallePorCodBarra(string cb, int? pe)
         {
 
             ViewBag.WordDocumentFilename = "AboutMeDocument";
@@ -70,7 +74,7 @@ namespace ISICWeb.Areas.Otip.Controllers
             {
 
 
-                DatosGeneralesViewModel model = ImputadoSrv.LlenarViewModelConImputado(imputado.Id, pe);
+                DatosGeneralesViewModel model = _imputadoExtraService.LlenarViewModelConImputado(imputado.Id, pe);
                 if (model != null)
                     return View("Detalle", model);
                 
@@ -85,11 +89,11 @@ namespace ISICWeb.Areas.Otip.Controllers
         /// <param name="id">id del imputado</param>
         /// <param name="pe">si es para editar</param>
         /// <returns></returns>
-        public ActionResult Detalle(int id, bool pe = false)
+        public ActionResult Detalle(int id, int? pe=0)
         {
 
             ViewBag.WordDocumentFilename = "AboutMeDocument";
-            DatosGeneralesViewModel model = ImputadoSrv.LlenarViewModelConImputado(id, pe);
+            DatosGeneralesViewModel model = _imputadoExtraService.LlenarViewModelConImputado(id, pe);
             if (model != null) return View(model);
             RedirectToAction("Index");
             return null;
@@ -103,54 +107,93 @@ namespace ISICWeb.Areas.Otip.Controllers
 
 
             if (id != null && id > 0) //para modificar
-                return RedirectToAction("Detalle", "ImputadoOtip", new { id, pe = true });
-            DatosGeneralesViewModel datosGenerales = ImputadoSrv.CrearViewModel();
+                return RedirectToAction("Detalle", "ImputadoOtip", new { id=id, pe=1 });
+            DatosGeneralesViewModel datosGenerales = _imputadoExtraService.CrearViewModel();
             return View("Detalle", datosGenerales);
         }
 
         // GET: Imputado/Borrar/5
-        public bool Borrar(int id)
+        public string Borrar(int id)
         {
 
 
             bool borroBien = false;
+            string errormsg = "";
             Imputado imp = repository.Set<Imputado>().SingleOrDefault(x => x.Id == id);
             if (imp != null)
             {
                 imp.Baja = true;
-                repository.UnitOfWork.RegisterChanged(imp);
-                try
+                using (var tran = repository.UnitOfWork.Context.Database.BeginTransaction())
                 {
-                    repository.UnitOfWork.Commit();
-                    borroBien = true;
-                }
-                catch { }
-                
+                       repository.UnitOfWork.RegisterChanged(imp);
+                    try
+                    {
+                        
+                        
+                        Issue<IssueFields> issue = _jiraService.GetIssue(imp.CodigoDeBarras);
+                        Transition transition = _jiraService.GetTransitions(issue).First();
+                        
+                        //repository.UnitOfWork.Commit();
+                        tran.Commit();
+                        _jiraService.TransitionIssue(issue, transition);
+                        borroBien = true;
+                    }
+                    catch (MPBA.Jira.JiraClientException jiraex)
+                    {
+                        errormsg = "Error al marcar como borrado en el Jira";
+                    }
+                    catch(Exception e)
+                    {
+                        errormsg = e.InnerException.ToString();
+                        int i = errormsg.Length < 400 ? errormsg.Length : 400;
+                        errormsg = e.InnerException.ToString().Substring(0, i);
+                    }
 
+
+                }
             }
+
+
             if (!borroBien)
+            {
                 ModelState.AddModelError("",
-                    "No se pudieron guardar los cambios. Intentar nuevamente, si el problema persiste contacte al administrador del sistema.");
-           
-            return borroBien;
+                    string.Format("No se pudieron guardar los cambios: {0}", errormsg));
+            }
+
+            return errormsg;
         }
 
         public int BuscarIdImputado(string codBarras)
         {
-            Imputado imputado = new ImputadoService(repository).GetByCodigoBarra(codBarras);
+            Imputado imputado = _imputadoService.GetByCodigoBarra(codBarras);
 
             return imputado == null ? 0 : imputado.Id;
         }
 
         public bool BuscarDelito(string codBarras)
         {
-            bool existente = ImputadoSrv.GetByCodigoBarra(codBarras) != null;
+            bool existente = _imputadoExtraService.GetByCodigoBarra(codBarras) != null;
             //if (existente)
             //{
             //    ModelState.AddModelError("CodBarras","Codigo de Barras existente");
             //}
             return existente;
         }
+
+        public JsonResult BuscarDni(string dni="", string id="")
+        {
+            var imputados =repository.Set<Imputado>().Where(x =>x.Persona.DocumentoNumero == dni && x.Id.ToString()!=id).Select(x=>new{dni=x.Persona.DocumentoNumero, codbarra=x.CodigoDeBarras, apellido=x.Persona.Apellido, nombre=x.Persona.Nombre, delito=x.Delito.Ipp.caratula}).ToList();
+            JsonResult json = Json(new { imputados }, JsonRequestBehavior.AllowGet);
+            return json;
+        }
+
+        public JsonResult BuscarApeNom(string ape = "", string nom="", string id = "")
+        {
+            var imputados = repository.Set<Imputado>().Where(x => x.Persona.Apellido == ape && x.Persona.Nombre==nom && x.Id.ToString() != id).Select(x => new { dni = x.Persona.DocumentoNumero, codbarra = x.CodigoDeBarras, apellido = x.Persona.Apellido, nombre = x.Persona.Nombre, delito=x.Delito.Ipp.caratula }).ToList();
+            JsonResult json = Json(new { imputados }, JsonRequestBehavior.AllowGet);
+            return json;
+        }
+
 
         public string TraerCodigoBarasAutogenerado()
         {
@@ -177,7 +220,7 @@ namespace ISICWeb.Areas.Otip.Controllers
             string errores = "";
             if (ModelState.IsValid)
             {
-
+                
                 var idPuntoGestion =  ((ClaimsIdentity)User.Identity).FindFirst("idPuntoGestion").Value;
                 var subCodBarra = ((ClaimsIdentity)User.Identity).FindFirst("subCodBarra").Value;
                 
@@ -199,8 +242,7 @@ namespace ISICWeb.Areas.Otip.Controllers
                 }
                 else
                 {
-                    errores = ImputadoSrv.GuardarImputadoDesdeViewModel(imp, idPuntoGestion);
-
+                    errores = _imputadoExtraService.GuardarImputadoDesdeViewModel(imp, User);
 
                 }
                 if (errores != "")
@@ -314,9 +356,10 @@ namespace ISICWeb.Areas.Otip.Controllers
         }
 
 
-        public bool EnviarDelitos(int id)
+        public string EnviarDelitos(int id)
         {
             bool envioOk = false;
+            string errormsg = "";
             Imputado imputado = repository.Set<Imputado>().First(x => x.Id == id);
             if (imputado != null)
             {
@@ -324,20 +367,33 @@ namespace ISICWeb.Areas.Otip.Controllers
                     repository.Set<SICEstadoTramite>().First(x => x.Descripcion.Contains("segmen"));
                 if (imputado.Estado != null)
                 {
-                    repository.UnitOfWork.RegisterChanged(imputado);
-                    repository.UnitOfWork.Commit();
-                    Issue<IssueFields> issue = _jiraService.GetIssue(imputado.CodigoDeBarras);
-                    Transition transition = _jiraService.GetTransitions(issue).First();
-                    _jiraService.TransitionIssue(issue, transition);
-                    envioOk = true;
+                    using (var tran = repository.UnitOfWork.Context.Database.BeginTransaction())
+                    {
+                        repository.UnitOfWork.RegisterChanged(imputado);
+                        try
+                        {
+                            Issue<IssueFields> issue = _jiraService.GetIssue(imputado.CodigoDeBarras);
+                            Transition transition = _jiraService.GetTransitions(issue).First();
+                            tran.Commit();
+                            _jiraService.TransitionIssue(issue, transition);
+                            envioOk = true;
+                        }
+                        catch (MPBA.Jira.JiraClientException jiraex)
+                        {
+                            errormsg = "Error al marcar el envio en el Jira";
+                        }
+                        catch (Exception e)
+                        {
+                            errormsg = e.InnerException.ToString();
+                            int i = errormsg.Length < 400 ? errormsg.Length : 400;
+                            errormsg = e.InnerException.ToString().Substring(0, i);
+                        }
+
+                    }
                 }
             }
-            return envioOk;
-            //if (!envioBien)
-            //    ModelState.AddModelError("",
-            //        "No se pudieron guardar los cambios. Intentar nuevamente, si el problema persiste contacte al administrador del sistema.");
-            //return borroBien;
-            return true;
+          
+            return errormsg;
         }
     }
 

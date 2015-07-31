@@ -43,7 +43,7 @@ namespace ISICWeb.Models
         {
             
             
-            if (CodigoBarra.Trim() == "")
+            if (CodigoBarra==null || CodigoBarra.Trim() == "")
                 return "";
             else
             {

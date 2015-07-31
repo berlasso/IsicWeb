@@ -999,7 +999,7 @@ hr {
 }
 
 .alert-info {
-    color: #61A8CA;
+    color: #0B628D;
     border-left: 5px solid #0B628D;
 }
 
@@ -1402,6 +1402,11 @@ a.list-group-item.active > .badge,
     background: rgba(0,0,0,0.70);
 }
 
+
+.thumb {
+    background: url('/Content/Images/ajax-loader.gif') center no-repeat;
+    
+}
 
 
 /* Media */

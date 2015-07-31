@@ -29,6 +29,9 @@
                             <th>
                                 Caratula
                             </th>
+                            <th>
+                                Fecha Informe
+                            </th>
 
                         </tr>
                     </thead>
@@ -50,7 +53,12 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Caratula)
                                     </td>
-
+                                    <td>
+                                        @{
+                                string fecha = item.FechaInforme.ToString("dd/MM/yyyy");
+                                        }
+                                        @fecha
+                                    </td>
                                 </tr>
                             }
                         }

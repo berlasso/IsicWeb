@@ -1,121 +1,129 @@
 ﻿@using ISICWeb.Models
 @model IEnumerable<ISICWeb.Models.ImputadosSimilaresViewModel>
-           <style>
-               html, body { height:100%; } 
-               img { -ms-interpolation-mode: bicubic; }
+<style>
+    html, body {
+        height: 100%;
+    }
+
+    img {
+        -ms-interpolation-mode: bicubic;
+    }
 </style>
-<div class="panel-heading" >
-<h4 class="tile">  Imputados en el Prontuario: @Model.Count() , Código de Prontuario: <span style="font-weight:bold;"> @ViewBag.CodigoProntuario </span> </h4>
+<div class="panel-heading">
+    <h4 class="tile">  Imputados en el Prontuario: @Model.Count() , Código de Prontuario: <span style="font-weight:bold;"> @ViewBag.CodigoProntuario </span> </h4>
 
 </div>
 
-    <table id="tProntuario" class=" table table-bordered table-hover table-condensed table-striped tile tabla" cellspacing="0" style="width:100% !important">
-        <thead style="color:white!important">
+<table id="tProntuario" class=" table table-bordered table-hover table-condensed table-striped tile tabla" cellspacing="0" style="width:100% !important">
+    <thead style="color:white!important">
 
-            <tr>
-                <th style="color:white!important;width: 40%">Foto</th>
+        <tr>
+            <th style="color:white!important;width: 40%">Foto</th>
 
-                <th style="color:white!important">Codigo De Barras</th>
-                <th >
-                   Ap y Nombres
-                </th>
-                
-                <th >
-                    Documento
-                </th>
-                <th >
-                    Apodo
-                </th>
-                <th >
-                    Nombre Madre
-                </th>
-                <th >
-                    Edad Actual
-                </th>
-                <th >
-                    Fecha Fichaje
-                </th>
-                <th >
-                    Altura
-                </th>
-           
+            <th style="color:white!important">Codigo De Barras</th>
+            <th>
+                Ap y Nombres
+            </th>
 
-            </tr> 
-        </thead>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td style="width: 40%">
+            <th>
+                Documento
+            </th>
+            <th>
+                Apodo
+            </th>
+            <th>
+                Nombre Madre
+            </th>
+            <th>
+                Edad Actual
+            </th>
+            <th>
+                Fecha Fichaje
+            </th>
+            <th>
+                Altura
+            </th>
 
-                    @if (ViewBag.IdEstrella == item.Id)
-                    {
-                   
-                        <i class="fa fa-star" style="float:left"></i>
-           <i  style="float:left;font-size:1.2em;margin-left:10px;  color: rgb(202, 231, 231)">Mas Coincidente de este Prontuario</i>
 
-                    }   
-                   @if (item.Extraccion == false)
-                   {
-                    <span class="input-group">
-                       
-                            <button id="btnExtraccion" class="btn btn-default" style="margin-left: 328px;float: right" type="button" onclick="location.href='@Url.Action("MarcarHuellasDactilares", "Digitalizacion",new{@CodigoBarra =item.CodigoDeBarras})';" >
-                                Digitalizar Huellas
-                            </button>
-                      
-                       
-                    </span>
-                   }
-                   else
-                   {
-                    <i class="fa fa-paw" style="font-size:1.2em;margin-left:280px; color: rgb(202, 231, 231);float:right;"> <span >Huella Digitalizada </span></i>
-                       
-                        <span class="input-group-btn">
-                            <button id="btnCotejo" class="btn btn-default" style="margin-left:380px;float: right" type="button" onclick="location.href='@Url.Action("VisualizaParesDecaDactilares", "CotejoManual", new { @CodigoBarraImpNuevo = @ViewBag.CodigoBarrasImpNuevo, @CodigoBarraImpArchivo = item.CodigoDeBarras })';">
-                                A Cotejar
-                            </button>
-                        </span>
-                   }
-
-                          <div>
-                              @{var nombreFoto = ISICWeb.Models.FuncionesGrales.DirectorioImagenes(item.CodigoDeBarras,false,FuncionesGrales.TipoImagen.Rostro, 1);  }
-                                                    <img src='@Url.Content(nombreFoto)' style="height:50%; width: 50%;" />
-                                                </div>
-                  </td>
-
-                <td id="@item.CodigoDeBarras">@item.CodigoDeBarras</td>
-                <td>
-                    @item.Apellido, @item.Nombres
-                </td>
-              
-                <td >
-                    @item.DocumentoNumero
-                </td>
-                <td>
-                    @item.Apodo
-                </td>
-                <td>
-                    @item.NombreMadre
-                </td>
-
-                <td>
-                    @item.EdadActual
-                </td>
-                <td>
-                    @item.FechaFichaje
-                </td>
-                <td>
-
-                </td>
-
-            </tr>
-        }
-    </table>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="width: 40%">
+                <div>
+                    @{var nombreFoto = ISICWeb.Models.FuncionesGrales.DirectorioImagenes(item.CodigoDeBarras, false, FuncionesGrales.TipoImagen.Rostro, 1);  }
+                    <img src='@Url.Content(nombreFoto)' style="height:50%; width: 50%;" />
+                </div>
+                @if (ViewBag.IdEstrella == item.Id)
+                {
+                    <div>
+                    <i class="fa fa-star" style="float: left;color: yellow"></i>
+                        <i style="float:left;font-size:1.2em;margin-left:10px;  color: rgb(202, 231, 231)">Mas Coincidente de este Prontuario</i>
+                </div>
+                }
+                @if (item.Extraccion == false)
+                {
+                    <br/>
+                    <div class="clearfix"></div>
+                        <a id="btnExtraccion" class="btn btn-default" onclick="location.href='@Url.Action("MarcarHuellasDactilares", "Digitalizacion",new{@CodigoBarra =item.CodigoDeBarras})';">
+                            Digitalizar Huellas
+                        </a>
 
 
 
 
 
-    <script type="text/javascript">
+                }
+                else
+                {
+                    <br />
+                    <div class="clearfix"></div>
+                    <div>
+                        <i class="fa fa-paw" style="font-size: 1.2em; color: rgb(202, 231, 231);"> <span>Huella Digitalizada </span></i>
+                    <button id="btnCotejo" class="btn btn-default"  type="button" onclick="location.href = '@Url.Action("VisualizaParesDecaDactilares", "CotejoManual", new {@CodigoBarraImpNuevo = @ViewBag.CodigoBarrasImpNuevo, @CodigoBarraImpArchivo = item.CodigoDeBarras})';">
+                            A Cotejar
+                        </button>
+                    </div>
+                    
+
+                }
+
+             
+            </td>
+
+            <td id="@item.CodigoDeBarras">@item.CodigoDeBarras</td>
+            <td>
+                @item.Apellido, @item.Nombres
+            </td>
+
+            <td>
+                @item.DocumentoNumero
+            </td>
+            <td>
+                @item.Apodo
+            </td>
+            <td>
+                @item.NombreMadre
+            </td>
+
+            <td>
+                @item.EdadActual
+            </td>
+            <td>
+                @item.FechaFichaje
+            </td>
+            <td></td>
+
+        </tr>
+                        }
+</table>
+
+
+
+
+
+<script type="text/javascript">
     var pTable;
 
 
@@ -196,5 +204,5 @@
     $("div.dataTables_filter>label>input").addClass("form-control");//estilo correcto a filtro
     $("div.dataTables_length>label>select").addClass("form-control");//estilo correcto a cant de filas
     $(".DTTT_container >a").each($).removeClass().addClass("btn btn-sm");//agrego estilo correcto a botones de tabla
-     
-    </script>
+
+</script>

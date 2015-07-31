@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Globalization;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -14,7 +15,14 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Services
 {
-    public class MigracionesService
+    public interface IMigracionesService
+    {
+        bool BorrarFichaMigraciones(int id, IPrincipal user);
+        MigracionesViewModel LlenarViewModelDesdeBase(string prontuariosic, int idMigraciones);
+        string GuardarFichaMigraciones(MigracionesViewModel model, IPrincipal user);
+    }
+
+    public class MigracionesService : IMigracionesService
     {
         private IRepository _repository;
 
@@ -25,11 +33,13 @@ namespace ISICWeb.Services
 
         }
 
-        public bool BorrarFichaMigraciones(int id)
+        public bool BorrarFichaMigraciones(int id, IPrincipal user)
         {
             try
             {
                 Migraciones migraciones = _repository.Set<Migraciones>().Single(x => x.Id == id);
+                migraciones.idUsuarioUltimaModificacion = user.Identity.Name;
+                migraciones.FechaUltimaModificacion=DateTime.Now;
                 migraciones.Baja = true;
                 _repository.UnitOfWork.RegisterChanged(migraciones);
                 _repository.UnitOfWork.Commit();
@@ -69,7 +79,7 @@ namespace ISICWeb.Services
 
             }
 
-      
+            migracionesViewModel.FechaInforme = (migracionesViewModel.Id > 0) ? mig.FechaInforme.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy");
             //migracionesViewModel.GetType().GetProperties();
             return migracionesViewModel;
         }
@@ -93,7 +103,7 @@ namespace ISICWeb.Services
             }
         }
 
-        public string GuardarFichaMigraciones(MigracionesViewModel model)
+        public string GuardarFichaMigraciones(MigracionesViewModel model, IPrincipal user)
         {
             string errores = "";
             string prontuariosic = model.Prontuario.ProntuarioNro;
@@ -101,7 +111,11 @@ namespace ISICWeb.Services
             Migraciones mig = _repository.Set<Migraciones>().SingleOrDefault(x => x.Id == model.Id);
             if (mig == null)
             {
-                mig = new Migraciones();;
+                mig = new Migraciones
+                {
+                    FechaCreacion = DateTime.Now,
+                    idUsuarioCreacion = user.Identity.Name
+                };;
             }
 
             if (prontuario == null)
@@ -112,7 +126,14 @@ namespace ISICWeb.Services
             Mapper.CreateMap<MigracionesViewModel,Migraciones>();
             mig = Mapper.Map(model,mig);
             mig.Prontuario = prontuario;
-            mig.FechaUltimaModificacion = DateTime.Now;
+            DateTime fecha;
+            bool fechacorrecta = DateTime.TryParseExact(model.FechaInforme, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fecha);
+            if (!fechacorrecta)
+                errores = "Fecha del informe incorrecta";
+            else
+                mig.FechaInforme = fecha;
+          mig.FechaUltimaModificacion = DateTime.Now;
+            mig.idUsuarioUltimaModificacion = user.Identity.Name;
             mig.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id == model.Sexo.Id);
             mig.EstadoCivil = _repository.Set<ClaseEstadoCivil>().Single(x => x.Id == model.EstadoCivil.Id);
             mig.ExpedienteMigraciones = _repository.Set<ClaseExpedienteMigraciones>().Single(x => x.Id == model.ExpedienteMigraciones.Id);
@@ -120,21 +141,26 @@ namespace ISICWeb.Services
             mig.PaisEmbarque = _repository.Set<Pais>().Single(x => x.Id == model.PaisEmbarque.Id);
             mig.LocalidadJusticia = _repository.Set<Localidad>().Single(x => x.Id == model.LocalidadJusticia.Id);
 
-            if (model.Id == 0)
+            if (errores == "")
             {
-                _repository.UnitOfWork.RegisterNew(mig);
-            }
-            else
-            {
-                _repository.UnitOfWork.RegisterChanged(mig);
-            }
-            try
-            {
-                _repository.UnitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                errores = e.InnerException == null ? "Error al guardar. " + e.Message : e.InnerException.ToString().Substring(0, 400);
+                if (model.Id == 0)
+                {
+                    _repository.UnitOfWork.RegisterNew(mig);
+                }
+                else
+                {
+                    _repository.UnitOfWork.RegisterChanged(mig);
+                }
+                try
+                {
+                    _repository.UnitOfWork.Commit();
+                }
+                catch (Exception e)
+                {
+                    errores = e.InnerException == null
+                        ? "Error al guardar. " + e.Message
+                        : e.InnerException.ToString().Substring(0, 400);
+                }
             }
             return errores;
         }

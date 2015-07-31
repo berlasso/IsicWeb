@@ -82,7 +82,15 @@
                                 @Html.TextArea("Roles",csv, new { @class = "form-control", @readonly = "readonly" })
                             </div>
                             <div class="col-md-6">
-                             
+                                <br/>
+                                @if (Model.UsuarioMPBA == true)
+                                {
+                                    @Html.TextBox("umpba","Es usuario de la red MPBA", new{@class="form-control", @readonly="readonly"})
+                                }
+                                else
+                                {
+                                    @Html.TextBox("umpba", "Es usuario externo a la red MPBA", new { @class = "form-control", @readonly = "readonly" })
+                                }
                             </div>
                         </div>
                     </div>

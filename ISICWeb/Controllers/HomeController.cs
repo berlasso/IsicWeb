@@ -15,7 +15,8 @@ using RestSharp;
 namespace ISICWeb.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador,OTIP, Usuarios, AFIS, Antecedentes")]
+    [Autorizar(Roles = "Administrador,OTIP, Usuarios, AFIS, Antecedentes")]
+   // [CheckSessionOut]
     public class HomeController : Controller
     {
         private IRepository repository;
@@ -57,9 +58,6 @@ namespace ISICWeb.Controllers
            //wsSIC.Services ws=new wsSIC.Services();
            // string perfil = ws.PerfilUsuario("usuario", "clave");
 
-
-          
-            
             
             return View();
         }

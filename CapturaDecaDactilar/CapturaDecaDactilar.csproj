@@ -76,6 +76,14 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MPBA.RenaperClient">
       <HintPath>..\packages\MPBA.RenaperClient.1.0.0\lib\net45\MPBA.RenaperClient.dll</HintPath>
     </Reference>
@@ -114,6 +122,9 @@
       <HintPath>..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -130,6 +141,8 @@
     <Compile Include="Capturer\Code\ClaseMano.cs" />
     <Compile Include="Capturer\Code\ClusterClient.cs" />
     <Compile Include="Capturer\Code\DedosUtils.cs" />
+    <Compile Include="Capturer\Code\HuellasImputado.cs" />
+    <Compile Include="Capturer\Code\ImputadoDatosPers.cs" />
     <Compile Include="Capturer\Code\Model.cs" />
     <Compile Include="Capturer\Code\NBiometricStatusEsp.cs" />
     <Compile Include="Capturer\Code\Utilities.cs" />
@@ -207,6 +220,30 @@
     <Compile Include="ImageFromScanner.Designer.cs">
       <DependentUpon>ImageFromScanner.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service References\ServiceCapturaDecaDactilar\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <None Include="Service References\ServiceCapturaDecaDactilar\CapturaDecaDactilarService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceCapturaDecaDactilar\CapturaDecaDactilarService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceCapturaDecaDactilar\CapturaDecaDactilarService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceCapturaDecaDactilar\CapturaDecaDactilarService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceCapturaDecaDactilar\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceCapturaDecaDactilar\configuration.svcinfo" />
+    <None Include="Service References\ServiceCapturaDecaDactilar\configuration91.svcinfo" />
+    <None Include="Service References\ServiceCapturaDecaDactilar\CapturaDecaDactilarService.disco" />
     <None Include="bin\DebugRightIndexFingerRodada.jpeg" />
     <Content Include="Resources\ArrowDown.png" />
     <Content Include="Resources\ArrowUp.png" />
@@ -217,14 +254,13 @@
     <None Include="Resources\ficha decadactilar.png.gif" />
     <None Include="Resources\FichaVacia.jpg" />
     <None Include="Resources\fondoBlanco.png" />
+    <None Include="Resources\FichaNueva500.jpg" />
     <Content Include="Resources\GoToNext.png" />
     <Content Include="Resources\GoToPrevious.png" />
     <Content Include="Resources\Help.png" />
     <Content Include="Resources\Ok.png" />
     <Content Include="Resources\Repeat.png" />
     <Content Include="Resources\SaveHS.png" />
-    <None Include="Resources\SINHUELLA1.png" />
-    <None Include="Resources\SINHUELLA.png" />
     <Content Include="Resources\TwoHands.svg" />
     <EmbeddedResource Include="Capturer\Controls\FingerSelector.resx">
       <DependentUpon>FingerSelector.cs</DependentUpon>
@@ -293,6 +329,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\ServiceCapturaDecaDactilar\CapturaDecaDactilarService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -316,7 +353,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="lib\LScanEssentials.dll" />
     <Content Include="lib\LS_USB_Stub_Us.dll" />
@@ -328,6 +367,9 @@
     <Content Include="lib\NLicensing.dll" />
     <Content Include="lib\NMedia.dll" />
     <Content Include="lib\NMediaProc.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServiceCapturaDecaDactilar\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -351,6 +393,7 @@
   <Import Project="..\packages\Neurotec.Devices.5.0.0.0\build\Neurotec.Devices.targets" Condition="Exists('..\packages\Neurotec.Devices.5.0.0.0\build\Neurotec.Devices.targets')" />
   <Import Project="..\packages\Neurotec.Biometrics.Client.5.0.0.0\build\Neurotec.Biometrics.Client.targets" Condition="Exists('..\packages\Neurotec.Biometrics.Client.5.0.0.0\build\Neurotec.Biometrics.Client.targets')" />
   <Import Project="..\packages\Neurotec.Cluster.5.0.0.0\build\Neurotec.Cluster.targets" Condition="Exists('..\packages\Neurotec.Cluster.5.0.0.0\build\Neurotec.Cluster.targets')" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

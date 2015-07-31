@@ -112,6 +112,8 @@
       <HintPath>..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -205,6 +207,11 @@
     <Compile Include="ImageFromScanner.Designer.cs">
       <DependentUpon>ImageFromScanner.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service References\IdentityService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Content Include="Resources\ArrowDown.png" />
     <Content Include="Resources\ArrowUp.png" />
     <Content Include="Resources\Bad.png" />
@@ -215,6 +222,13 @@
     <Content Include="Resources\Repeat.png" />
     <Content Include="Resources\SaveHS.png" />
     <Content Include="Resources\TwoHands.svg" />
+    <None Include="Service References\IdentityService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\IdentityService\configuration.svcinfo" />
+    <None Include="Service References\IdentityService\configuration91.svcinfo" />
+    <None Include="Service References\IdentityService\RenaperIdentityService.disco" />
     <EmbeddedResource Include="Capturer\Controls\FingerSelector.resx">
       <DependentUpon>FingerSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -223,9 +237,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Capturer\Forms\ConnectionForm.resx">
       <DependentUpon>ConnectionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Capturer\Forms\DeviceSelectForm.resx">
       <DependentUpon>DeviceSelectForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Capturer\Forms\EditInfoForm.resx">
       <DependentUpon>EditInfoForm.cs</DependentUpon>
@@ -280,6 +296,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\IdentityService\RenaperResponseService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -303,7 +320,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="lib\LScanEssentials.dll" />
     <Content Include="lib\LS_USB_Stub_Us.dll" />
@@ -315,6 +334,9 @@
     <Content Include="lib\NLicensing.dll" />
     <Content Include="lib\NMedia.dll" />
     <Content Include="lib\NMediaProc.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\IdentityService\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

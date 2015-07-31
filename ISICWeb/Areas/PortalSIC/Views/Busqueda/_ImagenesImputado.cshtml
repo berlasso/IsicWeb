@@ -20,12 +20,12 @@
 
 
                         <ul class="portfolio-filter" id="fotos_filter" style="margin-bottom: 10px">
-                            <li role="presentation"><a class="btn btn-default active" href="#" data-filter="*">Todas</a></li>
+                            <li role="presentation"><a id="btnFotosTodas" class="btn btn-default active hidden-print" href="#" data-filter="*">Todas</a></li>
 
 
                             @foreach (var tipoArchivo in tiposArchivos)
                             {
-                                <li role="presentation"><a class="btn btn-default" href="#" data-filter=".@(tipoArchivo.Key.Descripcion.Substring(5, 5).Replace(" ",""))">@tipoArchivo.Key.Descripcion.Trim()</a></li>
+                                <li role="presentation"><a class="btn btn-default hidden-print" href="#" data-filter=".@(tipoArchivo.Key.Descripcion.Substring(5, 5).Replace(" ",""))">@tipoArchivo.Key.Descripcion.Trim()</a></li>
                             }
 
                         </ul>

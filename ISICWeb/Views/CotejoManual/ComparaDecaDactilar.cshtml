@@ -18,97 +18,168 @@
         canvas {
             background-color: white !important;
         }
-      
+
     </style>
 }
-  
+
 <div class="container-detalle">
-    
-
-    <div class="row">
-	<p  id="iok"> <i class="fa fa-icon-ok-circle"></i> </p>
-        <div class="col-md-12 wow fadeInDown animated tile-light">
-            <h3 style="text-align:center">Cotejo de las huellas del Imputado ingresado con Cod.Barra: @Model.First().CodigoDeBarras, @Model.First().Persona.Apellido  @Model.First().Persona.Nombre</h3>
-            <h4 style="text-align:center">
-               con el <span>Cod.Barra: @Model.Last().CodigoDeBarras , @Model.Last().Persona.Apellido , @Model.Last().Persona.Nombre</span>
-             </h4>
+    <div class="row wow fadeInDown animated tile-light">
+        <div class="col-md-12 ">
+            <h1 class="center">Cotejo de Huellas</h1>
         </div>
-
-         <div class="row">
-		 
-		   <div class="col-xs-6 col-md-4">
-		   	<button type="button" id="Unificar" onclick="'@Url.Action("UnificarImputados", "CotejoManual", new { @CodigoBarraImpNuevo =  @Model.First().CodigoDeBarras,@CodigoBarraImpArchivo= @Model.Last().CodigoDeBarras })'; " class="btn" style="margin-left: 1%"> Unificar con el imputado @Model.Last().CodigoDeBarras</button>
-		          
-						                   
-				
-				 <div class="row">
-		  <div class="col-xs-6">
-			<span id="TCantDedosCoincidentes" class="block-title" style="margin-left: 55% !important;white-space: nowrap">  @Html.DisplayName("Huellas Coincidentes:") <span id="CantDedosCoincidentes" style="color:red;font-size: larger;font-weight: bold;">0</span></span>
-	       </div>
-		   </div>
-		   </div>
-
-		<div class="col-xs-6 col-md-4">
-				<button type="button" id="Continuar" onclick=" window.history.go(-1); return false; " class="btn" style="margin-left: 1%">Continuar Cotejo</button>
-		   </div>
-
-
-		   
-
-		<div class="col-xs-6 col-md-4">
-			<button type="button" id="FIN" onclick="@Url.Action("FINCotejoAFIS", "CotejoManual", new { @CodigoBarraImpNuevo =  @Model.First().CodigoDeBarras }); return false; " class="btn" style="margin-left: 1%">FIN del Cotejo AFIS Local</button>
-
-	   </div>
-		   
-		 </div>
-		
-	  <div class="row">
-        <div id="decadactilarPanelOrg" style="float: left;" title="">
-          
-
-            <canvas id="co" width="1200" height="500" style="float: left; margin-top: 2%; margin-left: 15% !important; border: 1px solid #000000;"></canvas>
-        </div>
-        </div>
-
-         
     </div>
-    <div class="row">
-    <div id="comparacion"  class="col-md-12 wow fadeInDown animated tile-light"  style="position:relative; margin-top: 50px;width:auto ;display: none" >
-	 <div class="row">
 
-	    <div class="col-xs-6 col-md-4">
-				<span id="CantCoincidencias" class="block-title">  @Html.DisplayName("Cantidad de Puntos Coincidentes: 0")</span> 
-	<div class="row">
-		   <div class="col-xs-6 col-md-4">
-		    <label>@Html.RadioButton("Resultado", "1", true, new {@class = "radio"})Cotejo Positivo</label>
+    <br />
+<div class="row wow tile-light">
+    <div class="col-xs-3">
+    </div>
+    <div class="col-xs-2">
+        <div class="row">
+            <div class="col-xs-5">
+                Código de Barras:
             </div>
-			 <div class="col-xs-6 col-md-4">
-                <label>@Html.RadioButton("Resultado", "2", new {@class = "radio"})Negativo</label>
-             </div>
+            <div class="col-xs-7">
+                <span class="block-title">@Model.First().CodigoDeBarras</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-5">
+                Apellido:
+            </div>
+            <div class="col-xs-7">
+                <span class="block-title">@Model.First().Persona.Apellido</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-5">
+                Nombre:
+            </div>
+            <div class="col-xs-7">
+                <span class="block-title">@Model.First().Persona.Nombre</span>
+            </div>
+        </div>
+    </div>
 
-			 <div class="col-xs-6 col-md-4">
-	                <label>@Html.RadioButton("Resultado", "3", new {@class = "radio"})No define</label>
-             </div>
-	</div>
+    <div class="col-xs-1">
+        <div class="row">
+            <br/>
+        </div>
+        <div class="row">
+            <div style="text-align: center; font-size: larger;"> VS </div>
 
         </div>
-		<div class="col-xs-6 col-md-4">
-				<button type="button" id="btnLimpiaPuntos"  class="btn" style="margin-left: 2%">Borra los Puntos</button>
+        <div class="row">
+            <br/>
         </div>
-		<div class="col-xs-6 col-md-4">
-				<button type="button" id="btnSalir"  class="btn" style="margin-left: 2%">Salir</button>
+    </div>
+    <div class="col-xs-2">
+        <div class="row">
+
+            <div class="col-xs-5">
+                Código de Barras:
+            </div>
+            <div class="col-xs-7">
+                <span class="block-title">@Model.Last().CodigoDeBarras</span>
+            </div>
         </div>
-		</div>
-	
-	 <div class="row">                     
-
-                            <canvas id="coriginal" width="1220" height="700" ></canvas>
-     </div>
-
-                        
-                            
+        <div class="row">
+            <div class="col-xs-5">
+                Apellido:
+            </div>
+            <div class="col-xs-7">
+                <span class="block-title">@Model.Last().Persona.Apellido</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-5">
+                Nombre:
+            </div>
+            <div class="col-xs-7">
+                <span class="block-title">@Model.Last().Persona.Nombre</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4">
     </div>
 </div>
+
+
+
+    <br />
+
+    <div class="row wow fadeInDown animated">
+        <p id="iok">
+            <i class="fa fa-icon-ok-circle"></i>
+        </p>
+
+
+
+        <div class="row  tile">
+
+            <div class="col-xs-12">
+                <h5 style="margin-left: 10px">Huellas de @Model.First().CodigoDeBarras</h5>
+                <span id="TCantDedosCoincidentes" class="block-title">  @Html.DisplayName("Huellas Coincidentes:") <span id="CantDedosCoincidentes" style="color: red; font-size: larger; font-weight: bold;">0</span></span>
+                <button type="button" id="Unificar" onclick="'@Url.Action("UnificarImputados", "CotejoManual", new {@CodigoBarraImpNuevo = @Model.First().CodigoDeBarras, @CodigoBarraImpArchivo = @Model.Last().CodigoDeBarras})'; " class="btn" style="margin-left: 1%"> Unificar con @Model.Last().CodigoDeBarras</button>
+                <button type="button" id="Continuar" onclick=" window.history.go(-1); return false; " class="btn" style="margin-left: 1%">Continuar Cotejo</button>
+                <button type="button" id="FIN" onclick="@Url.Action("FINCotejoAFIS", "CotejoManual", new {@CodigoBarraImpNuevo = @Model.First().CodigoDeBarras}); return false; " class="btn" style="margin-left: 1%">FIN del Cotejo AFIS Local</button>
+            </div>
+            <div class="col-xs-12">
+                
+            </div>
+
+
+
+
+            <div class="row" >
+                <div id="decadactilarPanelOrg" style="float: left;" title="">
+
+
+                    <canvas id="co" width="1200" height="500" style="float: left; margin-top: 2%; margin-left: 5% !important; border: 1px solid #000000;"></canvas>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div id="comparacion" class="col-md-12 wow fadeInDown animated tile-light" style="position: relative; margin-top: 50px; width: auto; display: none">
+                <div class="row">
+
+                    <div class="col-xs-6 col-md-4">
+                        <span id="CantCoincidencias" class="block-title">  @Html.DisplayName("Cantidad de Puntos Coincidentes: 0")</span>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-4">
+                                <label>@Html.RadioButton("Resultado", "1", true, new { @class = "radio" })Cotejo Positivo</label>
+                            </div>
+                            <div class="col-xs-6 col-md-4">
+                                <label>@Html.RadioButton("Resultado", "2", new { @class = "radio" })Negativo</label>
+                            </div>
+
+                            <div class="col-xs-6 col-md-4">
+                                <label>@Html.RadioButton("Resultado", "3", new { @class = "radio" })No define</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <button type="button" id="btnLimpiaPuntos" class="btn" style="margin-left: 2%">Borra los Puntos</button>
+                    </div>
+                    <div class="col-xs-6 col-md-4">
+                        <button type="button" id="btnSalir" class="btn" style="margin-left: 2%">Salir</button>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <canvas id="coriginal" width="1220" height="700"></canvas>
+                </div>
+
+
+
+            </div>
+        </div>
         @{var indice = 0;}
         <div id="dedosImagenes" style="margin-top: 0px; height: 400px; display: none">
             @foreach (var dedos in Model.First().BioManoDerecha)
@@ -118,32 +189,32 @@
                 switch (dedos.EstadoDedo)
                 {
 
-                    case (ISIC.Enums.ClaseEstadoDedo) 1:
-                    {
-                        var base64 = Convert.ToBase64String(dedos.imagen);
-                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    case (ISIC.Enums.ClaseEstadoDedo)1:
+                        {
+                            var base64 = Convert.ToBase64String(dedos.imagen);
+                            var imgSrc = String.Format("data:image/png;base64,{0}", base64);
 
-                        <img src="@imgSrc" height="400" width="400" id="@nombreDedo"/>
-                        break;
-                    }
-                    case (ISIC.Enums.ClaseEstadoDedo) 2:
-                    {
-// Lastimado
-                        <img src="~/Images/dedoLastimado.png" id=@nombreDedo height="300"/>
-                        break;
-                    }
-                    case (ISIC.Enums.ClaseEstadoDedo) 3:
-                    {
-// faltante
-                        <img src="~/Images/dedoFaltante.png" id=@nombreDedo height="300"/>
-                        break;
-                    }
-                    case (ISIC.Enums.ClaseEstadoDedo) 4:
-                    {
-// Huella No Apta
-                        <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedo height="300"/>
-                        break;
-                    }
+                            <img src="@imgSrc" height="400" width="400" id="@nombreDedo" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)2:
+                        {
+                            // Lastimado
+                            <img src="~/Images/dedoLastimado.png" id=@nombreDedo height="300" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)3:
+                        {
+                            // faltante
+                            <img src="~/Images/dedoFaltante.png" id=@nombreDedo height="300" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)4:
+                        {
+                            // Huella No Apta
+                            <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedo height="300" />
+                            break;
+                        }
 
 
 
@@ -158,32 +229,32 @@
                 switch (dedos.EstadoDedo)
                 {
 
-                    case (ISIC.Enums.ClaseEstadoDedo) 1:
-                    {
-                        var base64 = Convert.ToBase64String(dedos.imagen);
-                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    case (ISIC.Enums.ClaseEstadoDedo)1:
+                        {
+                            var base64 = Convert.ToBase64String(dedos.imagen);
+                            var imgSrc = String.Format("data:image/png;base64,{0}", base64);
 
-                        <img src="@imgSrc" id="@nombreDedoI" height="400" width="400"/>
-                        break;
-                    }
-                    case (ISIC.Enums.ClaseEstadoDedo) 2:
-                    {
-// Lastimado
-                        <img src="~/Images/dedoLastimado.png" id=@nombreDedoI height="300"/>
-                        break;
-                    }
-                    case (ISIC.Enums.ClaseEstadoDedo) 3:
-                    {
-// faltante}
-                        <img src="~/Images/dedoFaltante.png" id=@nombreDedoI height="300"/>
-                        break;
-                    }
-                    case (ISIC.Enums.ClaseEstadoDedo) 4:
-                    {
-// Huella No Apta}
-                        <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedoI height="300"/>
-                        break;
-                    }
+                            <img src="@imgSrc" id="@nombreDedoI" height="400" width="400" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)2:
+                        {
+                            // Lastimado
+                            <img src="~/Images/dedoLastimado.png" id=@nombreDedoI height="300" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)3:
+                        {
+                            // faltante}
+                            <img src="~/Images/dedoFaltante.png" id=@nombreDedoI height="300" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)4:
+                        {
+                            // Huella No Apta}
+                            <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedoI height="300" />
+                            break;
+                        }
 
 
 
@@ -192,142 +263,180 @@
             }
 
         </div>
-    <div id="dedosImagenesSimilar" style="margin-top: 0px; height: 400px; display: none">
-        @foreach (var dedos in Model.Last().BioManoDerecha)
-        {
-            var nombreDedo = dedos.Dedo.ToString() + "MD" + Model.Last().CodigoDeBarras;
-
-            switch (dedos.EstadoDedo)
+        <div id="dedosImagenesSimilar" style="margin-top: 0px; height: 400px; display: none">
+            @foreach (var dedos in Model.Last().BioManoDerecha)
             {
+                var nombreDedo = dedos.Dedo.ToString() + "MD" + Model.Last().CodigoDeBarras;
 
-                case (ISIC.Enums.ClaseEstadoDedo)1:
-                    {
-                        var base64 = Convert.ToBase64String(dedos.imagen);
-                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                switch (dedos.EstadoDedo)
+                {
 
-                        <img src="@imgSrc" height="400" width="400" id="@nombreDedo" />
-                        break;
-                    }
-                case (ISIC.Enums.ClaseEstadoDedo)2:
-                    {
-                        // Lastimado
-                        <img src="~/Images/dedoLastimado.png" id=@nombreDedo height="300" />
-                        break;
-                    }
-                case (ISIC.Enums.ClaseEstadoDedo)3:
-                    {
-                        // faltante
-                        <img src="~/Images/dedoFaltante.png" id=@nombreDedo height="300" />
-                        break;
-                    }
-                case (ISIC.Enums.ClaseEstadoDedo)4:
-                    {
-                        // Huella No Apta
-                        <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedo height="300" />
-                        break;
-                    }
+                    case (ISIC.Enums.ClaseEstadoDedo)1:
+                        {
+                            var base64 = Convert.ToBase64String(dedos.imagen);
+                            var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                            <img src="@imgSrc" height="400" width="400" id="@nombreDedo" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)2:
+                        {
+                            // Lastimado
+                            <img src="~/Images/dedoLastimado.png" id=@nombreDedo height="300" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)3:
+                        {
+                            // faltante
+                            <img src="~/Images/dedoFaltante.png" id=@nombreDedo height="300" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)4:
+                        {
+                            // Huella No Apta
+                            <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedo height="300" />
+                            break;
+                        }
 
 
 
+                }
+                indice++;
             }
-            indice++;
-        }
 
-        @foreach (var dedos in Model.Last().BioManoIzquierda)
-        {
-            var nombreDedoI = dedos.Dedo.ToString() + "MI" + Model.Last().CodigoDeBarras.ToString();
-
-            switch (dedos.EstadoDedo)
+            @foreach (var dedos in Model.Last().BioManoIzquierda)
             {
+                var nombreDedoI = dedos.Dedo.ToString() + "MI" + Model.Last().CodigoDeBarras.ToString();
 
-                case (ISIC.Enums.ClaseEstadoDedo)1:
-                    {
-                        var base64 = Convert.ToBase64String(dedos.imagen);
-                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                switch (dedos.EstadoDedo)
+                {
 
-                        <img src="@imgSrc" id="@nombreDedoI" height="400" width="400" />
-                        break;
-                    }
-                case (ISIC.Enums.ClaseEstadoDedo)2:
-                    {
-                        // Lastimado
-                        <img src="~/Images/dedoLastimado.png" id=@nombreDedoI height="300" />
-                        break;
-                    }
-                case (ISIC.Enums.ClaseEstadoDedo)3:
-                    {
-                        // faltante}
-                        <img src="~/Images/dedoFaltante.png" id=@nombreDedoI height="300" />
-                        break;
-                    }
-                case (ISIC.Enums.ClaseEstadoDedo)4:
-                    {
-                        // Huella No Apta}
-                        <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedoI height="300" />
-                        break;
-                    }
+                    case (ISIC.Enums.ClaseEstadoDedo)1:
+                        {
+                            var base64 = Convert.ToBase64String(dedos.imagen);
+                            var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                            <img src="@imgSrc" id="@nombreDedoI" height="400" width="400" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)2:
+                        {
+                            // Lastimado
+                            <img src="~/Images/dedoLastimado.png" id=@nombreDedoI height="300" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)3:
+                        {
+                            // faltante}
+                            <img src="~/Images/dedoFaltante.png" id=@nombreDedoI height="300" />
+                            break;
+                        }
+                    case (ISIC.Enums.ClaseEstadoDedo)4:
+                        {
+                            // Huella No Apta}
+                            <img src="~/Images/dedoHuellaNoApta.png" id=@nombreDedoI height="300" />
+                            break;
+                        }
 
 
 
+                }
+                indice++;
             }
-            indice++;
-        }
+
+        </div>
 
     </div>
-    </div>
+</div>
 
 
-  
-
-    <script src="~/Scripts/jquery-ui-1.11.2.js"></script>
-    <script src="~/Areas/PortalSIC/Scripts/printThis.js"></script>
-    <script type="text/javascript">
-    
-
-        var canvasOriginal = new fabric.Canvas('coriginal');
-        var posX;
-        var posY;
-        var CantOriginal =0;
-		var CantSimimlar =0;
-		var NombreDedoCotejoActual = "";
-		var CantDedosCoincidentes = 0;
-
-        $("#co").attr("id", "@Model.First().CodigoDeBarras");
-        var nombreInd = "Indiv".concat("@Model.First().CodigoDeBarras");
-        $("#cIndiv").attr("id", nombreInd);
-        var canvasDeca = new fabric.Canvas('@Model.First().CodigoDeBarras');
-        canvasDeca.hoverCursor = "url(/Content/magnify.cur),default";
-        var canvasIndiv = new fabric.Canvas(nombreInd);
-        canvasDeca.backgroundColor = "white";
-        canvasDeca.renderOnAddition = true;
-        canvasIndiv.renderOnAddition = true;
 
 
-        var imgDedos = new Array(10);
-        var nombreDedos = new Array(5);
-        nombreDedos = ["Pulgar", "Indice", "Medio", "Anular", "Meñique"]
-        var j = 0;
-        var desplaza = 40;
-        // ANCHO Y ALTO DE LAS IMAGENES?
-        var nombreD = "PulgarMD".concat("@Model.First().CodigoDeBarras");
-        var imgPulgar = document.getElementById(nombreD);
-        var linea = new fabric.Line([0, 210, $("#@Model.First().CodigoDeBarras").attr('width'), 210], {
-            strokeWidth: 1,
-            id: "otros",
-            stroke: 'blue'
-        });
+<script src="~/Scripts/jquery-ui-1.11.2.js"></script>
+<script src="~/Areas/PortalSIC/Scripts/printThis.js"></script>
+<script type="text/javascript">
 
-        canvasDeca.add(linea);
-        canvasDeca.item(0).bringToFront();
 
-        var textoDerecha = new fabric.Text('MANO DERECHA', {
+    var canvasOriginal = new fabric.Canvas('coriginal');
+    var posX;
+    var posY;
+    var CantOriginal = 0;
+    var CantSimimlar = 0;
+    var NombreDedoCotejoActual = "";
+    var CantDedosCoincidentes = 0;
+
+    $("#co").attr("id", "@Model.First().CodigoDeBarras");
+    var nombreInd = "Indiv".concat("@Model.First().CodigoDeBarras");
+    $("#cIndiv").attr("id", nombreInd);
+    var canvasDeca = new fabric.Canvas('@Model.First().CodigoDeBarras');
+    canvasDeca.hoverCursor = "url(/Content/magnify.cur),default";
+    var canvasIndiv = new fabric.Canvas(nombreInd);
+    canvasDeca.backgroundColor = "white";
+    canvasDeca.renderOnAddition = true;
+    canvasIndiv.renderOnAddition = true;
+
+
+    var imgDedos = new Array(10);
+    var nombreDedos = new Array(5);
+    nombreDedos = ["Pulgar", "Indice", "Medio", "Anular", "Meñique"]
+    var j = 0;
+    var desplaza = 40;
+    // ANCHO Y ALTO DE LAS IMAGENES?
+    var nombreD = "PulgarMD".concat("@Model.First().CodigoDeBarras");
+    var imgPulgar = document.getElementById(nombreD);
+    var linea = new fabric.Line([0, 210, $("#@Model.First().CodigoDeBarras").attr('width'), 210], {
+        strokeWidth: 1,
+        id: "otros",
+        stroke: 'blue'
+    });
+
+    canvasDeca.add(linea);
+    canvasDeca.item(0).bringToFront();
+
+    var textoDerecha = new fabric.Text('MANO DERECHA', {
+        fontFamily: 'Arial',
+        id: "letra",
+        fontSize: 20,
+        hasBorders: true,
+        angle: -90,
+        left: 0,
+        top: 180,
+        lockRotation: true,
+        lockMovementX: true,
+        lockMovementY: true,
+        lockScalingX: true,
+        lockScalingY: true,
+        lockUniScaling: true
+    });
+    canvasDeca.add(textoDerecha);
+    var textoDerecha = new fabric.Text('MANO IZQUIERDA', {
+        fontFamily: 'Arial',
+        fontSize: 20,
+        id: "letra",
+        hasBorders: true,
+        angle: -90,
+        left: 0,
+        top: 390,
+        lockRotation: true,
+        lockMovementX: true,
+        lockMovementY: true,
+        lockScalingX: true,
+        lockScalingY: true,
+        lockUniScaling: true
+    });
+    canvasDeca.add(textoDerecha);
+
+
+    for (var j = 0; j < 5; j++) {
+
+        var textoDedo = new fabric.Text(nombreDedos[j].toUpperCase(), {
             fontFamily: 'Arial',
-            id: "letra",
             fontSize: 20,
-            hasBorders: true,
-            angle: -90,
-            left: 0,
-            top: 180,
+            id: "letra",
+            hasBorders: false,
+            left: j + desplaza + 30,
+            top: 0,
+            textAlign: 'center',
             lockRotation: true,
             lockMovementX: true,
             lockMovementY: true,
@@ -335,15 +444,58 @@
             lockScalingY: true,
             lockUniScaling: true
         });
-        canvasDeca.add(textoDerecha);
-        var textoDerecha = new fabric.Text('MANO IZQUIERDA', {
-            fontFamily: 'Arial',
-            fontSize: 20,
-            id: "letra",
+        canvasDeca.add(textoDedo);
+
+
+        var aux = nombreDedos[j] + "MD"
+        aux = aux.concat("@Model.First().CodigoDeBarras");
+
+        var imgen = document.getElementById(aux);
+        var nombreIDO = nombreDedos[j] + "MD"
+
+        imgInstance = new fabric.Image(imgen, {
+            left: j + desplaza,
+            id: nombreDedos[j] + "MD",
+            top: 10,
+            angle: 0,
+            opacity: 1,
             hasBorders: true,
-            angle: -90,
-            left: 0,
-            top: 390,
+            borderColor: 'black',
+            scaleX: 220 / imgen.width,
+            scaleY: 230 / imgen.height,
+            lockRotation: true,
+            lockMovementX: true,
+            lockMovementY: true,
+            lockScalingX: true,
+            lockScalingY: true,
+            lockUniScaling: true
+
+        });
+
+        canvasDeca.add(imgInstance);
+        var total = canvasDeca.item.length;
+        canvasDeca.sendToBack(imgInstance);
+        desplaza += 220;
+
+
+    }
+    desplaza = 50;
+
+    for (var j = 0; j < 5; j++) {
+        var aux = nombreDedos[j] + "MI"
+        aux = aux.concat("@Model.First().CodigoDeBarras");
+        var imgen = document.getElementById(aux);
+
+        imgInstance = new fabric.Image(imgen, {
+            left: j + desplaza,
+            top: 225,
+            id: nombreDedos[j] + "MI",
+            angle: 0,
+            opacity: 1,
+            hasBorders: true,
+            borderColor: 'black',
+            scaleX: 220 / imgen.width,
+            scaleY: 230 / imgen.height,
             lockRotation: true,
             lockMovementX: true,
             lockMovementY: true,
@@ -351,310 +503,231 @@
             lockScalingY: true,
             lockUniScaling: true
         });
-        canvasDeca.add(textoDerecha);
+
+        canvasDeca.add(imgInstance);
+
+        desplaza += 220;
 
 
-        for (var j = 0; j < 5; j++) {
+    }
 
-            var textoDedo = new fabric.Text(nombreDedos[j].toUpperCase(), {
-                fontFamily: 'Arial',
-                fontSize: 20,
-                id: "letra",
-                hasBorders: false,
-                left: j + desplaza + 30,
-                top: 0,
-                textAlign: 'center',
-                lockRotation: true,
-                lockMovementX: true,
-                lockMovementY: true,
-                lockScalingX: true,
-                lockScalingY: true,
-                lockUniScaling: true
-            });
-            canvasDeca.add(textoDedo);
+    var objetoSeleccionado = null;
+    canvasDeca.item(0).bringToFront();
+    canvasDeca.hoverCursor = 'url(@Url.Content("~/Content/magnify.cur")),default';
+    /*  canvasOriginal.on('object:selected', function (e) {
+          var objetod = e.target;
+
+          this.add(new fabric.Rect({ id:'rectang'+posX+posY, top: posX, left: posY, width: 8, height: 8, fill: 'red' }));
 
 
-            var aux = nombreDedos[j] + "MD"
-            aux = aux.concat("@Model.First().CodigoDeBarras");
+      });*/
 
-            var imgen = document.getElementById(aux);
-            var nombreIDO = nombreDedos[j] + "MD"
-
-            imgInstance = new fabric.Image(imgen, {
-                left: j + desplaza,
-                id: nombreDedos[j] + "MD",
-                top: 10,
-                angle: 0,
-                opacity: 1,
-                hasBorders: true,
-                borderColor: 'black',
-                scaleX: 220 / imgen.width,
-                scaleY: 230 / imgen.height,
-                lockRotation: true,
-                lockMovementX: true,
-                lockMovementY: true,
-                lockScalingX: true,
-                lockScalingY: true,
-                lockUniScaling: true
-
-            });
-
-            canvasDeca.add(imgInstance);
-            var total = canvasDeca.item.length;
-            canvasDeca.sendToBack(imgInstance);
-            desplaza += 220;
-
-
-        }
-        desplaza = 50;
-
-        for (var j = 0; j < 5; j++) {
-            var aux = nombreDedos[j] + "MI"
-            aux = aux.concat("@Model.First().CodigoDeBarras");
-            var imgen = document.getElementById(aux);
-
-            imgInstance = new fabric.Image(imgen, {
-                left: j + desplaza,
-                top: 225,
-                id: nombreDedos[j] + "MI",
-                angle: 0,
-                opacity: 1,
-                hasBorders: true,
-                borderColor: 'black',
-                scaleX: 220 / imgen.width,
-                scaleY: 230 / imgen.height,
-                lockRotation: true,
-                lockMovementX: true,
-                lockMovementY: true,
-                lockScalingX: true,
-                lockScalingY: true,
-                lockUniScaling: true
-            });
-           
-            canvasDeca.add(imgInstance);
-         
-            desplaza += 220;
-
-
+    canvasOriginal.on('mouse:down', function (e) {
+        getMouseCoords(e);
+        var objeto = e.target;
+        canvasOriginal.add(new fabric.Rect({ id: 'rectang' + posX + posY, top: posY, left: posX, width: 8, height: 8, fill: 'red' }));
+        if (posX > 650)
+        { CantOriginal++; }
+        else { CantSimimlar++; }
+        if (CantOriginal == CantSimimlar) {
+            $('#CantCoincidencias').html('Cantidad de Coincidencias:' + CantOriginal);
         }
 
-        var objetoSeleccionado = null;
+
+    });
+
+    function getMouseCoords(event) {
+        var pointer = canvasOriginal.getPointer(event.e);
+        posX = pointer.x;
+        posY = pointer.y;
+
+    }
+
+    canvasDeca.on('object:selected', function (e) {
+        // Ir a comparar el dedo
+        var objeto = e.target;
+        var nombreObjeto = objeto.id;
+        nombreObjeto = nombreObjeto.substring(0, nombreObjeto.length - 2);
+        var nombreDedo = nombreObjeto;
+        var imageDeca = document.createElement('img');
+        imageDeca.src = e.target._originalElement.src;
+        imageDeca.style.width = 'auto';
+        imageDeca.style.height = '800px';
+        comparaDedos(objeto, nombreDedo);
+        //  alertify.alert(nombreObjeto, imageDeca).set({ 'pinnable': true, 'modal': false, 'resizable': true });
+
+    });
+
+
+    canvasDeca.on('mouse:over', function (e) {
+        canvasIndiv.clear().renderAll();
+        var objeto = e.target;
+        if (e.target.id == "otros" || e.target.id == "letra")
+            return;
+        objetoSeleccionado = fabric.util.object.clone(objeto);
         canvasDeca.item(0).bringToFront();
-        canvasDeca.hoverCursor = 'url(@Url.Content("~/Content/magnify.cur")),default';
-      /*  canvasOriginal.on('object:selected', function (e) {
-            var objetod = e.target;
-
-            this.add(new fabric.Rect({ id:'rectang'+posX+posY, top: posX, left: posY, width: 8, height: 8, fill: 'red' }));
 
 
-        });*/
+        objetoSeleccionado.scale(1.5);
+        objetoSeleccionado.left = 0;
+        objetoSeleccionado.top = 0;
+        objetoSeleccionado.width = 400;
+        objetoSeleccionado.height = 400;
 
-        canvasOriginal.on('mouse:down', function (e) {
-            getMouseCoords(e);
-            var objeto = e.target;
-            canvasOriginal.add(new fabric.Rect({ id:'rectang'+posX+posY ,top: posY, left: posX, width: 8, height: 8, fill: 'red' }));
-			if (posX > 650)
-			{     CantOriginal ++;}
-			else{ CantSimimlar ++;}
-			if  (CantOriginal == CantSimimlar)
-			{$('#CantCoincidencias').html('Cantidad de Coincidencias:'+CantOriginal);
-			}
+        canvasIndiv.add(objetoSeleccionado);
 
-			
+
+        canvasIndiv.renderAll();
+    });
+
+    /*
+      canvasDeca.on('mouse:out', function (e) {
+          canvasIndiv.clear().renderAll();
+      });
+
+            */
+    // nombre= PulgarMD
+
+
+    var imagenDECA = canvasDeca.toDataURL("image/png");
+    // $("#Izquierda"+i).attr("src", btoa(image));
+
+    //  imagenDECA = imagenDECA.replace('data:image/png;base64,', '');
+    $("#ImgDecaDactilar").val(imagenDECA);
+
+
+    function inicializaDedo(imagenDedo, nombre, estado) {
+        var a = 0;
+        imgInstance = new fabric.Image(imagenDedo, {
+            left: 0,
+            top: 0,
+            angle: 0,
+            opacity: 1
+        });
+        canvasDeca.add(imgInstance);
+
+    }
+
+
+
+
+    function comparaDedos(objeto, nombreDedo) {
+
+        /*Agrega comparaacion de ambos dedos*/
+
+        CantOriginal = 0;
+        CantSimimlar = 0;
+
+        canvasOriginal.clear().renderAll();
+        canvasOriginal.backgroundColor = "white";
+        canvasOriginal.renderOnAddition = true;
+
+        var aux = objeto.id;
+        aux = aux.concat("@Model.First().CodigoDeBarras");
+
+        var imgen = document.getElementById(aux);
+        var nombreIDO = objeto.id
+        nombreDedoCotejoActual = objeto.id;
+
+
+
+        var imgInstance = new fabric.Image(imgen, {
+            left: 0,
+            id: nombreIDO,
+            top: 10,
+            angle: 0,
+            opacity: 1,
+            hasBorders: true,
+            borderColor: 'black',
+            scaleX: 600 / imgen.width,
+            scaleY: 610 / imgen.height,
+            lockRotation: true,
+            lockMovementX: true,
+            lockMovementY: true,
+            lockScalingX: true,
+            lockScalingY: true,
+            lockUniScaling: true,
+            selectable: false
+
         });
 
-        function getMouseCoords(event) {
-            var pointer = canvasOriginal.getPointer(event.e);
-            posX = pointer.x;
-            posY = pointer.y;
-            
-        }
+        canvasOriginal.add(imgInstance);
+        var total = canvasOriginal.item.length
 
-        canvasDeca.on('object:selected', function (e) {
-            // Ir a comparar el dedo
-            var objeto = e.target;
-            var nombreObjeto = objeto.id;
-            nombreObjeto = nombreObjeto.substring(0, nombreObjeto.length - 2);
-			var nombreDedo = nombreObjeto;
-            var imageDeca = document.createElement('img');
-            imageDeca.src = e.target._originalElement.src;
-            imageDeca.style.width = 'auto';
-            imageDeca.style.height = '800px';
-			comparaDedos(objeto,nombreDedo);
-          //  alertify.alert(nombreObjeto, imageDeca).set({ 'pinnable': true, 'modal': false, 'resizable': true });
+
+        var auxCO = objeto.id
+        auxCO = auxCO.concat("@Model.Last().CodigoDeBarras");
+
+        var imgenCO = document.getElementById(auxCO);
+        var nombreCO = objeto.id
+
+
+
+        var imgInstanceC = new fabric.Image(imgenCO, {
+            left: 650,
+            id: nombreCO,
+            top: 10,
+            angle: 0,
+            opacity: 1,
+            hasBorders: true,
+            borderColor: 'black',
+            scaleX: 600 / imgenCO.width,
+            scaleY: 610 / imgenCO.height,
+            lockRotation: true,
+            lockMovementX: true,
+            lockMovementY: true,
+            lockScalingX: true,
+            lockScalingY: true,
+            lockUniScaling: true,
+            selectable: false
 
         });
 
+        canvasOriginal.add(imgInstanceC);
+        $('#comparacion').show("slow");
+    }
+    $('#btnSalir').on("click", function (e) {
+        e.preventDefault;
+        $('#comparacion').hide("slow");
+        if ($('#Resultado:checked').val() == '1') {
+            CantDedosCoincidentes++;
+            $('#CantDedosCoincidentes').html(CantDedosCoincidentes);
+            canvasDeca.forEachObject(
+               function (o) {
+                   if (o.id == nombreDedoCotejoActual) {
+                       o.borderColor = 'red';
+                       o.backgroundColor = 'red';
 
-        canvasDeca.on('mouse:over', function (e) {
-            canvasIndiv.clear().renderAll();
-            var objeto = e.target;
-            if (e.target.id == "otros" || e.target.id == "letra")
-                return;
-            objetoSeleccionado = fabric.util.object.clone(objeto);
-            canvasDeca.item(0).bringToFront();
+                   }
 
+               });
 
-            objetoSeleccionado.scale(1.5);
-            objetoSeleccionado.left = 0;
-            objetoSeleccionado.top = 0;
-            objetoSeleccionado.width = 400;
-            objetoSeleccionado.height = 400;
-
-            canvasIndiv.add(objetoSeleccionado);
-          
-
-            canvasIndiv.renderAll();
-        });
-
-        /*
-          canvasDeca.on('mouse:out', function (e) {
-              canvasIndiv.clear().renderAll();
-          });
-
-                */
-        // nombre= PulgarMD
-
-
-        var imagenDECA = canvasDeca.toDataURL("image/png");
-        // $("#Izquierda"+i).attr("src", btoa(image));
-
-        //  imagenDECA = imagenDECA.replace('data:image/png;base64,', '');
-        $("#ImgDecaDactilar").val(imagenDECA);
-
-
-        function inicializaDedo(imagenDedo, nombre, estado) {
-            var a = 0;
-            imgInstance = new fabric.Image(imagenDedo, {
-                left: 0,
-                top: 0,
-                angle: 0,
-                opacity: 1
-            });
-            canvasDeca.add(imgInstance);
-       
+            canvasOriginal.renderAll();
         }
+    });
+    $('#btnUnificar').on("click", function (e) {
 
 
-     
-
-        function comparaDedos(objeto,nombreDedo) {
-
-            /*Agrega comparaacion de ambos dedos*/
-            
-            CantOriginal =0;
-		     CantSimimlar =0;
-		   
-            canvasOriginal.clear().renderAll();
-            canvasOriginal.backgroundColor = "white";
-            canvasOriginal.renderOnAddition = true;
-            
-            var aux = objeto.id;
-            aux = aux.concat("@Model.First().CodigoDeBarras");
-
-            var imgen = document.getElementById(aux);
-            var nombreIDO = objeto.id
-			 nombreDedoCotejoActual =objeto.id;
-		
+    });
 
 
-            var imgInstance = new fabric.Image(imgen, {
-                left: 0,
-                id: nombreIDO,
-                top: 10,
-                angle: 0,
-                opacity: 1,
-                hasBorders: true,
-                borderColor: 'black',
-                scaleX: 600 / imgen.width,
-                scaleY: 610 / imgen.height,
-                lockRotation: true,
-                lockMovementX: true,
-                lockMovementY: true,
-                lockScalingX: true,
-                lockScalingY: true,
-                lockUniScaling: true,
-                selectable: false
-
-            });
-
-            canvasOriginal.add(imgInstance);
-            var total = canvasOriginal.item.length
-
-
-            var auxCO = objeto.id
-            auxCO = auxCO.concat("@Model.Last().CodigoDeBarras");
-
-            var imgenCO = document.getElementById(auxCO);
-            var nombreCO = objeto.id
-
-
-
-            var imgInstanceC = new fabric.Image(imgenCO, {
-                left: 650,
-                id: nombreCO,
-                top: 10,
-                angle: 0,
-                opacity: 1,
-                hasBorders: true,
-                borderColor: 'black',
-                scaleX: 600 / imgenCO.width,
-                scaleY: 610 / imgenCO.height,
-                lockRotation: true,
-                lockMovementX: true,
-                lockMovementY: true,
-                lockScalingX: true,
-                lockScalingY: true,
-                lockUniScaling: true,
-                selectable: false
-
-            });
-
-            canvasOriginal.add(imgInstanceC);
-            $('#comparacion').show("slow");
+    $('#btnLimpiaPuntos').on("click", function (e) {
+        e.preventDefault;
+        CantOriginal = 0;
+        CantSimimlar = 0;
+        $('#CantCoincidencias').html('Cantidad de Coincidencias: 0');
+        canvasOriginal.forEachObject(
+        function (o) {
+            if (o.id.substr(0, 7) == 'rectang')
+            { canvasOriginal.remove(o) }
         }
-          $('#btnSalir').on("click", function (e) {
-		    e.preventDefault;
-			 $('#comparacion').hide("slow");
-			 if ($('#Resultado:checked').val() == '1' )
-			  {
-			  CantDedosCoincidentes ++;
-			   $('#CantDedosCoincidentes').html(CantDedosCoincidentes );
-			   canvasDeca.forEachObject(
-			      function(o){ 
-			  	  if (o.id == nombreDedoCotejoActual )
-				   { o.borderColor = 'red'; 
-				     o.backgroundColor = 'red';  
-					 				 
-				    }
-
-			       });
-				   
-				    canvasOriginal.renderAll();
-			 }
-			 });
-			$('#btnUnificar').on("click", function (e) {
+        );
 
 
-			  });
+        for (var j = 2; j <= canvasOriginal.getObjects.length ; j++) {
+            canvasOriginal.remove(canvasOriginal.item(j));
+        }
+        canvasOriginal.renderAll();
+    });
 
-
-        $('#btnLimpiaPuntos').on("click", function (e) {
-		    e.preventDefault;
-			 CantOriginal =0;
-		     CantSimimlar =0;
-			 $('#CantCoincidencias').html('Cantidad de Coincidencias: 0');
-			 canvasOriginal.forEachObject(
-			 function(o){ 
-			if (o.id.substr(0,7) == 'rectang')
-			{ canvasOriginal.remove(o)} }
-			 );
-
-
-             for (var j = 2; j <= canvasOriginal.getObjects.length ; j++) {
-			   canvasOriginal.remove(canvasOriginal.item(j));
-			 }
-			 canvasOriginal.renderAll();
-            });
-
-    </script>
+</script>

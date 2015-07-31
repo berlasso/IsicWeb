@@ -12,20 +12,22 @@ using System.IO;
 using System.Drawing.Printing;
 using Neurotec.Biometrics;
 using Neurotec.Images;
+using System.Drawing.Imaging;
+using System.Reflection;
+using System.Drawing.Drawing2D;
 
 namespace Capturer.Forms
 {
     public partial class DecaDactilarForm : Form
     {
-        public Image []_dedos = new Image[10];
+       
         private PrintDocument printDocument1 = new PrintDocument();
         Bitmap memoryImage= null;
        
         PrintDialog printdlg = new PrintDialog();
         PrintPreviewDialog printPrvDlg = new PrintPreviewDialog();
-
-        
-
+        private Bitmap  _decaDactilar;
+     
         private PrintPreviewControl ppc;
       
 
@@ -38,12 +40,18 @@ namespace Capturer.Forms
             printDocument1.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
             printDocument1.DefaultPageSettings.Landscape = true; //or false!
             printDocument1.OriginAtMargins = true;
+            this.Size = new Size(1940,700);
              
            
             
         }
-     
-       
+
+       public  void inicializaImagen(Bitmap deca)
+        {
+
+
+           _decaDactilar = deca;
+        }
 
      
 
@@ -51,8 +59,7 @@ namespace Capturer.Forms
        
         void imprimir_Click(object sender, EventArgs e)
         {
-           CaptureScreen();
-          // printDocument1.DefaultPageSettings.Landscape = true;
+                  // printDocument1.DefaultPageSettings.Landscape = true;
            printPrvDlg.Document = printDocument1;
            printPrvDlg.ShowDialog();
           // printDocument1.Print();
@@ -60,32 +67,7 @@ namespace Capturer.Forms
         }
 
        
-        private void CaptureScreen()
-        {
-            if (memoryImage != null)
-            {
-                SalvaImagen(memoryImage);
-                return;
-            }
-            Graphics myGraphics = this.CreateGraphics();
-            
-            Size s = this.BackgroundImage.Size;
-
-            s.Width = s.Width - 50;
-            s.Height = s.Height - 30;
-             memoryImage = new Bitmap(s.Width, s.Height, myGraphics);
-            //Bitmap resized = new Bitmap(memoryImage, new Size(s.Width / 50, s.Height / 50));
-          
-            Graphics memoryGraphics = Graphics.FromImage(memoryImage);
-           
-            memoryGraphics.CopyFromScreen(this.Location.X + 25, this.Location.Y+ 30, 0, 0, s);
-        //   memoryImage = new Bitmap(s.Width/2, s.Height/2, memoryGraphics);
-              // SaveImage(memoryImage);
-            SalvaImagen(memoryImage);
-           
-                   
-   
-        }
+     
 
      /*   private void SaveImage(Bitmap b)
         {
@@ -152,121 +134,18 @@ namespace Capturer.Forms
 
         }
 
-        public void InicilizaDedos(MemoryStream []imgStream, string apeynom, string codigBarra)
-        {
-            this.lCodBarra.Text = codigBarra;
-            this.lApeyNom.Text = apeynom;
-            for (var i = 0; i < 10; i++)
-            {
-              
-                if (imgStream[i] != null)
-                { _dedos[i] = Image.FromStream(imgStream[i]); }
-                // Pruebo darle un dedo al NFingerView
-               
-            }
-         /* crear un fingerView con tempplate 
-          * this.nFAnularView.Finger = dedosF[1];
-
-
-            using (NImage image =  dedosF[1].GetImage(false))
-				{float zoom = 1;
-					if (image != null)
-					{
-						Size clientSize = nFAnularView.Size;
-
-						
-						zoom = Math.Min((float)clientSize.Width / (int)image.Width, (float)clientSize.Height / (int)image.Height);
-						zoom = Math.Max(0.01f, zoom);
-					}
-                nFAnularView.Zoom = zoom;
-			    nFAnularView.Invalidate();
-				}
-			
-			*/
-        }
-        public void SeteaImagenes()
-        {
-            if (_dedos[0] != null)
-            {
-                pulgarIzquierdo.Image = _dedos[0];
-                this.pulgarIzquierdo.SizeMode = PictureBoxSizeMode.Zoom;
-                pulgarDerecho.Refresh();
-            }
-            if (_dedos[1] != null)
-            {
-                indiceIzquierdo.Image = _dedos[1];
-                this.indiceIzquierdo.SizeMode = PictureBoxSizeMode.Zoom;
-                indiceIzquierdo.Refresh();
-            }
-
-            if (_dedos[2] != null)
-            {
-                medioIzquierdo.Image = _dedos[2];
-                this.medioIzquierdo.SizeMode = PictureBoxSizeMode.Zoom;
-                medioIzquierdo.Refresh();
-            }
-
-            if (_dedos[3] != null)
-            {
-                anularIzquierdo.Image = _dedos[3];
-                this.anularIzquierdo.SizeMode = PictureBoxSizeMode.Zoom;
-                anularIzquierdo.Refresh();
-            }
-
-            if (_dedos[4] != null)
-            {
-                meniqueIzquierdo.Image = _dedos[4];
-                this.meniqueIzquierdo.SizeMode = PictureBoxSizeMode.Zoom;
-                meniqueIzquierdo.Refresh();
-            }
-            if (_dedos[5] != null)
-            {
-                pulgarDerecho.Image = _dedos[5];
-                this.pulgarDerecho.SizeMode = PictureBoxSizeMode.Zoom;
-                pulgarDerecho.Refresh();
-            }
-            if (_dedos[6] != null)
-            {
-                indiceDerecho.Image = _dedos[6];
-                this.indiceDerecho.SizeMode = PictureBoxSizeMode.Zoom;
-                indiceDerecho.Refresh();
-            }
-            if (_dedos[7] != null)
-            {
-                medioDerecho.Image = _dedos[7];
-                this.medioDerecho.SizeMode = PictureBoxSizeMode.Zoom;
-                medioDerecho.Refresh();
-            }
-            if (_dedos[8] != null)
-            {
-                anularDerecho.Image = _dedos[8];
-                this.anularDerecho.SizeMode = PictureBoxSizeMode.Zoom;
-                anularDerecho.Refresh();
-            }
-
-            if (_dedos[9] != null)
-            {
-                meniqueDerecho.Image = _dedos[9];
-                this.meniqueDerecho.SizeMode = PictureBoxSizeMode.Zoom;
-                meniqueDerecho.Refresh();
-            }
-
-           
-        }
-
+       
         private void DecaDactilarForm_Load(object sender, EventArgs e)
         {
             // Carga la pantalla setea Imagenes y prepara el bmp
-            SeteaImagenes();
             
-
         }
 
     
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            CaptureScreen();
+
             // printDocument1.DefaultPageSettings.Landscape = true;
             printPrvDlg.Document = printDocument1;
            
@@ -277,9 +156,34 @@ namespace Capturer.Forms
 
             // printDocument1.Print();
         }
+        public static Bitmap resizeImage(Bitmap imgToResize, Size size)
+        {
+            return (new Bitmap(imgToResize, size));
+        }
 
-       
-       
+        private void DecaDactilarForm_Paint(object sender, PaintEventArgs e)
+        {
+           //1924,811
+            int alto, ancho;
+            alto = e.ClipRectangle.Height / 539 == 0 ? 1 : e.ClipRectangle.Height / 539;
+            ancho = e.ClipRectangle.Width / 1386 == 0 ? 1 : e.ClipRectangle.Width / 1386 ;
+           
+           Bitmap nuevo = new Bitmap(_decaDactilar,new Size(ancho * 1386,alto  * 539));
+            e.Graphics.DrawImage(nuevo, new Point(10, 10));
+          
+         
+            
+        }
+
+        private void DecaDactilarForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _decaDactilar.Dispose();
+        }
+
+
+
+
+
 
        
 

@@ -91,12 +91,12 @@ namespace ISICWeb.Models
     {
         public void InitializeDatabase(ApplicationDbContext context)
         {
-            // Me aseguro que la base ISIC este creada
-           // IDbContext ctx = DependencyResolver.Current.GetService<IDbContext>();
-            //if (!ctx.Database.Exists())
-            //{
-            //    ctx.Database.Initialize(true);
-            //}
+             //Me aseguro que la base ISIC este creada
+            IDbContext ctx = DependencyResolver.Current.GetService<IDbContext>();
+            if (!ctx.Database.Exists())
+            {
+                ctx.Database.Initialize(true);
+            }
 
             if (!CheckIfTableUsersExists(context))
             {

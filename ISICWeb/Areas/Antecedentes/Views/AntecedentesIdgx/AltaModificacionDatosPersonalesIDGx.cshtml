@@ -190,7 +190,9 @@
                             @Html.ValidationMessageFor(model => model.causaspendientes, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-xs-4">
-
+                            @Html.LabelFor(model => model.FechaInforme)
+                            @Html.EditorFor(model => model.FechaInforme, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                            @Html.ValidationMessageFor(model => model.FechaInforme, "", new { @class = "text-danger" })
 
 
                         </div>

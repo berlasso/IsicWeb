@@ -18,8 +18,10 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
+using Atlassian.Jira;
 using ISIC.Entities;
 using ISIC.Persistence.Context;
+using ISIC.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -27,6 +29,7 @@ using Microsoft.Owin.Security;
 using Owin;
 using ISICWeb.Models;
 using MPBA.DataAccess;
+using MPBA.Jira.Model;
 using MPBA.Security.Ldap;
 using WebGrease.Css.Extensions;
 using UsuarioViewModel = ISICWeb.Models.UsuarioViewModel;
@@ -35,7 +38,7 @@ using UsuarioViewModel = ISICWeb.Models.UsuarioViewModel;
 namespace ISICWeb.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, Usuarios")]
+    [Autorizar(Roles = "Administrador, Usuarios")]
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -118,16 +121,12 @@ namespace ISICWeb.Controllers
             {
                 ApplicationUser user = null;
 
-                user = await UserManager.FindAsync(model.UserName, model.Password);
-                if (user == null)
-                {
-                    user = await UserManager.FindByNameAsync(model.UserName);
-                }
+                //user = await UserManager.FindAsync(model.UserName, model.Password);
+                user = await UserManager.FindByNameAsync(model.UserName);
                 if (user != null)
                 {
-                    if (user.UsuarioMPBA == true)
+                    if (user.PasswordHash == null && user.UsuarioMPBA == true)
                     {
-
                         LoginDomain loginmpba = new LoginDomain();
                         try
                         {
@@ -138,17 +137,27 @@ namespace ISICWeb.Controllers
                                 return View(model);
                             }
                         }
-                        //catch (PrincipalServerDownException exception)
-                        //{
-                        //    ModelState.AddModelError("", "Error en la conexion al servidor");
-                        //    return View(model);
-                        //}
+                            //catch (PrincipalServerDownException exception)
+                            //{
+                            //    ModelState.AddModelError("", "Error en la conexion al servidor");
+                            //    return View(model);
+                            //}
                         catch
                         {
                             ModelState.AddModelError("", "Error en la conexion a MPBA");
                             return View(model);
                         }
                     }
+                    else if (user.PasswordHash != null && user.UsuarioMPBA == false)
+                    {
+                        user = await UserManager.FindAsync(model.UserName, model.Password);
+                        if (user == null)
+                        {
+                            ModelState.AddModelError("", "Nombre de usuario o contraseña no válidos.");
+                            return View(model);
+                        }
+                    }
+                    
                     if (user.EmailConfirmed == false)
                         ModelState.AddModelError("", "El usuario no ha confirmado el email de verificación.");
                     else if (user.activo == false)
@@ -159,20 +168,21 @@ namespace ISICWeb.Controllers
                     {
                         await SignInAsync(user, model.RememberMe);
 
-                        if (user.Roles.Count == 1 && RoleManager.FindById(user.Roles.First().RoleId).Name=="Portal")
+                        if (user.Roles.Count == 1 && RoleManager.FindById(user.Roles.First().RoleId).Name == "Portal")
                         {
                             returnUrl = Url.Action("Index", "Busqueda", new {area = "PortalSIC"});
                         }
-                        
+
 
                         return RedirectToLocal(returnUrl);
                     }
-
                 }
                 else
                 {
                     ModelState.AddModelError("", "Nombre de usuario o contraseña no válidos.");
                 }
+
+
             }
 
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
@@ -1013,10 +1023,12 @@ namespace ISICWeb.Controllers
             {
                 ModelState.AddModelError("", "Debe indicar el Departamento");
             }
-
-            if (model.Roles == null || model.Roles.Count==0)
+            if (model.Validando == false)
             {
-                ModelState.AddModelError("", "Debe indicar al menos un Rol");
+                if (model.Roles == null || model.Roles.Count == 0)
+                {
+                    ModelState.AddModelError("", "Debe indicar al menos un Rol");
+                }
             }
 
             if (model.UsuarioMPBA == false)
@@ -1056,6 +1068,7 @@ namespace ISICWeb.Controllers
                             FechaCreacion = DateTime.Now,
                             FechaAlta = DateTime.Now,
                             FechaUltimaModificacion = DateTime.Now,
+                            UsuarioUltimaModificacion = User.Identity.Name,
                             Sexo = _repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == model.Sexo.Id),
                         },
                         PuntoGestion = pg
@@ -1065,7 +1078,7 @@ namespace ISICWeb.Controllers
                     usuario = new ApplicationUser
                     {
                         FechaCreacion = DateTime.Now,
-
+                        UsuarioCreacion = User.Identity.Name
 
                     };
                 }
@@ -1073,6 +1086,7 @@ namespace ISICWeb.Controllers
                 {
                     cambioEmail = (model.Email != usuario.Email);
                     usuario.FechaModificacion = DateTime.Now;
+                    usuario.UsuarioModificacion = User.Identity.Name;
                     ppj = _repository.Set<PersonalPoderJudicial>().SingleOrDefault(x => x.Id == usuario.idPersonalPoderJudicial);
                     if (ppj != null)
                     {
@@ -1083,6 +1097,7 @@ namespace ISICWeb.Controllers
                         ppj.Persona.Nombre = model.Nombre;
                         ppj.Persona.DocumentoNumero = model.DocumentoNumero;
                         ppj.Persona.FechaUltimaModificacion = DateTime.Now;
+                        ppj.Persona.UsuarioUltimaModificacion = User.Identity.Name;
                         ppj.Persona.Sexo = _repository.Set<ClaseSexo>().SingleOrDefault(x => x.Id == model.Sexo.Id);
                         _repository.UnitOfWork.RegisterChanged(ppj);
                         _repository.UnitOfWork.Commit();
@@ -1107,7 +1122,6 @@ namespace ISICWeb.Controllers
                 usuario.idPuntoGestion = pg.Id;
                 usuario.subCodBarra = model.SubCodBarra;
 
-
                 IdentityResult result = null;
                 bool usuarioNuevo = model.id == null;
                 usuario.activo = model.activo;
@@ -1127,7 +1141,7 @@ namespace ISICWeb.Controllers
                     {
                         try
                         {
-                            result = await UserManager.AddToRoleAsync(usuario.Id, "Operador");
+                            result = await UserManager.AddToRoleAsync(usuario.Id, "Portal");
                         }
                         catch (Exception e)
                         {
@@ -1320,6 +1334,8 @@ namespace ISICWeb.Controllers
             try
             {
                 ApplicationUser u = await UserManager.FindByIdAsync(id);
+                u.UsuarioModificacion = User.Identity.Name;
+                u.FechaModificacion=DateTime.Now;
                 u.activo = false;
                 IdentityResult resultado = await UserManager.UpdateAsync(u);
 
@@ -1376,8 +1392,12 @@ namespace ISICWeb.Controllers
         public async Task<RedirectToRouteResult> Prueba()
         {
             //RoleManager.Create(new IdentityRole {Name = "Portal"});
-            UserManager.AddToRole("a85b0cb7-d8dd-43cf-be15-b7f08f1df92a", "Administrador");
+            //UserManager.AddToRole("a85b0cb7-d8dd-43cf-be15-b7f08f1df92a", "Administrador");
             //string aa = UserManager.GenerateUserToken("prueba", "abfb0899-ac4d-4dd4-a8d9-91a059d657b8");
+            JiraService jira=new JiraService();
+          
+            Issue<IssueFields> issue = jira.GetIssue("011700002906P");
+            Transition transition = jira.GetTransitions(issue).First();
             return RedirectToAction("Index", "Home");
         }
 

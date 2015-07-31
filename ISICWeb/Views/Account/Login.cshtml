@@ -16,14 +16,14 @@
 
     </div>
     <div class="col-md-6">
-        <div class="panel panel-default tile wow fadeInDown animated" style="margin: 60px 0 80px 0">
+        <div class="panel panel-default tile wow fadeInDown animated" style="margin: 20px 0 80px 0">
             <div class="panel-heading">
 
                 <h4>Indique su usuario y contraseña para iniciar la sesión.</h4>
 
             </div>
             <div class="panel-body">
-                <section id="loginForm">
+                <section id="loginForm" style="padding-bottom: 0">
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
@@ -53,8 +53,8 @@
                         </div>
                         <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
                             <div class="col-xs-12">
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe)
+                                @*@Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)*@
                             </div>
 
                         </div>
@@ -92,17 +92,22 @@
             <div class="panel-footer">
                 <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
                     <div class="col-xs-12">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                     </div>
 
                 </div>
             </div>
-            <div class="alert alert-warning alert-icon   tile-dark wow fadeInDown animated">
-                IMPORTANTE: Si used era usuario activo de la version anterior del sitio del SIC, deberá completar algunos pasos previos. Para comenzar haga click <a href=@Url.Action("ValidarLoginSicViejo") style="font-weight: bolder;">AQUI</a>
-                <i class="icon flaticon-caution2">
+            
+            @if (ViewBag.ReturnUrl=="/")
+            {
+                <div class="alert alert-warning alert-icon   tile-dark wow fadeInDown animated" style="margin-top: 1px">
+                    IMPORTANTE: Si used era usuario activo de la version anterior del sitio del SIC, deberá completar algunos pasos previos. Para comenzar haga click <a href=@Url.Action("ValidarLoginSicViejo") style="font-weight: bolder;">AQUI</a>
+                    <i class="icon flaticon-caution2">
 
-                </i>
-            </div>
+                    </i>
+                </div>
+            }
+            
         </div>
     </div>
     <div class="col-md-3">
@@ -114,4 +119,10 @@
 
 @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function() {
+            $.unblockUI();
+        });
+        
+    </script>
     }

@@ -11,14 +11,14 @@ using MPBA.DataAccess;
 namespace ISICWeb.Areas.Antecedentes.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, Antecedentes")]
+    [Autorizar(Roles = "Administrador, Antecedentes")]
     public class AntecedentesIdgxController : Controller
     {
         
         IRepository _repository;
-        private IdgxService _idgxService;
+        private IIdgxService _idgxService;
 
-        public AntecedentesIdgxController(IRepository repository, IdgxService idgxService)
+        public AntecedentesIdgxController(IRepository repository, IIdgxService idgxService)
         {
             _repository = repository;
             _idgxService = idgxService;
@@ -98,6 +98,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
                 datosPersona = new IdgxDatosPersonalesViewModel
                 {
                     Id = 0,
+                    FechaInforme = DateTime.Now.ToString("dd/MM/yyyy"),
                     idIdgxProntuario = idIdgxprontuario,
                     TipoDocumentoList = new SelectList(_repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion"),
                     ProvinciaList = new SelectList(_repository.Set<Provincia>().ToList(), "Id", "ProvinciaNombre"),
@@ -118,7 +119,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
         [HttpPost]
         public ActionResult GuardarDatosPersonalesIdGx(IdgxDatosPersonalesViewModel datosPersona)
         {
-            int idIdgxDatosPersonales = _idgxService.GuardarIdgxDatosPersona(datosPersona);
+            int idIdgxDatosPersonales = _idgxService.GuardarIdgxDatosPersona(datosPersona, User);
             // ViewData["idIdgxdatospersonales"] = idIdgxDatosPersonales;
             datosPersona.Id = idIdgxDatosPersonales;
             if (idIdgxDatosPersonales > 0)
@@ -174,7 +175,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
         [HttpPost]
         public int GuardarDelitoIdgx(IdgxDelitoViewModel delito)
         {
-            int idDelito = _idgxService.GuardarIdgxDelito(delito);
+            int idDelito = _idgxService.GuardarIdgxDelito(delito,User);
             delito.CodigoRestriccionList =
                 new SelectList(_repository.Set<ClaseCodigoRestriccionPoliciaFederal>().ToList(), "Id", "descripcion");
             IdgxDatosPersonalesViewModel datosPersona = _idgxService.TraerIdgxDatosPersona(delito.idIdgxdatospersonales, delito.idIdgxprontuario);
@@ -200,7 +201,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
         public bool BorrarDelitoIdgx(int id)
         {
-            bool borroBien = _idgxService.BorrarIdgxDelito(id);
+            bool borroBien = _idgxService.BorrarIdgxDelito(id, User);
             if (!borroBien)
                 ModelState.AddModelError("", "No se pudo borrar el delito de idgx");
             return borroBien;
@@ -208,7 +209,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
         public bool BorrarProntuarioIdgx(int id)
         {
-            bool borroBien = _idgxService.BorrarProntuarioIdgx(id);
+            bool borroBien = _idgxService.BorrarProntuarioIdgx(id, User);
             if (!borroBien)
                 ModelState.AddModelError("", "No se pudo borrar el delito de idgx");
             return borroBien;

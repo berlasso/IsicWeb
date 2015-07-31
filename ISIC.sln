@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISICWeb", "ISICWeb\ISICWeb.csproj", "{B14F4B58-E64F-421D-90B3-2CB2F92FF82E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISIC", "ISIC\ISIC.csproj", "{5B796E79-7E1E-4E2B-866B-E13928D8D0AD}"
@@ -21,6 +19,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMegaMatcher", "TestMegaMatcher\TestMegaMatcher.csproj", "{D150401D-9D75-4343-B58A-9A4EAA03C8B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerPrintCapturer", "FingerPrintCapturer\FingerPrintCapturer.csproj", "{4F23FE7B-410A-42F0-89FF-01DCA2D59BF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapturaDecaDactilar", "CapturaDecaDactilar\CapturaDecaDactilar.csproj", "{B60BC675-81D5-4D77-B3D6-167C058A459D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -158,6 +158,24 @@ Global
 		{4F23FE7B-410A-42F0-89FF-01DCA2D59BF4}.Test|Mixed Platforms.Build.0 = Release|Any CPU
 		{4F23FE7B-410A-42F0-89FF-01DCA2D59BF4}.Test|x64.ActiveCfg = Release|Any CPU
 		{4F23FE7B-410A-42F0-89FF-01DCA2D59BF4}.Test|x86.ActiveCfg = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Release|x64.ActiveCfg = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Release|x86.ActiveCfg = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Test|Any CPU.ActiveCfg = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Test|Any CPU.Build.0 = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Test|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Test|Mixed Platforms.Build.0 = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Test|x64.ActiveCfg = Release|Any CPU
+		{B60BC675-81D5-4D77-B3D6-167C058A459D}.Test|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

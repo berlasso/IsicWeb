@@ -114,11 +114,17 @@
                 </div>
 
                 <div class="col-xs-4">
-                    @Html.LabelFor(model => model.CTL, htmlAttributes: new { @class = "control-label  " })
-                    @Html.EditorFor(model => model.CTL, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.CTL, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.CTL, htmlAttributes: new {@class = "control-label  "})
+                    @Html.EditorFor(model => model.CTL, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                    @Html.ValidationMessageFor(model => model.CTL, "", new {@class = "text-danger"})
                 </div>
-            </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FechaInforme)
+                    @Html.EditorFor(model => model.FechaInforme, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    @Html.ValidationMessageFor(model => model.FechaInforme, "", new { @class = "text-danger" })
+                </div>
+
+                </div>
 
             <div class="row">
                 <div class="col-md-12" id="divValidation">

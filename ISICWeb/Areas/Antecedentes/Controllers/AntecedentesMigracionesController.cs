@@ -12,14 +12,14 @@ using MPBA.DataAccess;
 namespace ISICWeb.Areas.Antecedentes.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, Antecedentes")]
+    [Autorizar(Roles = "Administrador, Antecedentes")]
     public class AntecedentesMigracionesController : Controller
     {
         
             IRepository _repository;
-        private MigracionesService _migracionesService;
+        private IMigracionesService _migracionesService;
 
-        public AntecedentesMigracionesController(IRepository repository, MigracionesService migracionesService)
+        public AntecedentesMigracionesController(IRepository repository, IMigracionesService migracionesService)
         {
             _repository = repository;
             _migracionesService = migracionesService;
@@ -54,7 +54,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
             if (ModelState.IsValid)
             {
-                errores = _migracionesService.GuardarFichaMigraciones(model);
+                errores = _migracionesService.GuardarFichaMigraciones(model, User);
                  
             }
             else
@@ -75,7 +75,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
         public bool BorrarFichasMigraciones(int id)
         {
-            bool borroBien = _migracionesService.BorrarFichaMigraciones(id);
+            bool borroBien = _migracionesService.BorrarFichaMigraciones(id, User);
             if (!borroBien)
                 ModelState.AddModelError("", "No se pudo borrar la ficha de Migraciones");
             return borroBien;

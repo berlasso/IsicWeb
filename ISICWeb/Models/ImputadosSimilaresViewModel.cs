@@ -36,7 +36,8 @@ namespace ISICWeb.Models
         public int SCApodo { get; set; }
 
         public int? ScoreTotal { get; set; }
-    
+
+
 
     }
 }

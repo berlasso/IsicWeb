@@ -18,7 +18,7 @@ using RestSharp;
 namespace ISICWeb.Areas.Otip.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, OTIP")]
+    [Autorizar(Roles = "Administrador, OTIP")]
     public class BuscadorSimpController : Controller
     {
         IRepository repository;
@@ -52,9 +52,10 @@ namespace ISICWeb.Areas.Otip.Controllers
             var response = client.Execute<List<WebApiSimpModel>>(request);
             if (response.Data == null)
             {
-                string error = string.IsNullOrEmpty(response.ErrorMessage)
-                    ? "IPP inexistente en el SIMP"
-                    : response.ErrorMessage;
+                //string error = string.IsNullOrEmpty(response.ErrorMessage)
+                //    ? "IPP inexistente en el SIMP"
+                //    : response.ErrorMessage;
+                string error = "IPP inexistente en el SIMP";
                 
                 return Json(new { HuboError = true, errorMessage = error }, JsonRequestBehavior.AllowGet);
             }

@@ -179,6 +179,8 @@ namespace ISICWeb.Areas.Antecedentes.Models
         public SelectList EstadoCivilList { get; set; }
         public SelectList TipoDocList { get; set; }
         public SelectList PaisList { get; set; }
-
+        [Display(Name = "Fecha Informe")]
+        [Required]
+        public string FechaInforme { get; set; }
     }
 }

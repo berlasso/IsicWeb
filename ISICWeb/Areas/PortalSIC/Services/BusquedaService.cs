@@ -14,8 +14,15 @@ using Imputado = ISIC.Entities.Imputado;
 
 namespace ISICWeb.Areas.PortalSIC.Services
 {
+    public interface IBusquedaService
+    {
+        BusquedaViewModel CrearViewModel();
+        void LlenarListas(BusquedaViewModel datosImputado);
+        BusquedaViewModel LlenarViewModel(BusquedaViewModel model);
+        IEnumerable<Imputado> BuscarImputados(BusquedaViewModel model, int? max,out string querystring);
+    }
 
-    public class BusquedaService
+    public class BusquedaService : IBusquedaService
     {
         IRepository _repository;
 
@@ -32,7 +39,7 @@ namespace ISICWeb.Areas.PortalSIC.Services
             return datosBusqueda;
         }
 
-        private void LlenarListas(BusquedaViewModel datosImputado)
+        public void LlenarListas(BusquedaViewModel datosImputado)
         {
             datosImputado.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion", datosImputado.Sexo);
             datosImputado.ProvinciaList = new SelectList(_repository.Set<Provincia>().ToList(), "Id", "ProvinciaNombre", datosImputado.Provincia);
@@ -58,7 +65,86 @@ namespace ISICWeb.Areas.PortalSIC.Services
             datosImputado.FiscaliaGeneralList = new SelectList(_repository.Set<ClaseDepartamentoJudicial>().ToList(), "Id", "descripcion", datosImputado.FiscaliaGeneral);
         }
 
-        public IEnumerable<Imputado> BuscarImputados(BusquedaViewModel model, int max,out string querystring)
+        public BusquedaViewModel LlenarViewModel(BusquedaViewModel model)
+        {
+            BusquedaViewModel bvm = new BusquedaViewModel
+            {
+                Apellido = model.Apellido,
+                Apodos = model.Apodos,
+                BusquedaAvanzada = model.BusquedaAvanzada,
+                Calle = model.Calle,
+                CalleDelito = model.CalleDelito,
+                CodBarras = model.CodBarras,
+                ColorCabellos = model.ColorCabellos,
+                ColorPiel = model.ColorPiel,
+                ColorOjos = model.ColorOjos,
+                Conyuge = model.Conyuge,
+                Delito = model.Delito,
+                DependenciaPolicial = model.DependenciaPolicial,
+                DeptoH = model.DeptoH,
+                DeptoHDelito = model.DeptoHDelito,
+                DimensionCeja = model.DimensionCeja,
+                Domicilio = model.Domicilio,
+                EdadDesde = model.EdadDesde,
+                EdadHasta = model.EdadHasta,
+                EntreCalle = model.EntreCalle,
+                EntreCalle2 = model.EntreCalle2,
+                EntreCalle2Delito = model.EntreCalle2Delito,
+                EntreCalleDelito = model.EntreCalleDelito,
+                EstadoCivil = model.EstadoCivil,
+                Estatura = model.Estatura,
+                FechaDelitoDesde = model.FechaDelitoDesde,
+                FechaDelitoHasta = model.FechaDelitoHasta,
+                FechaNacimiento = model.FechaNacimiento,
+                Fiscal = model.Fiscal,
+                FiscaliaGeneral = model.FiscaliaGeneral,
+                FormaBoca = model.FormaBoca,
+                FormaCara = model.FormaCara,
+                FormaLabioInferior = model.FormaLabioInferior,
+                FormaLabioSuperior = model.FormaLabioSuperior,
+                FormaMenton = model.FormaMenton,
+                FormaNariz = model.FormaNariz,
+                FormaOreja = model.FormaOreja,
+                IPP = model.IPP,
+                Instruccion = model.Instruccion,
+                JuzgadoGarantias = model.JuzgadoGarantias,
+                Localidad = model.Localidad,
+                LocalidadDelito = model.LocalidadDelito,
+                LocalidadNacimiento = model.LocalidadNacimiento,
+                LocalidadPolicial = model.LocalidadPolicial,
+                Madre = model.Madre,
+                ModusOperandi = model.ModusOperandi,
+                Nombres = model.Nombres,
+                NroH = model.NroH,
+                NroHDelito = model.NroHDelito,
+                NumeroDocumento = model.NumeroDocumento,
+                OtrosNombres = model.OtrosNombres,
+                Padre = model.Padre,
+                PaisNacimiento = model.PaisNacimiento,
+                ParajeBarrioH = model.ParajeBarrioH,
+                ParajeBarrioHDelito = model.ParajeBarrioHDelito,
+                Partido = model.Partido,
+                PartidoDelito = model.PartidoDelito,
+                PisoH = model.PisoH,
+                PisoHDelito = model.PisoHDelito,
+                Profesion = model.Profesion,
+                Provincia = model.ProvinciaNacimiento,
+                ProvinciaDelito = model.ProvinciaDelito,
+                Robustez = model.Robustez,
+                Sexo = model.Sexo,
+                Telefono = model.Telefono,
+                TipoBusqueda = model.TipoBusqueda,
+                TipoCabello = model.TipoCabello,
+                TipoCalvicie = model.TipoCalvicie,
+                TipoCeja = model.TipoCeja,
+                TipoDocumento = model.TipoDocumento,
+                UFI = model.UFI
+            };
+            LlenarListas(bvm);
+            return bvm;
+        }
+
+        public IEnumerable<Imputado> BuscarImputados(BusquedaViewModel model, int? max,out string querystring)
         {
             //ImputadoService imputadoService=new ISICWeb.Services.ImputadoExtraService(_repository);
             ISICContext dbContext = (ISICContext)_repository.UnitOfWork.Context;
@@ -121,7 +207,9 @@ namespace ISICWeb.Areas.PortalSIC.Services
 
                 whereString = String.Format("CodigoDeBarras==\"{0}\" && Prontuario.baja!=true", model.CodBarras);
                 imputados = dbContext.Imputado
-                   .Where(whereString).OrderBy(x => x.CodigoDeBarras).Take(max);
+                   .Where(whereString).OrderBy(x => x.CodigoDeBarras);
+                if (max.HasValue)
+                   imputados= imputados.Take(max.Value);
 
             }
             else
@@ -131,7 +219,7 @@ namespace ISICWeb.Areas.PortalSIC.Services
                 //busqueda basica
                 if (fg != "00") whereString = string.Format("CodigoDeBarras.Substring(2, 2) == \"{0}\" &&", fg);
                 if (apellido != "") whereString += string.Format("Persona.Apellido.Contains(\"{0}\") &&", apellido);
-                if (nrodoc != 0) whereString += string.Format("Persona.DocumentoNumero=={0} &&", nrodoc);
+                if (nrodoc != 0) whereString += string.Format("Persona.DocumentoNumero==\"{0}\" &&", nrodoc);
                 if (delito != "") whereString += string.Format("Delito.Ipp.caratula.Contains(\"{0}\") &&", delito);
                 if (nombres != "") whereString += string.Format("Persona.Nombre.Contains(\"{0}\") &&", nombres);
                 whereString += string.Format("Estado.Id!={0} &&", 9);//no trae los que estan en OTIP
@@ -179,7 +267,7 @@ namespace ISICWeb.Areas.PortalSIC.Services
                     if (tipoCalvicie != 0) whereString += string.Format("TipoCalvicie.Id=={0} &&", tipoCalvicie);
                     if (formaCara != 0) whereString += string.Format("FormaCara.Id=={0} &&", formaCara);
                     if (dimensionCeja != 0) whereString += string.Format("CejasDimension.Id=={0} &&", dimensionCeja);
-                    if (tipoCeja != 0) whereString += string.Format("tipoCeja.Id=={0} &&", tipoCeja);
+                    if (tipoCeja != 0) whereString += string.Format("CejasTipo.Id=={0} &&", tipoCeja);
                     if (formaMenton != 0) whereString += string.Format("FormaMenton.Id=={0} &&", formaMenton);
                     if (formaOreja != 0) whereString += string.Format("FormaOreja.Id=={0} &&", formaOreja);
                     if (formaNariz != 0) whereString += string.Format("FormaNariz.Id=={0} &&", formaNariz);
@@ -206,12 +294,18 @@ namespace ISICWeb.Areas.PortalSIC.Services
                 if (string.IsNullOrEmpty(whereString)) whereString = "true";
 
                 imputados = dbContext.Imputado
-                    .Where(whereString, fechaDesde, fechaHasta, fechaDelitoDesde, fechaDelitoHasta).OrderBy(x=>x.CodigoDeBarras).Take(max);
+                    .Where(whereString, fechaDesde, fechaHasta, fechaDelitoDesde, fechaDelitoHasta).OrderBy(x=>x.CodigoDeBarras);
+                     if (max.HasValue)
+                        imputados= imputados.Take(max.Value);
 
                 if (model.TipoBusqueda == TipoBusqueda.Fotografias)
                 {
+                    whereString += " && Archivos.Count>0";
                     imputados = dbContext.Imputado
-                   .Where(whereString, fechaDesde, fechaHasta, fechaDelitoDesde, fechaDelitoHasta).Where(x => x.Archivos.Count > 0).OrderBy(x => x.CodigoDeBarras).Take(max).ToList();
+                        .Where(whereString, fechaDesde, fechaHasta, fechaDelitoDesde, fechaDelitoHasta)
+                        .OrderBy(x => x.CodigoDeBarras);
+                    if (max.HasValue)
+                        imputados=imputados.Take(max.Value);
                 }
                
             }

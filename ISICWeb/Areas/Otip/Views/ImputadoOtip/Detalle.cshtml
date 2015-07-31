@@ -215,337 +215,340 @@
     <script>
 
 
-        var urlAutocompleteModusOperandi = '@Url.Action("BuscaModusOperandi", "BuscadorAutocompletes")?mo=';
-        var urlAutocompletePartido = '@Url.Action("BuscaPartido", "BuscadorAutocompletes")?partido=';
-        var urlAutocompleteLocalidad = '@Url.Action("BuscaLocalidad", "BuscadorAutocompletes")?localidad=';
-        var urlAutocompleteDependenciaPolicial = '@Url.Action("BuscaComisaria", "BuscadorAutocompletes")?comisaria=';
-        var urlGenerarReporte = '@Url.Action("GenerarReporte", "Reporte")?id=';
-        var urlBajarReporte = '@Url.Action("BajarReporte", "Reporte")?rptPath=';
+    var urlAutocompleteModusOperandi = '@Url.Action("BuscaModusOperandi", "BuscadorAutocompletes")?mo=';
+    var urlAutocompletePartido = '@Url.Action("BuscaPartido", "BuscadorAutocompletes")?partido=';
+    var urlAutocompleteLocalidad = '@Url.Action("BuscaLocalidad", "BuscadorAutocompletes")?localidad=';
+    var urlAutocompleteDependenciaPolicial = '@Url.Action("BuscaComisaria", "BuscadorAutocompletes")?comisaria=';
+    var urlGenerarReporte = '@Url.Action("GenerarReporte", "Reporte")?id=';
+    var urlBajarReporte = '@Url.Action("BajarReporte", "Reporte")?rptPath=';
 
-        var urlBuscarIppSimp = '@Url.Action("BuscarIppSimpPrueba", "BuscadorSimp")?IPP=';
-        var urlBuscarCodBarras = '@Url.Action("BuscarDelito", "ImputadoOtip")?codBarras=';
-        var urlBuscarCodBarrasAutogenerado = '@Url.Action("TraerCodigoBarasAutogenerado", "ImputadoOtip")';
-        var urlAltaModificacion = '@Url.Action("AltaModificacion", "ImputadoOtip")?id=';
-        var urlBuscarIdImputado = '@Url.Action("BuscarIdImputado", "ImputadoOtip")?codBarras=';
+    var urlBuscarIppSimp = '@Url.Action("BuscarIppSimpPrueba", "BuscadorSimp")?IPP=';
+    var urlBuscarCodBarras = '@Url.Action("BuscarDelito", "ImputadoOtip")?codBarras=';
+    var urlBuscarCodBarrasAutogenerado = '@Url.Action("TraerCodigoBarasAutogenerado", "ImputadoOtip")';
+    var urlAltaModificacion = '@Url.Action("AltaModificacion", "ImputadoOtip")?id=';
+    var urlBuscarIdImputado = '@Url.Action("BuscarIdImputado", "ImputadoOtip")?codBarras=';
+    var urlBuscarDni = '@Url.Action("BuscarDni", "ImputadoOtip")?dni=';
+        var urlBuscarApeNom = '@Url.Action("BuscarApeNom", "ImputadoOtip")?ape=';
+
 
         @*var urlVolver = '@Url.Action("Index", "ImputadoOtip", new {Area = "Otip"})';*@
 
 
 
-        $('.selectize-partido').selectize({
-            valueField: 'value',
-            labelField: 'name',
-            searchField: 'search',
-            selectOnTab: true,
-            delimiter: ',',
-            maxItems: "1",
-            closeAfterSelect: true,
-            create: false,
-            persist: false,
-            hideSelected: true,
-            loadingClass: 'loading',
-            onChange: function(value) {
-                var id = this.$input[0].id;
-                var hiddenControl = '#hidId' + id;
-                var valor = $("#elegido" + id).data("autocomplete");
-                if (valor == null) {
-                    valor = "0"
-                };
-                $(hiddenControl).val(valor);
-            },
-            render: {
-                item: function(data) {
-                    var nombre = this.$input[0].id;
-                    var id = $('#hidId' + nombre).val();
-                    var datavalue = "";
-                    if (!isNaN(parseFloat(data.value)))
-                        datavalue = data.value;
-                    else
-                        datavalue = id;
-                    return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '">' + data.name + '</div>';
-                }
-            },
-            load: function(query, callback) {
-                if (query.length < 3)
-                    return callback();
-                else {
-                    var autocompletePartidoUrl = $("#autocompletePartidoUrl").val();
-                    $.ajax({
-                        url: urlAutocompletePartido + encodeURIComponent(query),
-                        type: 'GET',
-                        error: function() {
-                            callback();
-                        },
-                        success: function(res) {
-                            callback(res.partidosEncontrados);
-                        }
-                    });
-                }
+    $('.selectize-partido').selectize({
+        valueField: 'value',
+        labelField: 'name',
+        searchField: 'search',
+        selectOnTab: true,
+        delimiter: ',',
+        maxItems: "1",
+        closeAfterSelect: true,
+        create: false,
+        persist: false,
+        hideSelected: true,
+        loadingClass: 'loading',
+        onChange: function (value) {
+            var id = this.$input[0].id;
+            var hiddenControl = '#hidId' + id;
+            var valor = $("#elegido" + id).data("autocomplete");
+            if (valor == null) {
+                valor = "0"
+            };
+            $(hiddenControl).val(valor);
+        },
+        render: {
+            item: function (data) {
+                var nombre = this.$input[0].id;
+                var id = $('#hidId' + nombre).val();
+                var datavalue = "";
+                if (!isNaN(parseFloat(data.value)))
+                    datavalue = data.value;
+                else
+                    datavalue = id;
+                return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '">' + data.name + '</div>';
             }
-
-        });
-
-        var xhr;
-        $deppol = $('#DependenciaPolicial').selectize({
-            valueField: 'value',
-            labelField: 'name',
-            selectOnTab: true,
-            maxItems: "1",
-            searchField: ['search'],
-            closeAfterSelect: true,
-            onChange: function (value) {
-                $("#hidIdDependenciaPolicial").val(value);
+        },
+        load: function (query, callback) {
+            if (query.length < 3)
+                return callback();
+            else {
+                var autocompletePartidoUrl = $("#autocompletePartidoUrl").val();
+                $.ajax({
+                    url: urlAutocompletePartido + encodeURIComponent(query),
+                    type: 'GET',
+                    error: function () {
+                        callback();
+                    },
+                    success: function (res) {
+                        callback(res.partidosEncontrados);
+                    }
+                });
             }
-        });
-        if ($deppol[0]) {
-            deppol = $deppol[0].selectize;
-          //  deppol.disable();
         }
 
-        $('.selectize-localidadPol').selectize({
-            valueField: 'value',
-            labelField: 'localidad',
-            searchField: 'search',
-            delimiter: ',',
-            selectOnTab: true,
-            maxItems: "1",
-            closeAfterSelect: true,
-            create: false,
+    });
 
-            persist: false,
-            loadingClass: 'loadinggif',
-            hideSelected: true,
-            onChange: function(value) {
-                var id = this.$input[0].id;
+    var xhr;
+    $deppol = $('#DependenciaPolicial').selectize({
+        valueField: 'value',
+        labelField: 'name',
+        selectOnTab: true,
+        maxItems: "1",
+        searchField: ['search'],
+        closeAfterSelect: true,
+        onChange: function (value) {
+            $("#hidIdDependenciaPolicial").val(value);
+        }
+    });
+    if ($deppol[0]) {
+        deppol = $deppol[0].selectize;
+        //  deppol.disable();
+    }
 
-                var hiddenControl = '#hidId' + id;
-                var valor = $("#elegido" + id).data("autocomplete");
-                var valorIdProvincia = $("#elegido" + id).data("idprovincia");
-                var valorIdPartido = $("#elegido" + id).data("idpartido");
-                var valorIdLocalidad = value;
-                var valorLocalidad = $("#elegido" + id).data("localidad");
-                if (valor == null) {
-                    valor = "0";
+    $('.selectize-localidadPol').selectize({
+        valueField: 'value',
+        labelField: 'localidad',
+        searchField: 'search',
+        delimiter: ',',
+        selectOnTab: true,
+        maxItems: "1",
+        closeAfterSelect: true,
+        create: false,
+
+        persist: false,
+        loadingClass: 'loadinggif',
+        hideSelected: true,
+        onChange: function (value) {
+            var id = this.$input[0].id;
+
+            var hiddenControl = '#hidId' + id;
+            var valor = $("#elegido" + id).data("autocomplete");
+            var valorIdProvincia = $("#elegido" + id).data("idprovincia");
+            var valorIdPartido = $("#elegido" + id).data("idpartido");
+            var valorIdLocalidad = value;
+            var valorLocalidad = $("#elegido" + id).data("localidad");
+            if (valor == null) {
+                valor = "0";
+            }
+            $(hiddenControl).val(valorIdLocalidad);
+            if (id)
+                id = id.replace('Localidad', '');
+            if (!isNaN(parseFloat(valorIdProvincia))) {
+                $('#Provincia' + id).val(valorIdProvincia);
+                if (id.toLowerCase() == "nacimiento") {
+                    $("#PaisNacimiento option").filter(function () {
+                        return this.text == "Argentina";
+                    }).attr('selected', true);
                 }
-                $(hiddenControl).val(valorIdLocalidad);
-                if (id)
-                    id = id.replace('Localidad', '');
-                if (!isNaN(parseFloat(valorIdProvincia))) {
-                    $('#Provincia' + id).val(valorIdProvincia);
-                    if (id.toLowerCase() == "nacimiento") {
-                        $("#PaisNacimiento option").filter(function() {
-                            return this.text == "Argentina";
-                        }).attr('selected', true);
-                    }
 
-                    if (!value.length || typeof deppol == 'undefined') return;
-                    deppol.disable();
-                    deppol.clearOptions();
-                    deppol.load(function(callback) {
-                        xhr && xhr.abort();
-                        xhr = $.ajax({
-                            type: 'GET',
-                            url: urlAutocompleteDependenciaPolicial + "&loc=" + $('#hidIdLocalidadPolicial').val(),
-                            success: function (results) {
-                                if (results.dpEncontrados.length > 0) {
-                                    deppol.enable();
-                                    deppol.open();
-                                    callback(results.dpEncontrados);
-                                }
-                                
-                                else {
-                                    deppol.disable();
-                                }
-                                    
-                                    
-                                
-                            },
-                            error: function() {
-                                callback();
+                if (!value.length || typeof deppol == 'undefined') return;
+                deppol.disable();
+                deppol.clearOptions();
+                deppol.load(function (callback) {
+                    xhr && xhr.abort();
+                    xhr = $.ajax({
+                        type: 'GET',
+                        url: urlAutocompleteDependenciaPolicial + "&loc=" + $('#hidIdLocalidadPolicial').val(),
+                        success: function (results) {
+                            if (results.dpEncontrados.length > 0) {
+                                deppol.enable();
+                                deppol.open();
+                                callback(results.dpEncontrados);
                             }
-                        });
-                    });
-                };
-                if (!isNaN(parseFloat(valorIdLocalidad))) {
-                    $('#Partido' + id).attr("data-autocomplete", valorIdLocalidad);
-                    $('#elegidoPartido' + id).html(valorLocalidad);
-                    $('#hidIdPartido' + id).val(valorIdPartido);
-                }
-            },
-            render: {
-                item: function(data) {
-                    var nombre = this.$input[0].id;
-                    var id = $('#hidId' + nombre).val();
-                    var datavalue = "";
-                    if (!isNaN(parseFloat(data.value)))
-                        datavalue = data.value;
-                    else
-                        datavalue = id;
-                    return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '" data-idprovincia="' + data.idProvincia + '" data-idpartido="' + data.idPartido + '" data-partido="' + data.partido + '" data-localidad="' + data.localidad + '">' + data.localidad + '</div>';
-                },
-                option: function(item, escape) {
-                    return item.provincia ? '<div><span>' + escape(item.localidad) + '</span><br/><span class="caption">' + escape(item.partido) + ', ' + escape(item.provincia) + '</span></div>' : '';
-                }
-            },
-            load: function(query, callback) {
-                if (query.length < 3)
-                    return callback();
-                else {
+
+                            else {
+                                deppol.disable();
+                            }
 
 
-                    $.ajax({
-                        url: urlAutocompleteLocalidad + encodeURIComponent(query),
-                        type: 'GET',
-                        error: function() {
-                            callback();
+
                         },
-                        success: function(res) {
-                            callback(res.localidadesEncontradas);
+                        error: function () {
+                            callback();
                         }
                     });
-                }
+                });
+            };
+            if (!isNaN(parseFloat(valorIdLocalidad))) {
+                $('#Partido' + id).attr("data-autocomplete", valorIdLocalidad);
+                $('#elegidoPartido' + id).html(valorLocalidad);
+                $('#hidIdPartido' + id).val(valorIdPartido);
             }
-        });
+        },
+        render: {
+            item: function (data) {
+                var nombre = this.$input[0].id;
+                var id = $('#hidId' + nombre).val();
+                var datavalue = "";
+                if (!isNaN(parseFloat(data.value)))
+                    datavalue = data.value;
+                else
+                    datavalue = id;
+                return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '" data-idprovincia="' + data.idProvincia + '" data-idpartido="' + data.idPartido + '" data-partido="' + data.partido + '" data-localidad="' + data.localidad + '">' + data.localidad + '</div>';
+            },
+            option: function (item, escape) {
+                return item.provincia ? '<div><span>' + escape(item.localidad) + '</span><br/><span class="caption">' + escape(item.partido) + ', ' + escape(item.provincia) + '</span></div>' : '';
+            }
+        },
+        load: function (query, callback) {
+            if (query.length < 3)
+                return callback();
+            else {
 
 
-        $('.selectize-localidad').selectize({
-            valueField: 'value',
-            labelField: 'localidad',
-            searchField: 'search',
-            selectOnTab: true,
-            delimiter: ',',
-            maxItems: "1",
-            closeAfterSelect: true,
-            create: false,
-
-            persist: false,
-            loadingClass: 'loadinggif',
-            hideSelected: true,
-            onChange: function(value) {
-                var id = this.$input[0].id;
-                var hiddenControl = '#hidId' + id;
-                var valor = $("#elegido" + id).data("autocomplete");
-                var valorIdProvincia = $("#elegido" + id).data("idprovincia");
-                var valorIdPartido = $("#elegido" + id).data("idpartido");
-                var valorPartido = $("#elegido" + id).data("partido");
-                if (valor == null) {
-                    valor = "0";
-                }
-                $(hiddenControl).val(valor);
-                if (id)
-                    id = id.replace('Localidad', '');
-                if (!isNaN(parseFloat(valorIdProvincia))) {
-                    $('#Provincia' + id).val(valorIdProvincia);
-                    if (id.toLowerCase() == "nacimiento") {
-                        $("#PaisNacimiento option").filter(function() {
-                            return this.text == "Argentina";
-                        }).attr('selected', true);
+                $.ajax({
+                    url: urlAutocompleteLocalidad + encodeURIComponent(query),
+                    type: 'GET',
+                    error: function () {
+                        callback();
+                    },
+                    success: function (res) {
+                        callback(res.localidadesEncontradas);
                     }
-                }
-                if (!isNaN(parseFloat(valorIdPartido))) {
-                    $('#Partido' + id).attr("data-autocomplete", valorIdPartido);
-                    $('#elegidoPartido' + id).html(valorPartido);
-                    $('#hidIdPartido' + id).val(valorIdPartido);
-                }
-            },
-            render: {
-                item: function(data) {
-                    var nombre = this.$input[0].id;
-                    var id = $('#hidId' + nombre).val();
-                    var datavalue = "";
-                    if (!isNaN(parseFloat(data.value)))
-                        datavalue = data.value;
-                    else
-                        datavalue = id;
-                    return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '" data-idprovincia="' + data.idProvincia + '" data-idpartido="' + data.idPartido + '" data-partido="' + data.partido + '" data-localidad="' + data.localidad + '">' + data.localidad + '</div>';
-                },
-                option: function(item, escape) {
-                    return item.provincia ? '<div><span>' + escape(item.localidad) + '</span><br/><span class="caption">' + escape(item.partido) + ', ' + escape(item.provincia) + '</span></div>' : '';
-                    //return 'german';
-                }
-            },
-            load: function(query, callback) {
-                if (query.length < 3)
-                    return callback();
-                else {
+                });
+            }
+        }
+    });
 
 
-                    $.ajax({
-                        url: urlAutocompleteLocalidad + encodeURIComponent(query),
-                        type: 'GET',
-                        error: function() {
-                            callback();
-                        },
-                        success: function(res) {
-                            callback(res.localidadesEncontradas);
-                        }
-                    });
+    $('.selectize-localidad').selectize({
+        valueField: 'value',
+        labelField: 'localidad',
+        searchField: 'search',
+        selectOnTab: true,
+        delimiter: ',',
+        maxItems: "1",
+        closeAfterSelect: true,
+        create: false,
+
+        persist: false,
+        loadingClass: 'loadinggif',
+        hideSelected: true,
+        onChange: function (value) {
+            var id = this.$input[0].id;
+            var hiddenControl = '#hidId' + id;
+            var valor = $("#elegido" + id).data("autocomplete");
+            var valorIdProvincia = $("#elegido" + id).data("idprovincia");
+            var valorIdPartido = $("#elegido" + id).data("idpartido");
+            var valorPartido = $("#elegido" + id).data("partido");
+            if (valor == null) {
+                valor = "0";
+            }
+            $(hiddenControl).val(valor);
+            if (id)
+                id = id.replace('Localidad', '');
+            if (!isNaN(parseFloat(valorIdProvincia))) {
+                $('#Provincia' + id).val(valorIdProvincia);
+                if (id.toLowerCase() == "nacimiento") {
+                    $("#PaisNacimiento option").filter(function () {
+                        return this.text == "Argentina";
+                    }).attr('selected', true);
                 }
             }
-        });
-
-
-        $('#ModusOperandi').selectize({
-            valueField: 'value',
-            labelField: 'name',
-            searchField: 'search',
-            delimiter: ',',
-            maxItems: "1",
-            closeAfterSelect: true,
-            selectOnTab: true,
-            create: false,
-            persist: false,
-            hideSelected: true,
-            loadingClass: 'loading',
-            onChange: function(value) {
-                var id = this.$input[0].id;
-                var hiddenControl = '#hidId' + id;
-                var valor = $("#elegido" + id).data("autocomplete");
-                if (valor == null) {
-                    valor = "0"
-                };
-                $(hiddenControl).val(valor);
-            },
-            render: {
-                item: function(data) {
-                    var nombre = this.$input[0].id;
-                    var id = $('#hidId' + nombre).val();
-                    var datavalue = "";
-                    if (!isNaN(parseFloat(data.value)))
-                        datavalue = data.value;
-                    else
-                        datavalue = id;
-                    return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '">' + data.name + '</div>';
-                }
-            },
-
-            load: function(query, callback) {
-                if (query.length < 3)
-                    return callback();
-                else {
-                    $.ajax({
-                        url: urlAutocompleteModusOperandi + encodeURIComponent(query),
-                        type: 'GET',
-                        error: function() {
-                            callback();
-                        },
-                        success: function(res) {
-                            callback(res.moEncontrados);
-                        }
-                    });
-                }
-
-
+            if (!isNaN(parseFloat(valorIdPartido))) {
+                $('#Partido' + id).attr("data-autocomplete", valorIdPartido);
+                $('#elegidoPartido' + id).html(valorPartido);
+                $('#hidIdPartido' + id).val(valorIdPartido);
             }
-        });
+        },
+        render: {
+            item: function (data) {
+                var nombre = this.$input[0].id;
+                var id = $('#hidId' + nombre).val();
+                var datavalue = "";
+                if (!isNaN(parseFloat(data.value)))
+                    datavalue = data.value;
+                else
+                    datavalue = id;
+                return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '" data-idprovincia="' + data.idProvincia + '" data-idpartido="' + data.idPartido + '" data-partido="' + data.partido + '" data-localidad="' + data.localidad + '">' + data.localidad + '</div>';
+            },
+            option: function (item, escape) {
+                return item.provincia ? '<div><span>' + escape(item.localidad) + '</span><br/><span class="caption">' + escape(item.partido) + ', ' + escape(item.provincia) + '</span></div>' : '';
+                //return 'german';
+            }
+        },
+        load: function (query, callback) {
+            if (query.length < 3)
+                return callback();
+            else {
+
+
+                $.ajax({
+                    url: urlAutocompleteLocalidad + encodeURIComponent(query),
+                    type: 'GET',
+                    error: function () {
+                        callback();
+                    },
+                    success: function (res) {
+                        callback(res.localidadesEncontradas);
+                    }
+                });
+            }
+        }
+    });
+
+
+    $('#ModusOperandi').selectize({
+        valueField: 'value',
+        labelField: 'name',
+        searchField: 'search',
+        delimiter: ',',
+        maxItems: "1",
+        closeAfterSelect: true,
+        selectOnTab: true,
+        create: false,
+        persist: false,
+        hideSelected: true,
+        loadingClass: 'loading',
+        onChange: function (value) {
+            var id = this.$input[0].id;
+            var hiddenControl = '#hidId' + id;
+            var valor = $("#elegido" + id).data("autocomplete");
+            if (valor == null) {
+                valor = "0"
+            };
+            $(hiddenControl).val(valor);
+        },
+        render: {
+            item: function (data) {
+                var nombre = this.$input[0].id;
+                var id = $('#hidId' + nombre).val();
+                var datavalue = "";
+                if (!isNaN(parseFloat(data.value)))
+                    datavalue = data.value;
+                else
+                    datavalue = id;
+                return '<div id="elegido' + nombre + '" data-autocomplete="' + datavalue + '">' + data.name + '</div>';
+            }
+        },
+
+        load: function (query, callback) {
+            if (query.length < 3)
+                return callback();
+            else {
+                $.ajax({
+                    url: urlAutocompleteModusOperandi + encodeURIComponent(query),
+                    type: 'GET',
+                    error: function () {
+                        callback();
+                    },
+                    success: function (res) {
+                        callback(res.moEncontrados);
+                    }
+                });
+            }
+
+
+        }
+    });
 
 
 
 
-        $(document).ready(function() {
-            ControlarComisaria();
-            $("#navFooter").hide();
-        });
+    $(document).ready(function () {
+        ControlarComisaria();
+        $("#navFooter").hide();
+    });
     </script>
 }
 

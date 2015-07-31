@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -12,6 +13,7 @@ namespace ISIC.Services
     public interface IRenaperResponseService
     {
         [OperationContract]
+        [MyFormatterBehavior]       
         int SendResponse(RenaperResponse renaperResponse);
     }
 
@@ -19,6 +21,9 @@ namespace ISIC.Services
     [DataContract]
     public class RenaperResponse
     {
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         int dni;
         string sexo;
         string tcn;
@@ -66,6 +71,12 @@ namespace ISIC.Services
         {
             get { return fecha; }
             set { fecha = value; }
+        }
+
+        [OnDeserialized]
+        void OnDeserialized(StreamingContext c)
+        {
+            logger.Info("OnDeserialized "+c);            
         }
 
     }

@@ -16,7 +16,7 @@ using Image = System.Drawing.Image;
 namespace ISICWeb.Areas.Otip.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, OTIP")]
+    [Autorizar(Roles = "Administrador, OTIP")]
     public class ReporteController : Controller
     {
         IRepository repository;
@@ -34,7 +34,7 @@ namespace ISICWeb.Areas.Otip.Controllers
             {
                 ImputadoExtraService imputadoSrv=new ImputadoExtraService(repository);
                 DatosGeneralesViewModel dg=new DatosGeneralesViewModel();
-                dg=imputadoSrv.LlenarViewModelConImputado(id, false);
+                dg=imputadoSrv.LlenarViewModelConImputado(id,0);
                 
                 string path = Server.MapPath("~/Content/");
                 string fileTmp = Guid.NewGuid().ToString() + ".docx";

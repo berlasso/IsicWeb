@@ -46,18 +46,22 @@
                         if (node.id === '#') {
                             url = '@Url.Action("GetJsTree3Data","Imputado")';
                         }
-                        else {
+                        else if (node.id === "En OTIP") {
                             nodeId = node.id;
                             url = '@Url.Action("GetJsTree3DataNode","Imputado")?estado=' + node.text;
                         }
+                        else {
+                            nodeId = node.id;
+                            url = '@Url.Action("GetJsTree3DataNodeDepto","Imputado")?idDepto=' + node.id;
+                        }
                         return url;
                     },
-                    'data': function(node) {
+                    'data': function (node) {
                         return { 'id': node.id };
                     }
                 }
             }
-           }).on("select_node.jstree", function (e, data) {
+        }).on("select_node.jstree", function (e, data) {
             data.instance.toggle_node(data.node);
             if (data.event) {
                 if ($.isNumeric(data.node.parent)) {
@@ -79,6 +83,11 @@
                     showPageLoadingSpinner();
                     window.location = url.replace('__param__', data.selected[0]);
                 }
+                @*else if (data.node.parent == "En OTIP") {
+                    var url = '@Url.Action("GetJsTree3DataNodeDepto", "Imputado", new { depto = "__param__" })';
+                    showPageLoadingSpinner();
+                    window.location = url.replace('__param__', data.selected[0]);
+                }*@
             };
         });
 

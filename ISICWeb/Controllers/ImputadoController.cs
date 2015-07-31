@@ -70,7 +70,7 @@ namespace ISICWeb.Controllers
         public JsonResult GetJsTree3Data()
         {
 
-            var estados = new List<string>(new string[] { "En OTIP", "Para segmentar", "Para clasificar", "Para cotejo local", "Para cotejo en Federal", "Para anexar informes", "Closed" });
+            var estados = new List<string>(new string[] {  "En OTIP", "Para segmentar", "Para cotejo local", "Para cotejo en Federal", "Closed" });
        
             var imputados = repository.Set<Imputado>().ToList().FindAll(delegate(Imputado imp) { return imp.UsuarioAsignadoI == User.Identity.Name.ToString(); });
 
@@ -99,33 +99,35 @@ namespace ISICWeb.Controllers
         {
             ArrayList alNodos = new ArrayList();
 
-            if (estado == "En OTIP")
+            if (estado == "En Otip")
             {
-                var departamentos = repository.Set<Departamento>().Where(d => d.Id != 0 && d.Id != 20 && d.Id != 21).ToList();
-                foreach (Departamento departamento in departamentos)
+                var departamentos = repository.Set<ClaseDepartamentoJudicial>().Where(d => d.Id != 0 && d.Id != 30 && d.Id != 35).ToList();
+                foreach (ClaseDepartamentoJudicial departamento in departamentos)
                 {
                     string id = departamento.Id.ToString();
                     var root = new // Create our root node and ensure it is opened
                     {
                         id = id,
-                        text = departamento.DepartamentoNombre,
+                        text = departamento.descripcion,
                         state = new State(false, false, false),
-                        children = new List<JsTree3Node>()
-                    };
-                    var issues = jiraService.GetIssuesByQuery("IG", "Task", "status = \"" + estado + "\"");
+                        //children = new List<JsTree3Node>()
 
-                    foreach (Issue<IssueFields> issue in issues)
-                    {
-                        string deptoIssue = issue.fields.summary.Trim().Substring(2,2);
-                        if (Convert.ToInt32(deptoIssue) == departamento.Id )
-                        root.children.Add(JsTree3Node.NewNode(issue.fields.summary.Trim()));
-                    }
+                        children = true
+                    };
+                    var issues = jiraService.GetIssuesByQuery("IG", "FichasDactiloscopicas", "status = \"" + estado + "\"");
+
+                    //foreach (Issue<IssueFields> issue in issues)
+                    //{
+                    //    string deptoIssue = issue.fields.summary.Trim().Substring(2,2);
+                    //    if (Convert.ToInt32(deptoIssue) == departamento.Id )
+                    //    root.children.Add(JsTree3Node.NewNode(issue.fields.summary.Trim()));
+                    //}
                     alNodos.Add(root);
                 }
             }
             else
             {
-                var issues = jiraService.GetIssuesByQuery("IG", "Task", "status = \"" + estado + "\""); // AND assignee = " + User.Identity.Name.ToString());
+                var issues = jiraService.GetIssuesByQuery("IG", "FichasDactiloscopicas", "status = \"" + estado + "\""); // AND assignee = " + User.Identity.Name.ToString());
                 
                 foreach (Issue<IssueFields> issue in issues)
                 {
@@ -309,6 +311,29 @@ namespace ISICWeb.Controllers
 
         #endregion
 
+        public JsonResult GetJsTree3DataNodeDepto(int idDepto)
+        {
+            //int idDepto = repository.Set<Departamento>().FirstOrDefault(x => x.DepartamentoNombre == depto).Id;
+            ArrayList alNodos = new ArrayList();
+            string estado = "En OTIP";
+           //var issues = jiraService.GetIssuesByQuery("IG", "Task", "status LIKE \"%" + estado + "%\""); // AND assignee = " + User.Identity.Name.ToString());
+            var issues = jiraService.GetIssuesByQuery("IG", "Task", "status = \"" + estado + "\"").Where(x=>x.fields.summary.Substring(2,2)==idDepto.ToString("00")); 
 
+            foreach (Issue<IssueFields> issue in issues)
+            {
+                string id = issue.fields.summary.Trim();
+                var root = new // Create our root node and ensure it is opened
+                {
+                    id = id,
+                    text = id,
+                    state = new State(false, false, false),
+                    //children = true
+                };
+                alNodos.Add(root);
+                // nodeEstado.children.Add(JsTree3Node.NewNode(issue.fields.summary));
+            }
+
+            return Json(alNodos, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -5,20 +5,20 @@
 }
 
 function LlenarControlesSimp(control) {
-    $("#Apellido").val(control.dataset.apellido).css("color", "rgb(17, 17, 139)");
-    $("#Nombres").val(control.dataset.nombre).css("color", "rgb(17, 17, 139)");
-    //$("#DependenciaPolicial").val(control.dataset.comisaria).css("color", "rgb(17, 17, 139)");
-    //$("#JuzgadoGarantias").val(control.dataset.juzgar).css("color", "rgb(17, 17, 139)");
-    $("#FechaDelito").val(control.dataset.fechadelito).css("color", "rgb(17, 17, 139)");
-    $("UFI").val(control.dataset.ufi).css("color", "rgb(17, 17, 139)");
-    $("#Fiscal").val(control.dataset.titularufi).css("color", "rgb(17, 17, 139)");
-    $("#Sexo").val(control.dataset.sexo).css("color", "rgb(17, 17, 139)");
-    $("#Padre").val(control.dataset.padre).css("color", "rgb(17, 17, 139)");
-    $("#Madre").val(control.dataset.madre).css("color", "rgb(17, 17, 139)");
-    $("#Apodos").val(control.dataset.apodo).css("color", "rgb(17, 17, 139)");
-    $("#FechaNacimiento").val(control.dataset.fechanacimiento).css("color", "rgb(17, 17, 139)");
-    $("#Delito").val(control.dataset.delito).css("color", "rgb(17, 17, 139)");
-    $("#EstadoCivil").val(control.dataset.estadocivil).css("color", "rgb(17, 17, 139)");
+    $("#Apellido").val(control.dataset.apellido).css("color", "rgb(52, 255, 37)");
+    $("#Nombres").val(control.dataset.nombre).css("color", "rgb(52, 255, 37)");
+    //$("#DependenciaPolicial").val(control.dataset.comisaria).css("color", "rgb(52, 255, 37)");
+    //$("#JuzgadoGarantias").val(control.dataset.juzgar).css("color", "rgb(52, 255, 37)");
+    $("#FechaDelito").val(control.dataset.fechadelito).css("color", "rgb(52, 255, 37)");
+    $("UFI").val(control.dataset.ufi).css("color", "rgb(52, 255, 37)");
+    $("#Fiscal").val(control.dataset.titularufi).css("color", "rgb(52, 255, 37)");
+    $("#Sexo").val(control.dataset.sexo).css("color", "rgb(52, 255, 37)");
+    $("#Padre").val(control.dataset.padre).css("color", "rgb(52, 255, 37)");
+    $("#Madre").val(control.dataset.madre).css("color", "rgb(52, 255, 37)");
+    $("#Apodos").val(control.dataset.apodo).css("color", "rgb(52, 255, 37)");
+    $("#FechaNacimiento").val(control.dataset.fechanacimiento).css("color", "rgb(52, 255, 37)");
+    $("#Delito").val(control.dataset.delito).css("color", "rgb(52, 255, 37)");
+    $("#EstadoCivil").val(control.dataset.estadocivil).css("color", "rgb(52, 255, 37)");
 
 }
 
@@ -32,9 +32,10 @@ $(function () {
         //"dom": 'TRfrtsp<"row"<"col-md-12"l>>i',
         "dom": '<"row "<"col-md-5"TR><"col-md-1"r><"col-md-6"f>>ts<"row tile"<"col-md-4"l><"col-md-4"i><"col-md-4"p>>',
         serverSide: true,
+        stateSave: true,
         "processing": true,
         "ajax": window.urlTablaImputados,
-        "order": [[2, "asc"]],//codbarras
+        "order": [[2, 'asc'], [3, 'asc']],
         "columns": [
                     { "data": null },
                     { "data": "ThumbUrl" },
@@ -46,15 +47,15 @@ $(function () {
 
                       {
                           "data": null,
-                          "defaultContent": "<button class='btn-alt btn-xs' style='font-size: 20px!important' title='Borrar' id='btnborrarimputado' ><span  class='flaticon-waste2' ></span></button>"+
+                          "defaultContent": "<button class='btn-alt btn-xs' style='font-size: 20px!important' title='Borrar' id='btnborrarimputado' ><span  class='flaticon-waste2' ></span></button>" +
                            "<button class='btn-alt btn-xs ' style='font-size: 20px!important'  title='Enviar al SIC'   id='btnEnviarImputado'><span  class='flaticon-arrow430' ></span></button>"
-                              
-                        },
+
+                      },
                     {
                         "data": "Id",
                         "visible": false
                     }
-       
+
 
         ],
         "columnDefs": [
@@ -62,6 +63,7 @@ $(function () {
               "render": function (data, type, row) {
                   return '<a href="' + urlEditar + '/' + row.Id + '" class="btn  btn-alt" title="Editar" onclick=" showPageLoadingSpinner()  ">Editar</a>';
               },
+              "orderable": false,
               "targets": 0, //boton editar
 
           },
@@ -175,7 +177,7 @@ $(function () {
 
             var url = urlBorrarImputado + encodeURI(id);
             $.get(url, null, function (data) {
-                if (data === "True") {
+                if (data === "") {
 
                     //row.remove();
                     row.remove().draw();
@@ -183,7 +185,7 @@ $(function () {
 
 
                 } else {
-                    alertify.error("Error al borrar");
+                    alertify.error("Error: "+data,0);
                 }
             });
 
@@ -197,14 +199,14 @@ $(function () {
         var url = urlEnviarImputado + encodeURI(data.Id);
         if ($('#chkEnviar').is(':checked')) {
             $.get(url, null, function (data) {
-                if (data === "True") {
+                if (data === "") {
 
                     row.remove();
                     alertify.success("Delito Enviado");
 
 
                 } else {
-                    alertify.error("Error al enviar");
+                    alertify.error("Error: "+data,0);
                 }
             });
         } else {
@@ -499,7 +501,8 @@ $(function () {
                     var json = data;
                     $("#divIppEncontrado").empty();
                     if (data.HuboError == true) {
-                        alertify.alert("Error", data.errorMessage);
+                        //alertify.alert("Error", data.errorMessage);
+                        $("#divIppEncontrado").html("").append("<i  style='color:red;'>No se encontro la IPP</i>").show();
                     } else {
                         if (data.DatosSimp.length == 0 || data.DatosSimp[0].Imputados.length == 0) {
                             alertify.alert("No hubo resultados");
@@ -522,12 +525,14 @@ $(function () {
                                 imputado.Madre = "";
                             if (imputado.Padre === null)
                                 imputado.Padre = "";
+                            if (imputado.Apodo === null)
+                                imputado.Apodo = "";
                             if ((imputado.FechaNacimiento instanceof Date && !isNaN(imputado.FechaNacimiento.valueOf())) === false)
                                 imputado.FechaNacimiento = "";
                             if (i == 0) {
-                                $("#divIppEncontrado").html("").append("<b>Imputados en el SIMP para la IPP " + ipp + ":</b>");
+                                $("#divIppEncontrado").html("").append("<b style='font-size:smaller'>Imputados en el SIMP para la IPP " + ipp + ":</b>");
                             }
-                            $("#divIppEncontrado").append('<ul><a id="imputadoSimp' + i + '" href="#CodBarras" onclick="LlenarControlesSimp(imputadoSimp' + i + ')"' +
+                            $("#divIppEncontrado").append('<ul><a style="color:green;" id="imputadoSimp' + i + '" href="#CodBarras" onclick="LlenarControlesSimp(imputadoSimp' + i + ')"' +
                                 //'data-comisaria="' + imputado.depPol + '" ' +
                                 'data-fechanacimiento="' + imputado.FechaNacimiento + '" ' +
                                 'data-delito="' + delito.ClaseDelito + '" ' +
@@ -570,11 +575,88 @@ $(document).ready(function () {
     $('#LocalidadPolicial').bind('keyup keypress blur change cut copy paste ', function () {
         ControlarComisaria();
     });
+
+
+    $("#frmDetalleOtip").on("blur", "#NumeroDocumento", function () {
+        var dni = $("#NumeroDocumento").val();
+        var id = $("#Id").val();
+        if (dni === undefined || dni.trim() === "")
+            return;
+        $.ajax({
+            url: urlBuscarDni + dni + "&id=" + id,
+            success: function (data) {
+                var json = data;
+
+                if (data.imputados.length == 0) {
+                    $("#CoincidenciasDni").remove();
+                }
+                for (var i = 0; i < data.imputados.length; i++) {
+                    var imputado = data.imputados[i];
+                    if (i == 0) {
+                        if ($("#CoincidenciasDni").length === 0) {
+                            $("#colDocumento").append('<div class="alert alert-info " id="CoincidenciasDni" role="alert"></div>');
+                        }
+
+                        $("#CoincidenciasDni").html("").append("<b>Coincidencias encontradas para el DNI " + dni + ":</b>");
+                    }
+                    $("#CoincidenciasDni").append('<ul><li>' + imputado.codbarra + '         ' + imputado.apellido + ', ' + imputado.nombre + '   -  ' + imputado.delito + '</li></ul>');
+
+                }
+            },
+            beforeSend: function () {
+                $("#NumeroDocumento").addClass("loadinggif");
+            },
+            complete: function () {
+                $("#NumeroDocumento").removeClass("loadinggif");
+            },
+            dataType: "json"
+        });
+
+    });
+
+    $("#frmDetalleOtip").on("blur", "#Apellido, #Nombres", function () {
+        var ape = $("#Apellido").val();
+        if (ape === undefined) ape = "";
+        var nom = $("#Nombres").val();
+        if (nom === undefined) nom = "";
+
+        var id = $("#Id").val();
+        if ((ape.trim() === "") && (nom.trim() === ""))
+            return;
+        $.ajax({
+            url: urlBuscarApeNom + ape + "&nom=" + nom + "&id=" + id,
+            success: function (data) {
+                var json = data;
+
+                if (data.imputados.length == 0) {
+                    $("#CoincidenciasApeNom").remove();
+                }
+                for (var i = 0; i < data.imputados.length; i++) {
+                    var imputado = data.imputados[i];
+                    if (i == 0) {
+                        if ($("#CoincidenciasApeNom").length === 0) {
+                            $("#colApellido").append('<div class="alert alert-info" id="CoincidenciasApeNom" role="alert"></div>');
+                        }
+
+                        $("#CoincidenciasApeNom").html("").append("<b>Coincidencias encontradas para " + ape + ", " + nom + ":</b>");
+                    }
+                    $("#CoincidenciasApeNom").append('<ul><li>cb: ' + imputado.codbarra + '         dni: ' + imputado.dni + '     -      ' + imputado.delito + '</li></ul>');
+
+                }
+            },
+            beforeSend: function () {
+                $("#Apellido").addClass("loadinggif");
+                $("#Nombres").addClass("loadinggif");
+            },
+            complete: function () {
+                $("#Apellido").removeClass("loadinggif");
+                $("#Nombres").removeClass("loadinggif");
+            },
+            dataType: "json"
+        });
+
+    });
 });
-
-
-
-
 
 $("#btnGuardar").on('click', function () {
     if ($("#frmDetalleOtip").valid() == false) {
@@ -592,14 +674,14 @@ function BorrarImputado(id) {
 
     var url = urlBorrarImputado + encodeURI(id);
     $.get(url, null, function (data) {
-        if (data === "True") {
+        if (data === "") {
 
             $("#tr" + id).remove();
             alertify.success("Imputado borrado correctamente");
 
 
         } else {
-            alertify.error("Error al borrar");
+            alertify.error("Error: "+data,0);
         }
     });
 

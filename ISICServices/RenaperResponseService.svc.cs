@@ -21,7 +21,7 @@ namespace ISIC.Services
         public int SendResponse(RenaperResponse composite)
         {
             logger.Info("Datos transacción");
-            logger.Info("tcn: {0}, dni: {1}, sexo: {2}",composite.Tcn,composite.DNI,composite.Sexo);
+            logger.Info("tcn: {0}, dni: {1}, sexo: {2}, resultado: {3}, score: {4}",composite.Tcn ,composite.DNI ,composite.Sexo ,composite.Resultado, composite.Score);
             return 1;
         }
     }

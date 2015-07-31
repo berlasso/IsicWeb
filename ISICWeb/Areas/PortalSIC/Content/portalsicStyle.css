@@ -47,6 +47,20 @@ span.overlay>p>label {
    
 }
 
+
+   span.inverso {
+        background: rgba(0,0,0,0.25);
+        padding: 3px 5px 3px 5px;
+        /*display: table;*/
+    }
+
+    .row {
+        margin-bottom: 5px;
+    }
+
+    span.inverso:empty {
+        padding: 0;
+    }
   
 div.item > a:hover span {
     /*opacity: 1;*/

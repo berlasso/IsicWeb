@@ -97,6 +97,11 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -119,6 +124,10 @@
     <Compile Include="Utils\TestUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ISICServices\ISICServices.csproj">
+      <Project>{6ac040d7-5790-4413-a23a-25af1888d44b}</Project>
+      <Name>ISICServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ISICWeb\ISICWeb.csproj">
       <Project>{b14f4b58-e64f-421d-90b3-2cb2f92ff82e}</Project>
       <Name>ISICWeb</Name>

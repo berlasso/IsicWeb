@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using ISIC.Entities;
@@ -10,7 +11,29 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Services
 {
-    public class IdgxService
+    public interface IIdgxService
+    {
+        /// <summary>
+        /// Treae el idgxdatopersona con el id indicado y llena con eso el viewmodel
+        /// </summary>
+        /// <param name="idIdgxdatospersonales"></param>
+        /// <param name="idIdgxprontuario"></param>
+        /// <returns></returns>
+        IdgxDatosPersonalesViewModel TraerIdgxDatosPersona(int idIdgxdatospersonales, int idIdgxprontuario);
+
+        bool BorrarIdgxDatosPersonales(int idIdgxdatospersonales);
+        bool BorrarIdgxDelito(int idIdgxdelito, IPrincipal user);
+        IdgxProntuarioViewModel TraerIdgxProntuarioViewModel(IdgxProntuario idgxProntuario, string prontuariosic = "");
+        IdgxProntuarioViewModel LlenarIdgxProntuarioViewModel(IdgxProntuario idgxProntuario, string prontuariosic);
+        IdgxProntuario NuevoIdgxProntuario(string prontuariosic);
+        int GuardarIdgxDatosPersona(IdgxDatosPersonalesViewModel datosPersona, IPrincipal user);
+        int GuardarIdgxDelito(IdgxDelitoViewModel delito, IPrincipal user);
+        IdgxDelitoViewModel TraerIdgxDelito(int idIdgxdelito);
+        int GuardarIdgxProntuario(string idIdgxProntuario, string prontuariopf, string idtipoprontuario, string prontuariosic);
+        bool BorrarProntuarioIdgx(int id, IPrincipal user);
+    }
+
+    public class IdgxService : IIdgxService
     {
         private IRepository _repository;
 
@@ -51,12 +74,16 @@ namespace ISICWeb.Services
                 InfNom = datosPersona.InfNom,
                 Madre = datosPersona.Madre,
                 Padre = datosPersona.Padre,
+                FechaInforme = datosPersona.FechaInforme.ToString("dd/MM/yyyy"),
                 Nombre = datosPersona.Nombre,
                 causaspendientes = datosPersona.causaspendientes,
                 idIdgxProntuario = idIdgxprontuario,
                 Delitos = datosPersona.Delitos
 
             };
+            
+            
+            
             return idgxpersona;
         }
 
@@ -79,7 +106,7 @@ namespace ISICWeb.Services
             return borroBien;
         }
 
-        public bool BorrarIdgxDelito(int idIdgxdelito)
+        public bool BorrarIdgxDelito(int idIdgxdelito, IPrincipal user)
         {
             bool borroBien = false;
             try
@@ -107,7 +134,7 @@ namespace ISICWeb.Services
 
         }
 
-        private IdgxProntuarioViewModel LlenarIdgxProntuarioViewModel(IdgxProntuario idgxProntuario, string prontuariosic)
+        public IdgxProntuarioViewModel LlenarIdgxProntuarioViewModel(IdgxProntuario idgxProntuario, string prontuariosic)
         {
             
 
@@ -127,7 +154,7 @@ namespace ISICWeb.Services
             return prontuario;
         }
 
-        private IdgxProntuario NuevoIdgxProntuario(string prontuariosic)
+        public IdgxProntuario NuevoIdgxProntuario(string prontuariosic)
         {
             Prontuario prontuarioSic = _repository.Set<Prontuario>().SingleOrDefault(x => x.ProntuarioNro == prontuariosic);
             if (prontuarioSic==null)
@@ -151,11 +178,15 @@ namespace ISICWeb.Services
             return idgxprontuario;
         }
 
-        public int GuardarIdgxDatosPersona(IdgxDatosPersonalesViewModel datosPersona)
+        public int GuardarIdgxDatosPersona(IdgxDatosPersonalesViewModel datosPersona, IPrincipal user)
         {
             IdgxDatosPersona idgxpersona = null;
             if (datosPersona.Id == 0)
-                idgxpersona = new IdgxDatosPersona();
+                idgxpersona = new IdgxDatosPersona
+                {
+                    FechaCreacion = DateTime.Now,
+                    UsuarioCreacion = user.Identity.Name
+                };
             else
                 idgxpersona = _repository.Set<IdgxDatosPersona>().Single(x => x.Id == datosPersona.Id);
 
@@ -189,11 +220,18 @@ namespace ISICWeb.Services
                 //    idgxpersona.tipoprontuario =
                 //        _repository.Set<ClaseProntuarioPoliciaFederal>().FirstOrDefault(x => x.Id.ToString() == datosPersona.TipoProntuarioPF);
                 //}
-                idgxpersona.FechaCreacion = DateTime.Now;
+                
                 idgxpersona.FechaModificacion = DateTime.Now;
+                idgxpersona.UsuarioModificacion = user.Identity.Name;
                 idgxpersona.Apellido = datosPersona.Apellido;
                 idgxpersona.Apodo = datosPersona.Apodo;
                 idgxpersona.Id = datosPersona.Id;
+                DateTime fecha;
+                bool fechacorrecta = DateTime.TryParseExact(datosPersona.FechaInforme, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fecha);
+                if (!fechacorrecta)
+                    throw new Exception("Fecha del informe incorrecta");
+                else
+                    idgxpersona.FechaInforme = fecha;
                 idgxpersona.InfDac = datosPersona.InfDac;
                 idgxpersona.DocumentoNumero = datosPersona.DocumentoNumero;
                 if (datosPersona.FechaFallecimiento != null)
@@ -230,11 +268,15 @@ namespace ISICWeb.Services
             throw new Exception("No se pudo guardar idgxdatospersonales");
         }
 
-        public int GuardarIdgxDelito(IdgxDelitoViewModel delito)
+        public int GuardarIdgxDelito(IdgxDelitoViewModel delito, IPrincipal user)
         {
             IdgxDetalle idgxdelito = null;
             if (delito.Id == 0)
-                idgxdelito = new IdgxDetalle();
+                idgxdelito = new IdgxDetalle
+                {
+                    ctlUsuCrea = user.Identity.Name,
+                    ctlFecCrea = DateTime.Now
+                };
             else
             {
                 idgxdelito = _repository.Set<IdgxDetalle>().Single(x => x.Id == delito.Id);
@@ -253,7 +295,7 @@ namespace ISICWeb.Services
                     _repository.Set<ClaseCodigoRestriccionPoliciaFederal>().FirstOrDefault(x => x.Id.ToString() == delito.CodigoRestriccionPF);
                 idgxdelito.codigoRestriccion = codrespf;
             }
-            idgxdelito.ctlFecCrea = DateTime.Now;
+            idgxdelito.ctlUsuModi = user.Identity.Name;
             idgxdelito.ctlFecModi = DateTime.Now;
             idgxdelito.expedientenro = delito.expedientenro;
             if (delito.fechapublicacion != null && delito.fechapublicacion.Trim() != "")
@@ -284,7 +326,7 @@ namespace ISICWeb.Services
             idgxdelito.resolucion = delito.resolucion;
             idgxdelito.secretaria = delito.secretaria;
             idgxdelito.solicitante = delito.solicitante;
-
+            
 
             if (delito.Id == 0)
                 _repository.UnitOfWork.RegisterNew(idgxdelito);
@@ -382,11 +424,13 @@ namespace ISICWeb.Services
           
         }
 
-        public bool BorrarProntuarioIdgx(int id)
+        public bool BorrarProntuarioIdgx(int id, IPrincipal user)
         {
             try
             {
                 IdgxProntuario idgxProntuario = _repository.Set<IdgxProntuario>().Single(x => x.Id == id);
+                idgxProntuario.FechaUltimaModificacion = DateTime.Now;
+                idgxProntuario.idUsuarioUltimaModificacion = user.Identity.Name;
                 idgxProntuario.Baja = true;
                 _repository.UnitOfWork.RegisterChanged(idgxProntuario);
                 _repository.UnitOfWork.Commit();

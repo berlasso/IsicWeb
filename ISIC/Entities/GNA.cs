@@ -61,6 +61,6 @@ namespace ISIC.Entities
         public Nullable<bool> Baja { get; set; }
         public string idUsuarioUltimaModificacion { get; set; }
         public Nullable<System.DateTime> FechaUltimaModificacion { get; set; }
-
+        public DateTime FechaInforme { get; set; }
     }
 }

@@ -101,7 +101,7 @@
         @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
                 Volver
             </a>*@
-        <a class="btn btn-lg btn-alt volver" href='#' onclick=' window.history.go(-1); return false; ' title=" volver" type="button">
+        <a class="btn btn-lg btn-alt " href='@Url.Action("Index", "Home")' onclick=' showPageLoadingSpinner() ' title=" volver" type="button" id="btnVolver">
             Volver
         </a>
     </div>

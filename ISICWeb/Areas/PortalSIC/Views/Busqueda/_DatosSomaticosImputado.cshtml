@@ -14,135 +14,177 @@
         </div>
         <div class="panel-body">
             <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                <div class="col-xs-4">
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.Robustez)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var robustez = Model.RobustezList.First(m => m.Value == Model.Robustez).Text;
-                        @Html.Label(robustez);
+                        <span class="inverso">@Html.Label(robustez)</span>
                     }
 
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.ColorPiel)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var colorpiel = Model.ColorPielList.First(m => m.Value == Model.ColorPiel).Text;
-                        @Html.Label(colorpiel);
+                        <span class="inverso">@Html.Label(colorpiel)</span>
                     }
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.ColorOjos)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var colorojos = Model.ColorOjosList.First(m => m.Value == Model.ColorOjos).Text;
-                        @Html.Label(colorojos);
+                        <span class="inverso">@Html.Label(colorojos)</span>
                     }
 
                 </div>
+
             </div>
             <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                <div class="col-xs-4">
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.ColorCabellos)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var colorcabellos = Model.ColorCabellosList.First(m => m.Value == Model.ColorCabellos).Text;
-                        @Html.Label(colorcabellos);
+                        <span class="inverso">@Html.Label(colorcabellos)</span>
                     }
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.TipoCabello)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var tipocabello = Model.TipoCabelloList.First(m => m.Value == Model.TipoCabello).Text;
-                        @Html.Label(tipocabello);
+                        <span class="inverso">@Html.Label(tipocabello)</span>
                     }
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.TipoCalvicie)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var tipocalvicie = Model.TipoCalvicieList.First(m => m.Value == Model.TipoCalvicie).Text;
-                        @Html.Label(tipocalvicie);
+                        <span class="inverso">@Html.Label(tipocalvicie)</span>
                     }
                 </div>
+
             </div>
             <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                <div class="col-xs-4">
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.FormaCara)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var formacara = Model.FormaCaraList.First(m => m.Value == Model.FormaCara).Text;
-                        @Html.Label(formacara);
+                        <span class="inverso">@Html.Label(formacara)</span>
                     }
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.DimensionCeja)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var dimensionceja = Model.DimensionCejaList.First(m => m.Value == Model.DimensionCeja).Text;
-                        @Html.Label(dimensionceja);
+                        <span class="inverso">@Html.Label(dimensionceja)</span>
                     }
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.TipoCeja)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var tipoceja = Model.TipoCejaList.First(m => m.Value == Model.TipoCeja).Text;
-                        @Html.Label(tipoceja);
+                        <span class="inverso">@Html.Label(tipoceja)</span>
                     }
                 </div>
+
             </div>
             <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                <div class="col-xs-4">
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.FormaMenton)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var formamenton = Model.FormaMentonList.First(m => m.Value == Model.FormaMenton).Text;
-                        @Html.Label(formamenton);
+                        <span class="inverso">@Html.Label(formamenton)</span>
                     }
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.FormaOreja)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var formaoreja = Model.FormaOrejaList.First(m => m.Value == Model.FormaOreja).Text;
-                        @Html.Label(formaoreja);
+                        <span class="inverso">@Html.Label(formaoreja)</span>
                     }
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.FormaNariz)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var formanariz = Model.FormaNarizList.First(m => m.Value == Model.FormaNariz).Text;
-                        @Html.Label(formanariz);
+                        <span class="inverso">@Html.Label(formanariz)</span>
                     }
                 </div>
+
             </div>
             <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                <div class="col-xs-4">
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.FormaBoca)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var formaboca = Model.FormaBocaList.First(m => m.Value == Model.FormaBoca).Text;
-                        @Html.Label(formaboca);
+                        <span class="inverso">@Html.Label(formaboca)</span>
                     }
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.FormaLabioInferior)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var formalabioinferior = Model.FormaLabioInferiorList.First(m => m.Value == Model.FormaLabioInferior).Text;
-                        @Html.Label(formalabioinferior);
+                        <span class="inverso">@Html.Label(formalabioinferior)</span>
                     }
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.FormaLabioSuperior)
+                </div>
+                <div class="col-xs-2 col-md-2">
                     @{
                         var formalabiosuperior = Model.FormaLabioSuperiorList.First(m => m.Value == Model.FormaLabioSuperior).Text;
-                        @Html.Label(formalabiosuperior);
+                        <span class="inverso">@Html.Label(formalabiosuperior)</span>
                     }
                 </div>
+
             </div>
             <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
-                <div class="col-xs-4">
+                <div class="col-xs-2 col-md-2">
                     @Html.LabelFor(model => model.Estatura)
-                    
-                    @Html.DisplayFor(m=>m.Estatura)
-                    
                 </div>
-                <div class="col-xs-4">
+
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.Estatura)</span>
 
                 </div>
-                <div class="col-xs-4">
-
-                </div>
+                
             </div>
         </div>
     </div>

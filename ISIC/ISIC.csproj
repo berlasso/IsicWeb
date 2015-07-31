@@ -81,6 +81,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MPBA.JiraClient.1.1.0\lib\net40\MPBA.JiraClient.dll</HintPath>
     </Reference>
+    <Reference Include="MPBA.RenaperClient">
+      <HintPath>..\packages\MPBA.RenaperClient.1.0.0\lib\net45\MPBA.RenaperClient.dll</HintPath>
+    </Reference>
     <Reference Include="Neurotec">
       <HintPath>..\packages\Neurotec.5.0.0.0\lib\net40\Neurotec.dll</HintPath>
     </Reference>
@@ -233,6 +236,7 @@
     <Compile Include="Persistence\Mappings\ImputadoMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\JiraService.cs" />
+    <Compile Include="Services\VerifyIdentityService.cs" />
     <Compile Include="Utils\DedosUtils.cs" />
     <Compile Include="Utils\ImageConverter.cs" />
   </ItemGroup>

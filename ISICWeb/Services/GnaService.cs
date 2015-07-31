@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using ISIC.Entities;
@@ -11,7 +12,14 @@ using MPBA.DataAccess;
 
 namespace ISICWeb.Services
 {
-    public class GnaService
+    public interface IGnaService
+    {
+        bool BorrarFichaGNA(int id, IPrincipal user);
+        string GuardarFichaGNA(GNAViewModel model, IPrincipal user);
+        GNAViewModel LlenarViewModelDesdeBase(string prontuariosic, int idGNA);
+    }
+
+    public class GnaService : IGnaService
     {
         private IRepository _repository;
 
@@ -22,12 +30,14 @@ namespace ISICWeb.Services
 
         }
 
-        public bool BorrarFichaGNA(int id)
+        public bool BorrarFichaGNA(int id, IPrincipal user)
         {
             try
             {
                 GNA gna = _repository.Set<GNA>().Single(x => x.Id == id);
                 gna.Baja = true;
+                gna.FechaUltimaModificacion=DateTime.Now;
+                gna.idUsuarioUltimaModificacion = user.Identity.Name;
                 _repository.UnitOfWork.RegisterChanged(gna);
                 _repository.UnitOfWork.Commit();
                 return true;
@@ -39,7 +49,7 @@ namespace ISICWeb.Services
 
         }
 
-        public string GuardarFichaGNA(GNAViewModel model)
+        public string GuardarFichaGNA(GNAViewModel model, IPrincipal user)
         {
             string errores = "";
             string prontuariosic = model.Prontuario.ProntuarioNro;
@@ -47,7 +57,12 @@ namespace ISICWeb.Services
             GNA gna = _repository.Set<GNA>().SingleOrDefault(x => x.Id == model.Id);
             if (gna == null)
             {
-                gna = new GNA { FechaCreacion = DateTime.Now, };
+                gna = new GNA
+                {
+                    FechaCreacion = DateTime.Now,
+                    idUsuarioCreacion = user.Identity.Name,
+
+                };
             }
 
             if (prontuario == null)
@@ -61,6 +76,12 @@ namespace ISICWeb.Services
             gna.Asunto = model.Asunto;
             gna.Captura = model.Captura;
             gna.Caratula = model.Caratula;
+            DateTime fecha;
+            bool fechacorrecta=DateTime.TryParseExact(model.FechaInforme, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fecha);
+            if (!fechacorrecta )
+                errores = "Fecha del informe incorrecta";
+            else
+                gna.FechaInforme = fecha;
             gna.Corroborado = model.Corroborado;
             gna.DocumentoNumero = model.DocumentoNumero;
             gna.ExpteGNA = model.ExpteGNA;
@@ -75,21 +96,29 @@ namespace ISICWeb.Services
             gna.Vigente = model.Vigente;
             gna.Sexo = _repository.Set<ClaseSexo>().Single(x => x.Id.ToString() == model.idClaseSexo);
             gna.TipoDNI = _repository.Set<ClaseTipoDNI>().Single(x => x.Id.ToString() == model.idClaseTipoDNI);
-            if (model.Id == 0)
+            gna.FechaUltimaModificacion=DateTime.Now;
+            gna.idUsuarioUltimaModificacion = user.Identity.Name;
+            if (errores == "")
             {
-                _repository.UnitOfWork.RegisterNew(gna);
-            }
-            else
-            {
-                _repository.UnitOfWork.RegisterChanged(gna);
-            }
-            try
-            {
-                _repository.UnitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                errores = e.InnerException == null ? "Error al guardar. " + e.Message : e.InnerException.ToString().Substring(0, 400);
+
+                if (model.Id == 0)
+                {
+                    _repository.UnitOfWork.RegisterNew(gna);
+                }
+                else
+                {
+                    _repository.UnitOfWork.RegisterChanged(gna);
+                }
+                try
+                {
+                    _repository.UnitOfWork.Commit();
+                }
+                catch (Exception e)
+                {
+                    errores = e.InnerException == null
+                        ? "Error al guardar. " + e.Message
+                        : e.InnerException.ToString().Substring(0, 400);
+                }
             }
             return errores;
 
@@ -127,6 +156,7 @@ namespace ISICWeb.Services
             model.Vigente = gna.Vigente;
             model.ClaseSexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion");
             model.ClaseTipoDNIList = new SelectList(_repository.Set<ClaseTipoDNI>().ToList(), "Id", "descripcion");
+            model.FechaInforme = (gna.Id > 0) ? gna.FechaInforme.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy");
             return model;
         }
 

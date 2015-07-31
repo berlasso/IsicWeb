@@ -18,73 +18,76 @@
             <h1>Presuntas reincidencias de <span style="font-size: inherit;color:rgb(53, 64, 108);font-weight:bolder;"> @ViewBag.Apellido , @ViewBag.Nombres  </span> por búsqueda nominal</h1>
         </div>
         <input type="hidden" id="CodigoBarra" value="@ViewBag.CodigoBarra" name="CodigoBarra">
-    
+
 
         <div class="panel-body">
-            <div class="row wow fadeindown animated" >
+            <div class="row wow fadeindown animated">
                 <div class="col-md-4 col-sm-12 ">
-                    <canvas id="cImagen" width="300" height="220"></canvas>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <h5>
-                        <span class="block-title">  @Html.DisplayName("Codigo de Barra: ")</span>
-                        <span class="cdatosImputado" style="font-size: medium;"> @ViewBag.CodigoBarra</span>
-                    </h5>
+                    <img class="img-responsive  wow fadeInDown animated"  src="@Url.Content(ViewBag.NombreArchivo)?r=@Guid.NewGuid()"/>
+                    
                 </div>
 
-
-                <div class="col-md-4 col-sm-6">
-                    <h5>
-                        <span class="block-title">
-                            @Html.DisplayName("Apellido y Nombres:  ")
-                        </span>
-                        <span class="cdatosImputado"> @ViewBag.Apellido , @ViewBag.Nombres</span>
-                    </h5>
-                </div>
-
-                <div class="col-md-4">
-                    <h5>
-                        <span class="block-title">
-
-                            @Html.DisplayName("Apodo: ")
-                        </span>
-                        <span class="cdatosImputado">  @ViewBag.Apodo </span>
-                    </h5>
-                </div>
-                <div class="row wow fadeindown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-md-8 col-sm-12">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
 
 
-                    <div class="col-md-4">
-                        <h5>
-                            <span class="block-title">
-                                @Html.DisplayName("Edad: ")
-                            </span>
-                            <span class="cdatosImputado">   @ViewBag.Edad</span>
-                        </h5>
+                            <span class="cdatosImputado">Código de Barras: </span> 
+                            <span class="block-title" style="font-size: large;"> @ViewBag.CodigoBarra</span>
+                            
+                        </div>
+
+
+                        <div class="col-md-6 col-sm-6">
+                            <span class="cdatosImputado">Apellido y Nombres: </span> 
+                            <span class="block-title" style="font-size: medium;"> @ViewBag.Apellido , @ViewBag.Nombres</span>
+
+                        </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <h5>
-                            <span class="block-title">
-                                @Html.DisplayName("Nombre de la Madre: ")
-                            </span>
-                            <span class="cdatosImputado">  @ViewBag.NombreMadre</span>
-                        </h5>
+                    <div class="row"><br/>
                     </div>
-                    <div class="col-md-4">
-                        <h5>
-                            <span class="block-title">
-                                @Html.DisplayName("Documento Nro:")
-                            </span>
-                            <span class="cdatosImputado">  @ViewBag.DocumentoNro</span>
-                        </h5>
-                    </div>
+                    <div class="row">
+                        <div class="col-md-6  col-sm-6">
+                            <span class="cdatosImputado">Apodo: </span> 
+                            <span class="block-title" style="font-size: medium;">  @ViewBag.Apodo </span>
+                            
+                        </div>
 
+                        <div class="col-md-6  col-sm-6">
+
+                            <span class="cdatosImputado">Edad: </span> 
+                            <span class="block-title" style="font-size: medium;">   @ViewBag.Edad</span>
+                            
+                        </div>
+                    </div>
+                    <div class="row"><br/>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6  col-sm-6">
+                            <span class="cdatosImputado">Nombre de la Madre: </span> 
+                            <span class="block-title" style="font-size: medium;">  @ViewBag.NombreMadre</span>
+                            
+                        </div>
+                        <div class="col-md-6  col-sm-6">
+                            <span class="cdatosImputado">Documento Nro.: </span> 
+                            <span class="block-title" style="font-size: medium;">  @ViewBag.DocumentoNro</span>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
-        <div id="DataT" class="row">
+        <div class="panel panel-default" id="Prontuario">
+            <div id="cargando" class="form-group col-lg-4" style="display: none;">
+                <img src="~/Images/loading.gif" alt="Loading..."/>
+            </div>
+        </div>
+        <div id="prontuarios"></div>
+    
+
+
+    <div id="DataT" class="row">
             <table id="table" class="table  table-bordered table-hover table-condensed table-striped tile tabla" cellspacing="0" width="100%">
                 <thead style="color:white!important">
                     <tr>
@@ -128,9 +131,7 @@
 
                             <tr id="">
                                 <td style="width: 5%">
-                                    <a href="#" rel="@imp.ProntuarioSIC" id="@imp.Id">
-                                        @*<img src="/Content/images/details_open.png" alt="expand/collapse" rel="@imp.ProntuarioSIC" id="@imp.Id" />*@
-                                        @*<img alt="expand/collapse" rel="@imp.ProntuarioSIC" id="@imp.Id" />*@
+                                    <a href="#prontuarioBody" rel="@imp.ProntuarioSIC" id="@imp.Id" onclick=" showPageLoadingSpinner();">
                                         <span class="flaticon-arrow420" style='font-size: 30px!important'></span>
                                     </a>
                                 </td>
@@ -141,11 +142,11 @@
 
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("Actiones", new {id = imp.Id})" title="Editar" class="flaticon-magnifying27" onclick=" showPageLoadingSpinner() ">
+                                    
 
                                         @Html.DisplayFor(modelItem => imp.ProntuarioSIC)
 
-                                    </a>
+                                    
 
 
                                 </td>
@@ -204,14 +205,8 @@
 
         <br>
 
-        <div class="panel panel-default" id="Prontuario">
-            <div id="cargando" class="form-group col-lg-4" style="display: none;">
-                <img src="~/Images/loading.gif" alt="Loading..." />
-            </div>
-            <div id="prontuarioBody" class="panel-body">
+     
 
-            </div>
-        </div>
 
 
 
@@ -231,7 +226,7 @@
         @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
                 Volver
             </a>*@
-        <a class="btn btn-lg btn-alt " href='@Url.Action("IndexPorTareas", "Imputado")' onclick=' showPageLoadingSpinner() ' title=" volver" type="button" id="btnVolver">
+        <a class="btn btn-lg btn-alt " href='@Url.Action("Index", "CotejoManual")' onclick=' showPageLoadingSpinner() ' title=" volver" type="button" id="btnVolver">
             Volver
         </a>
     </div>
@@ -248,35 +243,7 @@
 
     <script type="text/javascript">
 
-        var canvasFoto = new fabric.Canvas('cImagen');
-        var archivo = '@Url.Content(ViewBag.NombreArchivo)';
-        fabric.Image.fromURL(archivo, function(oImg) {
-            oImg.top = 0;
-            oImg.left = 0;
-            oImg.set({
-                scaleY: .45,
-                scaleX: .45,
-                selectable: true,
-                stroke: 'none',
-                hasBorders: false,
-                fill: 'none',
-                borderColor: 'none',
-                lockRotation: true,
-                strokeWidth: 0,
-                lockMovementX: true,
-                lockMovementY: true,
-                lockScalingX: true,
-                lockScalingY: true,
-                lockUniScaling: true,
-                lockRotation: true
-            });
-
-
-            canvasFoto.add(oImg);
-
-
-        });
-
+     
 
         $("#Prontuario").hide("fast");
 
@@ -285,7 +252,8 @@
 
         /* Initialize table and make first column non-sortable*/
         oTable = $('#table').dataTable({
-            "dom": '<"row"<"col-md-5"TR><"col-md-1"r><"col-md-6"f>>ts<"row"<"col-md-6"l><"col-md-6"p>>i',
+            //"dom": '<"row"<"col-md-5"TR><"col-md-1"r><"col-md-6"f>>ts<"row"<"col-md-6"l><"col-md-6"p>>i',
+            "dom": '<"row "<"col-md-5"R><"col-md-1"r><"col-md-6">>ts<"row tile"<"col-md-4"l><"col-md-4"i><"col-md-4"p>>',
             "bProcessing": true,
             "bServerSide": false,
             "bJqueryUI": true,
@@ -376,7 +344,7 @@
             $.ajax({
                 url: "@(Url.Action("VisualizaImputadosPorProntuario"))",
                 type: "GET",
-                data: { CodProntuario: prontuario, Id: id, imputadoAComparar: "@ViewBag.CodigoBarra" },
+                data: { CodProntuario: prontuario, Id: id, codbarra: "@ViewBag.CodigoBarra" },
                 cache: false,
                 dataType: 'html',
                 beforeSend: function() {
@@ -384,14 +352,15 @@
                 },
                 success: function(data) {
                     //Fill div with results
-
+                    hidePageLoadingSpinner(1);
+                    $("#prontuarios").empty().append('<div class="alert alert-dismissible fade in tile" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">X</span></button><div id="prontuarioBody" class="panel-body"></div></div>');
                     $("#prontuarioBody").html(data);
                 },
                 error: function(xhr, status, error) {
                     alert(xhr.responseText);
                 },
                 complete: function(xhr, data) {
-
+                    
                 }
 
             });

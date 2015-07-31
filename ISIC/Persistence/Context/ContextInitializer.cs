@@ -27,21 +27,23 @@ namespace ISIC.Persistence.Context
         public void InitializeDatabase(ISICContext context )
         {
 
-            //if (!context.Database.Exists())
-            //{
-            //    context.Database.Create();
-            //}
+            if (!context.Database.Exists())
+            {
+                context.Database.Create();
+            }
             //jiraService = new JiraService();
+            //Issue<IssueFields> issue = jiraService.CreateIssue("010200000043K");
+            //Issue<IssueFields> issue = jiraService.CreateIssue("150100000015S");
             //Issue<IssueFields> issue = jiraService.GetIssue("010200000006V");
             //MPBA.Jira.Model.JiraUser usuario = new JiraUser();
-            //issue.fields.assignee = new JiraUser(); 
+            //issue.fields.assignee = new JiraUser();
             //usuario.name = "meveleens";
             //usuario.displayName = "Mariana Eveleens";
             //usuario.emailAddress = "meveleens@mpba.gov.ar";
             //usuario.active = true;
             //issue.fields.assignee = usuario;
             //Issue<IssueFields> issuemodificada = jiraService.UpdateIssue(issue);
-            // CrearDatosJira(context);
+            //CrearDatosJira(context);
 #if DEBUG
 
             if (!context.Database.CompatibleWithModel(false))

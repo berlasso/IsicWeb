@@ -74,7 +74,7 @@
 @section footer
 {
     <div class="col-md-2 col-sm-3 col-xs-4">
-        <a class="btn btn-lg btn-alt" href='@Url.Action("Detalle", "ImputadoOtip", new {id = Model.idImputado, ParaEditar = true})#Imagenes' onclick=' showPageLoadingSpinner() ' title=" volver" type="button">
+        <a class="btn btn-lg btn-alt" href='@Url.Action("Detalle", "ImputadoOtip", new {id = Model.idImputado, pe = 1})#Imagenes' onclick=' showPageLoadingSpinner() ' title=" volver" type="button">
             @*<a href='#' id="btnVolver" onclick="window.history.go(-1); return false;" class=" btn btn-alt btn-lg">*@
             Volver
         </a>

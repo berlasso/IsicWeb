@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using ISIC.Entities;
 using ISIC.Persistence.Context;
 
@@ -13,6 +15,7 @@ namespace ISICWeb
             filters.Add(new HandleErrorAttribute());
         }
     }
+
     public class AuditAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -43,5 +46,60 @@ namespace ISICWeb
         }
     }
 
+    [AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
+    public class CheckSessionOutAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            HttpContext context = HttpContext.Current;
+            if (context.Session != null)
+            {
+                if (context.Session.IsNewSession)
+                {
+                    string sessionCookie = context.Request.Headers["Cookie"];
+
+                    if ((sessionCookie != null) && (sessionCookie.IndexOf("ASP.NET_SessionId") >= 0))
+                    {
+                        FormsAuthentication.SignOut();
+                        string redirectTo = "~/Account/Login";
+                        if (!string.IsNullOrEmpty(context.Request.RawUrl))
+                        {
+                            redirectTo = string.Format("~/Account/Login?ReturnUrl={0}", HttpUtility.UrlEncode(context.Request.RawUrl));
+                            filterContext.Result = new RedirectResult(redirectTo);
+                            return;
+                        }
+
+                    }
+                }
+            }
+
+            base.OnActionExecuting(filterContext);
+        }
+    }
+
+    public class AutorizarAttribute : AuthorizeAttribute
+    {
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
+            {
+                base.HandleUnauthorizedRequest(filterContext);
+            }
+            else if (!this.Roles.Split(',').Any(filterContext.HttpContext.User.IsInRole))
+            {
+
+                filterContext.Result = new ViewResult
+                {
+                    ViewName = "~/Views/Shared/_Unauthorized.cshtml"
+                };
+            }
+            else
+            {
+                base.HandleUnauthorizedRequest(filterContext);
+            }
+        }
+
+     
+    }
 
 }

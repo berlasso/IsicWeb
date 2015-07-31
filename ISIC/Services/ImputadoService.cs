@@ -127,7 +127,13 @@ namespace ISIC.Services
             this._repository.UnitOfWork.RegisterChanged(imputado);
             this._repository.UnitOfWork.Commit();
         }
-
+        public void ActualizarDigitalizacion(Imputado imputado)
+        {
+            imputado.Estado = _repository.Set<SICEstadoTramite>().First(x => x.Descripcion.Contains("Clasifi"));
+            this._repository.UnitOfWork.RegisterChanged(imputado);
+            this._repository.UnitOfWork.Commit();
+          
+        }
 
         public bool DeleteById(int idImputado)
         {
@@ -191,6 +197,7 @@ namespace ISIC.Services
         Imputado GetByCodigoBarra(string codigoBarra);
         Imputado GetByCodigoHuellas(string codigoBarra);
         void Actualizar(Imputado imputado);
+        void ActualizarDigitalizacion(Imputado imputado);
         void InicializaHuellasDactilares(Imputado imputado);
         bool DeleteById(int idImputado);
         void BorrarHuellas(Imputado imputado);

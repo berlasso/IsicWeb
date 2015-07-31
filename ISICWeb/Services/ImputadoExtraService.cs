@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Web.Mvc;
 using ISIC.Entities;
 using ISIC.Services;
@@ -9,10 +12,43 @@ using ISICWeb.Areas.Otip.Models;
 using Microsoft.Owin.Security.Provider;
 using MPBA.DataAccess;
 using MPBA.Jira.Model;
+using RestSharp.Extensions;
+
 
 namespace ISICWeb.Services
 {
-    public class ImputadoExtraService: ISIC.Services.ImputadoService
+    public interface IImputadoExtraService
+    {
+        DatosGeneralesViewModel CrearViewModel();
+
+        /// <summary>
+        /// Llena el viewmodel con el imputado cuyo id se indica traido para mostrarlo el la vista
+        /// </summary>
+        /// <param name="id">id del imputado a traer</param>
+        /// <param name="ParaEditar">si es para editar o solo lectura</param>
+        /// <returns></returns>
+        DatosGeneralesViewModel LlenarViewModelConImputado(int id, int? ParaEditar=null);
+
+        /// <summary>
+        /// Creo/modifico los datos de un imputado con los datos ingresados el el viewmodel
+        /// </summary>
+        /// <param name="imp">el viewmodel que uso para modificar el imputado</param>
+        /// <returns></returns>
+        string GuardarImputadoDesdeViewModel(DatosGeneralesViewModel imp,IPrincipal user);
+
+        void LlenarListas(DatosGeneralesViewModel datosImputado);
+        IList<Imputado> GetAll();
+        IList<Imputado> GetAllByEstado(SICEstadoTramite estado);
+        Imputado GetByCodigoBarra(string codigoBarra);
+        Imputado GetById(int id);
+        void BorrarHuellas(Imputado imputado);
+        void InicializaHuellasDactilares(Imputado imputado);
+        void Actualizar(Imputado imputado);
+        bool DeleteById(int idImputado);
+        Imputado GetByCodigoHuellas(string codigoBarra);
+    }
+
+    public class ImputadoExtraService: ISIC.Services.ImputadoService, IImputadoExtraService
     {
         private IRepository _repository;
         private JiraService _jiraService;
@@ -37,7 +73,7 @@ namespace ISICWeb.Services
         /// <param name="id">id del imputado a traer</param>
         /// <param name="ParaEditar">si es para editar o solo lectura</param>
         /// <returns></returns>
-        public DatosGeneralesViewModel LlenarViewModelConImputado(int id, bool ParaEditar)
+        public DatosGeneralesViewModel LlenarViewModelConImputado(int id, int? ParaEditar=null)
         {
             Imputado imputado = _repository.Set<Imputado>().FirstOrDefault(s => s.Id == id);
             if (imputado != null)
@@ -66,7 +102,7 @@ namespace ISICWeb.Services
                     NumeroDocumento = persona.DocumentoNumero == null ? "" : persona.DocumentoNumero.ToString(),
                     Instruccion = persona.EstudiosCursados == null ? "" : persona.EstudiosCursados.Id.ToString(),
                     EstadoCivil = persona.EstadoCivil == null ? "" : persona.EstadoCivil.Id.ToString(),
-                    EsSoloDetalle = !ParaEditar,
+                    EsSoloDetalle = ParaEditar==null || (ParaEditar!=1?true:false),
                     Conyuge = persona.Conyuge ?? "",
                     Robustez = imputado.Robustez == null ? "0" : imputado.Robustez.Id.ToString(),
                     FormaBoca = imputado.FormaBoca == null ? "0" : imputado.FormaBoca.Id.ToString(),
@@ -122,13 +158,13 @@ namespace ISICWeb.Services
                 if (dom != null)
                 {
                     
-                    datosImputado.Calle = dom.Calle??"";
-                    datosImputado.EntreCalle = dom.EntreCalle ?? "";
-                    datosImputado.EntreCalle2 = dom.EntreCalle2 ?? "";
-                    datosImputado.NroH = dom.NroH ?? "";
-                    datosImputado.DeptoH = dom.DeptoH ?? "";
-                    datosImputado.ParajeBarrioH = dom.ParajeBarrioH ?? "";
-                    datosImputado.PisoH = dom.PisoH ?? "";
+                    datosImputado.Calle = dom.Calle.HasValue()?dom.Calle.Trim():"";
+                    datosImputado.EntreCalle = dom.EntreCalle.HasValue()?dom.EntreCalle: "";
+                    datosImputado.EntreCalle2 = dom.EntreCalle2.HasValue() ?dom.EntreCalle2: "";
+                    datosImputado.NroH = dom.NroH.HasValue() ?dom.NroH: "";
+                    datosImputado.DeptoH = dom.DeptoH.HasValue() ?dom.DeptoH: "";
+                    datosImputado.ParajeBarrioH = dom.ParajeBarrioH.HasValue() ?dom.ParajeBarrioH: "";
+                    datosImputado.PisoH = dom.PisoH.HasValue() ?dom.PisoH: "";
                     bool hayPartido = dom.Partido != null;
                     if (!hayPartido)
                     {
@@ -193,12 +229,13 @@ namespace ISICWeb.Services
         /// </summary>
         /// <param name="imp">el viewmodel que uso para modificar el imputado</param>
         /// <returns></returns>
-        public string GuardarImputadoDesdeViewModel(DatosGeneralesViewModel imp,string idPuntoGestion)
+        public string GuardarImputadoDesdeViewModel(DatosGeneralesViewModel imp,IPrincipal user)
         {
             int? id = imp.Id ?? 0;
             string error = "";
             long dni = 0;
             imp.EsSoloDetalle = false;
+            var idPuntoGestion = ((ClaimsIdentity)user.Identity).FindFirst("idPuntoGestion").Value;
             //para que salga  indeterminado(0) en los autocompletes
             if (string.IsNullOrEmpty(imp.hidIdLocalidad)) imp.hidIdLocalidad = "0";
             if (string.IsNullOrEmpty(imp.hidIdLocalidadDelito)) imp.hidIdLocalidadDelito = "0";
@@ -218,14 +255,14 @@ namespace ISICWeb.Services
                 imputado.CodigoDeBarras = imp.CodBarras;
                 imputado.Prontuario = new Prontuario {ProntuarioNro = imp.CodBarras};
                 imputado.FechaCreacionI = DateTime.Now;
-                //CAMBIAR!!
                 imputado.PuntoGestionCreacionI =
                     _repository.Set<PuntoGestion>().SingleOrDefault(p => p.Id == idPuntoGestion);
-                /////////////////
+                imputado.UsuarioCreacionI = user.Identity.Name;
                 imputado.Estado = _repository.Set<SICEstadoTramite>().SingleOrDefault(e => e.Id == 9);
             }
-            
-            imputado.FechaUltimaModificacion = DateTime.Now;
+           
+           imputado.idUsuarioUltimaModificacion = user.Identity.Name;
+           imputado.FechaUltimaModificacion = DateTime.Now;
 
             //DATOS SOMATICOS
             imputado.CejasDimension = _repository.Set<SICClaseCejasDimension>().First(x => x.Id.ToString() == imp.DimensionCeja);
@@ -263,9 +300,8 @@ namespace ISICWeb.Services
             imputado.Persona.FechaAlta = DateTime.Now;
             imputado.Persona.Telefono = imp.Telefono;
             imputado.Persona.FechaNacimiento = DateTime.ParseExact(imp.FechaNacimiento, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-
             imputado.Persona.profesion = imp.Profesion;
-
+            imputado.Persona.UsuarioUltimaModificacion = user.Identity.Name;
             imputado.Persona.FechaUltimaModificacion = DateTime.Now;
             imputado.Persona.LocalidadNacimiento = localidadNacimiento;
             imputado.Persona.LugarNacimiento = localidadNacimiento != null ? localidadNacimiento.LocalidadNombre : null;
@@ -284,7 +320,6 @@ namespace ISICWeb.Services
             imputado.Persona.Domicilio.Calle = imp.Calle;
             imputado.Persona.Domicilio.EntreCalle = imp.EntreCalle;
             imputado.Persona.Domicilio.EntreCalle2 = imp.EntreCalle2;
-
             imputado.Persona.Domicilio.Localidad = _repository.Set<Localidad>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdLocalidad);
             imputado.Persona.Domicilio.NroH = imp.NroH;
             imputado.Persona.Domicilio.DeptoH = imp.DeptoH;
@@ -304,8 +339,10 @@ namespace ISICWeb.Services
                 imputado.Delito = new Delito
                 {
                     FechaAlta = DateTime.Now,
+                    idUsuarioAlta = user.Identity.Name
                 };
             imputado.Delito.FechaUltimaModificacion = DateTime.Now;
+            imputado.Delito.idUsuarioUltimaModificacion = user.Identity.Name;
             if (!string.IsNullOrEmpty(imp.hidIdDependenciaPolicial))
             {
                 PuntoGestion comisaria = _repository.Set<PuntoGestion>().FirstOrDefault(x => x.Id == imp.hidIdDependenciaPolicial);
@@ -326,7 +363,7 @@ namespace ISICWeb.Services
             imputado.Delito.Ipp.UFI = imp.UFI;
             imputado.Delito.Ipp.FechaUltimaModificacion = DateTime.Now;
             imputado.Delito.Ipp.caratula = imp.Delito;
-
+            imputado.Delito.Ipp.UsuarioUltimaModificacion = user.Identity.Name;
 
             if (imputado.Delito.DescripcionTemporal == null)
                 imputado.Delito.DescripcionTemporal = new DescripcionTemporal();
@@ -364,7 +401,6 @@ namespace ISICWeb.Services
             imputado.Delito.Domicilio.Partido = _repository.Set<Partido>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdPartidoDelito);
             imputado.Delito.Domicilio.Provincia = _repository.Set<Provincia>().FirstOrDefault(x => x.Id.ToString() == imp.ProvinciaDelito);
             imputado.Delito.Domicilio.Localidad = _repository.Set<Localidad>().FirstOrDefault(x => x.Id.ToString() == imp.hidIdLocalidadDelito);
-
             if (imputado.Persona.FechaNacimiento != null && imputado.Delito.DescripcionTemporal.FechaDesde != null)
             {
                 DateTime fechaNac=(DateTime)imputado.Persona.FechaNacimiento;
@@ -382,34 +418,42 @@ namespace ISICWeb.Services
             {
                 return error;
             }
-            if (id > 0)
+            using (var tran = _repository.UnitOfWork.Context.Database.BeginTransaction())
+            {
+                if (id > 0)
                     _repository.UnitOfWork.RegisterChanged(imputado);
                 else
                     _repository.UnitOfWork.RegisterNew(imputado);
-            
-            try
-            {
-                _repository.UnitOfWork.Commit();
-                if (id == 0 && imputado.Id>0)
-                {
-                
-                    Issue<IssueFields> issue = _jiraService.CreateIssue(imputado.CodigoDeBarras);
-                    //Transition transition = _jiraService.GetTransitions(issue).First();
-                    //_jiraService.TransitionIssue(issue, transition);
-                }
-              
 
-            }
-            catch (Exception e)
-            {
-                string errormsg = e.InnerException.ToString();
-                int i = errormsg.Length < 400 ? error.Length : 400;
-                error = e.InnerException.ToString().Substring(0,i);
+                try
+                {
+                    //_repository.UnitOfWork.Commit();
+                    _repository.UnitOfWork.Context.SaveChanges();
+                    if (id == 0 && imputado.Id > 0)
+                    {
+
+                        Issue<IssueFields> issue = _jiraService.CreateIssue(imputado.CodigoDeBarras);
+                        //Transition transition = _jiraService.GetTransitions(issue).First();
+                        //_jiraService.TransitionIssue(issue, transition);
+                    }
+
+                    tran.Commit();
+                }
+                catch (MPBA.Jira.JiraClientException jiraex)
+                {
+                    error = "No se pudo actualizar  el Jira";
+                }
+                catch (Exception e)
+                {
+                    string errormsg = e.InnerException.ToString();
+                    int i = errormsg.Length < 400 ? error.Length : 400;
+                    error = e.InnerException.ToString().Substring(0, i);
+                }
             }
             return error;
         }
 
-        private void LlenarListas(DatosGeneralesViewModel datosImputado)
+        public void LlenarListas(DatosGeneralesViewModel datosImputado)
         {
             //datosImputado.ComisariaList = new SelectList(repository.Set<PuntoGestion>().AsEnumerable().Select(x => new { id = x.Id, Descripcion = x.Descripcion + ", " + ((x.Localidad == null) ? "" : x.Localidad.LocalidadNombre) + ", " + ((x.Provincia == null) ? "" : x.Provincia.ProvinciaNombre) }), "id", "Descripcion");
             datosImputado.SexoList = new SelectList(_repository.Set<ClaseSexo>().ToList(), "Id", "descripcion", datosImputado.Sexo);

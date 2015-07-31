@@ -71,6 +71,8 @@ namespace ISICWeb.Areas.Antecedentes.Models
         public Nullable<System.DateTime> FechaUltimaModificacion { get; set; }
         public SelectList ClaseSexoList { get; set; }
         public SelectList ClaseTipoDNIList { get; set; }
-        
+        [Display(Name = "Fecha Informe")]
+        [Required]
+        public string FechaInforme { get; set; }
     }
 }

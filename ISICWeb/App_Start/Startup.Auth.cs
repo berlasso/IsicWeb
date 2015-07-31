@@ -26,6 +26,7 @@ namespace ISICWeb
             // Configurar cookie de inicio de sesión
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                SlidingExpiration = true,
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
@@ -33,10 +34,12 @@ namespace ISICWeb
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                }
+                },
+                ExpireTimeSpan = TimeSpan.FromMinutes(30)
             });
             
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
 
             // Quitar los comentarios de las siguientes líneas para habilitar el inicio de sesión con proveedores de inicio de sesión de terceros
             //app.UseMicrosoftAccountAuthentication(

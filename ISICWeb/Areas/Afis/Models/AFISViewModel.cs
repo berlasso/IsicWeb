@@ -13,7 +13,7 @@ namespace ISICWeb.Areas.Afis.Models
         public int Id { get; set; }
         public virtual Prontuario Prontuario { get; set; }
         [Required(ErrorMessage = "El {0} es requerido")]
-        [RegularExpression("([0-9]{12})([a-zA-Z])", ErrorMessage = "{0} incorrecto")]
+        //[RegularExpression("([0-9]{12})([a-zA-Z])", ErrorMessage = "{0} incorrecto")]
         public string NIF { get; set; } //prontuario de Policía Federal
         public string CTL { get; set; }
         [Display(Name = "Tipo Doducmento")]
@@ -41,5 +41,8 @@ namespace ISICWeb.Areas.Afis.Models
         public Nullable<System.DateTime> FechaUltimaModificacion { get; set; }
         public SelectList TipoDocList { get; set; }
         public SelectList SexoList { get; set; }
+        [Display(Name = "Fecha Informe")]
+        [Required]
+        public string FechaInforme { get; set; }
     }
 }

@@ -13,13 +13,13 @@ using MPBA.DataAccess;
 namespace ISICWeb.Areas.Antecedentes.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, Antecedentes")]
+    [Autorizar(Roles = "Administrador, Antecedentes")]
     public class AntecedentesGnaController : Controller
     {
         IRepository _repository;
-        private GnaService _gnaService;
+        private IGnaService _gnaService;
 
-       public AntecedentesGnaController(IRepository repository, GnaService gnaService)
+       public AntecedentesGnaController(IRepository repository, IGnaService gnaService)
         {
             _repository = repository;
             _gnaService = gnaService;
@@ -48,7 +48,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
 
        public bool BorrarFichaGNA(int id)
        {
-           bool borroBien = _gnaService.BorrarFichaGNA(id);
+           bool borroBien = _gnaService.BorrarFichaGNA(id, User);
            if (!borroBien)
                ModelState.AddModelError("", "No se pudo borrar la ficha de GNA");
            return borroBien;
@@ -60,7 +60,7 @@ namespace ISICWeb.Areas.Antecedentes.Controllers
            string errores = "";
            if (ModelState.IsValid)
            {
-               errores = _gnaService.GuardarFichaGNA(model);
+               errores = _gnaService.GuardarFichaGNA(model, User);
            }
            else
            {

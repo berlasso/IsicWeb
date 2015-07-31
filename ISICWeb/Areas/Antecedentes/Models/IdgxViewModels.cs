@@ -66,13 +66,14 @@ namespace ISICWeb.Areas.Antecedentes.Models
         [Display(Name = "Tipo Documento")]
         public string TipoDNI { get; set; }
         [Display(Name = "Tipo de Prontuario")]
-
         public IEnumerable<IdgxDetalle> Delitos { get; set; }
         public virtual ClaseProntuarioPoliciaFederal tipoprontuario { get; set; }
         public int idIdgxProntuario { get; set; }
         public SelectList TipoDocumentoList { get; set; }
         public SelectList ProvinciaList { get; set; }
-
+        [Display(Name = "Fecha Informe")]
+        [Required]
+        public string FechaInforme { get; set; }
     }
 
     public class IdgxDelitoViewModel

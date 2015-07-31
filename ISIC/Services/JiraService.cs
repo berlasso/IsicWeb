@@ -22,20 +22,38 @@ namespace ISIC.Services
         //}
         public Issue<IssueFields> CreateIssue(string codigoBarra)
         {
-            var issues = jira.CreateIssue("IG", "Task", new IssueFields { summary = codigoBarra });
+            var issues = jira.CreateIssue("IG", "FichasDactiloscopicas", new IssueFields { summary = codigoBarra });
             return issues;
         }
+
+        public string DeleteIssue(string codigoBarra)
+        {
+            bool borroBien = false;
+            var issue = jira.CreateIssue("IG", "Task", new IssueFields { summary = codigoBarra });
+            try
+            {
+                jira.DeleteIssue(issue);
+                borroBien = true;
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            
+            
+            return "";
+        }
+
         public Issue<IssueFields> UpdateIssue(Issue<IssueFields> issue)
         {
             //var issues = jira.CreateIssue("IG", "Task", new IssueFields { summary = codigoBarra });
-            
             var issues = jira.UpdateIssue(issue);
             return issues;
         }
         public Issue<IssueFields> GetIssue(string codigoBarra)
         {
             Issue<IssueFields> issue = null;
-            var issues = GetIssuesByQuery("IG", "TASK", "summary ~ \"" + codigoBarra + "\"");
+            var issues = GetIssuesByQuery("IG", "FichasDactiloscopicas", "summary ~ \"" + codigoBarra + "\"");
             if (issues.Count() > 0)
                 issue = issues.First();
            
@@ -48,7 +66,7 @@ namespace ISIC.Services
         }
         public IEnumerable<Issue<IssueFields>> GetIssues() 
         {
-            var issues = jira.GetIssues("IG", "Task");
+            var issues = jira.GetIssues("IG", "FichasDactiloscopicas");
             return issues;
         }
         //public Issue<IssueFields> GetIssue(string codigoBarra)
@@ -88,6 +106,8 @@ namespace ISIC.Services
         IEnumerable<Issue<IssueFields>> GetIssuesByQuery(string projectKey, string issueType, string jqlQuery);
 
         Issue<IssueFields> CreateIssue(string codigoBarra);
+
+        string DeleteIssue(string codigoBarra);
 
         Issue<IssueFields> TransitionIssue(Issue<IssueFields> issue, Transition transition);
 

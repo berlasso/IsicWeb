@@ -17,39 +17,50 @@ using System.Linq.Dynamic;
 using System.Security.Claims;
 using DataTables.Mvc;
 using ISICWeb.Areas.Afis.Models;
+using ISICWeb.Services;
 
 namespace ISICWeb.Areas.PortalSIC.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, Portal")]
+    [Autorizar(Roles = "Administrador, Portal")]
     public class BusquedaController : Controller
     {
         private readonly IRepository _repository;
-        private BusquedaService _busquedaService;
+        private IBusquedaService _busquedaService;
+        private IImputadoExtraService _imputadoExtraService;
         const int MaxResultados = 1000;
 
-        public BusquedaController(Repository repository, BusquedaService service)
+        public BusquedaController(Repository repository, IBusquedaService service, IImputadoExtraService imputadoExtraService)
         {
             _repository = repository;
             _busquedaService = service;
+            _imputadoExtraService = imputadoExtraService;
         }
         // GET: PortalSIC/Busqueda
         public ActionResult Index()
         {
-
-            var datosBusqueda = _busquedaService.CrearViewModel();
+          
+            BusquedaViewModel datosBusqueda = _busquedaService.CrearViewModel();
+            if (Session["model"] != null)
+            {
+                BusquedaViewModel model = (BusquedaViewModel)Session["model"];
+                datosBusqueda = _busquedaService.LlenarViewModel(model);
+            }
             return View(datosBusqueda);
         }
 
-        public ActionResult VerImputado(int id, bool? paraEditar = false)
+        public ActionResult VerImputado(int id,string returnUrl="", bool? paraEditar = false)
         {
-            ISICWeb.Services.ImputadoExtraService imputadoService = new ISICWeb.Services.ImputadoExtraService(_repository);
+            //ISICWeb.Services.ImputadoExtraService imputadoService = new ISICWeb.Services.ImputadoExtraService(_repository);
 
-            DatosGeneralesViewModel datosGeneralesImputado = imputadoService.LlenarViewModelConImputado(id, false);
+            DatosGeneralesViewModel datosGeneralesImputado = _imputadoExtraService.LlenarViewModelConImputado(id);
+           // ViewBag.returnUrl = returnUrl.Replace("inicio=true","inicio=false");
+          //  ViewBag.returnUrl = Request.Url.AbsoluteUri;
             return View(datosGeneralesImputado);
 
         }
 
+        [AllowAnonymous]
         public JsonResult MostrarImputados([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
 
@@ -138,10 +149,13 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
             return Json(new DataTablesResponse(requestModel.Draw, paged, cantFiltrados, cant), JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public ActionResult Buscar(BusquedaViewModel model)
+        [HttpGet]
+        public ActionResult Buscar(BusquedaViewModel model, bool?inicio=false)
         {
+            if (!ModelState.IsValid)
+                return View("Index");
             ViewBag.CantidadMaxima = MaxResultados;
+            ViewBag.Inicio = inicio;
             //var imputados = _busquedaService.BuscarImputados(model);
            // Session["imputados"] = imputados;
             Session["model"] =model;
@@ -152,6 +166,7 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
             //}
             //else
             //{
+
             if (model.TipoBusqueda == TipoBusqueda.Fotografias)
             {
                 
@@ -167,7 +182,12 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
 
         }
 
-    
+
+        public ActionResult Limpiar()
+        {
+            Session["model"] = null;
+            return RedirectToAction("Index");
+        }
     }
 }
     

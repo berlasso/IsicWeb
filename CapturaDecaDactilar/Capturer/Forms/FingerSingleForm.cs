@@ -223,7 +223,10 @@ namespace Capturer.Forms
 				catch (Exception ex)
 				{
 					Utilities.ShowError(ex);
-					SetError("No pudo crear el template {0}", ex.Message);
+					SetError("No pudo crear el template {0}", "Intentara volver a escanear: "+ex.Message);
+                    /*Vuelve a Intentarlo ?*/
+                    this.btnRescan.PerformClick();
+
 				}
 				finally
 				{
@@ -432,7 +435,10 @@ namespace Capturer.Forms
 				biometricTask.Biometric = _current;
 				_current.PropertyChanged += OnPropertyChanged;
 				_isCapturing = true;
-				_biometricClient.BeginPerformTask(biometricTask, OnCaptureCompleted, null);
+                /*AGREGADO MARTHA NUEVO*/
+                OnFingerViewResize();
+
+                _biometricClient.BeginPerformTask(biometricTask, OnCaptureCompleted, null);
 			}
 			else
 			{
@@ -568,7 +574,7 @@ namespace Capturer.Forms
         private void lvQueue_MouseDoubleClick(object sender, MouseEventArgs e)
         {
 
-
+           
             _current.Image = null;
             int index = _captureList.IndexOf(_current);
             lvQueue.Items[index].ForeColor = Color.Black;

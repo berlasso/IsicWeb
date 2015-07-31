@@ -6,6 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Capturer.Forms;
+using System.Collections.Specialized;
+using System.Deployment.Application;
+using System.Web;
 
 namespace FingerCapturer
 {
@@ -16,11 +19,63 @@ namespace FingerCapturer
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
+        /// 
+        // Parametros: CodBarra, Apellido, Nombres, IPP, DNI,sexo
+
 		[STAThread]
-		static void Main()
+        static void Main()
 		{
 			logger.Info("Iniciando Applicacion");
 			logger.Info("Copiando librerias nativas");
+            string CodBarra,Apellido,Nombres,IPP,DNI,sexo;
+           
+          var  parametros = GetQueryStringParameters();
+          CodBarra =  "";
+          Apellido =  "";
+
+          Nombres =  "";
+          IPP = "";
+          DNI = "";
+
+          sexo =  "";
+
+          foreach (string key in parametros)
+          {
+              var value = parametros[key];
+              switch (key)
+              {
+                  case "CodBarra":
+                      CodBarra = value;
+                      break;
+                  case "Apellido":
+                      Apellido = value;
+                      break;
+                  case "Nombres":
+                      Nombres = value;
+                      break;
+                  case "IPP":
+                      IPP = value;
+                      break;
+                  case "DNI":
+                      DNI = value;
+                      break;
+                  case "sexo":
+                      sexo = value;
+                      break;
+
+              }
+          }
+
+            /*sacaarrrr */
+          CodBarra= "011700002900M";
+                     
+                 
+                /*****/
+
+            MainForm _mainF;
+
+           
+          
 			CopyNativeLibs();
 			const string Components = "Biometrics.FingerExtraction,Biometrics.FingerMatching,Devices.FingerScanners,Biometrics.FingerSegmentation,Biometrics.FingerQualityAssessmentBase,Devices.Cameras";
 			try
@@ -32,8 +87,11 @@ namespace FingerCapturer
 
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
-				//Application.Run(new MainForm());
-                Application.Run(new MainForm());
+                _mainF = new MainForm();
+                _mainF.InicializaImputado(CodBarra,Apellido,Nombres,DNI,sexo,IPP);
+              
+				Application.Run(_mainF);
+           
 			}
 			catch (Exception ex)
 			{
@@ -44,7 +102,7 @@ namespace FingerCapturer
 				NLicense.ReleaseComponents(Components);
 			} 
 		}
-
+        
 		static void CopyNativeLibs()
 		{
 			// Copy from the current directory, include subdirectories.
@@ -53,6 +111,23 @@ namespace FingerCapturer
 			   DirectoryCopy(@".\lib", @".", true);
 			}
 		}
+
+
+
+
+        private static  NameValueCollection GetQueryStringParameters()
+        {
+            NameValueCollection nameValueTable = new NameValueCollection();
+
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                string queryString = ApplicationDeployment.CurrentDeployment.ActivationUri.Query;
+                nameValueTable = HttpUtility.ParseQueryString(queryString);
+            }
+           
+            return (nameValueTable);
+        }
+
 
 		private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
 		{

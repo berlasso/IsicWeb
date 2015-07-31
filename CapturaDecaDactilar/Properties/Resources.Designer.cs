@@ -93,16 +93,6 @@ namespace FingerCapturer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap DebugRightIndexFingerRodada {
-            get {
-                object obj = ResourceManager.GetObject("DebugRightIndexFingerRodada", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap ficha_decadactilar {
             get {
                 object obj = ResourceManager.GetObject("ficha decadactilar", resourceCulture);
@@ -116,6 +106,16 @@ namespace FingerCapturer.Properties {
         internal static System.Drawing.Bitmap ficha_decadactilar_png {
             get {
                 object obj = ResourceManager.GetObject("ficha_decadactilar_png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FichaNueva500 {
+            get {
+                object obj = ResourceManager.GetObject("FichaNueva500", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -196,36 +196,6 @@ namespace FingerCapturer.Properties {
         internal static System.Drawing.Bitmap SaveHS {
             get {
                 object obj = ResourceManager.GetObject("SaveHS", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap SINHUELLA {
-            get {
-                object obj = ResourceManager.GetObject("SINHUELLA", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap SINHUELLA1 {
-            get {
-                object obj = ResourceManager.GetObject("SINHUELLA1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap SINHUELLA2 {
-            get {
-                object obj = ResourceManager.GetObject("SINHUELLA2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

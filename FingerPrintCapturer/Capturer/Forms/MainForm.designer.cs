@@ -147,6 +147,7 @@ namespace Capturer.Forms
             this.panel23 = new System.Windows.Forms.Panel();
             this.nfvRightLittleRolled = new Neurotec.Biometrics.Gui.NFingerView();
             this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.fSelector = new Capturer.Controls.FingerSelector();
             this.infoPanel = new Capturer.Controls.InfoPanel();
             this.menuStrip1.SuspendLayout();
@@ -524,6 +525,7 @@ namespace Capturer.Forms
             // 
             // tabInformation
             // 
+            this.tabInformation.Controls.Add(this.button1);
             this.tabInformation.Controls.Add(this.label27);
             this.tabInformation.Controls.Add(this.cidentifica);
             this.tabInformation.Controls.Add(this.DNI);
@@ -1748,6 +1750,16 @@ namespace Capturer.Forms
             this.label2.TabIndex = 4;
             this.label2.Text = "Ambos Pulgares";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(20, 302);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(138, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Verificar Identidad";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // fSelector
             // 
             this.fSelector.AllowHighlight = true;
@@ -1771,6 +1783,7 @@ namespace Capturer.Forms
             this.infoPanel.Size = new System.Drawing.Size(1458, 532);
             this.infoPanel.TabIndex = 0;
             // 
+
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1951,6 +1964,7 @@ namespace Capturer.Forms
         private System.Windows.Forms.ToolStripButton tsbSaveImage;
         private System.Windows.Forms.ToolStripButton tsbSaveRecord;
         private System.Windows.Forms.Button bSalvar;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label resultadoRNR;
         private System.Windows.Forms.Label scoreRNR;
         private System.Windows.Forms.Label ApyNomRNR;

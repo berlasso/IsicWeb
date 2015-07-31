@@ -41,6 +41,7 @@ namespace Capturer.Forms
             this.saveTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.subirDecaDactilar = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeScannerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +57,6 @@ namespace Capturer.Forms
             this.lCodigoBarras = new System.Windows.Forms.Label();
             this.lApeyNom = new System.Windows.Forms.Label();
             this.bdecadactilar = new System.Windows.Forms.Button();
-            this.bSalvar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.amputada = new System.Windows.Forms.CheckBox();
             this.btnStartCapturing = new System.Windows.Forms.Button();
@@ -124,7 +124,6 @@ namespace Capturer.Forms
             this.nfvRightRing = new Neurotec.Biometrics.Gui.NFingerView();
             this.nfvRightLittle = new Neurotec.Biometrics.Gui.NFingerView();
             this.label2 = new System.Windows.Forms.Label();
-            this.nViewDeca = new Neurotec.Biometrics.Gui.NFingerView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -175,6 +174,7 @@ namespace Capturer.Forms
             this.saveTemplateToolStripMenuItem,
             this.saveImagesToolStripMenuItem,
             this.toolStripSeparator1,
+            this.subirDecaDactilar,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
@@ -218,6 +218,13 @@ namespace Capturer.Forms
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
+            // 
+            // subirDecaDactilar
+            // 
+            this.subirDecaDactilar.Name = "subirDecaDactilar";
+            this.subirDecaDactilar.Size = new System.Drawing.Size(170, 22);
+            this.subirDecaDactilar.Text = "Subir DecaDactilar";
+            this.subirDecaDactilar.Click += new System.EventHandler(this.toolStripMenuItem1_Click_1);
             // 
             // exitToolStripMenuItem
             // 
@@ -296,14 +303,12 @@ namespace Capturer.Forms
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Controls.Add(this.nViewDeca);
             this.splitContainer.Panel1.Controls.Add(this.bRenaper);
             this.splitContainer.Panel1.Controls.Add(this.lCodBarra);
             this.splitContainer.Panel1.Controls.Add(this.label1);
             this.splitContainer.Panel1.Controls.Add(this.lCodigoBarras);
             this.splitContainer.Panel1.Controls.Add(this.lApeyNom);
             this.splitContainer.Panel1.Controls.Add(this.bdecadactilar);
-            this.splitContainer.Panel1.Controls.Add(this.bSalvar);
             this.splitContainer.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer.Panel1.Controls.Add(this.gbFingerSelector);
             // 
@@ -374,17 +379,6 @@ namespace Capturer.Forms
             this.bdecadactilar.Text = "Armado DecaDactilar";
             this.bdecadactilar.UseVisualStyleBackColor = true;
             this.bdecadactilar.Click += new System.EventHandler(this.bdecadactilar_Click);
-            // 
-            // bSalvar
-            // 
-            this.bSalvar.Location = new System.Drawing.Point(1358, 79);
-            this.bSalvar.Name = "bSalvar";
-            this.bSalvar.Size = new System.Drawing.Size(125, 40);
-            this.bSalvar.TabIndex = 6;
-            this.bSalvar.Text = "Guarda Imagen y Template";
-            this.bSalvar.UseVisualStyleBackColor = true;
-            this.bSalvar.Visible = false;
-            this.bSalvar.Click += new System.EventHandler(this.bSalvar_Click);
             // 
             // groupBox1
             // 
@@ -1348,30 +1342,6 @@ namespace Capturer.Forms
             this.label2.TabIndex = 4;
             this.label2.Text = "Ambos Pulgares";
             // 
-            // nViewDeca
-            // 
-            this.nViewDeca.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.nViewDeca.BackColor = System.Drawing.SystemColors.Control;
-            this.nViewDeca.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.nViewDeca.BoundingRectColor = System.Drawing.Color.Red;
-            this.nViewDeca.Location = new System.Drawing.Point(1019, 3);
-            this.nViewDeca.MinutiaColor = System.Drawing.Color.Red;
-            this.nViewDeca.Name = "nViewDeca";
-            this.nViewDeca.NeighborMinutiaColor = System.Drawing.Color.Orange;
-            this.nViewDeca.ResultImageColor = System.Drawing.Color.Green;
-            this.nViewDeca.SelectedMinutiaColor = System.Drawing.Color.Magenta;
-            this.nViewDeca.SelectedSingularPointColor = System.Drawing.Color.Magenta;
-            this.nViewDeca.SingularPointColor = System.Drawing.Color.Red;
-            this.nViewDeca.Size = new System.Drawing.Size(308, 270);
-            this.nViewDeca.TabIndex = 11;
-            this.nViewDeca.TreeColor = System.Drawing.Color.Crimson;
-            this.nViewDeca.TreeMinutiaNumberDiplayFormat = Neurotec.Biometrics.Gui.MinutiaNumberDiplayFormat.DontDisplay;
-            this.nViewDeca.TreeMinutiaNumberFont = new System.Drawing.Font("Arial", 10F);
-            this.nViewDeca.TreeWidth = 2D;
-            this.nViewDeca.Visible = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1510,7 +1480,6 @@ namespace Capturer.Forms
         private System.Windows.Forms.ToolStrip toolStripViewControls;
         private System.Windows.Forms.ToolStripButton tsbSaveImage;
         private System.Windows.Forms.ToolStripButton tsbSaveRecord;
-        private System.Windows.Forms.Button bSalvar;
         private System.Windows.Forms.CheckBox amputada;
         private System.Windows.Forms.Button bdecadactilar;
         private System.Windows.Forms.TextBox DNI;
@@ -1522,7 +1491,7 @@ namespace Capturer.Forms
         private System.Windows.Forms.TextBox tCodigoBarra;
         private System.Windows.Forms.Label lCodiBar;
         private System.Windows.Forms.Button bRenaper;
-        private Neurotec.Biometrics.Gui.NFingerView nViewDeca;
+        private System.Windows.Forms.ToolStripMenuItem subirDecaDactilar;
 
     }
 }

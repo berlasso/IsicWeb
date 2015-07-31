@@ -13,6 +13,7 @@ function AsignarPrettyPhoto(caller) {
 }
 
 $(document).ready(function () {
+
     //Initialize PrettyPhoto here
     $("a[rel^='prettyPhoto']").prettyPhoto({ animation_speed: 'normal', overlay_gallery: false, slideshow: 3000, autoplay_slideshow: false, social_tools: false, deeplinking: false });
    
@@ -43,24 +44,60 @@ $(document).ready(function () {
 });
 
 
+$(function() {
+    $("#btnBusquedaAvanzada").change(function () {
+      
+        $("#pnlBusquedaAvanzada").toggleClass("hidden");
+        $("#pnlDatosSomaticos").toggleClass("hidden");
+        var busquedaAvanzada = 0;
+        if ($("#pnlDatosSomaticos").hasClass("hidden") === false) {
+            busquedaAvanzada = 1;
+            $('html, body').animate({
+                scrollTop: $("#pnlBusquedaAvanzada").offset().top
+            }, 2000);
+        }
 
-$(function () {
+        $("#BusquedaAvanzada").val(busquedaAvanzada);
+    });
+});
+
+
+
+$(function() {
+    $('#EdadDesde').bind('keyup keypress blur change cut copy paste ', function() {
+        var validator = $("#frmBusquedaSic").validate();
+        validator.element(this);
+        validator.element($("#EdadHasta"));
+    });
+    $('#EdadHasta').bind('keyup keypress blur change cut copy paste ', function() {
+        var validator = $("#frmBusquedaSic").validate();
+        validator.element(this);
+
+        validator.element($("#EdadDesde"));
+    });
+});
+
+
+$(function() {
     $('#tablaPortal').dataTable({
-        //"dom": 'TRfrtsp<"row"<"col-md-12"l>>i',
-        //"dom": '<"row"<"col-md-5"TR><"col-md-1"><"col-md-6"p>>ts<"row"<"col-md-6"l><"col-md-6"p>>i',
-        "dom": '<"row"<"col-md-12"ip>><"clear">rt<"bottom"><"clear">',
+        "dom": '<"row"<"col-md-12"ip>><"clear">rt<"bottom"><"clear"><"row"<"col-md-12"p>>',
+        "initComplete": function(settings, json) {
+            $.unblockUI();
+        },
         serverSide: true,
-        "processing": true,
+        "processing": false,
+        "stateSave": true,
         "ajax": window.urlTablaImputados,
+
         "order": [[2, "asc"]], //codbarras
         "columns": [
-                    { "data": null },
-                    {"data": "ThumbUrl"},
-                    { "data": "CodigoDeBarras" },
-                    { "data": "Apellido" },
-                    { "data": "Nombre" },
-                    { "data": "DocumentoNumero" },
-                    { "data": "Id" }
+            { "data": null },
+            { "data": "ThumbUrl" },
+            { "data": "CodigoDeBarras" },
+            { "data": "Apellido" },
+            { "data": "Nombre" },
+            { "data": "DocumentoNumero" },
+            { "data": "Id" }
         ],
         "columnDefs": [
             {
@@ -70,31 +107,31 @@ $(function () {
                 //"defaultContent": "Editar",
                 "targets": 0 //Ver
             },
-        {
-            "render": function (data, type, row) {
-                if (data !== "")
-                    
-                return '<img src=' + data + ' style="max-width: 100px" />';
-                else
-                    return '';
-            },
-            "orderable": false,
-            "searchable": false,
-            "targets": 1 //ThumbUrl
-        },
-        {
-            "render": function (data, type, row) {
-                return '<a href="' + urlVerImputado+  '/' + row.Id + '" title="Ver Imputado" onclick=" showPageLoadingSpinner() " class="btn btn-alt">Ver</a>';
-            },
-            "targets": 0, //ver
-        },
+            {
+                "render": function(data, type, row) {
+                    if (data !== "" && data != null)
 
-     
-       {
-           "targets": 6,//id
-           "visible": false,
-           "searchable": false
-       }
+                        return '<p class="thumb"><img src=' + data + '?r=' + Math.random() + ' style="max-width: 100px"  /><br/></p>';
+                    else
+                        return '';
+
+                },
+                "orderable": false,
+                "searchable": false,
+                "targets": 1 //ThumbUrl
+            },
+            {
+                "render": function(data, type, row) {
+                    var url = window.location.href;
+                    return '<a href="' + urlVerImputado + '?id=' + row.Id + '&returnUrl=' + url + '" title="Ver Imputado" onclick=" showPageLoadingSpinner() " class="btn btn-alt">Ver</a>';
+                },
+                "targets": 0, //ver
+            },
+            {
+                "targets": 6, //id
+                "visible": false,
+                "searchable": false
+            }
         ],
         "language": {
             "sProcessing": "Procesando...",
@@ -120,89 +157,17 @@ $(function () {
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
         },
-        //"tableTools": {
-        //    "sSwfPath": "/Content/swf/copy_csv_xls_pdf.swf",
-        //    "aButtons": [
-        //        {
-        //            "sExtends": "copy",
-        //            "oSelectorOpts": { filter: 'applied', order: 'current' },
-        //            "mColumns": "visible",
-        //            "sButtonText": "Copiar"
-        //        },
-        //        {
-        //            "sExtends": "xls",
-        //            "oSelectorOpts": { filter: 'applied', order: 'current' },
-        //            "mColumns": "visible",
-
-        //        },
-        //        {
-        //            "sExtends": "pdf",
-        //            "oSelectorOpts": { filter: 'applied', order: 'current' },
-        //            "mColumns": "visible",
-        //            "sPdfOrientation": "landscape"
-        //        },
-        //        {
-        //            "sExtends": "print",
-        //            "sButtonText": "Imprimir",
-        //            "sInfo": "<h2 style='color: white;'>Vista de Impresión</h2><p>Utilice la funcion de impresion del navegador para imprimir la tabla. Presione ESCAPE cuando haya terminado</p>"
-        //        }
-        //    ]
-        //}
-    });
-   
-
-    $('tablaPortal').on('processing.dt', function (e, settings, processing) {
+    }).on('processing.dt', function(e, settings, processing) {
         if (processing) {
-
-                        showPageLoadingSpinner();
-                    } else {
-                        hidePageLoadingSpinner(1);
-                    }
+            loader("Buscando datos...");
+        } else {
+            $.unblockUI();
+        }
     }).dataTable();
 
-  
-
-   
-});
-
-
-
-
-$(function() {
-    $("#btnBusquedaAvanzada").change(function() {
-        $("#pnlBusquedaAvanzada").toggleClass("hidden");
-        $("#pnlDatosSomaticos").toggleClass("hidden");
-  
-    });
-});
-
-$(function () {
-    $("#btnBuscar").on('click', function () {
-        if ($("#frmBusquedaSic").valid() == false) {
-            //$("#frmDetalleOtip").data("validator").settings.focusInvalid = false;
-            $("#frmBusquedaSic").data("validator");
-            alertify.error("Error en los datos ingresados");
-        } else {
-            var busquedaAvanzada = 0;
-            if ($("#pnlDatosSomaticos").hasClass("hidden") === false)
-                busquedaAvanzada = 1;
-            $("#BusquedaAvanzada").val(busquedaAvanzada);
-            showPageLoadingSpinner();
-        }
-    });
-});
-
-$(function() {
-    $('#EdadDesde').bind('keyup keypress blur change cut copy paste ', function() {
-        var validator = $("#frmBusquedaSic").validate();
-        validator.element(this);
-        validator.element($("#EdadHasta"));
-    });
-    $('#EdadHasta').bind('keyup keypress blur change cut copy paste ', function() {
-        var validator = $("#frmBusquedaSic").validate();
-        validator.element(this);
-
-        validator.element($("#EdadDesde"));
+    $('#tablaPortal').on('page.dt', function () {
+       
+        
     });
 });
 
@@ -215,8 +180,10 @@ $(document).ready(function () {
         validator.element($("#FechaDelitoHasta"));
 
     });
-
+    
 });
+
+
 
 $(document).ready(function () {
     //ControlarComisaria();
@@ -255,9 +222,12 @@ function ElegirFoto(control) {
     else if (cant > 1)
         msg = cant + " FOTOS AGREGADAS";
     $("#CantFotosAgregadas").val(cant);
-    $("#CartelFotosAgregadas").html("<b>" + msg + "<i class='flaticon-zoom22'></i></b> ");
+    $("#CartelFotosAgregadas").html( msg );
     if (msg === "")
         $("#CartelFotosAgregadas").html('');
+    else {
+        $("#CartelFotosAgregadas").append("<a style='margin-left:10px;' href='#' class='btn  btn-alt' onclick='MostrarFotosElegidas()'>Mostrar</a>");
+    }
     $("#FotosAgregadas").val(fotosAgregadas);
 }
 
@@ -270,11 +240,6 @@ function MostrarFotosElegidas() {
     }
 }
 
-$(function() {
-    $("#CartelFotosAgregadas").on("click", function() {
-        MostrarFotosElegidas();
-    });
-});
 
 
 
@@ -324,20 +289,24 @@ function appendModelPrefix(value, prefix) {
 
 $(window).load(function () {
 
-    $(function () {
-        $("#btnImprimir").on("click", function () {
+    $(function() {
+        $("#btnImprimirFotos").on("click", function() {
             $("#printForm").printThis({
-            
+
             });
         });
     });
+  
+
+
 
     $(function () {
         var $container = $('.wrap');
-        $container.isotope({
+            $container.isotope({
             itemSelector: '.item',
             layoutMode: 'fitRows'
         });
+     
 
 
         $container.infinitescroll({
@@ -384,4 +353,304 @@ $(window).load(function () {
             });
 
     });
+
+
+
+    $('#NumeroDocumento').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroNroDoc").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroNroDoc"><label>Nro.Doc.: ' + valor + '</label><a  onclick=$("#filtroNroDoc").remove();$("#NumeroDocumento").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#CodBarras').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroCodBarras").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroCodBarras"><label>Cod.Barras: ' + valor + '</label><a  onclick=$("#filtroCodBarras").remove();$("#CodBarras").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Delito').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroDelito").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroDelito"><label>Delito: ' + valor + '</label><a  onclick=$("#filtroDelito").remove();$("#Delito").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Apellido').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroApellido").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroApellido"><label>Apellido: ' + valor + '</label><a  onclick=$("#filtroApellido").remove();$("#Apellido").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Nombres').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroNombre").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroNombre"><label>Nombre: ' + valor + '</label><a  onclick=$("#filtroNombre").remove();$("#Nombres").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FiscaliaGeneral').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroFisGral").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroFisGral"><label>Fisc.: ' + $("#FiscaliaGeneral option:selected").text() + '</label><a  onclick=$("#filtroFisGral").remove();$("#FiscaliaGeneral").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#IPP').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroIPP").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroIPP"><label>IPP: ' + valor + '</label><a  onclick=$("#filtroIPP").remove();$("#IPP").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Apodos').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroApodos").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroApodos"><label>Apodos: ' + valor + '</label><a  onclick=$("#filtroApodos").remove();$("#Apodos").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#EdadDesde').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroEdadDesde").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroEdadDesde"><label>Edad Desde: ' + valor + '</label><a  onclick=$("#filtroEdadDesde").remove();$("#EdadDesde").val("").valid();$("#EdadHasta").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#EdadHasta').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroEdadHasta").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroEdadHasta"><label>Edad Hasta: ' + valor + '</label><a  onclick=$("#filtroEdadHasta").remove();$("#EdadHasta").val("").valid();$("#EdadDesde").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Madre').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroMadre").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroMadre"><label>Madre: ' + valor + '</label><a  onclick=$("#filtroMadre").remove();$("#Madre").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Padre').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroPadre").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroPadre"><label>Padre: ' + valor + '</label><a  onclick=$("#filtroPadre").remove();$("#Padre").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FechaDelitoDesde').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroFechaDelitoDesde").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroFechaDelitoDesde"><label>Fecha Del. De: ' + valor + '</label><a  onclick=$("#filtroFechaDelitoDesde").remove();$("#FechaDelitoDesde").val("").valid();$("#FechaDelitoHasta").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FechaDelitoHasta').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroFechaDelitoHasta").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroFechaDelitoHasta"><label>Fecha Del. Hasta: ' + valor + '</label><a  onclick=$("#filtroFechaDelitoHasta").remove();$("#FechaDelitoHasta").val("").valid();$("#FechaDelitoDesde").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#OtrosNombres').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroOtrosNombres").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroOtrosNombres"><label>Otros Nombres: ' + valor + '</label><a  onclick=$("#filtroOtrosNombres").remove();$("#OtrosNombres").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Profesion').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroProfesion").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroProfesion"><label>Profesión: ' + valor + '</label><a  onclick=$("#filtroProfesion").remove();$("#Profesion").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#LocalidadNacimiento').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroLocalidadNacimiento").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroLocalidadNacimiento"><label>Lugar Nac.: ' + valor + '</label><a  onclick=$("#filtroLocalidadNacimiento").remove();$("#LocalidadNacimiento").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Calle').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroCalle").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroCalle"><label>Calle Imp.: ' + valor + '</label><a  onclick=$("#filtroCalle").remove();$("#Calle").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#NroH').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroNroH").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroNroH"><label>Nro. Casa: ' + valor + '</label><a  onclick=$("#filtroNroH").remove();$("#NroH").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Localidad').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroLocalidad").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroLocalidad"><label>Loc. Imp.: ' + valor + '</label><a  onclick=$("#filtroLocalidad").remove();$("#Localidad").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Partido').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroPartido").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroPartido"><label>Part. Imp.: ' + valor + '</label><a  onclick=$("#filtroPartido").remove();$("#Partido").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Sexo').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroSexo").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroSexo"><label>Sexo: ' + $("#Sexo option:selected").text() + '</label><a  onclick=$("#filtroSexo").remove();$("#Sexo").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#ProvinciaNacimiento').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroProvinciaNacimiento").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroProvinciaNacimiento"><label>Prov. Nac.: ' + $("#ProvinciaNacimiento option:selected").text() + '</label><a  onclick=$("#filtroProvinciaNacimiento").remove();$("#ProvinciaNacimiento").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#PaisNacimiento').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroPaisNacimiento").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroPaisNacimiento"><label>País Nac.: ' + $("#PaisNacimiento option:selected").text() + '</label><a  onclick=$("#filtroPaisNacimiento").remove();$("#PaisNacimiento").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Provincia').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroProvincia").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroProvincia"><label>Prov. Imputado: ' + $("#Provincia option:selected").text() + '</label><a  onclick=$("#filtroProvincia").remove();$("#Provincia").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Robustez').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroRobustez").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroRobustez"><label>Robustez: ' + $("#Robustez option:selected").text() + '</label><a  onclick=$("#filtroRobustez").remove();$("#FiscaliaGeneral").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#ColorPiel').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroColorPiel").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroColorPiel"><label>Color Piel: ' + $("#ColorPiel option:selected").text() + '</label><a  onclick=$("#filtroColorPiel").remove();$("#ColorPiel").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#ColorOjos').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroColorOjos").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroColorOjos"><label>Color Ojos: ' + $("#ColorOjos option:selected").text() + '</label><a  onclick=$("#filtroColorOjos").remove();$("#ColorOjos").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#ColorCabellos').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroColorCabello").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroColorCabello"><label>Color Pelo: ' + $("#ColorCabellos option:selected").text() + '</label><a  onclick=$("#filtroColorCabello").remove();$("#ColorCabellos").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#TipoCabello').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroTipoCabello").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroTipoCabello"><label>Tipo Pelo: ' + $("#TipoCabello option:selected").text() + '</label><a  onclick=$("#filtroTipoCabello").remove();$("#TipoCabello").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#TipoCalvicie').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroCalvicie").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroCalvicie"><label>Calvicie: ' + $("#TipoCalvicie option:selected").text() + '</label><a  onclick=$("#filtroCalvicie").remove();$("#TipoCalvicie").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FormaCara').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroFormaCara").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroFormaCara"><label>Forma Cara: ' + $("#FormaCara option:selected").text() + '</label><a  onclick=$("#filtroFormaCara").remove();$("#FormaCara").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#DimensionCeja').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroDimensionCeja").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroDimensionCeja"><label>Dim. Cejas: ' + $("#DimensionCeja option:selected").text() + '</label><a  onclick=$("#filtroDimensionCeja").remove();$("#DimensionCeja").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#TipoCeja').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroTipoCeja").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroTipoCeja"><label>Tipo Cejas: ' + $("#TipoCeja option:selected").text() + '</label><a  onclick=$("#filtroTipoCeja").remove();$("#TipoCeja").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FormaMenton').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroFormaMenton").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroFormaMenton"><label>Forma Mentón: ' + $("#FormaMenton option:selected").text() + '</label><a  onclick=$("#filtroFormaMenton").remove();$("#FormaMenton").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FormaOreja').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroFormaOreja").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroFormaOreja"><label>Forma Orejas: ' + $("#FormaOreja option:selected").text() + '</label><a  onclick=$("#filtroFormaOreja").remove();$("#FormaOreja").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FormaNariz').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroFormaNariz").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroFormaNariz"><label>Forma Nariz: ' + $("#FormaNariz option:selected").text() + '</label><a  onclick=$("#filtroFormaNariz").remove();$("#FormaNariz").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FormaBoca').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroFormaBoca").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroFormaBoca"><label>Forma Boca: ' + $("#FormaBoca option:selected").text() + '</label><a  onclick=$("#filtroFormaBoca").remove();$("#FormaBoca").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FormaLabioInferior').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroFormaLabioInferior").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroFormaLabioInferior"><label>Labio Inf.: ' + $("#FormaLabioInferior option:selected").text() + '</label><a  onclick=$("#filtroFormaLabioInferior").remove();$("#FormaLabioInferior").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#FormaLabioSuperior').bind('change  ', function () {
+        var valor = $(this).val();
+        $("#filtroFormaLabioSuperior").remove();
+        if (valor != '0') {
+            $("#filtrosAplicados").append('<div id="filtroFormaLabioSuperior"><label>Labio Sup.: ' + $("#FormaLabioSuperior option:selected").text() + '</label><a  onclick=$("#filtroFormaLabioSuperior").remove();$("#FormaLabioSuperior").val("0").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
+    $('#Estatura').bind('keyup keypress blur change cut copy paste input', function () {
+        var valor = $(this).val();
+        $("#filtroEstatura").remove();
+        if (valor != '') {
+            $("#filtrosAplicados").append('<div id="filtroEstatura"><label>Estatura: ' + valor + '</label><a  onclick=$("#filtroEstatura").remove();$("#Estatura").val("").valid(); href="#filtrosAplicados"><i style="color:red;margin-left:5px;" class="fa fa-times"></i></a></div>');
+        }
+    });
 });
+
+function LlenarPanelFiltros() {
+    $('input').blur();
+    $.each($("select"), function() {
+        if ($(this).val() !== '0' && $(this).val() !=='') {
+            $(this).change();
+        }
+    });
+};
+

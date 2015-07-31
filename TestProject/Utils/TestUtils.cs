@@ -8,6 +8,11 @@ using System.Drawing;
 using System.Reflection;
 using ISIC.Utils;
 using System.Drawing.Imaging;
+using System.Xml.Serialization;
+using System.IO;
+using System.Xml;
+using System.Text;
+using System.Runtime.Serialization;
 
 namespace TestProject
 {
@@ -32,5 +37,23 @@ namespace TestProject
             Image img = stringBase64.Base64ToImage();
             Assert.IsNotNull(img);
         }
+
+        [TestMethod]
+        public void TestXML()
+        {                      
+            var result = 1;
+            StringBuilder strBuilder = new StringBuilder(10);
+            XmlWriter writer = XmlWriter.Create(strBuilder);
+            XmlDictionaryWriter dictionaryWriter = XmlDictionaryWriter.CreateDictionaryWriter(writer);
+            
+            DataContractSerializer serializer = new DataContractSerializer(typeof(Int32));
+
+            WrappedBodyWriter br = new WrappedBodyWriter(result, serializer, "hola", "http://");
+            br.dd(dictionaryWriter);
+            dictionaryWriter.Flush();
+        }
+
+
+
     }
 }

@@ -233,6 +233,7 @@ namespace ISICWeb.Controllers
                 {
                     string base64I = form[nombrei];
                     dedoi.imagen = Convert.FromBase64String(base64I);
+                    
                 }
 
 
@@ -281,9 +282,11 @@ namespace ISICWeb.Controllers
             //    { imputadoDb.ExisteDecadactilar = 0; }
             //  else
             imputadoDb.ExisteDecadactilar = 1;
-            SICEstadoTramite sicEstado = new SICEstadoTramite();
             imputadoDb.ExisteMonodactilar = 1;
             imputadoDb.FechaUltimaModificacion = DateTime.Now;
+
+            imputadoService.ActualizarDigitalizacion(imputadoDb);
+
             var issue = jiraService.GetIssue(imputadoDb.CodigoDeBarras);
             if (issue != null)
             {  /*Actualiza estados del Jira cuando los imputados son nuevos y se esta segmentando, es nulo para los imputados segmentados a partir del cotejo manual*/
@@ -291,9 +294,7 @@ namespace ISICWeb.Controllers
 
                 issue = jiraService.TransitionIssue(issue, transition);
             }
-            //imputadoDb.Estado = repository.Set<SICEstadoTramite>().First(x => x.Descripcion == "Para Clasificar");
-
-            imputadoService.Actualizar(imputadoDb);
+            
 
             if (form["clasifica"] == "on")
             {

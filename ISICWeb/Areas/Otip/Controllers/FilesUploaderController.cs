@@ -20,7 +20,7 @@ using MvcFileUploader.Models;
 namespace ISICWeb.Areas.Otip.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, OTIP")]
+    [Autorizar(Roles = "Administrador, OTIP")]
     public class FilesUploaderController : Controller
     {
 
@@ -260,8 +260,8 @@ namespace ISICWeb.Areas.Otip.Controllers
                 Imputado = imputado,
                 Url = FuncionesGrales.SwapPathsImagen(pathImage,FuncionesGrales.TipoSwap.AbsolutoAVirtual),
                 ThumbUrl = FuncionesGrales.SwapPathsImagen(pathThumb,FuncionesGrales.TipoSwap.AbsolutoAVirtual),
-                TipoArchivo = tipoArchivo
-
+                TipoArchivo = tipoArchivo,
+                Uploader = User.Identity.Name
             };
     
             if (hidTipoArchivo == 2) //sena

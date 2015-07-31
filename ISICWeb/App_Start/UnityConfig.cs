@@ -9,7 +9,9 @@ using MPBA.RenaperClient;
 using System.Configuration;
 using System.Security.Cryptography.X509Certificates;
 using System;
+using ISICWeb.Areas.PortalSIC.Services;
 using ISICWeb.Models;
+using ISICWeb.Services;
 using Microsoft.AspNet.Identity;
 
 namespace ISICWeb
@@ -29,6 +31,12 @@ namespace ISICWeb
             container.RegisterType<IBioDactilarService, BioDactilarService>();
             container.RegisterType<IJiraService, JiraService>();
             container.RegisterType<MegaMatcherService, MegaMatcherService>();
+            container.RegisterType<IImputadoExtraService, ImputadoExtraService>();
+            container.RegisterType<IAfisService, AfisService>();
+            container.RegisterType<IGnaService, GnaService>();
+            container.RegisterType<IMigracionesService, MigracionesService>();
+            container.RegisterType<IIdgxService, IdgxService>();
+            container.RegisterType<IBusquedaService, BusquedaService>();  
             container.RegisterType<ICotejoRenaperService, CotejoRenaperService>();            
 
 

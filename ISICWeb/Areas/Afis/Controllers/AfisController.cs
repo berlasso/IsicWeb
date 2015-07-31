@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Web;
+using Microsoft.AspNet.Identity;
+
 using System.Web.Mvc;
 using ISIC.Entities;
 using ISIC.Persistence.Context;
@@ -16,18 +18,19 @@ using MPBA.DataAccess;
 namespace ISICWeb.Areas.Afis.Controllers
 {
     [Audit]
-    [Authorize(Roles = "Administrador, AFIS")]
+    [Autorizar(Roles = "Administrador, AFIS")]
     public class AfisController : Controller
     {
         IRepository _repository;
-        private AfisService _afisService;
+        private IAfisService _afisService;
         private BusquedaService _busquedaService;
-
-        public AfisController(IRepository repository, AfisService afisService, BusquedaService busquedaService)
+        
+        public AfisController(IRepository repository, IAfisService afisService, BusquedaService busquedaService)
         {
             _repository = repository;
             _afisService = afisService;
             _busquedaService = busquedaService;
+            
         }
 
         public JsonResult BuscarCodBarras(string id)
@@ -68,7 +71,7 @@ namespace ISICWeb.Areas.Afis.Controllers
             string errores = "";
             if (ModelState.IsValid)
             {
-                errores = _afisService.GuardarFichaAFIS(model);
+                errores = _afisService.GuardarFichaAFIS(model,User);
             }
             else
             {
@@ -141,7 +144,7 @@ namespace ISICWeb.Areas.Afis.Controllers
         }
 
         
-        public ActionResult AltaModificacionAFIS(string prontuariosic,int idAfis=0)
+        public ActionResult AltaModificacionAFIS(string prontuariosic,int idAfis=0 )
         {
 
             AFISViewModel model = _afisService.LlenarViewModelDesdeBase(prontuariosic, idAfis);
@@ -151,7 +154,7 @@ namespace ISICWeb.Areas.Afis.Controllers
 
         public bool BorrarFichasAFIS(int id)
         {
-            bool borroBien = _afisService.BorrarFichaAFIS(id);
+            bool borroBien = _afisService.BorrarFichaAFIS(id,User);
             if (!borroBien)
                 ModelState.AddModelError("", "No se pudo borrar la ficha de AFIS");
             return borroBien;

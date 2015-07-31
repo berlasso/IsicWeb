@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<ISIC.Entities.Imputado>
-
+@{Session["urlTablaPortal"] = Request.Url.ToString(); }
 <div class="container body-content" style="margin-bottom: 50px">
     <section id="Imputados">
 
         <div class="center tile-light">
-            <h1>Imputados Encontrados</h1>
+            <h3>Imputados Encontrados</h3>
             <small>Cantidad Máxima Permitida: @ViewBag.CantidadMaxima</small>
         </div>
 
@@ -61,9 +61,7 @@
 @section footer
 {
     <div class="col-md-2 col-sm-3 col-xs-4">
-        <a class="btn btn-lg btn-alt volver" href='#' onclick=' window.history.go(-1); return false; ' title=" volver" type="button">
-            Volver
-        </a>
+      @Html.ActionLink("Volver", "Index", "Busqueda", null, new { @class = "btn btn-alt btn-lg", onclick = " showPageLoadingSpinner() " })
     </div>
     <div class="col-md-6 col-md-offset-2 col-sm-9 col-xs-4 text-center">
         @*<button id="btnBuscar" type="submit" class="btn btn-alt btn-lg" title="Buscar" onclick=" showPageLoadingSpinner() ">Buscar</button>*@
@@ -77,14 +75,27 @@
 {
 
     <script type="text/javascript">
-    $(function () {
-        $("div.dataTables_filter>label>input").addClass("form-control");//estilo correcto a filtro
-        $("div.dataTables_length>label>select").addClass("form-control");//estilo correcto a cant de filas
-        $(".DTTT_container >a").each($).removeClass().addClass("btn btn-sm");//agrego estilo correcto a botones de tabla
-        $("#table_filter").addClass("tile");
-    });
-    var urlTablaImputados = '@Url.Action("MostrarImputados", "Busqueda")';
+
+
+        $(function() {
+            $("div.dataTables_filter>label>input").addClass("form-control"); //estilo correcto a filtro
+            $("div.dataTables_length>label>select").addClass("form-control"); //estilo correcto a cant de filas
+            $(".DTTT_container >a").each($).removeClass().addClass("btn btn-sm"); //agrego estilo correcto a botones de tabla
+            $("#table_filter").addClass("tile");
+            //   loader("Buscando datos...");
+        });
+        var urlTablaImputados = '@Url.Action("MostrarImputados", "Busqueda")';
         var urlVerImputado = '@Url.Action("VerImputado", "Busqueda")';
+
+        $(document).ready(function() {
+            //prueba();
+            if ("@ViewBag.Inicio" === "True") {
+                var table = $('#tablaPortal').DataTable();
+                table.state.clear();
+                table.draw();
+            }
+        });
+
 
     </script>
 }
