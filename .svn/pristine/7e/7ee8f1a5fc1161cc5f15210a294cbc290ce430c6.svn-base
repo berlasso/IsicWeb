@@ -1,0 +1,126 @@
+﻿@model  ISICWeb.Areas.Otip.Models.DatosGeneralesViewModel
+
+<section id="Imagenes" style="min-height: 500px">
+
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
+            @*<div class="left wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">*@
+            <h2>Imágenes</h2>
+        </div>
+        <div class="panel-body">
+
+            @{
+                if (Model.Archivos != null)
+                {
+                    var tiposArchivos = Model.Archivos.GroupBy(x => x.TipoArchivo);
+                    if (tiposArchivos.Any())
+                    {
+
+
+                        <ul class="portfolio-filter" id="fotos_filter" style="margin-bottom: 10px">
+                            <li role="presentation"><a class="btn btn-default active" href="#" data-filter="*">Todas</a></li>
+
+
+                            @foreach (var tipoArchivo in tiposArchivos)
+                            {
+                                <li role="presentation"><a class="btn btn-default" href="#" data-filter=".@(tipoArchivo.Key.Descripcion.Substring(5, 5).Replace(" ", ""))">@tipoArchivo.Key.Descripcion.Trim()</a></li>
+                            }
+
+                        </ul>
+
+
+                        <div class="row">
+                            <div class="portfolio-items isotope" style="position: relative; overflow: hidden; height: 440px;">
+                                @{
+                            int i = 0;
+
+                            foreach (var archivo in Model.Archivos)
+                            {
+                                i++;
+                                int delay = 150 * i;
+                                <div class="portfolio-item @(archivo.TipoArchivo.Descripcion.Substring(5, 5).Replace(" ", "")) col-xs-6 col-sm-4 col-md-3 isotope-item">
+                                    <div class="recent-work-wrap">
+                                        <a class="preview" href="@Url.Content(archivo.Url)?r=@Guid.NewGuid()" rel="prettyPhoto[gallery]" title="@archivo.TipoArchivo.Descripcion">
+                                            <img class="img-responsive  wow fadeInDown animated  " data-wow-delay="@delay.ToString()ms" data-wow-duration="500ms" src="@Url.Content(archivo.ThumbUrl)?r=@Guid.NewGuid()" style="animation-duration: 500ms; animation-delay: @delay.ToString()ms; animation-name: fadeInDown;" />
+                                            <div class="overlay ">
+                                                <div class=" recent-work-inner">
+                                                    <p style="padding-top: 20px">
+                                                        @if (@archivo.SeniaParticular != null && @archivo.SeniaParticular.ClaseUbicacionSeniaPart != null)
+                                                        {
+                                                            @archivo.SeniaParticular.ClaseUbicacionSeniaPart.Descripcion
+                                                        }
+                                                        @if (@archivo.TatuajePersona != null && @archivo.TatuajePersona.ClaseUbicacionSeniaPart != null)
+                                                        {
+                                                            @archivo.TatuajePersona.ClaseUbicacionSeniaPart.Descripcion
+                                                        }
+                                                        @if (@archivo.TatuajePersona != null && @archivo.TatuajePersona.descripcion != null)
+                                                        {
+                                                            @archivo.TatuajePersona.descripcion
+                                                        }
+                                                        @if (@archivo.SeniaParticular != null && @archivo.SeniaParticular.descripcion != null)
+                                                        {
+                                                            @archivo.SeniaParticular.descripcion
+                                                        }
+                                                    </p>
+                                                    <i class="fa fa-search"></i>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            }
+
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+
+                <div class="row">
+                    @{
+                        string soloLectura = (!Model.EsSoloDetalle && Model.Id != null && Model.Id > 0) ? "" : "disabled";
+                        <div class="col-sm-3">
+
+                            <div style="margin-bottom: 60px;">
+                                <a id="btnImagenes" class="  btn btn-lg" href="@Url.Action("Imagenes", "FilesUploader", new {idImputado = Model.Id, cb = Model.CodBarras})" @soloLectura onclick=" showPageLoadingSpinner() ">
+                                    <span>Administrar Imágenes</span>
+
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-3 ">
+                            <a id="btnScanner" class="  btn btn-lg" href="#"  @soloLectura title=" Captura Huellas">
+                                <span>Capturar Huellas</span>
+                            </a>
+
+                        </div>
+                    }
+                </div>
+
+            }
+        </div>
+    </div>
+
+
+
+
+
+</section>
+
+
+<script>
+    $(function () {
+        $("#btnScanner").on("click", function () {
+            alertify.confirm("Capturar Huellas","Confirma que desea abrir la captura de huellas?", function () {
+                    var url = 'http://desa.mpba.gov.ar/isic/CapturaDecaDeployed/CapturaDecaDactilar.application?CodBarra=@Model.CodBarras&Apellido=@Model.Apellido&Nombres=@Model.Nombres&IPP=@Model.IPP&DNI=@Model.NumeroDocumento&sexo=@Model.Sexo';
+                window.open(url, '_blank');
+
+            }, null)
+             .set('labels', { cancel: 'Cancelar' })
+     .set('defaultFocus', 'cancel');
+        });
+    });
+
+</script>

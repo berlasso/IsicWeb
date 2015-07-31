@@ -1,0 +1,289 @@
+﻿@model ISICWeb.Areas.Afis.Models.AFISViewModel
+@{ string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index", "Antecedentes"); }
+
+@using (Ajax.BeginForm("GuardarDatosAFIS", "Afis",
+  new AjaxOptions
+                {
+                    UpdateTargetId = "divValidation",
+                    HttpMethod = "Post",
+                    OnBegin = "onGuardarBegin",
+                    OnComplete = "onGuardarComplete",
+                    OnSuccess = "onGuardarSuccess"
+                },
+                new { id = "frmGuardarDatosAfis" }))
+{    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x=>x.Prontuario.Id)
+    <div class="row wow fadeInDown animated">
+        <ol class="breadcrumb hidden-xs tile-light" style="float: left !important">
+            <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
+            <li><a href="@url">Resultados</a></li>
+            <li>@Html.ActionLink("Listado AFIS", "BuscarFichasAFIS", new { prontuariosic = Model.Prontuario.ProntuarioNro }, new { onclick = "showPageLoadingSpinner();" })</li>
+            <li class="active">Carga AFIS</li>
+        </ol>
+    </div>
+
+    <div class=" center wow fadeInDown animated tile-light">
+        <h3>
+            Carga datos del AFIS
+        </h3>
+    </div>
+
+
+    if (Model != null)
+    {
+        Html.RenderAction("MostrarDatosImputado", "Afis", new { idIdgxprontuario = Model.Id });
+
+    }
+    <div class="panel panel-default tile wow fadeInDown animated" style="margin-bottom: 80px;">
+        <div class="panel-heading">
+            @if (Model.Id > 0)
+            {
+                <h4><b style="color:red">Modificación</b> Datos del AFIS</h4>
+            }
+            else
+            {
+                <h4>Carga Nuevos Datos del AFIS</h4>
+            }
+        </div>
+        <div class="panel-body">
+
+
+            <div class="row wow fadeInDown animated">
+
+                <div class="col-xs-4">
+
+                    @Html.LabelFor(model => model.NIF)
+                    <div class="form-group">
+                        <div class='input-group '>
+                            @Html.EditorFor(model => model.NIF, new { htmlAttributes = new { @class = "form-control" } })
+                            <span class="input-group-addon btn btn-alt" id="btnBuscarNif">
+                                <span class="flaticon-zoom22"></span>
+                            </span>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.NIF, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+
+
+
+                </div>
+
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row wow fadeInDown animated">
+
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.idClaseSexo, "Sexo", htmlAttributes: new { @class = "control-label  " })
+                    @*@Html.HiddenFor(model=>model.Sexo.descripcion)*@
+                    @Html.DropDownListFor(model => model.idClaseSexo, Model.SexoList as IEnumerable<SelectListItem>, new { @class = "form-control", @readonly = "readonly" })
+
+
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.idTipoDoc, htmlAttributes: new { @class = "control-label  " })
+                    @Html.DropDownListFor(model => model.idTipoDoc, Model.TipoDocList as IEnumerable<SelectListItem>, new { @class = "form-control", @readonly = "readonly" })
+
+
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.DNI, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.DNI, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DNI, "", new { @class = "text-danger" })
+                </div>
+
+
+            </div>
+
+            <div class="row wow fadeInDown animated">
+
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.Clase, htmlAttributes: new { @class = "control-label  " })
+                    @Html.EditorFor(model => model.Clase, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Clase, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.CTL, htmlAttributes: new {@class = "control-label  "})
+                    @Html.EditorFor(model => model.CTL, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                    @Html.ValidationMessageFor(model => model.CTL, "", new {@class = "text-danger"})
+                </div>
+                <div class="col-xs-4">
+                    @Html.LabelFor(model => model.FechaInforme)
+                    @Html.EditorFor(model => model.FechaInforme, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                    @Html.ValidationMessageFor(model => model.FechaInforme, "", new { @class = "text-danger" })
+                </div>
+
+                </div>
+
+            <div class="row">
+                <div class="col-md-12" id="divValidation">
+                    @Html.HiddenFor(model => model.Prontuario.ProntuarioNro)
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+        <div class="row">
+            <div class="  col-sm-3 col-xs-4">
+                @Html.ActionLink("Volver", "BuscarFichasAFIS", new { prontuariosic = Model.Prontuario.ProntuarioNro }, new { @class = "btn btn-alt btn-lg", onclick = "showPageLoadingSpinner();" })
+
+
+
+            </div>
+            <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-8">
+                <div class="row ">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <input type="submit" value="Guardar" id="btnGuardar" class="btn btn-alt btn-lg" />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </nav>
+}
+
+@section scripts
+{
+    <script>
+        //GUARDAR DATOS AFIS
+        function onGuardarBegin() {
+            loader("Guardando, espere un momento...");
+        }
+
+        function onGuardarComplete() {
+            $.unblockUI();
+        }
+
+        function onGuardarSuccess(data) {
+            if (data == "") {
+                //alertify.success("Alta exitosa");
+                var url = '@Url.Content("BuscarFichasAFIS")?prontuariosic=@Model.Prontuario.ProntuarioNro';
+                alertify.alert("Exito", "<i class='Exito'>Carga Exitosa</i>").set({
+                    onclose: function() {
+                        showPageLoadingSpinner();
+                        location.href = url;
+
+                    }
+                });
+            } else {
+                alertify.error("Error en la carga");
+                $("#cartelSinDelitos").removeClass("hidden");
+            }
+        }
+
+        $(document).on("blur", "#NIF", function (e) {
+            
+            if ($(this).val().substr(0, 2) == "01") {
+                $("#btnBuscarNif").click();
+            } else {
+                $("#Apellido").removeAttr("readonly");
+                $("#Nombre").removeAttr("readonly");
+                $("#idClaseSexo").removeAttr("readonly");
+                $("#idTipoDoc").removeAttr("readonly");
+                $("#DNI").removeAttr("readonly");
+                $("#Clase").removeAttr("readonly");
+                $("#CTL").removeAttr("readonly");
+            };
+            $("#NIF").valid();
+        });
+
+        $(document).on("click", "#btnGuardar", function(e) {
+            e.preventDefault();
+            if (!$("#frmGuardarDatosAfis").valid())
+                return;
+            if ($("#NIF").val() == $("#Prontuario_ProntuarioNro").val()) {
+                alertify.error("El NIF no puede ser igual al Prontuario");
+                return;
+            }
+            alertify.confirm("Confirma", "Confirma asociacion del NIF" + $("#NIF").val() + " al prontuario " + $("#Prontuario_ProntuarioNro").val() + "?", function() {
+                    $("#frmGuardarDatosAfis").submit();
+                }, null)
+                .set('labels', { cancel: 'Cancelar' })
+                .set('defaultFocus', 'cancel');
+        });
+
+        $(document).ready(function() {
+            $("#navFooter").hide();
+            $("#Clase").mask("9999");
+            $('#NIF').keydown(function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    $("#btnBuscarNif").click();
+                }
+            });
+         //   $("#NIF").mask("999999999999a");
+
+            $("#btnBuscarNif").click(function () {
+                
+                if ($("#NIF").valid() == false)
+                    return;
+                if ($("#NIF").val() == $("#Prontuario_ProntuarioNro").val()) {
+                    alertify.error("El NIF es igual al Prontuario");
+                    return;
+                }
+                else {
+
+                    var nif = $("#NIF").val();
+                    if (nif.substr(0, 2) == "01") {
+                        var url = '@Url.Content("BuscarCodBarras")/' + nif;
+                        $.ajax({
+                            url: url,
+                            success: function(data) {
+                                var json = data;
+                                if (data.HuboError == true) {
+                                    alertify.error(data.datos.errorMessage);
+                                    $("#Apellido").val("");
+                                    $("#Nombre").val("");
+                                    $("#idClaseSexo").val("0");
+                                    $("#idTipoDoc").val("0");
+                                    $("#DNI").val("");
+                                    $("#Clase").val("");
+                                    $("#CTL").val("");
+                                } else {
+                                    var datos = data.datos.data;
+                                    $("#Apellido").val(datos.Apellido).attr("readonly", "readonly");
+                                    $("#Nombre").val(datos.Nombre).attr("readonly", "readonly");
+                                    $("#idClaseSexo").val(datos.Sexo).attr("readonly", "readonly");
+                                    $("#idTipoDoc").val(datos.TipoDoc).attr("readonly", "readonly");
+                                    $("#DNI").val(datos.DNI).attr("readonly", "readonly");
+                                    $("#Clase").val(datos.Clase).attr("readonly", "readonly");
+                                    $("#CTL").val(datos.CTL).attr("readonly", "readonly");
+
+                                }
+                            }
+                        });
+                    } else {
+                        $("#Apellido").val("").removeAttr("readonly");
+                        $("#Nombre").val("").removeAttr("readonly");
+                        $("#idClaseSexo").val("0").removeAttr("readonly");
+                        $("#idTipoDoc").val("0").removeAttr("readonly");
+                        $("#DNI").val("").removeAttr("readonly");
+                        $("#Clase").val("").removeAttr("readonly");
+                        $("#CTL").val("").removeAttr("readonly");
+
+
+                    }
+                }
+            });
+        });
+    </script>
+}

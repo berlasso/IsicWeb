@@ -1,0 +1,15 @@
+﻿
+
+<div class="row" style="margin-top: 100px;">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 tile center">
+        <div class="alert alert-warning alert-icon   tile-dark wow fadeInDown animated">
+            <i class="icon flaticon-caution2" style="font-size: 5em;"></i>
+                <h1>ACCESO NO PERMITIDO</h1>
+</div>
+
+            <div class="center">@Html.ActionLink("Volver", "login", "Account", new { area = "" }, new { @class = "btn  btn-lg" })</div>
+        </div>
+    <div class="col-md-3"></div>
+</div>
+    

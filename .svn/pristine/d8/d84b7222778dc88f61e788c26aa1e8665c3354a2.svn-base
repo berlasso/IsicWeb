@@ -1,0 +1,404 @@
+﻿@using System.Collections
+@using ISIC.Entities
+@model ISICWeb.Areas.Antecedentes.Models.IdgxDatosPersonalesViewModel
+@{
+    string url = Session["CurrentUrl"] != null ? Session["CurrentUrl"].ToString() : @Url.Action("Index","Antecedentes"); 
+    string prontuariosic=Session["prontuariosic"].ToString() != "" ? Session["prontuariosic"].ToString() : @Url.Action("Index","Antecedentes"); 
+}
+
+<div class="container-detalle" style="margin-bottom: 80px;">
+    <div class="row wow fadeInDown animated">
+        <ol class="breadcrumb hidden-xs tile-light" style="float: left !important">
+            <li>@Html.ActionLink("Búsqueda", "Index", "Antecedentes")</li>
+            <li><a href="@url">Resultados</a></li>
+            <li>@Html.ActionLink("Prontuarios", "BuscarProntuariosIdgx", new { prontuariosic = prontuariosic })</li>
+            <li>@Html.ActionLink("Prontuario","AltaModificacionProntuarioIDGx", new { prontuariosic = prontuariosic, idIdgxprontuario = Model.idIdgxProntuario, esNuevo = false})</li>
+            <li>@Html.ActionLink("Lista Datos Pers.", "MostrarDatosIdgx", new { id = Model.idIdgxProntuario })</li>
+            <li class="active">Carga Datos pers.</li>
+        </ol>
+    </div>
+
+
+
+        <div class="center wow fadeInDown animated tile-light">
+            <h1>Carga de Datos Personales en IDGx</h1>
+        </div>
+        @{
+            Html.RenderAction("MostrarDatosImputado", "Antecedentes", new { idIdgxprontuario = Model.idIdgxProntuario });
+
+        }
+
+
+        @using (Ajax.BeginForm("GuardarDatosPersonalesIDGx", "Antecedentes",
+  new AjaxOptions
+                {
+                    UpdateTargetId = "DelitosAsociados",
+                    HttpMethod = "Post",
+                    OnBegin = "onGuardarBegin",
+                    OnComplete = "onGuardarComplete",
+                    OnSuccess = "onGuardarSuccess"
+                },
+                new { id = "frmGuardarDatosPersonalesIdg" }))
+        {
+
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.idIdgxProntuario)
+
+            <div class="panel panel-default tile wow fadeInDown animated">
+                <div class="panel-heading">
+                    @if (Model.Id > 0)
+                    {
+                        <h4><b style="color:red">Modificación</b> Datos Personales del Prontuario IDGx @ViewBag.prontuarioidgx.</h4>
+                    }
+                    else
+                    {
+                        <h4>Carga Nuevos Datos Personales del Prontuario IDGx @ViewBag.prontuarioidgx</h4>
+                    }
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.idIdgxProntuario)
+
+                        </div>
+                    </div>
+
+                    <div class="row wow fadeInDown animated">
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.Nombre)
+
+                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+
+                        </div>
+
+
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.Apellido)
+                            @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                        </div>
+
+
+
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.Apodo)
+
+                            @Html.EditorFor(model => model.Apodo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Apodo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.FechaNacimiento)
+
+                            @Html.EditorFor(model => model.FechaNacimiento, new { htmlAttributes = new { @class = "form-control datepicker fecha" } })
+                            @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+                        </div>
+
+
+
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.Madre)
+
+                            @Html.EditorFor(model => model.Madre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Madre, "", new { @class = "text-danger" })
+
+
+                        </div>
+
+
+
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.Padre)
+
+                            @Html.EditorFor(model => model.Padre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Padre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.TipoDNI)
+                            @*@Html.DropDownListFor(m => m.TipoDNI.Id, ViewBag.TipoDNIlList as SelectList, new { @class = "form-control" } as object)*@
+                            @Html.DropDownListFor(model => model.TipoDNI, Model.TipoDocumentoList, new { @class = "form-control" })
+
+
+                        </div>
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.DocumentoNumero)
+
+                            @Html.EditorFor(model => model.DocumentoNumero, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DocumentoNumero, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.FechaFallecimiento)
+
+                            @Html.EditorFor(model => model.FechaFallecimiento, new { htmlAttributes = new { @class = "form-control datepicker fecha" } })
+                            @Html.ValidationMessageFor(model => model.FechaFallecimiento, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                        <div class="col-xs-4">
+                            @Html.HiddenFor(model => model.LocalidadNacimiento.Id)
+
+                            @Html.LabelFor(model => model.LocalidadNacimiento.LocalidadNombre, "Localidad Nacimiento")
+
+                            @Html.EditorFor(model => model.LocalidadNacimiento.LocalidadNombre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LocalidadNacimiento.LocalidadNombre, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.HiddenFor(model => model.PartidoNacimiento.Id)
+                            @Html.LabelFor(model => model.PartidoNacimiento.PartidoNombre, "Partido Nacimiento")
+
+                            @Html.EditorFor(model => model.PartidoNacimiento.PartidoNombre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PartidoNacimiento.PartidoNombre, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.ProvinciaNacimiento)
+
+                            @Html.DropDownListFor(model => model.ProvinciaNacimiento, Model.ProvinciaList, new { @class = "form-control" })
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.causaspendientes)
+                            @Html.EditorFor(model => model.causaspendientes, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.causaspendientes, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.LabelFor(model => model.FechaInforme)
+                            @Html.EditorFor(model => model.FechaInforme, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                            @Html.ValidationMessageFor(model => model.FechaInforme, "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br />
+                                    @Html.LabelFor(model => model.InfDac)
+
+                                    @Html.EditorFor(model => model.InfDac)
+                                    @Html.ValidationMessageFor(model => model.InfDac, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-6">
+                                    <br />
+                                    @Html.LabelFor(model => model.InfNom)
+
+                                    @Html.CheckBoxFor(model => model.InfNom)
+                                    @Html.ValidationMessageFor(model => model.InfNom, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row center">
+
+                        <button id="btnGuardar" type="submit" class="btn btn-lg btn-alt" title="Guardar">
+                            Guardar
+                        </button>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+    <div class="row wow fadeInDown animated" style="margin-bottom: 80px">
+        @*@if (Model.Delitos == null)
+            {
+                List<ISIC.Entities.IdgxDetalle> detalles=new List<IdgxDetalle>();
+                @Html.Partial("_IdgxDelitosAsociados", detalles);
+            }
+            else
+            {
+                @Html.Partial("_IdgxDelitosAsociados", Model.Delitos.ToList());
+            }*@
+        <div class="tile">
+            <div id="DelitosAsociados">
+
+
+
+
+                @if (Model.Id > 0)
+                {
+                    Html.RenderAction("MostrarIdgxDelitosAsociados", new { idIdgxDatosPersona = Model.Id });
+                }
+                else
+                {
+                    <div id="cartelSinDelitos" class="alert alert-info alert-icon   tile-dark">
+                        Atención: Los delitos relacionados podrán ser cargados una vez que haya guardado el nuevo Dato Personal.
+                        <i class="icon flaticon-information32">
+
+                        </i>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </div>
+
+            <nav class="navbar navbar-default navbar-fixed-bottom tile-dark">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-4">
+                        @Html.ActionLink("Volver", "MostrarDatosIdgx", new { id = Model.idIdgxProntuario }, new { @class = "btn btn-lg btn-alt", onclick = "showPageLoadingSpinner();" })
+
+
+                    </div>
+                    <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-8">
+                        <div class="row ">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </nav>
+        }
+
+    </div>
+
+    @section scripts
+    {
+        <script>
+
+            //GUARDAR DATOS PERSONALES IDGX
+            function onGuardarBegin() {
+                loader("Guardando, espere un momento...");
+            }
+
+            function onGuardarComplete() {
+                $.unblockUI();
+            }
+
+            function onGuardarSuccess(data) {
+                if (data !== null) {
+                    alertify.success("Alta exitosa");
+                    //$("#btnNuevoDelito").removeClass("hidden");
+                    $("#cartelSinDelitos").addClass("hidden");
+                    //var idIdgxDatosPersonales=$('#hidIdIdgxdatospersonales').val();
+                    $("#Id").val($("#idIdgxdatospersonales").val());
+
+                } else {
+                    alertify.error("Error en la carga");
+                    //$("#btnNuevoDelito").addClass("hidden");
+                    $("#cartelSinDelitos").removeClass("hidden");
+                }
+            }
+
+            $('#LocalidadNacimiento_LocalidadNombre').bind('autocompleteselect', function(event, ui) {
+                $("#LocalidadNacimiento_Id").val(ui.item.id);
+            });
+
+
+            $("#LocalidadNacimiento_LocalidadNombre").on("autocompletechange", function(event, ui) {
+                if (this.value.trim() === '') {
+                    $("#LocalidadNacimiento_Id").val("");
+                }
+                if ($("#LocalidadNacimiento_Id").val().trim() === "") {
+                    this.value = "";
+                };
+
+            });
+
+            $("#LocalidadNacimiento_LocalidadNombre").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: '@Url.Action("BuscarLocalidad", "Antecedentes")',
+                        type: "GET",
+                        dataType: "json",
+                        autoFocus: true,
+                        minLength: 3,
+                        data: { term: request.term },
+
+                        success: function(data) {
+                            $("#LocalidadNacimiento_Id").val("");
+                            response($.map(data, function(item) {
+
+                                return { label: item.label, value: item.label, id: item.id };
+                            }));
+                        }
+                    });
+                },
+            });
+
+            $('#PartidoNacimiento_PartidoNombre').bind('autocompleteselect', function(event, ui) {
+                $("#PartidoNacimiento_Id").val(ui.item.id);
+            });
+
+
+            $("#PartidoNacimiento_PartidoNombre").on("autocompletechange", function(event, ui) {
+                if (this.value.trim() === '') {
+                    $("#PartidoNacimiento_Id").val("");
+                }
+                if ($("#PartidoNacimiento_Id").val().trim() === "") {
+                    this.value = "";
+                };
+
+            });
+
+            $("#PartidoNacimiento_PartidoNombre").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: '@Url.Action("BuscarPartido", "Antecedentes")',
+                        type: "GET",
+                        dataType: "json",
+                        autoFocus: true,
+                        minLength: 3,
+                        data: { term: request.term },
+
+                        success: function(data) {
+                            $("#PartidoNacimiento_Id").val("");
+                            response($.map(data, function(item) {
+
+                                return { label: item.label, value: item.label, id: item.id };
+                            }));
+                        }
+                    });
+                },
+            });
+
+            $(document).ready(function() {
+                $('.fecha').bind('keyup keypress blur change cut copy paste ', function() {
+                    var validator = $("#frmGuardarDatosPersonalesIdg").validate();
+                    validator.element(this);
+                });
+                
+                $("#navFooter").hide();
+            });
+        </script>
+    }

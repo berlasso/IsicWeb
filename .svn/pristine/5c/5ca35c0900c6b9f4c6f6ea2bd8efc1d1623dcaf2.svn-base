@@ -1,0 +1,383 @@
+﻿@model  IEnumerable<ISICWeb.Models.ImputadosSimilaresViewModel>
+
+
+
+@{
+    ViewBag.Title = "Imputados Similares ";
+}
+<style>
+    .cdatosImputado {
+        color: rgb(49, 64, 126);
+        font-weight: bolder;
+        font-size: medium;
+    }
+</style>
+<div class="container body-content" style="margin-bottom: 50px">
+    <section id="Imputados">
+        <div class="center wow fadeInDown animated tile-light">
+            <h1>Presuntas reincidencias de <span style="font-size: inherit;color:rgb(53, 64, 108);font-weight:bolder;"> @ViewBag.Apellido , @ViewBag.Nombres  </span> por búsqueda nominal</h1>
+        </div>
+        <input type="hidden" id="CodigoBarra" value="@ViewBag.CodigoBarra" name="CodigoBarra">
+
+
+        <div class="panel-body">
+            <div class="row wow fadeindown animated">
+                <div class="col-md-4 col-sm-12 ">
+                    <img class="img-responsive  wow fadeInDown animated"  src="@Url.Content(ViewBag.NombreArchivo)?r=@Guid.NewGuid()"/>
+                    
+                </div>
+
+                <div class="col-md-8 col-sm-12">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+
+
+                            <span class="cdatosImputado">Código de Barras: </span> 
+                            <span class="block-title" style="font-size: large;"> @ViewBag.CodigoBarra</span>
+                            
+                        </div>
+
+
+                        <div class="col-md-6 col-sm-6">
+                            <span class="cdatosImputado">Apellido y Nombres: </span> 
+                            <span class="block-title" style="font-size: medium;"> @ViewBag.Apellido , @ViewBag.Nombres</span>
+
+                        </div>
+                    </div>
+                    <div class="row"><br/>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6  col-sm-6">
+                            <span class="cdatosImputado">Apodo: </span> 
+                            <span class="block-title" style="font-size: medium;">  @ViewBag.Apodo </span>
+                            
+                        </div>
+
+                        <div class="col-md-6  col-sm-6">
+
+                            <span class="cdatosImputado">Edad: </span> 
+                            <span class="block-title" style="font-size: medium;">   @ViewBag.Edad</span>
+                            
+                        </div>
+                    </div>
+                    <div class="row"><br/>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6  col-sm-6">
+                            <span class="cdatosImputado">Nombre de la Madre: </span> 
+                            <span class="block-title" style="font-size: medium;">  @ViewBag.NombreMadre</span>
+                            
+                        </div>
+                        <div class="col-md-6  col-sm-6">
+                            <span class="cdatosImputado">Documento Nro.: </span> 
+                            <span class="block-title" style="font-size: medium;">  @ViewBag.DocumentoNro</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel panel-default" id="Prontuario">
+            <div id="cargando" class="form-group col-lg-4" style="display: none;">
+                <img src="~/Images/loading.gif" alt="Loading..."/>
+            </div>
+        </div>
+        <div id="prontuarios"></div>
+    
+
+
+    <div id="DataT" class="row">
+            <table id="table" class="table  table-bordered table-hover table-condensed table-striped tile tabla" cellspacing="0" width="100%">
+                <thead style="color:white!important">
+                    <tr>
+                        <th> </th>
+                        <th style="color:white!important">
+                            Cant.Coincidencias
+                        </th>
+                        <th style="color:white!important">
+                            Prontuario
+                        </th>
+                        <th style="color:white!important">
+                            Apellido
+                        </th>
+                        <th style="color:white!important">
+                            Nombres
+                        </th>
+                        <th style="color:white!important">
+                            Documento
+                        </th>
+
+                        <th style="color:white!important">
+                            Apodo
+                        </th>
+                        <th style="color:white!important">
+                            Nombre Madre
+                        </th>
+                        <th style="color:white!important">
+                            Edad Actual
+                        </th>
+
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (ISICWeb.Models.ImputadosSimilaresViewModel imp in Model)
+                        {
+
+
+                            <tr id="">
+                                <td style="width: 5%">
+                                    <a href="#prontuarioBody" rel="@imp.ProntuarioSIC" id="@imp.Id" onclick=" showPageLoadingSpinner();">
+                                        <span class="flaticon-arrow420" style='font-size: 30px!important'></span>
+                                    </a>
+                                </td>
+                                <td>
+
+                                    @Html.DisplayFor(modelItem => imp.CantidadCoincidencias)
+
+
+                                </td>
+                                <td>
+                                    
+
+                                        @Html.DisplayFor(modelItem => imp.ProntuarioSIC)
+
+                                    
+
+
+                                </td>
+                                <td>
+
+                                    @Html.DisplayFor(modelItem => imp.Apellido)
+
+
+
+
+                                </td>
+                                <td>
+
+                                    @Html.DisplayFor(modelItem => imp.Nombres)
+
+
+
+                                </td>
+                                <td>
+
+                                    @Html.DisplayFor(modelItem => imp.DocumentoNumero)
+
+                                </td>
+                                <td>
+
+                                    @Html.DisplayFor(modelItem => imp.Apodo)
+
+                                </td>
+                                <td>
+
+                                    @Html.DisplayFor(modelItem => imp.NombreMadre)
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => imp.EdadActual)
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @{
+                if (ViewData.ModelState.IsValid == false)
+                {
+                    <div class="alert alert-danger alert-icon">
+                        <i class="icon flaticon-caution2"></i>
+                        <b>No se hallaron resultados</b>
+                    </div>
+                }
+            }
+
+        </div>
+
+
+
+        <br>
+
+     
+
+
+
+
+
+
+
+
+
+
+
+    </section>
+</div>
+
+@section footer
+{
+    <div class="col-md-2">
+        @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
+                Volver
+            </a>*@
+        <a class="btn btn-lg btn-alt " href='@Url.Action("Index", "CotejoManual")' onclick=' showPageLoadingSpinner() ' title=" volver" type="button" id="btnVolver">
+            Volver
+        </a>
+    </div>
+    <div class="col-md-10">
+
+    </div>
+
+}
+
+
+@section scripts
+{
+
+
+    <script type="text/javascript">
+
+     
+
+        $("#Prontuario").hide("fast");
+
+        var oTable;
+        var filaSeleccionada = -1;
+
+        /* Initialize table and make first column non-sortable*/
+        oTable = $('#table').dataTable({
+            //"dom": '<"row"<"col-md-5"TR><"col-md-1"r><"col-md-6"f>>ts<"row"<"col-md-6"l><"col-md-6"p>>i',
+            "dom": '<"row "<"col-md-5"R><"col-md-1"r><"col-md-6">>ts<"row tile"<"col-md-4"l><"col-md-4"i><"col-md-4"p>>',
+            "bProcessing": true,
+            "bServerSide": false,
+            "bJqueryUI": true,
+            "sAjaxSource": '',
+            "pageLength": 20,
+            "aoColumns": [
+                {
+                    "bSortable": false,
+                    "sClass": "center",
+                    "bSearchable": false,
+                    "fnRender": function(oObj) {
+
+                        return '/Content/images/details_open.png" ' +
+                            'alt="expand/collapse" rel="' + oObj.aData[0] + '"/>';
+                    }
+                },
+                null,
+                null,
+                null,
+                null,
+                null, null,
+                null, null
+            ],
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            "tableTools": {
+                "sSwfPath": "/Content/swf/copy_csv_xls_pdf.swf",
+                "aButtons": [
+                    {
+                        "sExtends": "copy",
+                        "oSelectorOpts": { filter: 'applied', order: 'current' },
+                        "mColumns": "visible",
+                        "sButtonText": "Copiar"
+                    },
+                    {
+                        "sExtends": "xls",
+                        "oSelectorOpts": { filter: 'applied', order: 'current' },
+                        "mColumns": "visible",
+
+                    },
+                    {
+                        "sExtends": "pdf",
+                        "oSelectorOpts": { filter: 'applied', order: 'current' },
+                        "mColumns": "visible",
+                        "sPdfOrientation": "landscape"
+                    },
+                    {
+                        "sExtends": "print",
+                        "sButtonText": "Imprimir",
+                        "sInfo": "<h2 style='color: white;'>Vista de Impresión</h2><p>Utilice la funcion de impresion del navegador para imprimir la tabla. Presione ESCAPE cuando haya terminado</p>"
+                    }
+                ]
+            }
+        });
+
+
+        $("#table tbody tr td  a").on('click', function() {
+
+            $("#Prontuario").show("fast");
+
+            $("#cargando").show("fast");
+            var prontuario = $(this).attr("rel");
+            var id = $(this).attr("Id");
+
+
+            $.ajax({
+                url: "@(Url.Action("VisualizaImputadosPorProntuario"))",
+                type: "GET",
+                data: { CodProntuario: prontuario, Id: id, codbarra: "@ViewBag.CodigoBarra" },
+                cache: false,
+                dataType: 'html',
+                beforeSend: function() {
+
+                },
+                success: function(data) {
+                    //Fill div with results
+                    hidePageLoadingSpinner(1);
+                    $("#prontuarios").empty().append('<div class="alert alert-dismissible fade in tile" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">X</span></button><div id="prontuarioBody" class="panel-body"></div></div>');
+                    $("#prontuarioBody").html(data);
+                },
+                error: function(xhr, status, error) {
+                    alert(xhr.responseText);
+                },
+                complete: function(xhr, data) {
+                    
+                }
+
+            });
+
+
+            $("#cargando").hide("fast");
+
+
+        });
+
+
+        $("div.dataTables_filter>label>input").addClass("form-control"); //estilo correcto a filtro
+        $("div.dataTables_length>label>select").addClass("form-control"); //estilo correcto a cant de filas
+        $(".DTTT_container >a").each($).removeClass().addClass("btn btn-sm"); //agrego estilo correcto a botones de tabla
+        //        $('#tabReincidentes').dataTable().columnFilter();
+
+
+    </script>
+
+}

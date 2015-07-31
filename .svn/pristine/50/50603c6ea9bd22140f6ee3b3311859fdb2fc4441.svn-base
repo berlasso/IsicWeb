@@ -1,0 +1,97 @@
+﻿@model ISICWeb.Areas.Otip.Models.DatosGeneralesViewModel
+
+
+
+<section id="Imagenes">
+
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
+            @*<div class="left wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">*@
+            <h2>Imágenes</h2>
+        </div>
+        <div class="panel-body">
+
+            @{
+                if (Model.Archivos != null)
+                {
+                    var tiposArchivos = Model.Archivos.GroupBy(x => x.TipoArchivo);
+                    if (tiposArchivos.Any())
+                    {
+
+
+                        <ul class="portfolio-filter" id="fotos_filter" style="margin-bottom: 10px">
+                            <li role="presentation"><a id="btnFotosTodas" class="btn btn-default active hidden-print" href="#" data-filter="*">Todas</a></li>
+
+
+                            @foreach (var tipoArchivo in tiposArchivos)
+                            {
+                                <li role="presentation"><a class="btn btn-default hidden-print" href="#" data-filter=".@(tipoArchivo.Key.Descripcion.Substring(5, 5).Replace(" ",""))">@tipoArchivo.Key.Descripcion.Trim()</a></li>
+                            }
+
+                        </ul>
+
+
+                        <div class="row">
+                            <div class="portfolio-items isotope" style="position: relative; overflow: hidden; height: 440px;">
+                                @{
+                            int i = 0;
+
+                            foreach (var archivo in Model.Archivos)
+                            {
+                                i++;
+                                int delay = 150 * i;
+                                <div class="portfolio-item @(archivo.TipoArchivo.Descripcion.Substring(5, 5).Replace(" ", "")) col-xs-6 col-sm-4 col-md-3 isotope-item">
+                                    <div class="recent-work-wrap">
+                                        <a class="preview" href=@Url.Content(archivo.Url) rel="prettyPhoto[gallery]" title="@archivo.TipoArchivo.Descripcion">
+                                            <img class="img-responsive  wow fadeInDown animated  " data-wow-delay="@delay.ToString()ms" data-wow-duration="500ms" src=@Url.Content(archivo.ThumbUrl) style="animation-duration: 500ms; animation-delay: @delay.ToString()ms; animation-name: fadeInDown;" />
+                                            <div class="overlay ">
+                                                <div class=" recent-work-inner">
+                                                    <p style="padding-top: 20px">
+                                                        @if (@archivo.SeniaParticular != null && @archivo.SeniaParticular.ClaseUbicacionSeniaPart != null)
+                                                        {
+                                                            @archivo.SeniaParticular.ClaseSeniaParticular.Descripcion
+                                                            @:&nbsp;
+                                                            @archivo.SeniaParticular.ClaseUbicacionSeniaPart.Descripcion
+                                                        }
+                                                        @if (@archivo.TatuajePersona != null && @archivo.TatuajePersona.ClaseUbicacionSeniaPart != null)
+                                                        {
+                                                            @archivo.TatuajePersona.ClaseUbicacionSeniaPart.Descripcion
+                                                        }
+
+                                                        @if (@archivo.TatuajePersona != null && @archivo.TatuajePersona.descripcion != null)
+                                                        {
+                                                            @archivo.TatuajePersona.descripcion
+                                                        }
+                                                        @if (@archivo.SeniaParticular != null && @archivo.SeniaParticular.descripcion != null)
+                                                        {
+                                                            @archivo.SeniaParticular.descripcion
+                                                        }
+                                                    </p>
+
+
+                                                    <i class="fa fa-search"></i>
+
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            }
+
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+
+            }
+        </div>
+    </div>
+
+
+
+
+
+</section>
+

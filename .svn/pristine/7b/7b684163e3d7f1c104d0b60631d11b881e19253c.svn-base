@@ -1,0 +1,431 @@
+﻿@using ISIC.Entities
+@model ISICWeb.Areas.Otip.Models.DatosGeneralesViewModel
+
+
+<section id="DatosGenerales">
+
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class=" panel-heading">
+            <h2>Datos Generales</h2>
+        </div>
+        <div class="panel-body">
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.CodBarras)
+                </div>
+                <div class="col-xs-2 col-md-2 ">
+                    <span class="inverso">@Html.DisplayFor(m => m.CodBarras, new {@class = "form-control"})</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.Prontuario)
+                </div>
+                <div class="col-xs-2 col-md-2 ">
+                    <span class="inverso">@Html.DisplayFor(m => m.Prontuario.ProntuarioNro, new { @class = "form-control" })</span>
+                </div>
+
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.IPP)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.IPP, new { @class = "form-control" })</span>
+
+                </div>
+
+
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.Apellido)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.Apellido, new { @class = "form-control " })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.Nombres)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.Nombres, new { @class = "form-control" })</span>
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.Apodos)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.Apodos, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.OtrosNombres)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.OtrosNombres, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.FechaNacimiento)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <div class="form-group">
+                        <span class="inverso">@Html.DisplayFor(m => m.FechaNacimiento, new { @class = "form-control" })</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.Delito)
+                </div>
+                <div class="col-xs-6 col-md-6">
+                    <span class="inverso">@Html.DisplayFor(m => m.Delito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.FechaDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.FechaDelito, new { @class = "form-control" })</span>
+                </div>
+                
+            </div>
+        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.Conyuge)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <span class="inverso">@Html.DisplayFor(m => m.Conyuge, new { @class = "form-control" })</span>
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.EstadoCivil)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @{
+                    var estCivil = Model.EstadoCivilList.First(m => m.Value == Model.EstadoCivil).Text;
+                    <span class="inverso">@Html.Label(estCivil)</span>
+                }
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.Telefono)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <span class="inverso">@Html.DisplayFor(m => m.Telefono, new {@class = "form-control"})</span>
+            </div>
+            
+        </div>
+        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.Madre)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <span class="inverso">@Html.DisplayFor(m => m.Madre, new { @class = "form-control" })</span>
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.Padre)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <span class="inverso">@Html.DisplayFor(m => m.Padre, new {@class = "form-control"})</span>
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.Sexo)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @{
+                    var sexo = Model.SexoList.First(m => m.Value == Model.Sexo).Text;
+                    <span class="inverso">@Html.Label(sexo)</span>
+                }
+            </div>
+            
+        </div>
+        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.LocalidadNacimiento)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <span class="inverso">@Html.DisplayFor(m => m.LocalidadNacimiento, new { @class = "form-control" })</span>
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.ProvinciaNacimiento)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @if (!String.IsNullOrEmpty(Model.ProvinciaNacimiento))
+                {
+                    var provNac = Model.ProvinciaList.FirstOrDefault(m => m.Value == Model.ProvinciaNacimiento).Text;
+                    <span class="inverso">@Html.Label(provNac)</span>
+                }
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.PaisNacimiento)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @{
+                    if (Model.PaisNacimiento != "")
+                    {
+                        var paisNac = Model.PaisList.FirstOrDefault(m => m.Value == Model.PaisNacimiento).Text;
+                        <span class="inverso">@Html.Label(paisNac)</span>
+                    }
+                }
+            </div>
+
+        </div>
+        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.Fiscal)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <span class="inverso">@Html.DisplayFor(m => m.Fiscal, new { @class = "form-control" })</span>
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.Instruccion)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @{
+                    var instruccion = Model.InstruccionList.First(m => m.Value == Model.Instruccion).Text;
+                    <span class="inverso">@Html.Label(instruccion)</span>
+                }
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.Profesion)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <span class="inverso">@Html.DisplayFor(m => m.Profesion, new {@class = "form-control"})</span>
+            </div>
+
+        </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.ModusOperandi)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.ModusOperandi, new { @class = "form-control" })</span>
+                </div>
+                  <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.FiscaliaGeneral)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @{
+                        var fiscalia = Model.FiscaliaGeneralList.First(m => m.Value == Model.FiscaliaGeneral).Text;
+                        <span class="inverso">@Html.Label(fiscalia)</span>
+                        }
+</div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.UFI)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.UFI, new { @class = "form-control" })</span>
+                </div>
+                
+            </div>
+        <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.TipoDocumento)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @{
+                    var tipoDoc = Model.TipoDocumentoList.First(m => m.Value == Model.TipoDocumento).Text;
+                    <span class="inverso">@Html.Label(tipoDoc)</span>
+                }
+            </div>
+
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.NumeroDocumento)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <span class="inverso">@Html.DisplayFor(m => m.NumeroDocumento, new {@class = "form-control"})</span>
+            </div>
+            <div class="col-xs-2 col-md-2">
+                @Html.LabelFor(model => model.JuzgadoGarantias)
+            </div>
+            <div class="col-xs-2 col-md-2">
+                <span class="inverso">@Html.DisplayFor(m => m.JuzgadoGarantias, new {@class = "form-control"})</span>
+            </div>
+
+        </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+<section id="DomicilioImputado">
+
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
+            @*<div class="left wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">*@
+            <h2>Domicilio del Imputado</h2>
+        </div>
+        <div class="panel-body">
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.Calle)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso" id="prueba">@Html.DisplayFor(m => m.Calle, new { @class = "form-control" })</span>
+                    
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.EntreCalle)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.EntreCalle, new { @class = "form-control" })</span>
+                </div>
+
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.EntreCalle2)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.EntreCalle2, new { @class = "form-control" })</span>
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.NroH)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.NroH, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.DeptoH)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.DeptoH, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.PisoH)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.PisoH, new { @class = "form-control" })</span>
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.Localidad)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.Localidad, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.ParajeBarrioH)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.ParajeBarrioH, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.Partido)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.Partido, new { @class = "form-control" })</span>
+                </div>
+            </div>
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.Provincia)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @if (Model.Provincia != null && Model.Provincia != "0")
+                    {
+
+                        var provincia = Model.ProvinciaList.FirstOrDefault(m => m.Value == Model.Provincia).Text;
+                        @Html.Label(provincia)
+                    }
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.LocalidadPolicial)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.LocalidadPolicial, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.Label("Dependencia Policial", new { id = "lblDependenciaPolicial", @for = "DependenciaPolicial" })
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @if (!String.IsNullOrEmpty(Model.ComisariaMigracion))
+                    {
+                        <span class="inverso">@Html.DisplayTextFor(x => x.ComisariaMigracion)</span>
+                    }
+                    else
+                    {
+                        <span class="inverso">@Html.DisplayFor(m => m.DependenciaPolicial, new { @class = "form-control" })</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section id="DomicilioDelito" style="display:none">
+
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
+            <h2>Domicilio del Delito</h2>
+        </div>
+        <div class="panel-body">
+            <div class="row wow fadeInDown animated" data-wow-delay=" 300ms" data-wow-duration="500ms" style="visibility: visible; animation-duration: 500ms; animation-delay: 300ms; animation-name: fadeInDown;">
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.CalleDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.CalleDelito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.EntreCalleDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.EntreCalleDelito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.EntreCalle2Delito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.EntreCalle2Delito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.NroHDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.NroHDelito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.DeptoHDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.DeptoHDelito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.PisoHDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.PisoHDelito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.LocalidadDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.LocalidadDelito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.ParajeBarrioHDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.ParajeBarrioHDelito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.PartidoDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <span class="inverso">@Html.DisplayFor(m => m.PartidoDelito, new { @class = "form-control" })</span>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @Html.LabelFor(model => model.ProvinciaDelito)
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    @if (Model.ProvinciaDelito != null && Model.ProvinciaDelito != "0")
+                    {
+                        var provDelito = Model.ProvinciaList.First(m => m.Value == Model.ProvinciaDelito).Text;
+                        @Html.Label(provDelito)
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

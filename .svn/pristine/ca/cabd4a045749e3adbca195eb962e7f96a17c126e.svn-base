@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>C:\Proyectos\ISIC\ISICWeb\CapturaDecaDeployed\|C:\Proyectos\CapturaDeployed\</PublishUrlHistory>
+    <InstallUrlHistory>http://desa.mpba.gov.ar/isic/CapturaDecaDeployed/CapturaDecaDactilar.application/|https://test.mpba.gov.ar/isic/Digitalizacion/VisualizaDecaDigital/</InstallUrlHistory>
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory>C:\Desarrollo\projects\ISIC\FingerCapturer\bin\Debug</BootstrapperUrlHistory>
+    <ErrorReportUrlHistory />
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>
+    </StartArguments>
+    <StartAction>Project</StartAction>
+  </PropertyGroup>
+</Project>

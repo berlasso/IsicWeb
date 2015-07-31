@@ -1,0 +1,89 @@
+﻿@model ISIC.Entities.Prontuario
+
+<div class="tile tile  wow fadeInDown animated" style="margin-bottom: 80px;">
+
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <h3>
+                Listado de fichas de AFIS
+            </h3>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tablaAFIS" class="table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                NIF
+                            </th>
+                            <th>
+                                Apellido
+                            </th>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Documento Nro.
+                            </th>
+                            <th>
+                                Clase
+                            </th>
+                            <th>
+                                Fecha Informe
+                            </th>
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.DatosAFIS != null)
+                        {
+                            foreach (var item in Model.DatosAFIS.Where(x => x.Baja != true))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NIF)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Apellido)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DNI)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Clase)
+                                    </td>
+                                    <td>
+                                        @{
+                                string fecha = item.FechaInforme.ToString("dd/MM/yyyy");
+                                        }
+                                        @fecha
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>

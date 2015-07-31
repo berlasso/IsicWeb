@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5"/></startup><system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_ICapturaDecaDactilarService" />
+                <binding name="BasicHttpBinding_ICapturaDecaDactilarService1">
+                    <security mode="Transport" />
+                </binding>
+                <binding name="BasicHttpBinding_ICapturaDecaDactilarService2" />
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:18898/CapturaDecaDactilarService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ICapturaDecaDactilarService"
+                contract="ServiceCaptura.ICapturaDecaDactilarService" name="BasicHttpBinding_ICapturaDecaDactilarService" />
+            <endpoint address="https://localhost/ISICServices/RenaperResponseService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ICapturaDecaDactilarService1"
+                contract="ServiceCapturaDecaDactilar.ICapturaDecaDactilarService"
+                name="BasicHttpBinding_ICapturaDecaDactilarService1" />
+        </client>
+    </system.serviceModel>
+</configuration>

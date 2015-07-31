@@ -1,0 +1,323 @@
+﻿<error errorId="a488a242-c9fc-435d-8480-f18c06ce7be3" application="/LM/W3SVC/28/ROOT" host="LPSICINFOR02" type="System.InvalidOperationException" message="Las plantillas solo se pueden usar con expresiones de acceso de campos, acceso de propiedades, índice de matriz de una dimensión o indizador personalizado de un parámetro." source="System.Web.Mvc" detail="System.InvalidOperationException: Las plantillas solo se pueden usar con expresiones de acceso de campos, acceso de propiedades, índice de matriz de una dimensión o indizador personalizado de un parámetro.&#xD;&#xA;   en System.Web.Mvc.ModelMetadata.FromLambdaExpression[TParameter,TValue](Expression`1 expression, ViewDataDictionary`1 viewData, ModelMetadataProvider metadataProvider)&#xD;&#xA;   en System.Web.Mvc.ModelMetadata.FromLambdaExpression[TParameter,TValue](Expression`1 expression, ViewDataDictionary`1 viewData)&#xD;&#xA;   en System.Web.Mvc.Html.TemplateHelpers.TemplateFor[TContainer,TValue](HtmlHelper`1 html, Expression`1 expression, String templateName, String htmlFieldName, DataBoundControlMode mode, Object additionalViewData, TemplateHelperDelegate templateHelper)&#xD;&#xA;   en System.Web.Mvc.Html.TemplateHelpers.TemplateFor[TContainer,TValue](HtmlHelper`1 html, Expression`1 expression, String templateName, String htmlFieldName, DataBoundControlMode mode, Object additionalViewData)&#xD;&#xA;   en System.Web.Mvc.Html.DisplayExtensions.DisplayFor[TModel,TValue](HtmlHelper`1 html, Expression`1 expression)&#xD;&#xA;   en ASP._Page_Areas_PortalSIC_Views_Busqueda__AntecedentesIdgx_cshtml.Execute() en c:\Proyectos2\ISIC Web 2.0\ISICWeb\Areas\PortalSIC\Views\Busqueda\_AntecedentesIdgx.cshtml:línea 79&#xD;&#xA;   en System.Web.WebPages.WebPageBase.ExecutePageHierarchy()&#xD;&#xA;   en System.Web.Mvc.WebViewPage.ExecutePageHierarchy()&#xD;&#xA;   en System.Web.WebPages.WebPageBase.ExecutePageHierarchy(WebPageContext pageContext, TextWriter writer, WebPageRenderingBase startPage)&#xD;&#xA;   en System.Web.Mvc.RazorView.RenderView(ViewContext viewContext, TextWriter writer, Object instance)&#xD;&#xA;   en System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)&#xD;&#xA;   en System.Web.Mvc.HtmlHelper.RenderPartialInternal(String partialViewName, ViewDataDictionary viewData, Object model, TextWriter writer, ViewEngineCollection viewEngineCollection)&#xD;&#xA;   en System.Web.Mvc.Html.RenderPartialExtensions.RenderPartial(HtmlHelper htmlHelper, String partialViewName, Object model)&#xD;&#xA;   en ASP._Page_Areas_PortalSIC_Views_Busqueda_VerImputado_cshtml.Execute() en c:\Proyectos2\ISIC Web 2.0\ISICWeb\Areas\PortalSIC\Views\Busqueda\VerImputado.cshtml:línea 35&#xD;&#xA;   en System.Web.WebPages.WebPageBase.ExecutePageHierarchy()&#xD;&#xA;   en System.Web.Mvc.WebViewPage.ExecutePageHierarchy()&#xD;&#xA;   en System.Web.WebPages.StartPage.RunPage()&#xD;&#xA;   en System.Web.WebPages.StartPage.ExecutePageHierarchy()&#xD;&#xA;   en System.Web.WebPages.WebPageBase.ExecutePageHierarchy(WebPageContext pageContext, TextWriter writer, WebPageRenderingBase startPage)&#xD;&#xA;   en System.Web.Mvc.RazorView.RenderView(ViewContext viewContext, TextWriter writer, Object instance)&#xD;&#xA;   en System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)&#xD;&#xA;   en System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)&#xD;&#xA;   en System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   en System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   en System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   en System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   en System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;&gt;c__DisplayClass2b.&lt;BeginInvokeAction&gt;b__1c()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Controller.&lt;BeginExecute&gt;b__15(IAsyncResult asyncResult, Controller controller)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)&#xD;&#xA;   en System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   en System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)&#xD;&#xA;   en System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   en System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="prueba" time="2015-07-21T12:40:26.9506898Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CACHE_CONTROL:max-age=0&#xD;&#xA;HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, sdch&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:es-419,es;q=0.8,en;q=0.6&#xD;&#xA;HTTP_COOKIE:__RequestVerificationToken=iNqIC8wuCEshMyDW--uV2CZ5oXc0YfpXlygxjzeMDV-GnA-i9i2H98gem3M6PhbbKwdbqPie-aCvuVoDEb3_rxHwEGo34Bynhw7A13jC94g1; ASP.NET_SessionId=bipy33nzma2ydulhhbgfyigx; .AspNet.ApplicationCookie=l-ex0mN_GspYMZfwqgVxvED5-e9hI3cWvghfl0GfM3W0yWqtYzyzXef06a9qTTsZkKX-Od7DLpAjODGY_JdvpiX1ffSS_l3mxZgR8JFrrAjFMXg2b8SOUO5dAkq9wCFOgtOwgaF5sl1Tpiyzn8t9intjA8uZbIJNsEvHXg3pP7V9hfSViv-jhcJ_XYb1HT9PdNL9B3ByjlgPHqLKF6BkAszodp0CHdosM6eTtFBwAbuCNCb9mxzworhod5ozthrj0XBsb5oMrBQfunBaEbO5DD0_kZEiHxjO9Jh4KZsunprVDPJrDQPtooQfCLVKFSTNsfw9fE7n_AUtG4Yv7oY2tsA11Z6Hu5MQsxnY-v_Tqe1F1KtTFaU6HLWrNKYfgzR0s673LSyV8k4vrCsLJjEc-FCx5rsXfcV3RrIF6NFxSHgJ8Tj0471v_tB2ZRVwsU19XosgOmcH9Ye_hFPNLlHpaberbpLVIcJIJUjhqNfQUgC0johx6g_0HqzQ-f9lne4QFnNLKASSn9y-56VL0trPGRU0BNUqUWK9Q1LXJx0uuIyE0H05LRvarmZ_f5VhjrKP&#xD;&#xA;HTTP_HOST:localhost:22443&#xD;&#xA;HTTP_REFERER:http://localhost:22443/PortalSIC/busqueda/Buscar?inicio=true&amp;TipoBusqueda=1&amp;BusquedaAvanzada=0&amp;FiscaliaGeneral=0&amp;CodBarras=010200019904R&amp;Delito=&amp;Apellido=&amp;Nombres=&amp;NumeroDocumento=&amp;IPP=&amp;Apodos=&amp;EdadDesde=&amp;EdadHasta=&amp;Madre=&amp;Padre=&amp;FechaDelitoDesde=&amp;FechaDelitoHasta=&amp;OtrosNombres=&amp;Profesion=&amp;Sexo=0&amp;LocalidadNacimiento=&amp;ProvinciaNacimiento=&amp;PaisNacimiento=&amp;Calle=&amp;NroH=&amp;Localidad=&amp;Partido=&amp;Provincia=&amp;CalleDelito=&amp;NroHDelito=&amp;LocalidadDelito=&amp;PartidoDelito=&amp;ProvinciaDelito=&amp;Robustez=0&amp;ColorPiel=0&amp;ColorOjos=0&amp;ColorCabellos=0&amp;TipoCabello=0&amp;TipoCalvicie=0&amp;FormaCara=0&amp;DimensionCeja=0&amp;TipoCeja=0&amp;FormaMenton=0&amp;FormaOreja=0&amp;FormaNariz=0&amp;FormaBoca=0&amp;FormaLabioInferior=0&amp;FormaLabioSuperior=0&amp;Estatura=&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Cache-Control: max-age=0&#xD;&#xA;Connection: keep-alive&#xD;&#xA;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&#xD;&#xA;Accept-Encoding: gzip, deflate, sdch&#xD;&#xA;Accept-Language: es-419,es;q=0.8,en;q=0.6&#xD;&#xA;Cookie: __RequestVerificationToken=iNqIC8wuCEshMyDW--uV2CZ5oXc0YfpXlygxjzeMDV-GnA-i9i2H98gem3M6PhbbKwdbqPie-aCvuVoDEb3_rxHwEGo34Bynhw7A13jC94g1; ASP.NET_SessionId=bipy33nzma2ydulhhbgfyigx; .AspNet.ApplicationCookie=l-ex0mN_GspYMZfwqgVxvED5-e9hI3cWvghfl0GfM3W0yWqtYzyzXef06a9qTTsZkKX-Od7DLpAjODGY_JdvpiX1ffSS_l3mxZgR8JFrrAjFMXg2b8SOUO5dAkq9wCFOgtOwgaF5sl1Tpiyzn8t9intjA8uZbIJNsEvHXg3pP7V9hfSViv-jhcJ_XYb1HT9PdNL9B3ByjlgPHqLKF6BkAszodp0CHdosM6eTtFBwAbuCNCb9mxzworhod5ozthrj0XBsb5oMrBQfunBaEbO5DD0_kZEiHxjO9Jh4KZsunprVDPJrDQPtooQfCLVKFSTNsfw9fE7n_AUtG4Yv7oY2tsA11Z6Hu5MQsxnY-v_Tqe1F1KtTFaU6HLWrNKYfgzR0s673LSyV8k4vrCsLJjEc-FCx5rsXfcV3RrIF6NFxSHgJ8Tj0471v_tB2ZRVwsU19XosgOmcH9Ye_hFPNLlHpaberbpLVIcJIJUjhqNfQUgC0johx6g_0HqzQ-f9lne4QFnNLKASSn9y-56VL0trPGRU0BNUqUWK9Q1LXJx0uuIyE0H05LRvarmZ_f5VhjrKP&#xD;&#xA;Host: localhost:22443&#xD;&#xA;Referer: http://localhost:22443/PortalSIC/busqueda/Buscar?inicio=true&amp;TipoBusqueda=1&amp;BusquedaAvanzada=0&amp;FiscaliaGeneral=0&amp;CodBarras=010200019904R&amp;Delito=&amp;Apellido=&amp;Nombres=&amp;NumeroDocumento=&amp;IPP=&amp;Apodos=&amp;EdadDesde=&amp;EdadHasta=&amp;Madre=&amp;Padre=&amp;FechaDelitoDesde=&amp;FechaDelitoHasta=&amp;OtrosNombres=&amp;Profesion=&amp;Sexo=0&amp;LocalidadNacimiento=&amp;ProvinciaNacimiento=&amp;PaisNacimiento=&amp;Calle=&amp;NroH=&amp;Localidad=&amp;Partido=&amp;Provincia=&amp;CalleDelito=&amp;NroHDelito=&amp;LocalidadDelito=&amp;PartidoDelito=&amp;ProvinciaDelito=&amp;Robustez=0&amp;ColorPiel=0&amp;ColorOjos=0&amp;ColorCabellos=0&amp;TipoCabello=0&amp;TipoCalvicie=0&amp;FormaCara=0&amp;DimensionCeja=0&amp;TipoCeja=0&amp;FormaMenton=0&amp;FormaOreja=0&amp;FormaNariz=0&amp;FormaBoca=0&amp;FormaLabioInferior=0&amp;FormaLabioSuperior=0&amp;Estatura=&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/28/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Proyectos2\ISIC Web 2.0\ISICWeb\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="ApplicationCookie" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="prueba" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="prueba" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="28" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/28" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/PortalSIC/Busqueda/VerImputado" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Proyectos2\ISIC Web 2.0\ISICWeb\PortalSIC\Busqueda\VerImputado" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="id=1662273&amp;returnUrl=http://localhost:22443/PortalSIC/busqueda/Buscar?inicio=true&amp;TipoBusqueda=1&amp;BusquedaAvanzada=0&amp;FiscaliaGeneral=0&amp;CodBarras=010200019904R&amp;Delito=&amp;Apellido=&amp;Nombres=&amp;NumeroDocumento=&amp;IPP=&amp;Apodos=&amp;EdadDesde=&amp;EdadHasta=&amp;Madre=&amp;Padre=&amp;FechaDelitoDesde=&amp;FechaDelitoHasta=&amp;OtrosNombres=&amp;Profesion=&amp;Sexo=0&amp;LocalidadNacimiento=&amp;ProvinciaNacimiento=&amp;PaisNacimiento=&amp;Calle=&amp;NroH=&amp;Localidad=&amp;Partido=&amp;Provincia=&amp;CalleDelito=&amp;NroHDelito=&amp;LocalidadDelito=&amp;PartidoDelito=&amp;ProvinciaDelito=&amp;Robustez=0&amp;ColorPiel=0&amp;ColorOjos=0&amp;ColorCabellos=0&amp;TipoCabello=0&amp;TipoCalvicie=0&amp;FormaCara=0&amp;DimensionCeja=0&amp;TipoCeja=0&amp;FormaMenton=0&amp;FormaOreja=0&amp;FormaNariz=0&amp;FormaBoca=0&amp;FormaLabioInferior=0&amp;FormaLabioSuperior=0&amp;Estatura=" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="53255" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/PortalSIC/Busqueda/VerImputado" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="22443" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/8.0" />
+    </item>
+    <item name="URL">
+      <value string="/PortalSIC/Busqueda/VerImputado" />
+    </item>
+    <item name="HTTP_CACHE_CONTROL">
+      <value string="max-age=0" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, sdch" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="es-419,es;q=0.8,en;q=0.6" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="__RequestVerificationToken=iNqIC8wuCEshMyDW--uV2CZ5oXc0YfpXlygxjzeMDV-GnA-i9i2H98gem3M6PhbbKwdbqPie-aCvuVoDEb3_rxHwEGo34Bynhw7A13jC94g1; ASP.NET_SessionId=bipy33nzma2ydulhhbgfyigx; .AspNet.ApplicationCookie=l-ex0mN_GspYMZfwqgVxvED5-e9hI3cWvghfl0GfM3W0yWqtYzyzXef06a9qTTsZkKX-Od7DLpAjODGY_JdvpiX1ffSS_l3mxZgR8JFrrAjFMXg2b8SOUO5dAkq9wCFOgtOwgaF5sl1Tpiyzn8t9intjA8uZbIJNsEvHXg3pP7V9hfSViv-jhcJ_XYb1HT9PdNL9B3ByjlgPHqLKF6BkAszodp0CHdosM6eTtFBwAbuCNCb9mxzworhod5ozthrj0XBsb5oMrBQfunBaEbO5DD0_kZEiHxjO9Jh4KZsunprVDPJrDQPtooQfCLVKFSTNsfw9fE7n_AUtG4Yv7oY2tsA11Z6Hu5MQsxnY-v_Tqe1F1KtTFaU6HLWrNKYfgzR0s673LSyV8k4vrCsLJjEc-FCx5rsXfcV3RrIF6NFxSHgJ8Tj0471v_tB2ZRVwsU19XosgOmcH9Ye_hFPNLlHpaberbpLVIcJIJUjhqNfQUgC0johx6g_0HqzQ-f9lne4QFnNLKASSn9y-56VL0trPGRU0BNUqUWK9Q1LXJx0uuIyE0H05LRvarmZ_f5VhjrKP" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:22443" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:22443/PortalSIC/busqueda/Buscar?inicio=true&amp;TipoBusqueda=1&amp;BusquedaAvanzada=0&amp;FiscaliaGeneral=0&amp;CodBarras=010200019904R&amp;Delito=&amp;Apellido=&amp;Nombres=&amp;NumeroDocumento=&amp;IPP=&amp;Apodos=&amp;EdadDesde=&amp;EdadHasta=&amp;Madre=&amp;Padre=&amp;FechaDelitoDesde=&amp;FechaDelitoHasta=&amp;OtrosNombres=&amp;Profesion=&amp;Sexo=0&amp;LocalidadNacimiento=&amp;ProvinciaNacimiento=&amp;PaisNacimiento=&amp;Calle=&amp;NroH=&amp;Localidad=&amp;Partido=&amp;Provincia=&amp;CalleDelito=&amp;NroHDelito=&amp;LocalidadDelito=&amp;PartidoDelito=&amp;ProvinciaDelito=&amp;Robustez=0&amp;ColorPiel=0&amp;ColorOjos=0&amp;ColorCabellos=0&amp;TipoCabello=0&amp;TipoCalvicie=0&amp;FormaCara=0&amp;DimensionCeja=0&amp;TipoCeja=0&amp;FormaMenton=0&amp;FormaOreja=0&amp;FormaNariz=0&amp;FormaBoca=0&amp;FormaLabioInferior=0&amp;FormaLabioSuperior=0&amp;Estatura=" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36" />
+    </item>
+  </serverVariables>
+  <queryString>
+    <item name="id">
+      <value string="1662273" />
+    </item>
+    <item name="returnUrl">
+      <value string="http://localhost:22443/PortalSIC/busqueda/Buscar?inicio=true" />
+    </item>
+    <item name="TipoBusqueda">
+      <value string="1" />
+    </item>
+    <item name="BusquedaAvanzada">
+      <value string="0" />
+    </item>
+    <item name="FiscaliaGeneral">
+      <value string="0" />
+    </item>
+    <item name="CodBarras">
+      <value string="010200019904R" />
+    </item>
+    <item name="Delito">
+      <value string="" />
+    </item>
+    <item name="Apellido">
+      <value string="" />
+    </item>
+    <item name="Nombres">
+      <value string="" />
+    </item>
+    <item name="NumeroDocumento">
+      <value string="" />
+    </item>
+    <item name="IPP">
+      <value string="" />
+    </item>
+    <item name="Apodos">
+      <value string="" />
+    </item>
+    <item name="EdadDesde">
+      <value string="" />
+    </item>
+    <item name="EdadHasta">
+      <value string="" />
+    </item>
+    <item name="Madre">
+      <value string="" />
+    </item>
+    <item name="Padre">
+      <value string="" />
+    </item>
+    <item name="FechaDelitoDesde">
+      <value string="" />
+    </item>
+    <item name="FechaDelitoHasta">
+      <value string="" />
+    </item>
+    <item name="OtrosNombres">
+      <value string="" />
+    </item>
+    <item name="Profesion">
+      <value string="" />
+    </item>
+    <item name="Sexo">
+      <value string="0" />
+    </item>
+    <item name="LocalidadNacimiento">
+      <value string="" />
+    </item>
+    <item name="ProvinciaNacimiento">
+      <value string="" />
+    </item>
+    <item name="PaisNacimiento">
+      <value string="" />
+    </item>
+    <item name="Calle">
+      <value string="" />
+    </item>
+    <item name="NroH">
+      <value string="" />
+    </item>
+    <item name="Localidad">
+      <value string="" />
+    </item>
+    <item name="Partido">
+      <value string="" />
+    </item>
+    <item name="Provincia">
+      <value string="" />
+    </item>
+    <item name="CalleDelito">
+      <value string="" />
+    </item>
+    <item name="NroHDelito">
+      <value string="" />
+    </item>
+    <item name="LocalidadDelito">
+      <value string="" />
+    </item>
+    <item name="PartidoDelito">
+      <value string="" />
+    </item>
+    <item name="ProvinciaDelito">
+      <value string="" />
+    </item>
+    <item name="Robustez">
+      <value string="0" />
+    </item>
+    <item name="ColorPiel">
+      <value string="0" />
+    </item>
+    <item name="ColorOjos">
+      <value string="0" />
+    </item>
+    <item name="ColorCabellos">
+      <value string="0" />
+    </item>
+    <item name="TipoCabello">
+      <value string="0" />
+    </item>
+    <item name="TipoCalvicie">
+      <value string="0" />
+    </item>
+    <item name="FormaCara">
+      <value string="0" />
+    </item>
+    <item name="DimensionCeja">
+      <value string="0" />
+    </item>
+    <item name="TipoCeja">
+      <value string="0" />
+    </item>
+    <item name="FormaMenton">
+      <value string="0" />
+    </item>
+    <item name="FormaOreja">
+      <value string="0" />
+    </item>
+    <item name="FormaNariz">
+      <value string="0" />
+    </item>
+    <item name="FormaBoca">
+      <value string="0" />
+    </item>
+    <item name="FormaLabioInferior">
+      <value string="0" />
+    </item>
+    <item name="FormaLabioSuperior">
+      <value string="0" />
+    </item>
+    <item name="Estatura">
+      <value string="" />
+    </item>
+  </queryString>
+  <cookies>
+    <item name="__RequestVerificationToken">
+      <value string="iNqIC8wuCEshMyDW--uV2CZ5oXc0YfpXlygxjzeMDV-GnA-i9i2H98gem3M6PhbbKwdbqPie-aCvuVoDEb3_rxHwEGo34Bynhw7A13jC94g1" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="bipy33nzma2ydulhhbgfyigx" />
+    </item>
+    <item name=".AspNet.ApplicationCookie">
+      <value string="l-ex0mN_GspYMZfwqgVxvED5-e9hI3cWvghfl0GfM3W0yWqtYzyzXef06a9qTTsZkKX-Od7DLpAjODGY_JdvpiX1ffSS_l3mxZgR8JFrrAjFMXg2b8SOUO5dAkq9wCFOgtOwgaF5sl1Tpiyzn8t9intjA8uZbIJNsEvHXg3pP7V9hfSViv-jhcJ_XYb1HT9PdNL9B3ByjlgPHqLKF6BkAszodp0CHdosM6eTtFBwAbuCNCb9mxzworhod5ozthrj0XBsb5oMrBQfunBaEbO5DD0_kZEiHxjO9Jh4KZsunprVDPJrDQPtooQfCLVKFSTNsfw9fE7n_AUtG4Yv7oY2tsA11Z6Hu5MQsxnY-v_Tqe1F1KtTFaU6HLWrNKYfgzR0s673LSyV8k4vrCsLJjEc-FCx5rsXfcV3RrIF6NFxSHgJ8Tj0471v_tB2ZRVwsU19XosgOmcH9Ye_hFPNLlHpaberbpLVIcJIJUjhqNfQUgC0johx6g_0HqzQ-f9lne4QFnNLKASSn9y-56VL0trPGRU0BNUqUWK9Q1LXJx0uuIyE0H05LRvarmZ_f5VhjrKP" />
+    </item>
+  </cookies>
+</error>

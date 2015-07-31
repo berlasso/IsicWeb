@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="xmlComments" type="WCFExtrasPlus.Wsdl.Documentation.XmlCommentsConfig, WCFExtrasPlus" />
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+  </configSections>
+  <connectionStrings>
+    <add name="ISICDS" connectionString="Data Source=MPBDDESA01;Initial Catalog=SIAC;Persist Security Info=true;User ID=UsuarioSIAC;Password=UsuarioSIAC;MultipleActiveResultSets=true;" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <appSettings>
+    <add key="renaper.url" value="https://afisrenaper.idear.gov.ar:13443/AFIS_MinJusticia.php" />
+    <!-- Subject Name del certificado -->
+    <add key="renaper.certificate.sn" value="ProcuracionGral" />
+    <!-- Store Location CurrentUser = 1, LocalMachine = 2 -->
+    <add key="renaper.certificate.storelocation" value="1" />
+    <!-- Stroe Name AddressBook = 1, AuthRoot = 2, CertificateAuthority = 3, My = 5, Root = 6, TrustedPeople = 7 -->
+    <add key="renaper.certificate.storename" value="5" />
+  </appSettings>
+  <system.web>
+    <compilation debug="true" targetFramework="4.5" />
+    <httpRuntime targetFramework="4.5" />
+  </system.web>
+  <system.serviceModel>
+    <extensions>
+      <behaviorExtensions>
+        <add name="wsdlExtensions" type="WCFExtrasPlus.Wsdl.WsdlExtensionsConfig, WCFExtrasPlus" />
+      </behaviorExtensions>
+    </extensions>
+    <services>
+      <service name="ISIC.Services.CapturaDecaDactilarService">
+        <endpoint  address=""
+       binding="basicHttpBinding" bindingConfiguration="TransferService"
+          contract="ISIC.Services.ICapturaDecaDactilarService" >
+        </endpoint>
+      </service>
+      
+      <service name="ISIC.Services.RenaperResponseService">
+        <endpoint address="" behaviorConfiguration="WsdlEndpointBehavior"
+          binding="basicHttpBinding" contract="ISIC.Services.IRenaperResponseService" />
+      </service>
+      <service name="ISIC.Services.RenaperIdentityService">
+        <endpoint address="" behaviorConfiguration="WsdlEndpointBehavior2"
+          binding="basicHttpBinding" contract="ISIC.Services.IRenaperIdentityService" />
+      </service>
+    </services>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="TransferService" maxReceivedMessageSize="2147483647" >
+        </binding>
+      </basicHttpBinding>
+    </bindings>
+    
+    <behaviors>
+      <endpointBehaviors>
+        <behavior name="WsdlEndpointBehavior">
+          <wsdlExtensions location="http://localhost:18898/RenaperResponseService.svc" singleFile="true"/>
+        </behavior>
+        <behavior name="WsdlEndpointBehavior2">
+          <wsdlExtensions location="http://localhost:18898/RenaperIdentityService.svc" singleFile="true" />
+        </behavior>
+      </endpointBehaviors>
+      <serviceBehaviors>
+        <!-- Default service behavior configuration -->
+        <behavior>
+          <!-- To avoid disclosing metadata information, set the value below to false and remove the metadata endpoint above before deployment -->
+          <serviceMetadata httpGetEnabled="true" />
+          <!-- To receive exception details in faults for debugging purposes, set the value below to true.  Set to false before deployment to avoid disclosing exception information -->
+          <serviceDebug includeExceptionDetailInFaults="true" />
+          <dataContractSerializer maxItemsInObjectGraph="2147483647" />
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+    <serviceHostingEnvironment aspNetCompatibilityEnabled="true" multipleSiteBindingsEnabled="true" />
+  </system.serviceModel>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true" />
+    <!--
+        Para examinar el directorio raíz de la aplicación web durante la depuración, establezca el valor siguiente en true.
+        Establézcalo en false antes de la implementación para evitar revelar información sobre la carpeta de aplicación web.
+      -->
+    <directoryBrowse enabled="true" />
+  </system.webServer>
+  <system.diagnostics>
+    <trace autoflush="true">
+      <listeners>
+        <add type="System.Diagnostics.TextWriterTraceListener" name="TextWriter" initializeData="trace.log" />
+      </listeners>
+    </trace>
+  </system.diagnostics>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Practices.Unity" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.5.0.0" newVersion="3.5.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+
+ 
+</configuration>

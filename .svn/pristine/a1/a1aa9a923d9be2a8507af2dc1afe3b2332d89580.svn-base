@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "Clasificación";
+}
+
+
+<div class="container-detalle">
+    <div class="center wow fadeInDown animated tile-light">
+        <h1>Clasificación</h1>
+    </div>
+
+
+@using (Ajax.BeginForm("ResultadoBusquedaImputado", "Clasificacion", new AjaxOptions
+{
+    HttpMethod = "POST",
+    UpdateTargetId = "resultadoBusqueda",
+    OnBegin = "showLoading",
+    OnComplete = "stopLoading"
+}, new { Id = "formResultadoBusqueda" }))
+
+
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="panel panel-default tile wow fadeInDown animated">
+        <div class="panel-heading">
+
+            <h2>
+                Imputado a clasificar
+            </h2>
+
+        </div>
+
+
+
+
+        <div class="panel-body">
+            <div class="row wow fadeInDown animated">
+
+                <div class="col-md-4">
+
+
+
+
+                    <div class="form-group">
+                        <div class="input-group">
+
+                            @Html.TextBox("CodigoBarra", "", new {@class = "form-control", id = "CodigoBarra", placeholder = "Código de Barras"})
+
+                            <span type="submit" class="input-group-addon btn btn-alt " id="btnBuscarCodBarras">
+                                <span class="flaticon-zoom22"></span>
+                            </span>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div id="cargando" style="display: none;">
+                        <img src="~/Images/loading.gif" alt="Loading..." />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+
+                    <div id="resultadoBusqueda">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    @Html.ValidationMessage("CodigoBarra")
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+  
+    </div>
+}
+
+
+</div>
+
+@section footer
+{
+    <div class="col-md-2 col-sm-3 col-xs-3">
+        @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
+                Volver
+            </a>*@
+        <a class="btn btn-lg btn-alt " href='@Url.Action("IndexPorTareas", "Imputado")' onclick=' showPageLoadingSpinner() ' title=" volver" type="button">
+                Volver
+        </a>
+</div>
+<div class="col-md-2  col-sm-4 col-xs-4 text-center ">
+
+@*    @Html.ActionLink("Pasar a Cotejo", "Finalizar", new {codBarra = Model.}, new { @class = "btn btn-lg btn-alt", title = "Finalizar" })*@
+   <input type="button" id="send" value="Pasar a Cotejo" class = "btn btn-lg btn-alt"/>
+     
+</div>
+</div>
+   @* <div class="col-md-10">
+
+</div>*@
+
+}
+
+
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+    function formSubmit() {
+
+        var form = $('#formResultadoBusqueda');
+        var criterioSeleccionado = $('#CodigoBarra').val().length > 0;
+
+        $.validator.unobtrusive.parse(form);
+        form.validate();
+        if (criterioSeleccionado && form.valid()) {
+            form.submit();
+        }
+    }
+    $(function(){
+        $('#send').on("click",function(e) {
+            var codbarra = $('#CodigoBarra').val();
+            Finalizar(codbarra);
+            //return false;
+            //alert("ok")
+        });
+        
+    });
+        function Finalizar(codbarra) {
+
+            var url = '@Url.Action("Finalizar", "Clasificacion", new { codBarra="param"})';
+            url = url.replace("param", codbarra)
+            document.location.href= url;
+        }
+
+        $('#CodigoBarra').mask("999999999999a");
+    function showLoading() {
+        $('#cargando').show();
+    }
+
+    function stopLoading() {
+        $('#cargando').hide();
+    }
+
+    //function showLoading() {
+    //    $('#resultadoBusqueda').html('<div class="loading">Cargando...</div>');
+    //}
+
+    $('form input').keydown(function (event) {
+        if (event.keyCode == 13) {
+            formSubmit();
+        }
+    });
+
+    $('#btnBuscarCodBarras').on('click', function (e) {
+        e.preventDefault();
+        formSubmit();
+    });
+  
+    @if (ViewBag.CodigoBarra != null)
+    {
+        <text>
+        $(function () {
+            $('#CodigoBarra').val("@ViewBag.CodigoBarra");
+            formSubmit();
+        });
+        </text>
+    }
+    
+
+</script>
+}

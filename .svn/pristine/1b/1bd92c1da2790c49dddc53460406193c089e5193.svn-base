@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ISIC.Entities.Archivo>
+@{ int FotoCount = 0; }
+
+<div class="well tile">
+    @*<h3>Cantidad de Fotos: @ViewBag.CantidadTotal</h3>*@
+    <p>Importante: Se muestra un máximo de @ViewBag.CantidadMaxima fotos.</p>
+</div>
+@if (!Model.Any())
+{
+    <div id="sinResultados" class="alert alert-warning alert-icon   tile-dark">
+        Atención: No se encontró ninguna foto.
+        <i class="icon flaticon-caution2">
+
+        </i>
+    </div>
+}
+<div id="container" class="wrap tile">
+
+        @foreach (var foto in Model)
+        {
+            FotoCount++;
+            <div class="item">
+                <img class="img-thumbnail" src="@Url.Content(foto.ThumbUrl)"/>
+                <span class="overlay">
+                <a href="@Url.Content(foto.Url)" onclick="event.preventDefault();AsignarPrettyPhoto(this)">
+                     @*<a href="#" onclick='AsignarPrettyPhoto("@Url.Content(foto.Url)")' >*@
+                         <i class=" fa fa-search">
+                         </i>
+                     </a>    
+                <p>
+                    <label>
+                        @Html.CheckBox("chkFotoElegida", false, new {@onchange = "ElegirFoto(this)"})Elegir
+                    </label>
+                </p>
+            </span>
+
+           
+            </div>
+
+            if (FotoCount == ViewBag.cantPorPag)
+            {
+                <div class="navselector" style="position: absolute; bottom: 10px;">
+                    <a id="next" href="@Url.Action("GenerarScroller", "InfiniteScroller", new {Area = "PortalSIC", pag = 2})"/>Next
+
+                </div>
+            @*<div class="nav">Siguiente</div>*@
+            }
+
+        }
+    </div>
+
+
+    
+@section footer
+{
+    <div class="col-md-2 col-xs-2">
+        @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
+                    Volver
+                </a>*@
+        <a class="btn btn-lg btn-alt " href='@Url.Action("Index", "Busqueda")' onclick=' showPageLoadingSpinner() ' title=" volver" type="button" id="btnVolver">
+        
+            Volver
+        </a>
+    </div>
+    <div class="col-md-4 col-md-offset-2 col-xs-8 col-xs-offset-2">
+        <h4>
+            <p id="CartelFotosAgregadas"></p>
+        </h4>
+        @Html.Hidden("CantFotosAgregadas")
+        @Html.Hidden("FotosAgregadas")
+
+    </div>
+}
+
+@section scripts
+{
+    <script>
+        var urlFotosElegidas = '@Url.Action("MostrarFotosSeleccionadas", "InfiniteScroller")?fotos=';
+
+
+    </script>
+}

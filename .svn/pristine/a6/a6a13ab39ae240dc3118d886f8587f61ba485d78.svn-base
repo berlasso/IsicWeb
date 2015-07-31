@@ -1,0 +1,99 @@
+﻿@model ISIC.Entities.Prontuario
+
+<div class="tile tile  wow fadeInDown animated" style="margin-bottom: 80px;">
+
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <h4>
+                Listado de fichas de Migraciones
+            </h4>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tablaMigraciones" class=" table  table-bordered table-hover  table-striped  tabla" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                Tipo
+                            </th>
+                            <th>
+                                TITULAR
+                            </th>
+                            <th>
+                                TEMA
+                            </th>
+                            <th>
+                                DOCUMENTO
+                            </th>
+
+                            <th>
+                                EXPEDIENTE
+                            </th>
+
+                            <th>
+                                CARATULA
+                            </th>
+                            <th>
+                                Fecha Informe
+                            </th>
+
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.DatosMigracioneses != null)
+                        {
+                            foreach (var item in Model.DatosMigracioneses.Where(x => x.Baja != true))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TipoRestriccion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Titular)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Tema)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DocumentoNumero)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NroExpediente)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Caratula)
+                                    </td>
+                                    <td>
+                                        @{
+                                string fecha = item.FechaInforme.ToString("dd/MM/yyyy");
+                                        }
+                                        @fecha
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>

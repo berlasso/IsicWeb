@@ -1,0 +1,86 @@
+﻿@using MvcFileUploader.HtmlHelper
+@using MvcFileUploader.Models
+@model ISICWeb.Areas.Otip.Models.ImagenesViewModel
+@{
+    ViewBag.Title = "Imagenes";
+
+}
+
+@section Head
+{
+<style>
+   .image-container {
+    position: relative;
+    width: 60%;
+    height: 100%;
+}
+.image-container .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    color: #FFF;
+}
+    .image-container .image-overlay i {
+      position: absolute;
+    color: white;
+    font-size: 200%;
+    top: 20%;
+    left: 30%;
+        opacity: 0.7;
+
+        
+    
+}
+.image-container:hover .image-overlay {
+    display: block;
+    background: rgba(0, 0, 0, .6);
+}
+</style>
+}
+
+<div class="container body-content">
+    <div class="text-center tile-light" style="padding-top: 20px">
+        <h1>
+            Subir Imágenes<br/><small>Código de Barras: @Model.codBarras - @ViewBag.Nombre</small>
+        </h1>
+        
+    </div>
+    <div class="well tile">
+
+        @(
+    Html.MvcFileUpload()
+        .UploadAt(Url.Action("UploadFile"))
+        .UIStyle(UploadUI.Bootstrap)
+        .WithFileTypes(@"/(\.|\/)(jpe?g|png)$/i")
+        .WithMaxFileSize(5000000)
+        .AddFormField("imputadoId", Model.idImputado.ToString())
+        .AddFormField("codBarras", Model.codBarras)
+        .RenderInline("_FilesUploader")
+
+              )
+
+    </div>
+
+    <div class="well tile">
+        @Html.Partial("_ListadoArchivos")
+    </div>
+
+</div>
+
+
+@section footer
+{
+    <div class="col-md-2 col-sm-3 col-xs-4">
+        <a class="btn btn-lg btn-alt" href='@Url.Action("Detalle", "ImputadoOtip", new {id = Model.idImputado, pe = 1})#Imagenes' onclick=' showPageLoadingSpinner() ' title=" volver" type="button">
+            @*<a href='#' id="btnVolver" onclick="window.history.go(-1); return false;" class=" btn btn-alt btn-lg">*@
+            Volver
+        </a>
+    </div>
+    <div class="col-md-6 col-sm-9 col-xs-4 text-center">
+
+
+    </div>
+}

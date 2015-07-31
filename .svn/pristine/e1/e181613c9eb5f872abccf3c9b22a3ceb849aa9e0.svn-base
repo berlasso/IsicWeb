@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "Proceso de Digitalización de Huellas Dactilares";
+}
+
+
+<div class="container-detalle">
+    <div class="center wow fadeInDown animated tile-light">
+        <h1>Segmentación de DecaDactilares </h1>
+    </div>
+</div>
+
+
+<div class="row">
+   
+
+
+
+    <div class="col-md-12">
+
+      @using (Html.BeginForm("MarcarHuellasDactilares", "Digitalizacion", FormMethod.Post, new { Id = "formResultadoBusqueda" }))
+      {
+
+            <div class="panel panel-default tile wow fadeInDown animated">
+                <div class="panel-heading">
+
+                    <h2>
+                       Imputado a segmentar la DecaDactilar
+                    </h2>
+
+                </div>
+
+
+
+
+                <div class="panel-body">
+                    <div class="row wow fadeInDown animated">
+
+                        <div class="col-md-4">
+
+
+
+
+                            <div class="form-group">
+                                <div class="input-group">
+
+                                    @Html.TextBox("CodigoBarra", "", new { @class = "form-control", id = "CodigoBarra", placeholder="Código de Barras" })
+                                    
+                                    <span type="submit" class="input-group-addon btn btn-alt " id="btnBuscarCodBarras">
+                                        <span class="flaticon-zoom22"></span>
+                                    </span>
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div id="cargando" style="display: none;">
+                                <img src="~/Images/loading.gif" alt="Loading..." />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            @Html.ValidationMessage("CodigoBarra")
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+      
+
+    </div>
+</div>
+
+
+
+
+@section footer
+{
+    <div class="col-md-2">
+        @*<a class="btn btn-lg btn-alt volver" href='#' onclick=' ' title=" volver" type="button">
+                Volver
+            </a>*@
+       @* <a class="btn btn-lg btn-alt volver" href='#' onclick=' window.history.go(-1); return false; ' title=" volver" type="button">*@
+        <a class="btn btn-lg btn-alt volver" href='@Url.Action("IndexPorTareas", "Imputado")' onclick=' showPageLoadingSpinner() ' title=" volver" type="button">
+            Volver
+        </a>
+    </div>
+    <div class="col-md-10">
+
+    </div>
+
+}
+
+
+
+
+
+
+@section Scripts {
+    <script type="text/javascript">
+        function formSubmit() {
+
+            var form = $('#formResultadoBusqueda');
+            var criterioSeleccionado = $('#CodigoBarra').val().length > 0;
+
+            $.validator.unobtrusive.parse(form);
+            var existingValdiation = form.validate();
+
+            //the settings property corresponds to the options parameter
+            existingValdiation.settings.invalidHandler = function (form) {
+                alert('Codigo de barra inválido!');
+            };
+
+            if (criterioSeleccionado) {
+                showLoading();
+                form.submit();
+            }
+        }
+        $('#CodigoBarra').mask("999999999999a");
+
+        function showLoading() {
+            $('#cargando').show();
+        }
+
+        $('#CodigoBarra').keydown(function (event) {
+            if (event.keyCode == 13) {
+                formSubmit();
+            }
+        });
+        $('#btnBuscarCodBarras').on('click', function (e) {
+            e.preventDefault();
+            formSubmit();
+        });
+
+        @if (ViewBag.CodigoBarra != null)
+            {
+                <text>
+        $(function () {
+            $('#CodigoBarra').val("@ViewBag.CodigoBarra");
+            formSubmit();
+        });
+        </text>
+            }
+    </script>
+}
