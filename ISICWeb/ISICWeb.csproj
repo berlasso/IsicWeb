@@ -27,6 +27,7 @@
     <SilverlightApplicationList>
     </SilverlightApplicationList>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -385,7 +386,9 @@
     <Content Include="Areas\Otip\Content\Images\fresh_snow.png" />
     <Content Include="Areas\Otip\Content\Images\sandpaper.png" />
     <Content Include="Areas\Otip\Content\otiipStyle.css" />
+    <Content Include="Areas\PortalSIC\Content\Images\broken.png" />
     <Content Include="Areas\PortalSIC\Content\Images\loader.gif" />
+    <Content Include="Areas\PortalSIC\Content\Images\loading.GIF" />
     <Content Include="Areas\PortalSIC\Content\portalsicStyle.css" />
     <Content Include="Areas\PortalSIC\Scripts\imagesloaded.js" />
     <Content Include="Areas\PortalSIC\Scripts\jquery.infinitescroll.js" />

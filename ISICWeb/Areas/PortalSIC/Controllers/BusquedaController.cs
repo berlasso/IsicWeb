@@ -16,6 +16,7 @@ using MPBA.DataAccess;
 using System.Linq.Dynamic;
 using System.Security.Claims;
 using DataTables.Mvc;
+using Glimpse.Core.Extensions;
 using ISICWeb.Areas.Afis.Models;
 using ISICWeb.Services;
 
@@ -45,6 +46,7 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
             {
                 BusquedaViewModel model = (BusquedaViewModel)Session["model"];
                 datosBusqueda = _busquedaService.LlenarViewModel(model);
+
             }
             return View(datosBusqueda);
         }
@@ -59,19 +61,18 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
             return View(datosGeneralesImputado);
 
         }
-
         [AllowAnonymous]
         public JsonResult MostrarImputados([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
 
-            BusquedaViewModel model = (BusquedaViewModel) Session["model"];
-            int skip=requestModel.Start;
+            BusquedaViewModel model = (BusquedaViewModel)Session["model"];
+            int skip = requestModel.Start;
             int take = requestModel.Length;
             string querystring = "";
-            var imputados = _busquedaService.BuscarImputados(model,MaxResultados,out querystring);
+            var imputados = _busquedaService.BuscarImputados(model, MaxResultados, out querystring);
 
             var cant = imputados.Count();
-            
+
             //var filteredColumns = requestModel.Columns.GetFilteredColumns();
             //foreach (var column in filteredColumns)
             //    Filtrar(column.Data, column.Search.Value, column.Search.IsRegexValue);
@@ -120,8 +121,8 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
                             break;
                     }
                     if (column.SortDirection == Column.OrderDirection.Descendant)
-                        orderby +=  " desc";
-                    
+                        orderby += " desc";
+
                     isSorted = true;
                 }
                 else
@@ -130,7 +131,7 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
                 }
             }
 
-       
+
 
             if (orderby == "") orderby = "CodigoDeBarras";
 
@@ -138,12 +139,12 @@ namespace ISICWeb.Areas.PortalSIC.Controllers
             int cantFiltrados = imputados.Count();
 
             imputados = imputados.Skip(requestModel.Start).Take(requestModel.Length);
-            ISICContext context = (ISICContext)_repository.UnitOfWork.Context;     
+            ISICContext context = (ISICContext)_repository.UnitOfWork.Context;
             var paged = (from i in imputados
-                             from a in context.Archivo.Where(a => a.Imputado.Id == i.Id && a.TipoArchivo.Id == 1).Take(1).DefaultIfEmpty()
-                             select new {Ver="",ThumbUrl=a==null?"":a.ThumbUrl.Replace("~","")??"", i.CodigoDeBarras, i.Persona.Apellido, i.Persona.Nombre, i.Persona.DocumentoNumero, i.Id });
+                         from a in context.Archivo.Where(a => a.Imputado.Id == i.Id && a.TipoArchivo.Id == 1).Take(1).DefaultIfEmpty()
+                         select new { Ver = "", ThumbUrl = a == null ? "" : a.ThumbUrl.Replace("~", "") ?? "", i.CodigoDeBarras, i.Persona.Apellido, i.Persona.Nombre, i.Persona.DocumentoNumero, i.Id });
             //.Select(x=>new {ThumbUrl="", CodigoDeBarras=x.CodigoDeBarras, Apellido=x.Persona.Apellido, Nombre=x.Persona.Nombre, DocumentoNumero=x.Persona.DocumentoNumero,Id=x.Id});;
-            
+
 
 
             return Json(new DataTablesResponse(requestModel.Draw, paged, cantFiltrados, cant), JsonRequestBehavior.AllowGet);

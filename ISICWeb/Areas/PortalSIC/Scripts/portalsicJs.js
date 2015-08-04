@@ -79,6 +79,13 @@ $(function() {
 
 
 $(function() {
+    function onProgress(imgLoad, image) {
+        var $item = $(image.img).parent();
+        $item.removeClass('is-loading');
+        if (!image.isLoaded) {
+            $item.addClass('is-broken');
+        }
+    };
     $('#tablaPortal').dataTable({
         "dom": '<"row"<"col-md-12"ip>><"clear">rt<"bottom"><"clear"><"row"<"col-md-12"p>>',
         "initComplete": function(settings, json) {
@@ -108,11 +115,18 @@ $(function() {
                 "targets": 0 //Ver
             },
             {
-                "render": function(data, type, row) {
-                    if (data !== "" && data != null)
-
-                        return '<p class="thumb"><img src=' + data + '?r=' + Math.random() + ' style="max-width: 100px"  /><br/></p>';
-                    else
+                "render": function (data, type, row) {
+                    var rando = Math.ceil(Math.random() * 1000);
+                    var size = Math.random() * 3 + 1;
+                    var width = Math.random() * 110 + 100;
+                    width = Math.round(width * size);
+                    var height = Math.round(140 * size);
+                    var data = rando < 100 ? '//foo/broken-' + rando + '.jpg' :
+                        '//lorempixel.com/' + width + '/' + height + '/' + '?' + rando;
+                    if (data !== "" && data != null) {
+                        var $container = '<div class="image-container"><li class="is-loading"><img src=' + data + '?r=' + Math.random() + ' /></li></div>';
+                        return $container;
+                    } else
                         return '';
 
                 },
@@ -162,13 +176,20 @@ $(function() {
             loader("Buscando datos...");
         } else {
             $.unblockUI();
+            var imgLoad = imagesLoaded( $('#tablaPortal') );
+            imgLoad.on('progress', function (instance, image) {
+                var $item = $(image.img).parent();
+                $item.removeClass('is-loading');
+                if (!image.isLoaded) {
+                    $item.addClass('is-broken');
+                }
+            });
         }
     }).dataTable();
 
-    $('#tablaPortal').on('page.dt', function () {
-       
-        
-    });
+   
+
+         
 });
 
 
@@ -183,6 +204,16 @@ $(document).ready(function () {
     
 });
 
+ (function (window) {
+     // triggered after each item is loaded
+     function onProgress(imgLoad, image) {
+         var $item = $(image.img).parent();
+         $item.removeClass('is-loading');
+         if (!image.isLoaded) {
+             $item.addClass('is-broken');
+         }
+     }
+ });
 
 
 $(document).ready(function () {

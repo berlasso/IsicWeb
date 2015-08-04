@@ -1,0 +1,329 @@
+﻿<error errorId="a1aa3834-e690-40f8-a4ad-607010ec8487" application="/LM/W3SVC/2/ROOT" host="GERMAN-PC" type="System.NotSupportedException" message="A second operation started on this context before a previous asynchronous operation completed. Use 'await' to ensure that any asynchronous operations have completed before calling another method on this context. Any instance members are not guaranteed to be thread safe." source="EntityFramework" detail="System.NotSupportedException: A second operation started on this context before a previous asynchronous operation completed. Use 'await' to ensure that any asynchronous operations have completed before calling another method on this context. Any instance members are not guaranteed to be thread safe.&#xD;&#xA;   at System.Data.Entity.Internal.ThrowingMonitor.EnsureNotEntered()&#xD;&#xA;   at System.Data.Entity.Core.Objects.ObjectQuery`1.System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator()&#xD;&#xA;   at System.Data.Entity.Internal.Linq.InternalQuery`1.GetEnumerator()&#xD;&#xA;   at System.Data.Entity.Infrastructure.DbQuery`1.System.Collections.Generic.IEnumerable&lt;TResult&gt;.GetEnumerator()&#xD;&#xA;   at System.Linq.Enumerable.&lt;SelectManyIterator&gt;d__4`3.MoveNext()&#xD;&#xA;   at System.Web.Script.Serialization.JavaScriptSerializer.SerializeEnumerable(IEnumerable enumerable, StringBuilder sb, Int32 depth, Hashtable objectsInUse, SerializationFormat serializationFormat)&#xD;&#xA;   at System.Web.Script.Serialization.JavaScriptSerializer.SerializeValueInternal(Object o, StringBuilder sb, Int32 depth, Hashtable objectsInUse, SerializationFormat serializationFormat, MemberInfo currentMember)&#xD;&#xA;   at System.Web.Script.Serialization.JavaScriptSerializer.SerializeValue(Object o, StringBuilder sb, Int32 depth, Hashtable objectsInUse, SerializationFormat serializationFormat, MemberInfo currentMember)&#xD;&#xA;   at System.Web.Script.Serialization.JavaScriptSerializer.SerializeCustomObject(Object o, StringBuilder sb, Int32 depth, Hashtable objectsInUse, SerializationFormat serializationFormat)&#xD;&#xA;   at System.Web.Script.Serialization.JavaScriptSerializer.SerializeValueInternal(Object o, StringBuilder sb, Int32 depth, Hashtable objectsInUse, SerializationFormat serializationFormat, MemberInfo currentMember)&#xD;&#xA;   at System.Web.Script.Serialization.JavaScriptSerializer.SerializeValue(Object o, StringBuilder sb, Int32 depth, Hashtable objectsInUse, SerializationFormat serializationFormat, MemberInfo currentMember)&#xD;&#xA;   at System.Web.Script.Serialization.JavaScriptSerializer.Serialize(Object obj, StringBuilder output, SerializationFormat serializationFormat)&#xD;&#xA;   at System.Web.Script.Serialization.JavaScriptSerializer.Serialize(Object obj, SerializationFormat serializationFormat)&#xD;&#xA;   at System.Web.Mvc.JsonResult.ExecuteResult(ControllerContext context)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;&gt;c__DisplayClass2b.&lt;BeginInvokeAction&gt;b__1c()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecute&gt;b__15(IAsyncResult asyncResult, Controller controller)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="prueba" time="2015-08-03T23:36:16.1904932Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CACHE_CONTROL:no-cache&#xD;&#xA;HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_PRAGMA:no-cache&#xD;&#xA;HTTP_ACCEPT:application/json, text/javascript, */*; q=0.01&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, sdch&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.8&#xD;&#xA;HTTP_COOKIE:ASP.NET_SessionId=ytptqqajrjnfnlpcq4jwxuyt; __RequestVerificationToken=a0L3iJdl17tRHaoJimG4gPCPK1zfJRVhV0X8ndvLRiyPb-YNUi8IjnIWmZX9dxh9IloCFaHUI9cFqB4Z7tv_9KdzqLDpSNEPxZmVFGagY441; .AspNet.ApplicationCookie=HPZnSYzb9Y0nmi9IFJQNXy-YLAPG0Q0Iovbfu9kifkqTfUahZO11BedYE1rtTImy_PUK9uQOh14tReoEhAsi9oHriMIE9je6YxQ7LiHquPs9b12SLNPoADEcA_ICSUTMDnr3VMuTB-bmu6I6EXR3JHfjvj9e4D5i5Z5BgqVJwbx4YAd8DszJtWdSeVtzGMJm_APBJxggcd3Paf539We6AWOwvRIBv1zQyUYo2_AtNwHg-bOlc-VBkqOtT8aJzxeZVbY7UE0uyzwHnRoLUpmfj89GHCeqlQwQ0cA-P9wIQpn6FYiY_nCJ3qp2NHRltxeu9kyhZWAXeC3VRcwMHH4xAqLSd6AYAyEyMz6cP_cbhRRV11IhfX7TMVNp93QzsDZF8-F3bsI7aYLo7RiaP8swVA-QF7osJDjBF845KKO1EYcVmftbtcINoSTsHYzjzsESVgrzL0s7p5cSZrdE2-HpapyoE1PZWGXtaJ6jieEKZSGAQL-eyjgAsmYyVR5z2XuWL67ba-GdrO4FSEZQ4FG6OeQofiEmzFMJH916Z8YjwHHmmcQzP82YTaeuvlV9Mbkh&#xD;&#xA;HTTP_HOST:localhost:59573&#xD;&#xA;HTTP_REFERER:http://localhost:59573/PortalSIC/busqueda/Buscar?inicio=true&amp;TipoBusqueda=1&amp;BusquedaAvanzada=0&amp;FiscaliaGeneral=0&amp;CodBarras=&amp;Delito=&amp;Apellido=&amp;Nombres=&amp;NumeroDocumento=&amp;IPP=&amp;Apodos=&amp;EdadDesde=&amp;EdadHasta=&amp;Madre=&amp;Padre=&amp;FechaDelitoDesde=&amp;FechaDelitoHasta=&amp;OtrosNombres=&amp;Profesion=&amp;Sexo=0&amp;LocalidadNacimiento=&amp;ProvinciaNacimiento=&amp;PaisNacimiento=&amp;Calle=&amp;NroH=&amp;Localidad=&amp;Partido=&amp;Provincia=&amp;CalleDelito=&amp;NroHDelito=&amp;LocalidadDelito=&amp;PartidoDelito=&amp;ProvinciaDelito=&amp;Robustez=0&amp;ColorPiel=0&amp;ColorOjos=0&amp;ColorCabellos=0&amp;TipoCabello=0&amp;TipoCalvicie=0&amp;FormaCara=0&amp;DimensionCeja=0&amp;TipoCeja=0&amp;FormaMenton=0&amp;FormaOreja=0&amp;FormaNariz=0&amp;FormaBoca=0&amp;FormaLabioInferior=0&amp;FormaLabioSuperior=0&amp;Estatura=&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36&#xD;&#xA;HTTP_X_REQUESTED_WITH:XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Cache-Control: no-cache&#xD;&#xA;Connection: keep-alive&#xD;&#xA;Pragma: no-cache&#xD;&#xA;Accept: application/json, text/javascript, */*; q=0.01&#xD;&#xA;Accept-Encoding: gzip, deflate, sdch&#xD;&#xA;Accept-Language: en-US,en;q=0.8&#xD;&#xA;Cookie: ASP.NET_SessionId=ytptqqajrjnfnlpcq4jwxuyt; __RequestVerificationToken=a0L3iJdl17tRHaoJimG4gPCPK1zfJRVhV0X8ndvLRiyPb-YNUi8IjnIWmZX9dxh9IloCFaHUI9cFqB4Z7tv_9KdzqLDpSNEPxZmVFGagY441; .AspNet.ApplicationCookie=HPZnSYzb9Y0nmi9IFJQNXy-YLAPG0Q0Iovbfu9kifkqTfUahZO11BedYE1rtTImy_PUK9uQOh14tReoEhAsi9oHriMIE9je6YxQ7LiHquPs9b12SLNPoADEcA_ICSUTMDnr3VMuTB-bmu6I6EXR3JHfjvj9e4D5i5Z5BgqVJwbx4YAd8DszJtWdSeVtzGMJm_APBJxggcd3Paf539We6AWOwvRIBv1zQyUYo2_AtNwHg-bOlc-VBkqOtT8aJzxeZVbY7UE0uyzwHnRoLUpmfj89GHCeqlQwQ0cA-P9wIQpn6FYiY_nCJ3qp2NHRltxeu9kyhZWAXeC3VRcwMHH4xAqLSd6AYAyEyMz6cP_cbhRRV11IhfX7TMVNp93QzsDZF8-F3bsI7aYLo7RiaP8swVA-QF7osJDjBF845KKO1EYcVmftbtcINoSTsHYzjzsESVgrzL0s7p5cSZrdE2-HpapyoE1PZWGXtaJ6jieEKZSGAQL-eyjgAsmYyVR5z2XuWL67ba-GdrO4FSEZQ4FG6OeQofiEmzFMJH916Z8YjwHHmmcQzP82YTaeuvlV9Mbkh&#xD;&#xA;Host: localhost:59573&#xD;&#xA;Referer: http://localhost:59573/PortalSIC/busqueda/Buscar?inicio=true&amp;TipoBusqueda=1&amp;BusquedaAvanzada=0&amp;FiscaliaGeneral=0&amp;CodBarras=&amp;Delito=&amp;Apellido=&amp;Nombres=&amp;NumeroDocumento=&amp;IPP=&amp;Apodos=&amp;EdadDesde=&amp;EdadHasta=&amp;Madre=&amp;Padre=&amp;FechaDelitoDesde=&amp;FechaDelitoHasta=&amp;OtrosNombres=&amp;Profesion=&amp;Sexo=0&amp;LocalidadNacimiento=&amp;ProvinciaNacimiento=&amp;PaisNacimiento=&amp;Calle=&amp;NroH=&amp;Localidad=&amp;Partido=&amp;Provincia=&amp;CalleDelito=&amp;NroHDelito=&amp;LocalidadDelito=&amp;PartidoDelito=&amp;ProvinciaDelito=&amp;Robustez=0&amp;ColorPiel=0&amp;ColorOjos=0&amp;ColorCabellos=0&amp;TipoCabello=0&amp;TipoCalvicie=0&amp;FormaCara=0&amp;DimensionCeja=0&amp;TipoCeja=0&amp;FormaMenton=0&amp;FormaOreja=0&amp;FormaNariz=0&amp;FormaBoca=0&amp;FormaLabioInferior=0&amp;FormaLabioSuperior=0&amp;Estatura=&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36&#xD;&#xA;X-Requested-With: XMLHttpRequest&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Proyectos\IsicWeb3\ISICWeb\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="ApplicationCookie" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="prueba" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="prueba" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/PortalSIC/Busqueda/MostrarImputados" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Proyectos\IsicWeb3\ISICWeb\PortalSIC\Busqueda\MostrarImputados" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="draw=2&amp;columns%5B0%5D%5Bdata%5D=&amp;columns%5B0%5D%5Bname%5D=&amp;columns%5B0%5D%5Bsearchable%5D=false&amp;columns%5B0%5D%5Borderable%5D=false&amp;columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&amp;columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&amp;columns%5B1%5D%5Bdata%5D=ThumbUrl&amp;columns%5B1%5D%5Bname%5D=&amp;columns%5B1%5D%5Bsearchable%5D=false&amp;columns%5B1%5D%5Borderable%5D=false&amp;columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&amp;columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&amp;columns%5B2%5D%5Bdata%5D=CodigoDeBarras&amp;columns%5B2%5D%5Bname%5D=&amp;columns%5B2%5D%5Bsearchable%5D=true&amp;columns%5B2%5D%5Borderable%5D=true&amp;columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&amp;columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&amp;columns%5B3%5D%5Bdata%5D=Apellido&amp;columns%5B3%5D%5Bname%5D=&amp;columns%5B3%5D%5Bsearchable%5D=true&amp;columns%5B3%5D%5Borderable%5D=true&amp;columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&amp;columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&amp;columns%5B4%5D%5Bdata%5D=Nombre&amp;columns%5B4%5D%5Bname%5D=&amp;columns%5B4%5D%5Bsearchable%5D=true&amp;columns%5B4%5D%5Borderable%5D=true&amp;columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&amp;columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&amp;columns%5B5%5D%5Bdata%5D=DocumentoNumero&amp;columns%5B5%5D%5Bname%5D=&amp;columns%5B5%5D%5Bsearchable%5D=true&amp;columns%5B5%5D%5Borderable%5D=true&amp;columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&amp;columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&amp;columns%5B6%5D%5Bdata%5D=Id&amp;columns%5B6%5D%5Bname%5D=&amp;columns%5B6%5D%5Bsearchable%5D=false&amp;columns%5B6%5D%5Borderable%5D=true&amp;columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&amp;columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&amp;order%5B0%5D%5Bcolumn%5D=2&amp;order%5B0%5D%5Bdir%5D=asc&amp;start=0&amp;length=10&amp;search%5Bvalue%5D=&amp;search%5Bregex%5D=false&amp;_=1438644971110" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="41051" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/PortalSIC/Busqueda/MostrarImputados" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="59573" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/PortalSIC/Busqueda/MostrarImputados" />
+    </item>
+    <item name="HTTP_CACHE_CONTROL">
+      <value string="no-cache" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_PRAGMA">
+      <value string="no-cache" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="application/json, text/javascript, */*; q=0.01" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, sdch" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.8" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="ASP.NET_SessionId=ytptqqajrjnfnlpcq4jwxuyt; __RequestVerificationToken=a0L3iJdl17tRHaoJimG4gPCPK1zfJRVhV0X8ndvLRiyPb-YNUi8IjnIWmZX9dxh9IloCFaHUI9cFqB4Z7tv_9KdzqLDpSNEPxZmVFGagY441; .AspNet.ApplicationCookie=HPZnSYzb9Y0nmi9IFJQNXy-YLAPG0Q0Iovbfu9kifkqTfUahZO11BedYE1rtTImy_PUK9uQOh14tReoEhAsi9oHriMIE9je6YxQ7LiHquPs9b12SLNPoADEcA_ICSUTMDnr3VMuTB-bmu6I6EXR3JHfjvj9e4D5i5Z5BgqVJwbx4YAd8DszJtWdSeVtzGMJm_APBJxggcd3Paf539We6AWOwvRIBv1zQyUYo2_AtNwHg-bOlc-VBkqOtT8aJzxeZVbY7UE0uyzwHnRoLUpmfj89GHCeqlQwQ0cA-P9wIQpn6FYiY_nCJ3qp2NHRltxeu9kyhZWAXeC3VRcwMHH4xAqLSd6AYAyEyMz6cP_cbhRRV11IhfX7TMVNp93QzsDZF8-F3bsI7aYLo7RiaP8swVA-QF7osJDjBF845KKO1EYcVmftbtcINoSTsHYzjzsESVgrzL0s7p5cSZrdE2-HpapyoE1PZWGXtaJ6jieEKZSGAQL-eyjgAsmYyVR5z2XuWL67ba-GdrO4FSEZQ4FG6OeQofiEmzFMJH916Z8YjwHHmmcQzP82YTaeuvlV9Mbkh" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:59573" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:59573/PortalSIC/busqueda/Buscar?inicio=true&amp;TipoBusqueda=1&amp;BusquedaAvanzada=0&amp;FiscaliaGeneral=0&amp;CodBarras=&amp;Delito=&amp;Apellido=&amp;Nombres=&amp;NumeroDocumento=&amp;IPP=&amp;Apodos=&amp;EdadDesde=&amp;EdadHasta=&amp;Madre=&amp;Padre=&amp;FechaDelitoDesde=&amp;FechaDelitoHasta=&amp;OtrosNombres=&amp;Profesion=&amp;Sexo=0&amp;LocalidadNacimiento=&amp;ProvinciaNacimiento=&amp;PaisNacimiento=&amp;Calle=&amp;NroH=&amp;Localidad=&amp;Partido=&amp;Provincia=&amp;CalleDelito=&amp;NroHDelito=&amp;LocalidadDelito=&amp;PartidoDelito=&amp;ProvinciaDelito=&amp;Robustez=0&amp;ColorPiel=0&amp;ColorOjos=0&amp;ColorCabellos=0&amp;TipoCabello=0&amp;TipoCalvicie=0&amp;FormaCara=0&amp;DimensionCeja=0&amp;TipoCeja=0&amp;FormaMenton=0&amp;FormaOreja=0&amp;FormaNariz=0&amp;FormaBoca=0&amp;FormaLabioInferior=0&amp;FormaLabioSuperior=0&amp;Estatura=" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.125 Safari/537.36" />
+    </item>
+    <item name="HTTP_X_REQUESTED_WITH">
+      <value string="XMLHttpRequest" />
+    </item>
+  </serverVariables>
+  <queryString>
+    <item name="draw">
+      <value string="2" />
+    </item>
+    <item name="columns[0][data]">
+      <value string="" />
+    </item>
+    <item name="columns[0][name]">
+      <value string="" />
+    </item>
+    <item name="columns[0][searchable]">
+      <value string="false" />
+    </item>
+    <item name="columns[0][orderable]">
+      <value string="false" />
+    </item>
+    <item name="columns[0][search][value]">
+      <value string="" />
+    </item>
+    <item name="columns[0][search][regex]">
+      <value string="false" />
+    </item>
+    <item name="columns[1][data]">
+      <value string="ThumbUrl" />
+    </item>
+    <item name="columns[1][name]">
+      <value string="" />
+    </item>
+    <item name="columns[1][searchable]">
+      <value string="false" />
+    </item>
+    <item name="columns[1][orderable]">
+      <value string="false" />
+    </item>
+    <item name="columns[1][search][value]">
+      <value string="" />
+    </item>
+    <item name="columns[1][search][regex]">
+      <value string="false" />
+    </item>
+    <item name="columns[2][data]">
+      <value string="CodigoDeBarras" />
+    </item>
+    <item name="columns[2][name]">
+      <value string="" />
+    </item>
+    <item name="columns[2][searchable]">
+      <value string="true" />
+    </item>
+    <item name="columns[2][orderable]">
+      <value string="true" />
+    </item>
+    <item name="columns[2][search][value]">
+      <value string="" />
+    </item>
+    <item name="columns[2][search][regex]">
+      <value string="false" />
+    </item>
+    <item name="columns[3][data]">
+      <value string="Apellido" />
+    </item>
+    <item name="columns[3][name]">
+      <value string="" />
+    </item>
+    <item name="columns[3][searchable]">
+      <value string="true" />
+    </item>
+    <item name="columns[3][orderable]">
+      <value string="true" />
+    </item>
+    <item name="columns[3][search][value]">
+      <value string="" />
+    </item>
+    <item name="columns[3][search][regex]">
+      <value string="false" />
+    </item>
+    <item name="columns[4][data]">
+      <value string="Nombre" />
+    </item>
+    <item name="columns[4][name]">
+      <value string="" />
+    </item>
+    <item name="columns[4][searchable]">
+      <value string="true" />
+    </item>
+    <item name="columns[4][orderable]">
+      <value string="true" />
+    </item>
+    <item name="columns[4][search][value]">
+      <value string="" />
+    </item>
+    <item name="columns[4][search][regex]">
+      <value string="false" />
+    </item>
+    <item name="columns[5][data]">
+      <value string="DocumentoNumero" />
+    </item>
+    <item name="columns[5][name]">
+      <value string="" />
+    </item>
+    <item name="columns[5][searchable]">
+      <value string="true" />
+    </item>
+    <item name="columns[5][orderable]">
+      <value string="true" />
+    </item>
+    <item name="columns[5][search][value]">
+      <value string="" />
+    </item>
+    <item name="columns[5][search][regex]">
+      <value string="false" />
+    </item>
+    <item name="columns[6][data]">
+      <value string="Id" />
+    </item>
+    <item name="columns[6][name]">
+      <value string="" />
+    </item>
+    <item name="columns[6][searchable]">
+      <value string="false" />
+    </item>
+    <item name="columns[6][orderable]">
+      <value string="true" />
+    </item>
+    <item name="columns[6][search][value]">
+      <value string="" />
+    </item>
+    <item name="columns[6][search][regex]">
+      <value string="false" />
+    </item>
+    <item name="order[0][column]">
+      <value string="2" />
+    </item>
+    <item name="order[0][dir]">
+      <value string="asc" />
+    </item>
+    <item name="start">
+      <value string="0" />
+    </item>
+    <item name="length">
+      <value string="10" />
+    </item>
+    <item name="search[value]">
+      <value string="" />
+    </item>
+    <item name="search[regex]">
+      <value string="false" />
+    </item>
+    <item name="_">
+      <value string="1438644971110" />
+    </item>
+  </queryString>
+  <cookies>
+    <item name="ASP.NET_SessionId">
+      <value string="ytptqqajrjnfnlpcq4jwxuyt" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="a0L3iJdl17tRHaoJimG4gPCPK1zfJRVhV0X8ndvLRiyPb-YNUi8IjnIWmZX9dxh9IloCFaHUI9cFqB4Z7tv_9KdzqLDpSNEPxZmVFGagY441" />
+    </item>
+    <item name=".AspNet.ApplicationCookie">
+      <value string="HPZnSYzb9Y0nmi9IFJQNXy-YLAPG0Q0Iovbfu9kifkqTfUahZO11BedYE1rtTImy_PUK9uQOh14tReoEhAsi9oHriMIE9je6YxQ7LiHquPs9b12SLNPoADEcA_ICSUTMDnr3VMuTB-bmu6I6EXR3JHfjvj9e4D5i5Z5BgqVJwbx4YAd8DszJtWdSeVtzGMJm_APBJxggcd3Paf539We6AWOwvRIBv1zQyUYo2_AtNwHg-bOlc-VBkqOtT8aJzxeZVbY7UE0uyzwHnRoLUpmfj89GHCeqlQwQ0cA-P9wIQpn6FYiY_nCJ3qp2NHRltxeu9kyhZWAXeC3VRcwMHH4xAqLSd6AYAyEyMz6cP_cbhRRV11IhfX7TMVNp93QzsDZF8-F3bsI7aYLo7RiaP8swVA-QF7osJDjBF845KKO1EYcVmftbtcINoSTsHYzjzsESVgrzL0s7p5cSZrdE2-HpapyoE1PZWGXtaJ6jieEKZSGAQL-eyjgAsmYyVR5z2XuWL67ba-GdrO4FSEZQ4FG6OeQofiEmzFMJH916Z8YjwHHmmcQzP82YTaeuvlV9Mbkh" />
+    </item>
+  </cookies>
+</error>

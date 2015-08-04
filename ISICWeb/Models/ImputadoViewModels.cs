@@ -1,6 +1,7 @@
 ﻿using ISIC.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace ISICWeb.Models
 {
@@ -90,6 +91,7 @@ namespace ISICWeb.Models
 
     public class CodigoBarraViewModel
     {
+        [Remote("CheckUserName", "Home")]
         public string CodigoBarra { get; set; }
     }
 
