@@ -147,15 +147,7 @@ namespace ISICWeb.Controllers
                 BioDactilar dedod = null;
                 BioDactilar dedoi = null;
 
-                /*  dedod = (from x in imputadoDb.BioManoDerecha
-                                  where x.Dedo == d  select x).FirstOrDefault();
-                  dedoi = (from x in imputadoDb.BioManoIzquierda
-                                  where x.Dedo == d  select x).FirstOrDefault();*/
-
-
-                /*      imputadoDb.BioManoDerecha.Remove(dedod);
-                      imputadoDb.BioManoIzquierda.Remove(dedoi);*/
-
+         
 
                 dedod = new BioDactilar();
                 dedod.CodigoDeBarra = imputadoDb.CodigoDeBarras;
@@ -278,9 +270,7 @@ namespace ISICWeb.Controllers
             }
 
 
-            //     if (imputadoDb.BioManoDerecha == null && imputadoDb.BioManoIzquierda == null)
-            //    { imputadoDb.ExisteDecadactilar = 0; }
-            //  else
+        
             imputadoDb.ExisteDecadactilar = 1;
             imputadoDb.ExisteMonodactilar = 1;
             imputadoDb.FechaUltimaModificacion = DateTime.Now;

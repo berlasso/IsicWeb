@@ -13,11 +13,11 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>\\mpapsic01\archivosSic\server1\Ejecutables\CapturaDeployed\</PublishUrl>
+    <PublishUrl>C:\Proyectos\ISIC\ISICWeb\CapturaDecaDeployed\</PublishUrl>
     <Install>false</Install>
-    <InstallFrom>Unc</InstallFrom>
+    <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
@@ -25,9 +25,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://desa.mpba.gov.ar/isic/CapturaDecaDeployed/</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>34</ApplicationRevision>
+    <ApplicationRevision>36</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -194,6 +195,12 @@
     <Compile Include="Capturer\Forms\FingerSingleForm.designer.cs">
       <DependentUpon>FingerSingleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Capturer\Forms\LongActionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Capturer\Forms\LongActionDialog.designer.cs">
+      <DependentUpon>LongActionDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Capturer\Forms\LongTaskForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -258,6 +265,7 @@
     <Content Include="Resources\GoToNext.png" />
     <Content Include="Resources\GoToPrevious.png" />
     <Content Include="Resources\Help.png" />
+    <Content Include="Resources\loading.gif" />
     <Content Include="Resources\Ok.png" />
     <Content Include="Resources\Repeat.png" />
     <Content Include="Resources\SaveHS.png" />
@@ -286,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Capturer\Forms\FingerSingleForm.resx">
       <DependentUpon>FingerSingleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Capturer\Forms\LongActionDialog.resx">
+      <DependentUpon>LongActionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Capturer\Forms\LongTaskForm.resx">
       <DependentUpon>LongTaskForm.cs</DependentUpon>

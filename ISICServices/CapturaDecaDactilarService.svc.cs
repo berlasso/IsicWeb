@@ -103,8 +103,19 @@ namespace ISIC.Services
                 
                 logger.Info("Datos transacción");
                 logger.Info("CODIGO BARRAS {0},DNI: {1}, Apellido: {2} Nombres: {3}, sexo: {4}", imputado.CodigoBarras,imputado.Apellido, imputado.DNI, imputado.Nombres, imputado.Sexo);
-                
 
+                Imputado imp = VImputado.GetByCodigoTodasHuellas(imputado.CodigoBarras.ToString());
+
+                if (imp == null)
+                { /* Son Huellas y el imputado NO esta creado*/
+
+                    logger.Info("Enviaron las Huellas y el imputado NO esta creado");
+                    resp = 1;
+                    return resp;
+
+                }
+
+                VImputado.BorrarHuellas(imp);
                 if (sujeto.DedosCapturados.Count() + sujeto.DedosFaltantes.Count() < 10)
                 {  // Ver porque reporto menos dedos
                     resp = 2;
@@ -116,44 +127,60 @@ namespace ISIC.Services
               
 
 
-              //  Imputado imp = this.VImputado.GetAll().Where(x => x.CodigoDeBarras == imputado.CodigoBarras).FirstOrDefault();
-                Imputado imp = VImputado.GetByCodigoBarra(imputado.CodigoBarras.ToString());
               
-                if (imp == null)
-                { /* Son Huellas y el imputado NO esta creado*/
-                   
-                    logger.Info("Enviaron las Huellas y el imputado NO esta creado");
-                    resp = 1;
-                    return resp;
-                
-                }
                 /*Ver el acceso al Renaper si accedio en el cliente esta en imputado clase y habria que enviarlo a algun metodo para su registro*/
                 /*Update de las huellas */
 
 
+                logger.Info("Antes de Borrar,Huellas mano derecha " + imp.BioManoDerecha.ToList().Count());
+                logger.Info("Antes de borrar, Huellas mano Izquierda " + imp.BioManoIzquierda.ToList().Count());
 
               /*  List<BioDactilar> bioDerecha = VBioDactilar.GetBioManoDerechaByCodigoBarra(imputado.CodigoBarras);
                 List<BioDactilar> bioIzq = VBioDactilar.GetBioManoIzquierdaByCodigoBarra(imputado.CodigoBarras);*/
                
+           /*
+                for (int i = imp.BioManoDerecha.ToList().Count - 1; i >= 0; i--)
+                {
+                    imp.BioManoDerecha.ToList().RemoveAt(i);
+                }
 
-              
-              
-                foreach (var item in imp.BioManoDerecha)
+
+                for (int i = imp.BioManoIzquierda.ToList().Count - 1; i >= 0; i--)
+                {
+                    imp.BioManoIzquierda.ToList().RemoveAt(i);
+                }
+
+*/
+
+                /*
+                var itemsToRemove =  imp.BioManoIzquierda.ToArray();
+                foreach (var item in itemsToRemove) {
+                                 
+
+                    imp.BioManoIzquierda.Remove(item);
+                    VBioDactilar.BorrarBio(item);
+
+                }
+        
+               itemsToRemove = imp.BioManoDerecha.ToArray();
+
+                foreach (var item in itemsToRemove)
                 {
                     imp.BioManoDerecha.Remove(item);
+                    VBioDactilar.BorrarBio(item);
                 }
+             */
 
 
-                foreach (var item in imp.BioManoIzquierda)
-                {
-                    imp.BioManoIzquierda.Remove(item);
-                }
+              
+                logger.Info("Se borraron las huellas mano derecha " + imp.BioManoDerecha.Count());
+                logger.Info("Se borraron las huellas mano Izquierda " + imp.BioManoIzquierda.Count());
 
                 /*Creo tantas BioDactilares como dedos*/
                 foreach(var item in sujeto.DedosFaltantes)
                 {
                     BioDactilar unDedo = new BioDactilar();
-                    unDedo.CodigoDeBarra = imputado.CodigoBarras;
+                    unDedo.CodigoDeBarra = imp.CodigoDeBarras;
                     int dedoEn5 = ConvertNFingerToIndex(item.Position) > 4 ? ConvertNFingerToIndex(item.Position) - 5 : ConvertNFingerToIndex(item.Position);
                    
                     unDedo.Dedo = (Enums.ClaseDedo)dedoEn5;
@@ -162,9 +189,14 @@ namespace ISIC.Services
                     unDedo.EstadoDedo = Enums.ClaseEstadoDedo.Faltante;
                     unDedo.FechaDigital = DateTime.Now;
                     unDedo.Baja = false;
-                   imp.BioManoDerecha.Add(unDedo);
+                    if (unDedo.Mano == Enums.ClaseMano.Derecha)
+                    { imp.BioManoDerecha.Add(unDedo); }
+                    if (unDedo.Mano == Enums.ClaseMano.Izquierda)
+                    { imp.BioManoIzquierda.Add(unDedo); }
+
                    
                  }
+                
 
                 foreach (var item in sujeto.DedosCapturados)
                 {
@@ -178,11 +210,14 @@ namespace ISIC.Services
                     unDedo.EstadoDedo = Enums.ClaseEstadoDedo.Normal;
                     unDedo.FechaDigital = DateTime.Now; 
                     unDedo.Baja = false;
-                    imp.BioManoIzquierda.Add(unDedo);
+                    if (unDedo.Mano == Enums.ClaseMano.Derecha)
+                    { imp.BioManoDerecha.Add(unDedo); }
+                    if (unDedo.Mano == Enums.ClaseMano.Izquierda)
+                    { imp.BioManoIzquierda.Add(unDedo); }
 
                 }
-              
 
+                
               
                 logger.Info("BioManoDerecha" + imp.BioManoDerecha.Count());
                 logger.Info("BioManoIzquierda" + imp.BioManoIzquierda.Count());
@@ -218,7 +253,7 @@ namespace ISIC.Services
                 {
                     imp.ManoIzquierda = (Enums.ClaseEstadoMano)1;
                 }
-
+                 
                 VImputado.Actualizar(imp);
                 logger.Info("Actualiza el Imputado");
                 return 0;

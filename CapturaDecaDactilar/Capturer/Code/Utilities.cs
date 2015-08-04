@@ -1,4 +1,5 @@
 using Neurotec.Biometrics;
+using Neurotec.Biometrics.Client;
 using Neurotec.Images;
 using System;
 using System.Drawing.Imaging;
@@ -48,7 +49,68 @@ namespace Capturer.Forms
 
           }
         }
-           
+
+
+
+
+        public static int ConvertNFingerToIndex(string pos)
+        {
+            switch (pos)
+            {
+                case "LeftIndexFinger":
+                    return 1;
+                case "LeftThumb":
+                    return 0;
+                case "LeftMiddleFinger":
+                    return 2;
+                case "LeftRingFinger":
+                    return 3;
+                case "LeftLittleFinger":
+                    return 4;
+                case "RightIndexFinger":
+                    return 6;
+                case "RightThumb":
+                    return 5;
+                case "RightMiddleFinger":
+                    return 7;
+                case "RightRingFinger":
+                    return 8;
+                case "RightLittleFinger":
+                    return 9;
+                default: return 0;
+
+            }
+        }
+
+
+        public static NFPosition ConvertStringToNeuro(string pos)
+        {
+            switch (pos)
+            {
+                case "LeftIndexFinger":
+                    return NFPosition.LeftIndexFinger;
+                case "LeftThumb":
+                    return NFPosition.LeftThumb;
+                case "LeftMiddleFinger":
+                    return NFPosition.LeftMiddleFinger;
+                case "LeftRingFinger":
+                    return NFPosition.LeftRingFinger;
+                case "LeftLittleFinger":
+                    return NFPosition.LeftLittleFinger;
+                case "RightIndexFinger":
+                    return NFPosition.RightIndexFinger;
+                case "RightThumb":
+                    return NFPosition.RightThumb;
+                case "RightMiddleFinger":
+                    return NFPosition.RightMiddleFinger;
+                case "RightRingFinger":
+                    return NFPosition.RightRingFinger;
+                case "RightLittleFinger":
+                    return NFPosition.RightLittleFinger;
+                default: return NFPosition.LeftIndexFinger;
+
+            }
+        }
 
          public static string RenaperGetSubject()
          {
@@ -225,6 +287,33 @@ namespace Capturer.Forms
             return result;
         }
 
+        public static  NBiometricClient ConnectionRemoteMegaMatcher(IWin32Window wind, int adminPort, int port, string hostname)
+        {
+                        NBiometricClient BiometricClient= new NBiometricClient();
+                        BiometricClient.DatabaseConnection = null;
+                       BiometricClient.FingersCheckForDuplicatesWhenCapturing = true;
+                        BiometricClient.RemoteConnections.AddToCluster(hostname, port, adminPort);
+                      
 
+                       try
+                       {
+                           LongActionDialog.ShowDialog(wind, "Conectándose al Servidor de Reconocimiento Biométrico ... ", new Action<NBiometricClient>(biometricClient =>
+                           {
+                                         biometricClient.Initialize();
+                             
+                              
+                           }), BiometricClient);
+                       }
+                       catch (Exception ex)
+                       {
+                           Utilities.ShowError(ex);
+                           BiometricClient.Dispose();
+                           BiometricClient = null;
+                          
+                       }
+
+
+                       return BiometricClient;
+        }
 	}
 }

@@ -113,6 +113,14 @@ namespace Capturer.Forms
             this.tsbSaveImage = new System.Windows.Forms.ToolStripButton();
             this.tsbSaveRecord = new System.Windows.Forms.ToolStripButton();
             this.infoPanel = new Capturer.Forms.InfoPanel();
+            this.tabResultado = new System.Windows.Forms.TabPage();
+            this.picEspera = new System.Windows.Forms.PictureBox();
+            this.lb_estadoRegistro = new System.Windows.Forms.Label();
+            this.lbStatus = new System.Windows.Forms.Label();
+            this.demoNist = new System.Windows.Forms.TabPage();
+            this.btn_abrir = new System.Windows.Forms.Button();
+            this.lNombreArchivo = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.nfvLeftThumb = new Neurotec.Biometrics.Gui.NFingerView();
             this.nfvLeftIndex = new Neurotec.Biometrics.Gui.NFingerView();
             this.nfvLeftMiddle = new Neurotec.Biometrics.Gui.NFingerView();
@@ -124,6 +132,7 @@ namespace Capturer.Forms
             this.nfvRightRing = new Neurotec.Biometrics.Gui.NFingerView();
             this.nfvRightLittle = new Neurotec.Biometrics.Gui.NFingerView();
             this.label2 = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -147,6 +156,9 @@ namespace Capturer.Forms
             this.tabInformation.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.toolStripViewControls.SuspendLayout();
+            this.tabResultado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picEspera)).BeginInit();
+            this.demoNist.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveFileDialog
@@ -328,6 +340,7 @@ namespace Capturer.Forms
             this.bRenaper.TabIndex = 12;
             this.bRenaper.Text = "Chequeo Identidad  Acceso al  Renaper";
             this.bRenaper.UseVisualStyleBackColor = true;
+            this.bRenaper.Click += new System.EventHandler(this.bRenaper_Click);
             // 
             // lCodBarra
             // 
@@ -453,6 +466,8 @@ namespace Capturer.Forms
             // 
             this.tabControl.Controls.Add(this.tabRolled);
             this.tabControl.Controls.Add(this.tabInformation);
+            this.tabControl.Controls.Add(this.tabResultado);
+            this.tabControl.Controls.Add(this.demoNist);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -1114,6 +1129,7 @@ namespace Capturer.Forms
             this.toolStripViewControls.Size = new System.Drawing.Size(246, 25);
             this.toolStripViewControls.TabIndex = 10;
             this.toolStripViewControls.Text = "toolStrip2";
+            this.toolStripViewControls.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripViewControls_ItemClicked);
             // 
             // tsbSaveImage
             // 
@@ -1141,6 +1157,97 @@ namespace Capturer.Forms
             this.infoPanel.Name = "infoPanel";
             this.infoPanel.Size = new System.Drawing.Size(1458, 532);
             this.infoPanel.TabIndex = 0;
+            // 
+            // tabResultado
+            // 
+            this.tabResultado.Controls.Add(this.picEspera);
+            this.tabResultado.Controls.Add(this.lb_estadoRegistro);
+            this.tabResultado.Controls.Add(this.lbStatus);
+            this.tabResultado.Location = new System.Drawing.Point(4, 22);
+            this.tabResultado.Name = "tabResultado";
+            this.tabResultado.Padding = new System.Windows.Forms.Padding(3);
+            this.tabResultado.Size = new System.Drawing.Size(1464, 538);
+            this.tabResultado.TabIndex = 4;
+            this.tabResultado.Text = "Resultado";
+            this.tabResultado.UseVisualStyleBackColor = true;
+            this.tabResultado.Click += new System.EventHandler(this.tabResultado_Click);
+            // 
+            // picEspera
+            // 
+            this.picEspera.Image = global::FingerCapturer.Properties.Resources.loading;
+            this.picEspera.Location = new System.Drawing.Point(324, 196);
+            this.picEspera.Name = "picEspera";
+            this.picEspera.Size = new System.Drawing.Size(525, 249);
+            this.picEspera.TabIndex = 15;
+            this.picEspera.TabStop = false;
+            this.picEspera.UseWaitCursor = true;
+            this.picEspera.Click += new System.EventHandler(this.picEspera_Click);
+            // 
+            // lb_estadoRegistro
+            // 
+            this.lb_estadoRegistro.AutoSize = true;
+            this.lb_estadoRegistro.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_estadoRegistro.Location = new System.Drawing.Point(61, 187);
+            this.lb_estadoRegistro.Name = "lb_estadoRegistro";
+            this.lb_estadoRegistro.Size = new System.Drawing.Size(513, 17);
+            this.lb_estadoRegistro.TabIndex = 14;
+            this.lb_estadoRegistro.Text = "Estado del Registro de las Huellas                                               " +
+    "                         ";
+            // 
+            // lbStatus
+            // 
+            this.lbStatus.AutoSize = true;
+            this.lbStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbStatus.Location = new System.Drawing.Point(61, 159);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(421, 17);
+            this.lbStatus.TabIndex = 13;
+            this.lbStatus.Text = "Estado de la extracción del patrón de reconocimiento Biométrico..";
+            // 
+            // demoNist
+            // 
+            this.demoNist.Controls.Add(this.btn_abrir);
+            this.demoNist.Controls.Add(this.lNombreArchivo);
+            this.demoNist.Controls.Add(this.label3);
+            this.demoNist.Location = new System.Drawing.Point(4, 22);
+            this.demoNist.Name = "demoNist";
+            this.demoNist.Padding = new System.Windows.Forms.Padding(3);
+            this.demoNist.Size = new System.Drawing.Size(1464, 538);
+            this.demoNist.TabIndex = 5;
+            this.demoNist.Text = "Demo";
+            this.demoNist.UseVisualStyleBackColor = true;
+            this.demoNist.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // btn_abrir
+            // 
+            this.btn_abrir.Location = new System.Drawing.Point(448, 97);
+            this.btn_abrir.Name = "btn_abrir";
+            this.btn_abrir.Size = new System.Drawing.Size(241, 23);
+            this.btn_abrir.TabIndex = 2;
+            this.btn_abrir.Text = "Seleccione el archivo...";
+            this.btn_abrir.UseVisualStyleBackColor = true;
+            this.btn_abrir.Click += new System.EventHandler(this.btn_abrir_Click);
+            // 
+            // lNombreArchivo
+            // 
+            this.lNombreArchivo.AutoSize = true;
+            this.lNombreArchivo.Location = new System.Drawing.Point(361, 102);
+            this.lNombreArchivo.Name = "lNombreArchivo";
+            this.lNombreArchivo.Size = new System.Drawing.Size(60, 13);
+            this.lNombreArchivo.TabIndex = 1;
+            this.lNombreArchivo.Text = "archivo.dat";
+            // 
+            // label3
+            // 
+            this.label3.AutoEllipsis = true;
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label3.Location = new System.Drawing.Point(248, 101);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(102, 15);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Nombre del Archivo";
             // 
             // nfvLeftThumb
             // 
@@ -1342,6 +1449,12 @@ namespace Capturer.Forms
             this.label2.TabIndex = 4;
             this.label2.Text = "Ambos Pulgares";
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.DefaultExt = "dat";
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Title = "Ingrese el Nombre del Archivo NIST ITl compatible de Policia Federal";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1388,6 +1501,11 @@ namespace Capturer.Forms
             this.groupBox2.PerformLayout();
             this.toolStripViewControls.ResumeLayout(false);
             this.toolStripViewControls.PerformLayout();
+            this.tabResultado.ResumeLayout(false);
+            this.tabResultado.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picEspera)).EndInit();
+            this.demoNist.ResumeLayout(false);
+            this.demoNist.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1477,9 +1595,6 @@ namespace Capturer.Forms
         private System.Windows.Forms.RadioButton rFemenino;
         private System.Windows.Forms.RadioButton rMasculino;
         protected internal Neurotec.Biometrics.Gui.NFingerView nfvLeftFour;
-        private System.Windows.Forms.ToolStrip toolStripViewControls;
-        private System.Windows.Forms.ToolStripButton tsbSaveImage;
-        private System.Windows.Forms.ToolStripButton tsbSaveRecord;
         private System.Windows.Forms.CheckBox amputada;
         private System.Windows.Forms.Button bdecadactilar;
         private System.Windows.Forms.TextBox DNI;
@@ -1492,6 +1607,18 @@ namespace Capturer.Forms
         private System.Windows.Forms.Label lCodiBar;
         private System.Windows.Forms.Button bRenaper;
         private System.Windows.Forms.ToolStripMenuItem subirDecaDactilar;
+        private System.Windows.Forms.Label lbStatus;
+        private System.Windows.Forms.TabPage tabResultado;
+        private System.Windows.Forms.ToolStrip toolStripViewControls;
+        private System.Windows.Forms.ToolStripButton tsbSaveImage;
+        private System.Windows.Forms.ToolStripButton tsbSaveRecord;
+        private System.Windows.Forms.Label lb_estadoRegistro;
+        private System.Windows.Forms.PictureBox picEspera;
+        private System.Windows.Forms.TabPage demoNist;
+        private System.Windows.Forms.Button btn_abrir;
+        private System.Windows.Forms.Label lNombreArchivo;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
 
     }
 }

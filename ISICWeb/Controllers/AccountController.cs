@@ -1389,18 +1389,6 @@ namespace ISICWeb.Controllers
             return PartialView("_ResultadosBusqueda", listaNueva);
         }
 
-        public async Task<RedirectToRouteResult> Prueba()
-        {
-            //RoleManager.Create(new IdentityRole {Name = "Portal"});
-            //UserManager.AddToRole("a85b0cb7-d8dd-43cf-be15-b7f08f1df92a", "Administrador");
-            //string aa = UserManager.GenerateUserToken("prueba", "abfb0899-ac4d-4dd4-a8d9-91a059d657b8");
-            JiraService jira=new JiraService();
-          
-            Issue<IssueFields> issue = jira.GetIssue("011700002906P");
-            Transition transition = jira.GetTransitions(issue).First();
-            return RedirectToAction("Index", "Home");
-        }
-
 
           [AllowAnonymous]
         public JsonResult BuscarUsuarioMPBA(string u)

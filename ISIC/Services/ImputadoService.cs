@@ -122,6 +122,7 @@ namespace ISIC.Services
             return;
       
         }
+
         public void Actualizar(Imputado imputado)
         {
             this._repository.UnitOfWork.RegisterChanged(imputado);
@@ -183,6 +184,15 @@ namespace ISIC.Services
             return _repository.Set<Imputado>().Where(x => x.BioManoDerecha.FirstOrDefault().CodigoDeBarra ==x.BioManoIzquierda.FirstOrDefault().CodigoDeBarra ).FirstOrDefault(i => i.CodigoDeBarras == codigoBarra);
 
         }
+        public Imputado GetByCodigoTodasHuellas(string codigoBarra)
+        {
+            return _repository.Set<Imputado>().Where(x => x.CodigoDeBarras == codigoBarra &&
+                x.BioManoDerecha.All(p => p.CodigoDeBarra == codigoBarra) &&
+                x.BioManoIzquierda.All(p => p.CodigoDeBarra == codigoBarra)).FirstOrDefault();
+           
+          
+
+        }
 
     }
 
@@ -196,6 +206,7 @@ namespace ISIC.Services
         IList<Imputado> GetAllByEstado(SICEstadoTramite estado);
         Imputado GetByCodigoBarra(string codigoBarra);
         Imputado GetByCodigoHuellas(string codigoBarra);
+        Imputado GetByCodigoTodasHuellas(string codigoBarra);
         void Actualizar(Imputado imputado);
         void ActualizarDigitalizacion(Imputado imputado);
         void InicializaHuellasDactilares(Imputado imputado);

@@ -77,14 +77,14 @@ namespace FingerCapturer
            
           
 			CopyNativeLibs();
-			const string Components = "Biometrics.FingerExtraction,Biometrics.FingerMatching,Devices.FingerScanners,Biometrics.FingerSegmentation,Biometrics.FingerQualityAssessmentBase,Devices.Cameras";
+            const string Components = "Biometrics.Standards.FingerTemplates,Biometrics.Standards.Base,Biometrics.Standards.Faces,Biometrics.FingerExtraction,Biometrics.FingerMatching,Devices.FingerScanners,Biometrics.FingerSegmentation,Biometrics.FingerQualityAssessmentBase,Devices.Cameras";
 			try
 			{
 				foreach (string component in Components.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
 				{
 					NLicense.ObtainComponents("mphv12.mpba.gov.ar", 5000, component);
 				}
-
+              
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
                 _mainF = new MainForm();

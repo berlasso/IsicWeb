@@ -1143,6 +1143,10 @@ namespace Capturer.Forms
 		static void Callback(object sender, VerifyIdentityCompletedEventArgs e)
 		{
 			Console.WriteLine("Add Result: {0}", e.Result);
+
+            /*LLamar a SendResponse(RenaperResponse)*/
+
+
 		}
 
 		private void bSalvar_Click(object sender, EventArgs e)

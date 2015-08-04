@@ -122,7 +122,11 @@ namespace Capturer.Forms
 
 		private void BtnPreviousClick(object sender, EventArgs e)
 		{
-			int index = _captureList.IndexOf(_current) - 1;
+            if (_current == null)
+            {
+                return;
+            }
+            int index = _captureList.IndexOf(_current) - 1;
 			if (index >= 0)
 			{
 				StartTask(_captureList[index]);
@@ -135,9 +139,15 @@ namespace Capturer.Forms
 		}
 
 		private void BtnRescanClick(object sender, EventArgs e)
-		{
-			_current.Image = null;
+        {
+            if (_current == null)
+            {
+                return;
+            }
+			
+            _current.Image = null;
 			int index = _captureList.IndexOf(_current);
+            
 			lvQueue.Items[index].ForeColor = Color.Black;
 
 			StartTask(_current);

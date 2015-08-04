@@ -59,6 +59,14 @@ namespace ISIC.Services
             this.repository.UnitOfWork.RegisterChanged(bioDactilar);
             this.repository.UnitOfWork.Commit();
         }
+
+        public void BorrarBio(BioDactilar bioDactilar)
+        {
+            var bioDactilarDB = repository.Set<BioDactilar>().SingleOrDefault(s => s.Id == bioDactilar.Id);
+            this.repository.UnitOfWork.RegisterDeleted(bioDactilarDB);
+         
+            
+        }
     }
 
     public interface IBioDactilarService
@@ -71,5 +79,6 @@ namespace ISIC.Services
         VucClasificacion GetClasificacionVuc(int id);
         VucSubClasificacion GetSubClasificacionVuc(int id);
         void Modificar(BioDactilar BioDactilar);
+        void BorrarBio(BioDactilar BioDactilar);
     }
 }

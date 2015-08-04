@@ -25,6 +25,7 @@ using System.Drawing.Drawing2D;
 using System.Reflection;
 using AutoMapper;
 using FingerCapturer.ServiceCapturaDecaDactilar;
+using Neurotec.Biometrics.Standards;
 
 
 namespace Capturer.Forms
@@ -32,10 +33,18 @@ namespace Capturer.Forms
     public partial class MainForm : Form
     {
         #region Public constructor
+        public NBiometricClient  BiometricClient;
+        bool estadoUpdateHuellas = false;
+        bool estadoRegistroBiometrico = false;
+        DateTime comienzaProceso = DateTime.Now;
 
         public MainForm()
         {
             InitializeComponent();
+            /*Se conecta al Servidor fijarse si no hacerlo en cada extraccion al final y ver como liberarlo*/
+             BiometricClient = Utilities.ConnectionRemoteMegaMatcher(this, 24932, 25452, "mpapdesa01");
+             BiometricClient.Initialize();
+             LimpiarResultados();
         }
 
         public void InicializaImputado(string CODBARRA, string Apellido, string Nombres, string DNI, string Sexo, string IPP)
@@ -147,7 +156,7 @@ namespace Capturer.Forms
 
             _model.Subject = null;
             LimpiarImagenes();
-
+            LimpiarResultados();
             _model.Subject = new NSubject();
             imputadosHuellas = new NSubject();
 
@@ -288,6 +297,11 @@ namespace Capturer.Forms
                 _exit = true;
                 _decaForm.Close();
             }
+            if (BiometricClient != null)
+            {
+                BiometricClient.Dispose();
+                BiometricClient = null;
+            }
         }
 
         private void CaptureFormFormClosed(object sender, FormClosedEventArgs e)
@@ -301,21 +315,7 @@ namespace Capturer.Forms
         }
         private void CaptureFormSingleClosed(object sender, FormClosedEventArgs e)
         {
-            //   imputadosHuellas =(NSubject) _captureSingle.Subject.Clone();
-            /*foreach (var item in imputadosHuellas.Fingers.Where(x => x.ProcessedImage != null))
-            {
-                imputadosHuellas.Fingers.Add(item);
-            
-            }
-            foreach (var item in _captureSingle.Subject.MissingFingers)
-            {
-                imputadosHuellas.MissingFingers.Add(item);
-
-            }*/
-
-            /*Al Web Service enviar imputadosHuellas un NSubjects con GetTemplate = NLTemplate : Fingers => NFRecords una coleccion con atributos de los templates extraidos*/
-            //       imputadosHuellas.SetTemplate(_captureSingle.Subject.GetTemplate());
-            _captureSingle.Dispose();
+             _captureSingle.Dispose();
             _captureSingle = null;
 
             _captureStarted = false;
@@ -445,6 +445,8 @@ namespace Capturer.Forms
                 _model.Subject = null;
             }
             fSelector.MissingPositions = null;
+            LimpiarResultados();
+            LimpiarImagenes();
 
             _model = new DataModel();
             _model.Info.AddRange(LoadInfoFields());
@@ -649,7 +651,7 @@ namespace Capturer.Forms
                 BeginInvoke(new MethodInvoker(Close));
                 return;
             }
-
+         
             _model = new DataModel();
             _model.Info.AddRange(LoadInfoFields());
             infoPanel.Model = _model;
@@ -740,6 +742,18 @@ namespace Capturer.Forms
             nfvRightRingRolled.Finger = null;
             nfvRightThumbRolled.Finger = null;
         }
+        private void LimpiarResultados()
+        {
+
+            this.lb_estadoRegistro.Text = "";
+             this.lbStatus.Text = "";
+             this.picEspera.Visible = false;
+           
+
+        }
+
+
+
         private NFingerView GetView(NFPosition position, bool isRolled)
         {
             switch (position)
@@ -963,7 +977,7 @@ namespace Capturer.Forms
         }
 
 
-        private void CheckRenaper()
+        private string CheckRenaper()
         {
             int cantidad = _model.Subject.Fingers.Count();
             string h1, h2, h1d, h2d;
@@ -1009,7 +1023,7 @@ namespace Capturer.Forms
 
             string tcn = rc.GenerarTransaccion(dni, sexo, h1, h1d, h2, h2d);
 
-
+            return tcn;
         }
 
 
@@ -1119,8 +1133,6 @@ namespace Capturer.Forms
 
             int cantidad = _model.Subject.Fingers.Count();
 
-            NFinger[] dedosF = new NFinger[10];
-
             foreach (NFinger dedo in _model.Subject.Fingers)
             {
                 //    _biometricClient.Dispose();
@@ -1140,8 +1152,15 @@ namespace Capturer.Forms
 
             }
 
+              GraficaDecaDactilar(dedosCapturados);
+
+            
+        }
 
 
+        private void  GraficaDecaDactilar(MemoryStream[] dedosCapturados)
+        {
+             int i=0;
             /*Path archivo Deca*/
             string exeFile = (new System.Uri(Assembly.GetEntryAssembly().CodeBase)).AbsolutePath;
             string exeDir = Path.GetDirectoryName(exeFile);
@@ -1347,20 +1366,24 @@ namespace Capturer.Forms
             _decaForm.FormClosed += new FormClosedEventHandler(DecaFormClosed);
             _decaForm.inicializaImagen(tempBmp);
             _decaForm.Show(this);
+         
+        
+        
+        
         }
-
-
-
         private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
         {
-            MessageBox.Show(this, "Va a Subir Deca Dactilar");
+            //MessageBox.Show(this, "Va a Subir Deca Dactilar");
             SubirHuellasAsync();
 
         }
 
         private  void SubirHuellasAsync()
         {
+
+
             /* Suponemos que el Imputado lo puede actualizara la aplicacion desktop?? */
+           
             FingerCapturer.ServiceCapturaDecaDactilar.ImputadoDatosPers imp = new FingerCapturer.ServiceCapturaDecaDactilar.ImputadoDatosPers();
             FingerCapturer.ServiceCapturaDecaDactilar.HuellasImputado huellasImp = new FingerCapturer.ServiceCapturaDecaDactilar.HuellasImputado();
              
@@ -1375,11 +1398,13 @@ namespace Capturer.Forms
             imp.CodigoBarras = _codBarra;
             imp.ScoreRenaper = "0";
             HuellasImputado huellas = new HuellasImputado();
-
+         
             int resp = GenerarImagenesyTemplate(huellas);
+
+           
             if (resp != 0)
             {
-                /*No son 10 huellas */
+                
                 Utilities.ShowQuestion(this, "La DecaDactilar no fue definida correctamente. Por favor, defina todas las huellas y las extremidades faltantes y/o lastimadas (10) ");
                 return;
             }
@@ -1391,7 +1416,7 @@ namespace Capturer.Forms
             int i = 0;
             foreach (var k in huellas.DedosCapturados)
             {
-                //huellasImp.DedosCapturados[i] = new FingerCapturer.ServiceCapturaDecaDactilar.Dedos();
+          
                 byte[] imagenAux  = k.Imagen.ToArray();
                 huellasImp.DedosCapturados[i] = new FingerCapturer.ServiceCapturaDecaDactilar.Dedos();
                 huellasImp.DedosCapturados[i].Imagen = imagenAux;
@@ -1422,35 +1447,314 @@ namespace Capturer.Forms
 
 
            try
-            {
+           {
+                startProgress();
                 capturaService.CapturaHuellasClienteCompleted += new EventHandler<CapturaHuellasClienteCompletedEventArgs>(CallbackCaptura);
                 capturaService.CapturaHuellasClienteAsync(imp, huellasImp);
-                Console.WriteLine("Esto es despues de la llamada Asyncrinoca");
+               
             }
             catch (Exception e)
             {
                 Console.WriteLine("Exception", e.GetBaseException());
                 
             }
+           
+               
+               int cantidadDedos = _model.Subject.Fingers.Where(p=> p.ProcessedImage != null).Count();
 
+               _model.Subject.Fingers.RemoveRange(0, _model.Subject.Fingers.Count() - cantidadDedos);
 
+               _model.Subject.Id = _codBarra;
+               try
+               {
+                   /*FUNCIONA:  NBiometricTask task = BiometricClient.CreateTask(NBiometricOperations.Identify, _model.Subject);*/
+                   /*    NBiometricTask task = BiometricClient.CreateTask(NBiometricOperations.Delete, _model.Subject);  */
+                   /* y dsps testear en el retorno de la tarea en el callbak OnTaskCompleted task.status  y task.Subjects*/
+
+                   /*NO FUNCIONAN: Tarea Update,Get,NBiometricTask task = BiometricClient.CreateTask(NBiometricOperations.EnrollWithDuplicateCheck, _model.Subject); y Verify da Invalid Operations no funciona*/
+                   /* Verification - 1:1 matching. Identification - 1:many matching.**/
+
+                   NBiometricTask task = BiometricClient.CreateTask(NBiometricOperations.Enroll, _model.Subject);
+                 
+                   BiometricClient.BeginPerformTask(task, OnTaskCompleted, null);
+               }
+            catch(Exception e){
+
+                string a = "FeatureSupport";
+             
+            }
            
 
 
 
         }
 
-        static void CallbackCaptura(object sender, CapturaHuellasClienteCompletedEventArgs e)
+        private void startProgress()
+        {
+            picEspera.Visible = true;
+            tabControl.SelectTab("tabResultado");
+          
+        
+        
+        }
+
+
+       void CallbackCaptura(object sender, CapturaHuellasClienteCompletedEventArgs e)
         {
             if (e.Cancelled)
             {
                 Utilities.ShowInformation("La operacion fue cancelada y las huellas no fueron salvadas intente nuevamente...");
                 return;
             }
-           
-            Console.WriteLine("Registro de las Huellas Digitalizadas","Termino la captura Con resultado "+e.Result);
-            Utilities.ShowInformation("Resultado del registro Decadactilar", "El resultado fue: "+ e.Result);
+            Console.WriteLine("Registro de las Huellas Digitalizadas", "Termino la captura, Empieza la extraccion del template Con resultado " + e.Result);
+            estadoUpdateHuellas = true;
+            lb_estadoRegistro.Text = string.Format("{0}: {1}", "Finalizó la inserción de las imagenes dactilares!", e.Result);
+            lb_estadoRegistro.BackColor = Color.Azure;
+
+           if (estadoRegistroBiometrico)
+           {
+               picEspera.Visible = false;
+           }
+         //   lb_estadoRegistro.BackColor = status == NBiometricStatus.Ok ? Color.Azure : Color.Red;
+           // El manejo del control de progress bar lo maneja la SIAC base de datos que tarda mas
+             // HideProgressbar();
+                       
         }
+   
+   
+
+/*Vuelta del MEgaMatcher, respuesta asyncrionica */
+
+      private void OnTaskCompleted(IAsyncResult result)
+      {
+          if (InvokeRequired)
+          {
+              BeginInvoke(new AsyncCallback(OnTaskCompleted), result);
+          }
+          else
+          {
+              try
+              {
+                  estadoRegistroBiometrico = true;
+                  if (estadoRegistroBiometrico)
+                  {
+                      picEspera.Visible = false;
+                  }
+              
+
+                  NBiometricTask task = _biometricClient.EndPerformTask(result);
+                  NBiometricStatus status = task.Status;
+                  lbStatus.Text = string.Format("{0}: {1}", " Finalizó el registro Biométrico, resultado del proceso :", status);
+                  lbStatus.BackColor = status == NBiometricStatus.Ok ? Color.Azure : Color.Red;
+
+                  if (task.Error != null)
+                  {
+                     Utilities.ShowError(task.Error);
+                  }
+                  task.Dispose();
+                
+              }
+              catch (Exception ex)
+              {
+                  lbStatus.Text = string.Format("{0}: {1}", NBiometricOperations.Enroll, "Error");
+                  lbStatus.BackColor = Color.Red;
+                  Utilities.ShowError(ex);
+              }
+          }
+
+      }
+
+      private void toolStripViewControls_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+      {
+
+      }
+
+      private void tabResultado_Click(object sender, EventArgs e)
+      {
+
+      }
+
+      private void picEspera_Click(object sender, EventArgs e)
+      {
+
+      }
+
+      private void tabPage1_Click(object sender, EventArgs e)
+      {
+
+      }
+
+      private void btn_abrir_Click(object sender, EventArgs e)
+      {
+          // Show the dialog and get result.
+          DialogResult result = openFileDialog1.ShowDialog();
+          if (result == DialogResult.OK) // Test result.
+          {
+              NSubject sujetoImp = new NSubject();
+              
+             string file = openFileDialog1.FileName;
+              try
+              {
+                  
+                  lNombreArchivo.Text =file;
+                  MemoryStream[] dedosCapturados = new MemoryStream[10];
+                  var j = 0;
+                  using (var template = new ANTemplate(file, ANValidationLevel.Standard, ANTemplate.FlagLeaveInvalidRecordsUnvalidated))
+                  {
+                      for (int i = 0; i < template.Records.Count; i++)
+                      {
+                          ANRecord record = template.Records[i];
+                          NImage image = null;
+                          int number = record.RecordType.Number;
+                          if (number >= 3 && number <= 8 && number != 7)
+                          {
+                              image = ((ANImageBinaryRecord)record).ToNImage();
+                          }
+                          else if (number >= 10 && number <= 17)
+                          {
+                              image = ((ANImageAsciiBinaryRecord)record).ToNImage();
+                          }
+
+                          if (image != null)
+                          {
+                              Neurotec.Biometrics.Standards.ANType4Record regi = (Neurotec.Biometrics.Standards.ANType4Record)record;
+                              string posicionDedo= regi.Positions.First().ToString();
+
+                              MemoryStream imgStream = new MemoryStream();
+                              image.Save(imgStream, NImageFormat.Jpeg);
+                              /*posicionDedo pasarlo a la posicion*/
+                              j = Utilities.ConvertNFingerToIndex(posicionDedo);
+                              dedosCapturados[j] = imgStream;
+                                NFinger dedoimp = new NFinger();
+                               NFPosition posicionNeu = Utilities.ConvertStringToNeuro(posicionDedo);
+                               dedoimp.Position = posicionNeu;
+                              
+                              string fileName = string.Format(posicionDedo+"{0}Number{1}.jpg", j,number);
+                              image.Save(fileName);
+                              dedoimp.FileName=fileName;
+                              dedoimp.ImpressionType = NFImpressionType.NonliveScanRolled;
+                              dedoimp.Image = image;
+                              sujetoImp.Fingers.Add(dedoimp);
+
+                              image.Dispose();
+                              Console.WriteLine("La imagen se salvo a {0}", fileName);
+                          }
+                      }
+
+
+
+                      // Converting ANTemplate object to NTemplate object
+                      NTemplate nTemplate = template.ToNTemplate();
+
+                      // Packing NTemplate object
+                      byte[] packedNTemplate = template.Save().ToArray();
+                      
+
+                   //   sujetoImp.SetTemplate(nTemplate); Esto ANDUVOOOOOO el enroll en el MegaMatcher
+
+
+                      sujetoImp.Id = "CODIGOBARRAS14";
+                      // Storing NTemplate object in file
+                      File.WriteAllBytes("pruebaTemplate", packedNTemplate);
+
+                  }
+                  GraficaDecaDactilar(dedosCapturados);
+
+
+                  try
+                  {
+                      /*FUNCIONA:  NBiometricTask task = BiometricClient.CreateTask(NBiometricOperations.Identify, _model.Subject);*/
+                      /*    NBiometricTask task = BiometricClient.CreateTask(NBiometricOperations.Delete, _model.Subject);  */
+                      /* y dsps testear en el retorno de la tarea en el callbak OnTaskCompleted task.status  y task.Subjects*/
+
+                      /*NO FUNCIONAN: Tarea Update,Get,NBiometricTask task = BiometricClient.CreateTask(NBiometricOperations.EnrollWithDuplicateCheck, _model.Subject); y Verify da Invalid Operations no funciona*/
+                      /* Verification - 1:1 matching. Identification - 1:many matching.**/
+
+                     /* el Enroll anduvo pero el tema es que el template es distinto es mas chico
+                      * NBiometricTask task = BiometricClient.CreateTask(NBiometricOperations.Enroll,sujetoImp);
+                      
+                      BiometricClient.BeginPerformTask(task, OnTaskCompleted, null);*/
+
+                      
+                      foreach(var item in sujetoImp.Fingers )
+                      {
+                      	NBiometricTask task = _biometricClient.CreateTask(NBiometricOperations.CreateTemplate,sujetoImp);
+                        task.Biometric = item;
+                 
+        				_biometricClient.BeginPerformTask(task, OnCreateTemplateCompleted, null);
+                      }
+                      int cantidad =1;
+                      while (cantidad >0)
+                      {
+                          var lista = sujetoImp.Fingers.Where(x => x.ProcessedImage == null && x.Image != null).ToList();
+                           cantidad = lista.Count;
+                      }
+
+                     
+
+                      NBiometricTask task1 = BiometricClient.CreateTask(NBiometricOperations.Enroll, sujetoImp);
+
+                      BiometricClient.BeginPerformTask(task1, OnTaskCompleted, null);
+
+			         }
+                  catch (Exception eh)
+                  {
+
+                      string a = "FeatureSupport";
+
+                  }
+             
+              }
+              catch (IOException)
+              {
+              }
+          }
+          Console.WriteLine(result); // <-- For debugging use.
+      }
+
+
+
+      private void OnCreateTemplateCompleted(IAsyncResult r)
+      {
+          if (InvokeRequired)
+          {
+              BeginInvoke(new AsyncCallback(OnCreateTemplateCompleted), r);
+          }
+          else
+          {
+              NBiometricStatus status = NBiometricStatus.None;
+              try
+              {
+                  _biometricClient.EndPerformTask(r);
+
+
+              }
+              catch (Exception ex)
+              {
+                  Utilities.ShowError(ex);
+
+                  /*Vuelve a Intentarlo ?*/
+
+
+              }
+              finally
+              {
+              }
+
+             
+          }
+      }
+
+      private void bRenaper_Click(object sender, EventArgs e)
+      {
+          string token= CheckRenaper();
+      }
+
+
+
     }
 
 }
+
+
+
