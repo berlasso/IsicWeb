@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+Este archivo es utilizado por el proceso de paquete/publicación de nuestro proyecto Web. Puede personalizar el comportamiento de este proceso
+editando este archivo MSBuild. Para conocer más acerca de esto, visite http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <WebPublishMethod>Package</WebPublishMethod>
+    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <SiteUrlToLaunchAfterPublish />
+    <LaunchSiteAfterPublish>True</LaunchSiteAfterPublish>
+    <ExcludeApp_Data>False</ExcludeApp_Data>
+    <DesktopBuildPackageLocation>C:\Proyectos\ISICDeployed\ISICWeb.zip</DesktopBuildPackageLocation>
+    <PackageAsSingleFile>true</PackageAsSingleFile>
+    <DeployIisAppPath>Default Web Site/isic</DeployIisAppPath>
+    <PublishDatabaseSettings>
+      <Objects xmlns="">
+        <ObjectGroup Name="ISICDS" Order="1" Enabled="False">
+          <Destination Path="Data Source=mpapdesa01;Initial Catalog=MPBDDESA01;User ID=UsuarioSIAC;Password=UsuarioSIAC" />
+          <Object Type="DbDacFx">
+            <PreSource Path="Data Source=(LocalDB)\v11.0;Initial Catalog=ISIC;Integrated Security=True;Persist Security Info=False" includeData="False" />
+            <Source Path="$(IntermediateOutputPath)AutoScripts\ISICDS_IncrementalSchemaOnly.dacpac" dacpacAction="Deploy" />
+          </Object>
+          <UpdateFrom Type="Web.Config">
+            <Source MatchValue="Data Source=(LocalDB)\v11.0;Initial Catalog=ISIC;MultipleActiveResultSets=True;Persist Security Info=false;Integrated Security=True;" MatchAttributes="$(UpdateFromConnectionStringAttributes)" />
+          </UpdateFrom>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <MSDeployParameterValue Include="$(DeployParameterPrefix)ISICDS-Web.config Connection String">
+      <ParameterValue>data source=mpapdesa01;initial catalog=MPBDDESA01;user id=UsuarioSIAC;password=UsuarioSIAC;MultipleActiveResultSets=True</ParameterValue>
+      <UpdateDestWebConfig>False</UpdateDestWebConfig>
+    </MSDeployParameterValue>
+    <MSDeployParameterValue Include="$(DeployParameterPrefix)ISICWebContext-Web.config Connection String" />
+    <MSDeployParameterValue Include="$(DeployParameterPrefix)ModelISIC-Web.config Connection String" />
+  </ItemGroup>
+</Project>
