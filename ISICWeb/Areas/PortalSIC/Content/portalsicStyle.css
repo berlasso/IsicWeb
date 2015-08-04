@@ -8,7 +8,49 @@
         background-image: url(../../../Content/images/abstract10.jpg)!important;
     }
 
-/*div.item > a > span {*/
+
+     .image-container img {
+        /*max-height: 140px;*/
+    }
+
+    .image-container>li {
+        /*height: 140px;*/
+        min-width: 100px;
+        display: block;
+        float: left;
+        list-style: none;
+        margin: 0 5px 5px 0;
+        /*background-color: black;*/
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+        .image-container>li img {
+            -webkit-transition: opacity 0.4s;
+            -moz-transition: opacity 0.4s;
+            -ms-transition: opacity 0.4s;
+            transition: opacity 0.4s;
+            max-height: 100px;
+        }
+
+        .image-container>li.is-loading {
+            /*background-color: black;*/
+            background-image: url(../Content/Images/loading.gif);
+        }
+
+        .image-container>li.is-broken {
+            background-image: url(../Content/Images/broken.png);
+            background-color: #be3730;
+            /*width: 120px;*/
+            height: 100px;
+        }
+
+           .image-container> li.is-loading img,
+          .image-container>  li.is-broken img {
+                opacity: 0;
+            }
+
+
 div.item>span.overlay{
     background: none repeat scroll 0 0 rgba(255, 255, 255, 0.46);
     min-height:90%;
